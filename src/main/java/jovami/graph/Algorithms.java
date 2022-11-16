@@ -120,4 +120,95 @@ public class Algorithms {
         allPaths(g, vOrig, vDest, visited, path, paths);
         return paths;
     }
+
+    /**
+     * Computes shortest-path distance from a source vertex to all reachable
+     * vertices of a graph g with non-negative edge weights
+     * This implementation uses Dijkstra's algorithm
+     *
+     * @param g        Graph instance
+     * @param vOrig    Vertex that will be the source of the path
+     * @param visited  set of previously visited vertices
+     * @param pathKeys minimum path vertices keys
+     * @param dist     minimum distances
+     */
+    private static <V, E> void shortestPathDijkstra(Graph<V, E> g, V vOrig,
+                                                    Comparator<E> ce, BinaryOperator<E> sum, E zero,
+                                                    boolean[] visited, V[] pathKeys, E[] dist) {
+        while (vOrig != null) {
+            visited[g.key(vOrig)] = true;
+            for (var edge : g.outgoingEdges(vOrig)) {
+                V vAdj = edge.getVDest();
+                if(!visited[g.key(vAdj)] && ce.compare(dist[g.key(vAdj)], sum.apply(dist[g.key(vOrig)], edge.getWeight())) > 0){
+                    dist[g.key(vAdj)] = sum.apply(dist[g.key(vOrig)], edge.getWeight());
+                    pathKeys[g.key(vAdj)] = vOrig;
+                    visited[g.key(vAdj)] = true;
+                }
+            }
+            vOrig = getVertMinDist(g, visited, dist, ce);
+        }
+    }
+
+    private static <V,E> V getVertMinDist(Graph<V,E> g, boolean[] visited, E[] dist, Comparator<E> ce) {
+        V result = null;
+        E min = dist[1];
+
+        int i;
+        for (i = 2; i < dist.length; i++) {
+            if (!visited[i] && ce.compare(min, dist[i]) > 0) {
+                min = dist[i];
+                result = g.vertex(i);
+            }
+        }
+
+        return result;
+    }
+
+    /** Shortest-path between two vertices
+     *
+     * @param g graph
+     * @param vOrig origin vertex
+     * @param vDest destination vertex
+     * @param ce comparator between elements of type E
+     * @param sum sum two elements of type E
+     * @param zero neutral element of the sum in elements of type E
+     * @param shortPath returns the vertices which make the shortest path
+     * @return if vertices exist in the graph and are connected, true, false otherwise
+     */
+    public static <V, E> E shortestPath(Graph<V, E> g, V vOrig, V vDest,
+                                        Comparator<E> ce, BinaryOperator<E> sum, E zero,
+                                        LinkedList<V> shortPath) {
+        if (!g.validVertex(vOrig) || !g.validVertex(vDest))
+            return null;
+
+        @SuppressWarnings("unchecked")
+        var dist = (E[]) new Object[g.numVertices()];
+        @SuppressWarnings("unchecked")
+        var pathKeys = (V[]) new Object[g.numVertices()];
+
+        var visited = new boolean[g.numVertices()];
+
+        for(V vert : g.vertices()){
+            dist[g.key(vert)] = null;
+            pathKeys[g.key(vert)] = null;
+            visited[g.key(vert)] = false;
+        }
+        dist[g.key(vOrig)] = zero;
+
+        shortestPathDijkstra(g, vOrig, Comparator.nullsLast(ce), sum, zero, visited, pathKeys, dist);
+        V v = vDest;
+        E minDist = zero;
+
+        while (v != vOrig && v != null) {
+            shortPath.push(v);
+            minDist = sum.apply(minDist, dist[g.key(v)]);
+            v = pathKeys[g.key(v)]; // predecessor
+        }
+        if (v != null) {
+            shortPath.push(v);
+            minDist = sum.apply(minDist, dist[g.key(v)]);
+        }
+
+        return minDist;
+    }
 }
