@@ -1,0 +1,102 @@
+DROP TABLE instalacao_agricola CASCADE CONSTRAINTS PURGE ;
+DROP TABLE tipo_cultura CASCADE CONSTRAINTS PURGE ;
+DROP TABLE cultura CASCADE CONSTRAINTS PURGE ;
+DROP TABLE tipo_edificio CASCADE CONSTRAINTS PURGE ;
+DROP TABLE edificio CASCADE CONSTRAINTS PURGE ;
+DROP TABLE parcela_agricola CASCADE CONSTRAINTS PURGE ;
+
+
+/*..........................................................*/
+/*..........................................................*/
+/*....................CREATE TABLE.........................*/
+
+
+CREATE TABLE instalacao_agricola (
+    instalacao_agricola_id      INTEGER GENERATED AS IDENTITY CONSTRAINT pk_instalacao_agricola_id  PRIMARY KEY,
+    nome                        VARCHAR(40)     CONSTRAINT nn_instalacao_agricola_nome NOT NULL                                    
+);
+
+
+CREATE TABLE tipo_cultura (
+    tipo_cultura_id             INTEGER GENERATED AS IDENTITY CONSTRAINT pk_tipo_cultura_id  PRIMARY KEY,
+    designacao                  VARCHAR(40) CONSTRAINT ck_tipo_cultura_designacao CHECK(designacao = 'temporaria' OR designacao = 'permanente') UNIQUE
+);
+
+
+CREATE TABLE cultura (
+    cultura_id                  INTEGER GENERATED AS IDENTITY CONSTRAINT pk_cultura_id  PRIMARY KEY,
+    plantado                    VARCHAR(40)  CONSTRAINT nn_cultura_plantado NOT NULL,                ---DUVIDA "especie vegtal para consumo" ou "adubacao verde" como fazer isto?
+    tipo_cultura_id             INTEGER REFERENCES tipo_cultura(tipo_cultura_id) NOT NULL
+);
+
+
+CREATE TABLE tipo_edificio (
+    tipo_edificio_id            INTEGER GENERATED AS IDENTITY CONSTRAINT pk_tipo_edificio_id  PRIMARY KEY,
+    designacao                  VARCHAR(40) CONSTRAINT ck_tipo_edificio_designacao CHECK(designacao = 'armazem' OR designacao = 'garagem' OR designacao = 'estabulo') UNIQUE   ---VERIFICAR
+);
+
+
+CREATE TABLE edificio (
+
+    edificio_id                      INTEGER GENERATED AS IDENTITY CONSTRAINT pk_edificio_id  PRIMARY KEY,
+    designacao                       VARCHAR(40)     CONSTRAINT nn_edificio_designacao NOT NULL,
+    area                             NUMBER(10,2)    CONSTRAINT nn_edificio_area NOT NULL,
+    tipo_edificio_id                 INTEGER REFERENCES tipo_edificio(tipo_edificio_id) NOT NULL,
+    instalacao_agricola_id           INTEGER REFERENCES instalacao_agricola(instalacao_agricola_id) NOT NULL
+);
+
+
+CREATE TABLE parcela_agricola (
+
+    parcela_agricola_id             INTEGER GENERATED AS IDENTITY CONSTRAINT pk_parcela_agricola_id  PRIMARY KEY,
+    designacao                      VARCHAR(40) CONSTRAINT nn_parcela_agricola_designacao NOT NULL,
+    area                            NUMBER(10,2) CONSTRAINT nn_parcela_agricola_area NOT NULL,
+    cultura_id                      INTEGER REFERENCES cultura(cultura_id) ,                                --pode ser null, uma parcela agricola nem sempre pode ter uma cultura "plantada"
+    instalacao_agricola_id          INTEGER REFERENCES instalacao_agricola(instalacao_agricola_id) NOT NULL
+);
+
+---------------------------
+----------[US204]----------
+---------------------------
+
+INSERT INTO instalacao_agricola(nome) VALUES ('INSTALACAO G31 LAPR3');
+
+INSERT INTO tipo_cultura(designacao) VALUES ('temporaria');
+INSERT INTO tipo_cultura(designacao) VALUES ('permanente');
+
+INSERT INTO cultura(plantado,tipo_cultura_id) VALUES ('flores',1);
+INSERT INTO cultura(plantado,tipo_cultura_id) VALUES ('frutos',2);
+INSERT INTO cultura(plantado,tipo_cultura_id) VALUES ('cereais',1);
+
+INSERT INTO tipo_edificio(designacao) VALUES ('armazem');
+INSERT INTO tipo_edificio(designacao) VALUES ('garagem');
+INSERT INTO tipo_edificio(designacao) VALUES ('estabulo');
+
+INSERT INTO edificio(designacao,area,tipo_edificio_id,instalacao_agricola_id) VALUES ('Almada', 1500.20, 1, 1);
+INSERT INTO edificio(designacao,area,tipo_edificio_id,instalacao_agricola_id) VALUES ('Lapa', 1300.10, 2, 1);
+INSERT INTO edificio(designacao,area,tipo_edificio_id,instalacao_agricola_id) VALUES ('Zapa', 1600.50, 3, 1);
+
+INSERT INTO parcela_agricola(designacao,area,cultura_id,instalacao_agricola_id) VALUES ('Balmada', 1100.20, 1, 1);
+INSERT INTO parcela_agricola(designacao,area,cultura_id,instalacao_agricola_id) VALUES ('Japa', 1000.10, 2, 1);
+INSERT INTO parcela_agricola(designacao,area,cultura_id,instalacao_agricola_id) VALUES ('Opat', 200.50, 3, 1);
+
+
+SELECT * FROM instalacao_agricola ;
+SELECT count(*) AS "linhas/tuplos na tabela instalacao_agricola" FROM instalacao_agricola;
+
+SELECT * FROM tipo_cultura ;
+SELECT count(*) AS "linhas/tuplos na tabela tipo_cultura" FROM tipo_cultura;
+
+SELECT * FROM cultura ;
+SELECT count(*) AS "linhas/tuplos na tabela cultura" FROM cultura;
+
+SELECT * FROM tipo_edificio ;
+SELECT count(*) AS "linhas/tuplos na tabela tipo_edificio" FROM tipo_edificio;
+
+SELECT * FROM edificio ;
+SELECT count(*) AS "linhas/tuplos na tabela edificio" FROM edificio;
+
+SELECT * FROM parcela_agricola ;
+SELECT count(*) AS "linhas/tuplos na tabela parcela_agricola" FROM parcela_agricola;
+
+
