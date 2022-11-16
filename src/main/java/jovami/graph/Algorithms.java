@@ -120,6 +120,7 @@ public class Algorithms {
         allPaths(g, vOrig, vDest, visited, path, paths);
         return paths;
     }
+<<<<<<< development
 
     /**
      * Computes shortest-path distance from a source vertex to all reachable
@@ -211,4 +212,6 @@ public class Algorithms {
 
         return minDist;
     }
+=======
+>>>>>>> feat(graphs): implementation of a a method allPaths that returns all possible paths from a vertex to another
 }
