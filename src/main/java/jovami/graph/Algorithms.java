@@ -74,4 +74,50 @@ public class Algorithms {
         DepthFirstSearch(g, vert, visited, qdfs);
         return qdfs;
     }
+
+    /**
+     * Returns all paths from vOrig to vDest
+     *
+     * @param g       Graph instance
+     * @param vOrig   Vertex that will be the source of the path
+     * @param vDest   Vertex that will be the end of the path
+     * @param visited set of discovered vertices
+     * @param path    stack with vertices of the current path (the path is in reverse order)
+     * @param paths   ArrayList with all the paths (in correct order)
+     */
+    private static <V, E> void allPaths(Graph<V, E> g, V vOrig, V vDest, boolean[] visited,
+                                        LinkedList<V> path, ArrayList<LinkedList<V>> paths) {
+        path.push(vOrig);
+        visited[g.key(vOrig)] = true;
+        for (V vAdj : g.adjVertices(vOrig)) {
+            if (vOrig.equals(vDest)) {
+                path.push(vDest);
+                paths.add(path);
+                path.pop();
+            } else {
+                if (visited[g.key(vAdj)])
+                    allPaths(g, vAdj, vDest, visited, path, paths);
+            }
+            path.pop();
+        }
+    }
+
+    /** Returns all paths from vOrig to vDest
+     *
+     * @param g     Graph instance
+     * @param vOrig information of the Vertex origin
+     * @param vDest information of the Vertex destination
+     * @return paths ArrayList with all paths from vOrig to vDest
+     */
+    public static <V, E> ArrayList<LinkedList<V>> allPaths(Graph<V, E> g, V vOrig, V vDest) {
+        if (!g.validVertex(vOrig) || !g.validVertex(vDest))
+            return null;
+
+        boolean[] visited = new boolean[g.numVertices()];
+        ArrayList<LinkedList<V>> paths = new ArrayList<>();
+        LinkedList<V> path = new LinkedList<>();
+
+        allPaths(g, vOrig, vDest, visited, path, paths);
+        return paths;
+    }
 }
