@@ -36,4 +36,42 @@ public class Algorithms {
         }
         return qbfs;
     }
+
+    /**
+     * Performs depth-first search starting in a vertex
+     *
+     * @param g       Graph instance
+     * @param vOrig   vertex of graph g that will be the source of the search
+     * @param visited set of previously visited vertices
+     * @param qdfs    return Stack with vertices of depth-first search
+     */
+    private static <V, E> void DepthFirstSearch(Graph<V, E> g, V vOrig, boolean[] visited, LinkedList<V> qdfs) {
+        if (visited[g.key(vOrig)])
+            return;
+
+        qdfs.push(vOrig);
+        visited[g.key(vOrig)] = true;
+
+        for (V vAdj : g.adjVertices(vOrig)) {
+            DepthFirstSearch(g, vAdj, visited, qdfs);
+        }
+    }
+
+    /**
+     * Performs depth-first search starting in a vertex
+     *
+     * @param g    Graph instance
+     * @param vert vertex of graph g that will be the source of the search
+     * @return a LinkedList with the vertices of depth-first search
+     */
+    public static <V, E> LinkedList<V> DepthFirstSearch(Graph<V, E> g, V vert) {
+        if (!g.vertices().contains(vert))
+            return null;
+
+        boolean[] visited = new boolean[g.numVertices()];
+        LinkedList<V> qdfs = new LinkedList<>();
+
+        DepthFirstSearch(g, vert, visited, qdfs);
+        return qdfs;
+    }
 }
