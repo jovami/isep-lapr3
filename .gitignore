@@ -41,4 +41,6 @@ Thumbs.db
 
 ####
 
+*.o
+
 compile_flags.txt

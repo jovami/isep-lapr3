@@ -1,7 +1,7 @@
-PROGNAME =
+PROGNAME = main
 
-CXXFLAGS =
-CFLAGS = -Wall -pedantic ${CXXFLAGS}
+CXXFLAGS = -Iinclude
+CFLAGS = -std=gnu17 -Wall -pedantic ${CXXFLAGS}
 LDFLAGS =
 
 ifneq ($(strip ${DEBUG}),)
@@ -9,10 +9,16 @@ ifneq ($(strip ${DEBUG}),)
 	DEBUG_CFLAGS = -g ${DEBUG_CXXFLAGS}
 endif
 
-CC = c99
+CC = cc
 
-CSRC =
-SSRC =
+CSRC = main.c \
+	   util.c \
+	   rnd/rnd.c \
+
+
+SSRC = rnd/__rnd_gen.s \
+
+
 
 OBJ = ${CSRC:.c=.o} ${SSRC:.s=.o}
 
@@ -28,10 +34,10 @@ flags:
 	@echo
 
 %.o: %.c
-	$(CC) -c ${CFLAGS} ${DEBUG_CFLAGS} $<
+	$(CC) -c ${CFLAGS} ${DEBUG_CFLAGS} -o $@ $<
 
 %.o: %.s
-	$(CC) -c ${DEBUG_CFLAGS} $<
+	$(CC) -c ${DEBUG_CFLAGS} -o $@ $<
 
 ${PROGNAME}: ${OBJ}
 	$(CC) -o $@ $^ ${LDFLAGS}

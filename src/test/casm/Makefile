@@ -1,21 +1,25 @@
-PROGNAME =
+PROGNAME = tests
 
-CXXFLAGS =
-CFLAGS = -Wall -pedantic ${CXXFLAGS}
+PFX = ../../main/casm
+
+CXXFLAGS = -I${PFX}/include
+CFLAGS = -std=gnu17 -Wall -pedantic ${CXXFLAGS}
 LDFLAGS =
+
+CC = cc
 
 ifneq ($(strip ${DEBUG}),)
 	DEBUG_CXXFLAGS =
 	DEBUG_CFLAGS = -g ${DEBUG_CXXFLAGS}
 endif
 
-CC = c99
+CFILES = $(shell find ${PFX} -type f ! -iname 'main.c' -iname '*.c')
+SFILES = $(shell find ${PFX} -type f -iname '*.s')
 
-CSRC =
-SSRC =
+CSRC = tests.c rnd_gen_test.c ${CFILES}
+SSRC = ${SFILES}
 
 OBJ = ${CSRC:.c=.o} ${SSRC:.s=.o}
-
 
 all: flags ${PROGNAME}
 
@@ -25,7 +29,6 @@ flags:
 	@echo "LDFLAGS     =    ${LDFLAGS}"
 	@[ -z "${DEBUG}" ] || echo "DEBUG_CFLAGS =    ${DEBUG_CFLAGS}"
 	@echo "CC          =    ${CC}"
-	@echo
 
 %.o: %.c
 	$(CC) -c ${CFLAGS} ${DEBUG_CFLAGS} $<
@@ -34,9 +37,9 @@ flags:
 	$(CC) -c ${DEBUG_CFLAGS} $<
 
 ${PROGNAME}: ${OBJ}
-	$(CC) -o $@ $^ ${LDFLAGS}
+	$(CC) -o $@ ${notdir $^} ${LDFLAGS}
 
 clean:
-	rm -f ${OBJ} ${PROGNAME}
+	rm -f *.o ${PROGNAME}
 
 .PHONY: all flags clean

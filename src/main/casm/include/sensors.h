@@ -1,5 +1,4 @@
-#ifndef SENSORS_H
-#define SENSORS_H 1
+#pragma once
 
 /**
  * Gera o valor de temperatura com base no último valor de temperatura.
@@ -114,4 +113,3 @@ unsigned char sens_humd_solo(unsigned char ult_hmd_solo, unsigned char ult_pluvi
 unsigned char sens_pluvio(unsigned char ult_pluvio, char ult_temp, char comp_rand);
 
 
-#endif /* !SENSORS_H */
