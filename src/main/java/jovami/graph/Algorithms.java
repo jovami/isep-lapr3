@@ -102,7 +102,8 @@ public class Algorithms {
         }
     }
 
-    /** Returns all paths from vOrig to vDest
+    /**
+     * Returns all paths from vOrig to vDest
      *
      * @param g     Graph instance
      * @param vOrig information of the Vertex origin
@@ -121,14 +122,22 @@ public class Algorithms {
         return paths;
     }
 <<<<<<< development
+<<<<<<< development
 
     /**
      * Computes shortest-path distance from a source vertex to all reachable
      * vertices of a graph g with non-negative edge weights
+=======
+
+    /**
+     * Computes shortest-path distance from a source vertex to all reachable
+     * vertices of a graph g with unweighted edge weights
+>>>>>>> feat(esinf/graphs): implementation of a method to calculate the shortest path using Dijkstra algorithm for unweighted graphs
      * This implementation uses Dijkstra's algorithm
      *
      * @param g        Graph instance
      * @param vOrig    Vertex that will be the source of the path
+<<<<<<< development
      * @param visited  set of previously visited vertices
      * @param pathKeys minimum path vertices keys
      * @param dist     minimum distances
@@ -214,4 +223,34 @@ public class Algorithms {
     }
 =======
 >>>>>>> feat(graphs): implementation of a a method allPaths that returns all possible paths from a vertex to another
+=======
+     * @param pathKeys minimum path vertices keys
+     * @param dist     minimum distances
+     */
+    private static <V, E> int[] shortestPathDijkstraUnweighted(Graph<V, E> g, V vOrig,
+                                                            int[] pathKeys, double[] dist) {
+        PriorityQueue<V> auxQueue = new PriorityQueue<>(g.vertices());
+
+        for (V vert : g.vertices()) {
+            dist[g.key(vert)] = Double.MAX_VALUE;
+            pathKeys[g.key(vert)] = -1;
+        }
+        auxQueue.add(vOrig);
+        dist[g.key(vOrig)] = 0;
+
+        while (!auxQueue.isEmpty()) {
+            auxQueue.remove(vOrig);
+            for (V vAdj : g.adjVertices(vOrig)) {
+                if (dist[g.key(vAdj)] == Double.MAX_VALUE) {
+                    dist[g.key(vAdj)] = dist[g.key(vOrig)] + 1;
+                    pathKeys[g.key(vAdj)] = g.key(vOrig);
+                    auxQueue.add(vAdj);
+                }
+            }
+        }
+        return pathKeys;
+    }
+
+    
+>>>>>>> feat(esinf/graphs): implementation of a method to calculate the shortest path using Dijkstra algorithm for unweighted graphs
 }
