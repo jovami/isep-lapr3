@@ -251,6 +251,44 @@ public class Algorithms {
         return pathKeys;
     }
 
+<<<<<<< development
     
 >>>>>>> feat(esinf/graphs): implementation of a method to calculate the shortest path using Dijkstra algorithm for unweighted graphs
+=======
+    private static <V, E> int[] shortestPathDijkstraWeighted(Graph<V,E> g, V vOrig, boolean[] visited,
+                                                             int[] path, double[] dist){
+        for (V vert : g.vertices()) {
+            dist[g.key(vert)] = Double.MAX_VALUE;
+            path[g.key(vert)] = -1;
+            visited[g.key(vert)] = false;
+        }
+        dist[g.key(vOrig)] = 0;
+
+        while(vOrig != null){
+            visited[g.key(vOrig)] = true;
+            for (V vAdj : g.adjVertices(vOrig)) {
+                Edge<V, E> edge = g.edge(vOrig, vAdj);
+                if (!visited[g.key(vAdj)] && dist[g.key(vAdj)] > (dist[g.key(vOrig)] + (double) edge.getWeight())){
+                    dist[g.key(vAdj)] = dist[g.key(vOrig)]+ (double) edge.getWeight();
+                    path[g.key(vAdj)] = g.key(vOrig);
+                }
+            }
+            vOrig = minimumDistVertex(g, vOrig, visited);
+        }
+        return path;
+    }
+
+    private static <V, E> V minimumDistVertex (Graph<V,E> g, V vOrig, boolean[] visited){
+        double minDist = Double.MAX_VALUE;
+        V nearestVertex = null;
+        for (V vAdj : g.adjVertices(vOrig)) {
+            double weight = (double) g.edge(vOrig, vAdj).getWeight();
+            if (!visited[g.key(vAdj)] && weight < minDist){
+                minDist = weight;
+                nearestVertex = vAdj;
+            }
+        }
+        return nearestVertex;
+    }
+>>>>>>> feat(esinf/graphs): implementation of a method to calculate the shortest path using Dijkstra algorithm for weighted graphs
 }
