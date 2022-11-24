@@ -22,7 +22,6 @@ public class Distance {
     /**
      * Joins two instances of {@code Distance} by adding up their
      * distance values and joining their location ids
-     *
      */
     public static final BinaryOperator<Distance> sum = Distance::new;
 
@@ -54,7 +53,8 @@ public class Distance {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        else if (!(o instanceof Distance dist))
+
+        if (!(o instanceof Distance dist))
             return false;
 
         return this.locID1.equals(dist.locID1)

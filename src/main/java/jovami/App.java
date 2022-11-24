@@ -1,5 +1,6 @@
 package jovami;
 
+import jovami.model.store.DistanceStore;
 import jovami.model.store.UserStore;
 import jovami.model.store.WateringControllerStore;
 
@@ -9,16 +10,22 @@ import jovami.model.store.WateringControllerStore;
  */
 public final class App {
 
-    private UserStore userStore;
+    private final UserStore userStore;
+    private final DistanceStore distStore;
     private final WateringControllerStore wcStore;
 
     private App() {
         this.userStore = new UserStore();
+        this.distStore = new DistanceStore();
         this.wcStore = new WateringControllerStore();
     }
 
     public UserStore userStore() {
         return this.userStore;
+    }
+
+    public DistanceStore distanceStore() {
+        return this.distStore;
     }
 
     public WateringControllerStore wateringControllerStore() {

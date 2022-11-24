@@ -2,8 +2,6 @@ package jovami.model;
 
 import java.util.Objects;
 
-import org.apache.commons.lang3.StringUtils;
-
 import jovami.model.shared.UserType;
 
 /**
@@ -16,17 +14,18 @@ public class User {
     private final Coordinate coords;
     private String locationID;
 
-    public User(String userID, UserType type, String locationID,
+    public User(String userID, String locationID,
                 double latitude, double longitude)
     {
-        // Null checks
-        Objects.requireNonNull(type);
-
-        this.userType = type;
         this.coords = new Coordinate(latitude, longitude);
 
         this.setLocationID(locationID);
         this.setUserID(userID);
+
+        this.userType = UserType.getType(this.userID.charAt(0));
+
+        if (this.userType == null)
+            throw new IllegalArgumentException("Unknown UserType for ID: " + this.userID);
     }
 
     private void setLocationID(String locID) {
@@ -41,12 +40,6 @@ public class User {
 
         if (id.isEmpty())
             throw new IllegalArgumentException("User ID cannot be empty!!");
-        else if (id.charAt(0) != this.userType.prefix)
-            throw new IllegalArgumentException(
-                String.format(
-                    "User ID does not match the user type!! Expected: %s",
-                    StringUtils.capitalize(this.userType.name())));
-
         this.userID = id;
     }
 
