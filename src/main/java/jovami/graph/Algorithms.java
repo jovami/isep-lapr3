@@ -1,6 +1,10 @@
 package jovami.graph;
 
-import java.util.*;
+import jovami.graph.matrix.MatrixGraph;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.function.BinaryOperator;
 
 public class Algorithms {
@@ -122,28 +126,14 @@ public class Algorithms {
         allPaths(g, vOrig, vDest, visited, path, paths);
         return paths;
     }
-<<<<<<< development
-<<<<<<< development
 
     /**
      * Computes shortest-path distance from a source vertex to all reachable
      * vertices of a graph g with non-negative edge weights
-=======
-
-    /**
-     * Computes shortest-path distance from a source vertex to all reachable
-<<<<<<< development
-     * vertices of a graph g with unweighted edge weights
->>>>>>> feat(esinf/graphs): implementation of a method to calculate the shortest path using Dijkstra algorithm for unweighted graphs
-=======
-     * vertices of a graph g with non-negative edge weights
->>>>>>> feat(esinf/graphs): implementation of a new version of the Dijkstra algorithm
      * This implementation uses Dijkstra's algorithm
      *
      * @param g        Graph instance
      * @param vOrig    Vertex that will be the source of the path
-<<<<<<< development
-<<<<<<< development
      * @param visited  set of previously visited vertices
      * @param pathKeys minimum path vertices keys
      * @param dist     minimum distances
@@ -155,7 +145,7 @@ public class Algorithms {
             visited[g.key(vOrig)] = true;
             for (var edge : g.outgoingEdges(vOrig)) {
                 V vAdj = edge.getVDest();
-                if(!visited[g.key(vAdj)] && ce.compare(dist[g.key(vAdj)], sum.apply(dist[g.key(vOrig)], edge.getWeight())) > 0){
+                if (!visited[g.key(vAdj)] && ce.compare(dist[g.key(vAdj)], sum.apply(dist[g.key(vOrig)], edge.getWeight())) > 0) {
                     dist[g.key(vAdj)] = sum.apply(dist[g.key(vOrig)], edge.getWeight());
                     pathKeys[g.key(vAdj)] = vOrig;
                     visited[g.key(vAdj)] = true;
@@ -165,7 +155,7 @@ public class Algorithms {
         }
     }
 
-    private static <V,E> V getVertMinDist(Graph<V,E> g, boolean[] visited, E[] dist, Comparator<E> ce) {
+    private static <V, E> V getVertMinDist(Graph<V, E> g, boolean[] visited, E[] dist, Comparator<E> ce) {
         V result = null;
         E min = dist[1];
 
@@ -180,14 +170,16 @@ public class Algorithms {
         return result;
     }
 
-    /** Shortest-path between two vertices
+
+    /**
+     * Shortest-path between two vertices
      *
-     * @param g graph
-     * @param vOrig origin vertex
-     * @param vDest destination vertex
-     * @param ce comparator between elements of type E
-     * @param sum sum two elements of type E
-     * @param zero neutral element of the sum in elements of type E
+     * @param g         graph
+     * @param vOrig     origin vertex
+     * @param vDest     destination vertex
+     * @param ce        comparator between elements of type E
+     * @param sum       sum two elements of type E
+     * @param zero      neutral element of the sum in elements of type E
      * @param shortPath returns the vertices which make the shortest path
      * @return if vertices exist in the graph and are connected, true, false otherwise
      */
@@ -204,7 +196,7 @@ public class Algorithms {
 
         var visited = new boolean[g.numVertices()];
 
-        for(V vert : g.vertices()){
+        for (V vert : g.vertices()) {
             dist[g.key(vert)] = null;
             pathKeys[g.key(vert)] = null;
             visited[g.key(vert)] = false;
@@ -227,87 +219,55 @@ public class Algorithms {
 
         return minDist;
     }
-=======
->>>>>>> feat(graphs): implementation of a a method allPaths that returns all possible paths from a vertex to another
-=======
-     * @param pathKeys minimum path vertices keys
-     * @param dist     minimum distances
+
+    /**
+     * Shortest-path between a vertex and all other vertices
+     *
+     * @param g     graph
+     * @param vOrig start vertex
+     * @param ce    comparator between elements of type E
+     * @param sum   sum two elements of type E
+     * @param zero  neutral element of the sum in elements of type E
+     * @param paths returns all the minimum paths
+     * @param dists returns the corresponding minimum distances
+     * @return if vOrig exists in the graph true, false otherwise
      */
-    private static <V, E> int[] shortestPathDijkstraUnweighted(Graph<V, E> g, V vOrig,
-                                                            int[] pathKeys, double[] dist) {
-        PriorityQueue<V> auxQueue = new PriorityQueue<>(g.vertices());
+    public static <V, E> boolean shortestPaths(Graph<V, E> g, V vOrig,
+                                               Comparator<E> ce, BinaryOperator<E> sum, E zero,
+                                               ArrayList<LinkedList<V>> paths, ArrayList<E> dists) {
 
-        for (V vert : g.vertices()) {
-            dist[g.key(vert)] = Double.MAX_VALUE;
-            pathKeys[g.key(vert)] = -1;
-        }
-        auxQueue.add(vOrig);
-        dist[g.key(vOrig)] = 0;
-
-        while (!auxQueue.isEmpty()) {
-            auxQueue.remove(vOrig);
-            for (V vAdj : g.adjVertices(vOrig)) {
-                if (dist[g.key(vAdj)] == Double.MAX_VALUE) {
-                    dist[g.key(vAdj)] = dist[g.key(vOrig)] + 1;
-                    pathKeys[g.key(vAdj)] = g.key(vOrig);
-                    auxQueue.add(vAdj);
-                }
-            }
-        }
-        return pathKeys;
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
-<<<<<<< development
-    
->>>>>>> feat(esinf/graphs): implementation of a method to calculate the shortest path using Dijkstra algorithm for unweighted graphs
-=======
-    private static <V, E> int[] shortestPathDijkstraWeighted(Graph<V,E> g, V vOrig, boolean[] visited,
-                                                             int[] path, double[] dist){
-        for (V vert : g.vertices()) {
-            dist[g.key(vert)] = Double.MAX_VALUE;
-            path[g.key(vert)] = -1;
-=======
-     * @param visited  set of previously visited vertices
+    /**
+     * Extracts from pathKeys the minimum path between voInf and vdInf
+     * The path is constructed from the end to the beginning
+     *
+     * @param g        Graph instance
+     * @param vOrig    information of the Vertex origin
+     * @param vDest    information of the Vertex destination
      * @param pathKeys minimum path vertices keys
-     * @param dist     minimum distances
+     * @param path     stack with the minimum path (correct order)
      */
-    private static <V, E> void shortestPathDijkstra(Graph<V, E> g, V vOrig,
-                                                    Comparator<E> ce, BinaryOperator<E> sum, E zero,
-                                                    boolean[] visited, V[] pathKeys, E[] dist) {
-        for(V vert : g.vertices()){
-            dist[g.key(vert)] = null;
-            pathKeys[g.key(vert)] = null;
->>>>>>> feat(esinf/graphs): implementation of a new version of the Dijkstra algorithm
-            visited[g.key(vert)] = false;
-        }
-        dist[g.key(vOrig)] = zero;
+    private static <V, E> void getPath(Graph<V, E> g, V vOrig, V vDest,
+                                       V[] pathKeys, LinkedList<V> path) {
 
-        while (vOrig != null) {
-            visited[g.key(vOrig)] = true;
-            for (V vAdj : g.adjVertices(vOrig)) {
-                Edge<V,E> edge = g.edge(vOrig, vAdj);
-                if(!visited[g.key(vAdj)] && ce.compare(dist[g.key(vAdj)], sum.apply(dist[g.key(vOrig)], edge.getWeight())) >= 0){
-                    dist[g.key(vAdj)] = sum.apply(dist[g.key(vOrig)], edge.getWeight());
-                    pathKeys[g.key(vAdj)] = vOrig;
-                }
-            }
-            vOrig = g.vertex(getVertMinDist(visited, dist, ce));
-        }
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    private static <E> int getVertMinDist(boolean[] visited, E[] dist, Comparator<E> ce) {
-        E min = dist[0];
-        int i = 0;
-        for (i = 1; i < dist.length; i++) {
-            if (!visited[i] && ce.compare(min, dist[i]) > 0)
-                min = dist[i];
+    /**
+     * Calculates the minimum distance graph using Floyd-Warshall
+     *
+     * @param g   initial graph
+     * @param ce  comparator between elements of type E
+     * @param sum sum two elements of type E
+     * @return the minimum distance graph
+     */
+    public static <V, E> MatrixGraph<V, E> minDistGraph(Graph<V, E> g, Comparator<E> ce, BinaryOperator<E> sum) {
+
+        for (int k = 0; k < g.numVertices(); k++) {
+
         }
-
-        return i;
+        return null;
     }
-<<<<<<< development
->>>>>>> feat(esinf/graphs): implementation of a method to calculate the shortest path using Dijkstra algorithm for weighted graphs
-=======
-
->>>>>>> feat(esinf/graphs): implementation of a new version of the Dijkstra algorithm
 }
