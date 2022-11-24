@@ -1,8 +1,8 @@
-package jovami.graph.matrix;
+package jovami.util.graph.matrix;
 
-import jovami.graph.CommonGraph;
-import jovami.graph.Edge;
-import jovami.graph.Graph;
+import jovami.util.graph.CommonGraph;
+import jovami.util.graph.Edge;
+import jovami.util.graph.Graph;
 
 import java.util.ArrayList;
 import java.util.Arrays;

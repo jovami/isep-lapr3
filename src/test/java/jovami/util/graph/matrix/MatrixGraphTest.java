@@ -1,7 +1,7 @@
-package graph.matrix;
+package jovami.util.graph.matrix;
 
-import graph.Edge;
-import graph.Graph;
+import jovami.util.graph.Edge;
+import jovami.util.graph.Graph;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

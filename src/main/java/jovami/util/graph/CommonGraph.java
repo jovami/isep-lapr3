@@ -1,4 +1,4 @@
-package jovami.graph;
+package jovami.util.graph;
 
 import java.util.ArrayList;
 import java.util.Collection;

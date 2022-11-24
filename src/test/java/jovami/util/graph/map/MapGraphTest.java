@@ -1,6 +1,6 @@
-package graph.map;
+package jovami.util.graph.map;
 
-import jovami.graph.Graph;
+import jovami.util.graph.Graph;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +10,7 @@ import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import graph.Edge;
+import jovami.util.graph.Edge;
 
 /**
  *

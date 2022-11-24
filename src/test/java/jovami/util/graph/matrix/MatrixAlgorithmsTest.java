@@ -1,22 +1,21 @@
-package graph.map;
+package jovami.util.graph.matrix;
 
-import graph.Algorithms;
-import graph.Graph;
+import jovami.util.graph.Algorithms;
+import jovami.util.graph.Graph;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class MapAlgorithmsTest {
+class MatrixAlgorithmsTest {
 
-    final Graph<String, Integer> completeMap = new MapGraph<>(false);
-    Graph<String, Integer> incompleteMap = new MapGraph<>(false);
+    final Graph<String,Integer> completeMap = new MatrixGraph<>(false);
+    Graph<String,Integer> incompleteMap = new MatrixGraph<>(false);
 
-    public MapAlgorithmsTest() {
+    public MatrixAlgorithmsTest() {
     }
 
     @BeforeEach
@@ -208,4 +207,7 @@ class MapAlgorithmsTest {
         throw new UnsupportedOperationException("Not supported yet.");
         
     }
+    
+    
+    
 }

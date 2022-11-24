@@ -1,6 +1,6 @@
-package jovami.graph.map;
+package jovami.util.graph.map;
 
-import jovami.graph.Edge;
+import jovami.util.graph.Edge;
 
 import java.util.*;
 

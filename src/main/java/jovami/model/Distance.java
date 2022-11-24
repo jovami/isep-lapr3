@@ -54,7 +54,8 @@ public class Distance {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        else if (!(o instanceof Distance dist))
+
+        if (!(o instanceof Distance dist))
             return false;
 
         return this.locID1.equals(dist.locID1)

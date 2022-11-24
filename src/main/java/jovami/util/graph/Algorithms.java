@@ -1,6 +1,6 @@
-package jovami.graph;
+package jovami.util.graph;
 
-import jovami.graph.matrix.MatrixGraph;
+import jovami.util.graph.matrix.MatrixGraph;
 
 import java.util.ArrayList;
 import java.util.Comparator;
