@@ -1,6 +1,7 @@
 package jovami.graph;
 
 import java.util.*;
+import java.util.function.BinaryOperator;
 
 public class Algorithms {
 
@@ -131,12 +132,17 @@ public class Algorithms {
 
     /**
      * Computes shortest-path distance from a source vertex to all reachable
+<<<<<<< development
      * vertices of a graph g with unweighted edge weights
 >>>>>>> feat(esinf/graphs): implementation of a method to calculate the shortest path using Dijkstra algorithm for unweighted graphs
+=======
+     * vertices of a graph g with non-negative edge weights
+>>>>>>> feat(esinf/graphs): implementation of a new version of the Dijkstra algorithm
      * This implementation uses Dijkstra's algorithm
      *
      * @param g        Graph instance
      * @param vOrig    Vertex that will be the source of the path
+<<<<<<< development
 <<<<<<< development
      * @param visited  set of previously visited vertices
      * @param pathKeys minimum path vertices keys
@@ -260,35 +266,48 @@ public class Algorithms {
         for (V vert : g.vertices()) {
             dist[g.key(vert)] = Double.MAX_VALUE;
             path[g.key(vert)] = -1;
+=======
+     * @param visited  set of previously visited vertices
+     * @param pathKeys minimum path vertices keys
+     * @param dist     minimum distances
+     */
+    private static <V, E> void shortestPathDijkstra(Graph<V, E> g, V vOrig,
+                                                    Comparator<E> ce, BinaryOperator<E> sum, E zero,
+                                                    boolean[] visited, V[] pathKeys, E[] dist) {
+        for(V vert : g.vertices()){
+            dist[g.key(vert)] = null;
+            pathKeys[g.key(vert)] = null;
+>>>>>>> feat(esinf/graphs): implementation of a new version of the Dijkstra algorithm
             visited[g.key(vert)] = false;
         }
-        dist[g.key(vOrig)] = 0;
+        dist[g.key(vOrig)] = zero;
 
-        while(vOrig != null){
+        while (vOrig != null) {
             visited[g.key(vOrig)] = true;
             for (V vAdj : g.adjVertices(vOrig)) {
-                Edge<V, E> edge = g.edge(vOrig, vAdj);
-                if (!visited[g.key(vAdj)] && dist[g.key(vAdj)] > (dist[g.key(vOrig)] + (double) edge.getWeight())){
-                    dist[g.key(vAdj)] = dist[g.key(vOrig)]+ (double) edge.getWeight();
-                    path[g.key(vAdj)] = g.key(vOrig);
+                Edge<V,E> edge = g.edge(vOrig, vAdj);
+                if(!visited[g.key(vAdj)] && ce.compare(dist[g.key(vAdj)], sum.apply(dist[g.key(vOrig)], edge.getWeight())) >= 0){
+                    dist[g.key(vAdj)] = sum.apply(dist[g.key(vOrig)], edge.getWeight());
+                    pathKeys[g.key(vAdj)] = vOrig;
                 }
             }
-            vOrig = minimumDistVertex(g, vOrig, visited);
+            vOrig = g.vertex(getVertMinDist(visited, dist, ce));
         }
-        return path;
     }
 
-    private static <V, E> V minimumDistVertex (Graph<V,E> g, V vOrig, boolean[] visited){
-        double minDist = Double.MAX_VALUE;
-        V nearestVertex = null;
-        for (V vAdj : g.adjVertices(vOrig)) {
-            double weight = (double) g.edge(vOrig, vAdj).getWeight();
-            if (!visited[g.key(vAdj)] && weight < minDist){
-                minDist = weight;
-                nearestVertex = vAdj;
-            }
+    private static <E> int getVertMinDist(boolean[] visited, E[] dist, Comparator<E> ce) {
+        E min = dist[0];
+        int i = 0;
+        for (i = 1; i < dist.length; i++) {
+            if (!visited[i] && ce.compare(min, dist[i]) > 0)
+                min = dist[i];
         }
-        return nearestVertex;
+
+        return i;
     }
+<<<<<<< development
 >>>>>>> feat(esinf/graphs): implementation of a method to calculate the shortest path using Dijkstra algorithm for weighted graphs
+=======
+
+>>>>>>> feat(esinf/graphs): implementation of a new version of the Dijkstra algorithm
 }
