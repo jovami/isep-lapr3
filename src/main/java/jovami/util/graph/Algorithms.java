@@ -215,14 +215,8 @@ public class Algorithms {
             return null;
 
         E minDist = dist[g.key(vDest)];
-        V v = vDest;
 
-        while (pathKeys[g.key(v)] != null) {
-            shortPath.push(v);
-            v = pathKeys[g.key(v)]; // predecessor
-        }
-        if (v != null)
-            shortPath.push(v);
+        getPath(g, vOrig, vDest, pathKeys, shortPath);
 
         return minDist;
     }
@@ -239,11 +233,19 @@ public class Algorithms {
      * @param dists returns the corresponding minimum distances
      * @return if vOrig exists in the graph true, false otherwise
      */
-    public static <V, E> boolean shortestPaths(Graph<V, E> g, V vOrig,
+    public static <V, E> void shortestPaths(Graph<V, E> g, V vOrig,
                                                Comparator<E> ce, BinaryOperator<E> sum, E zero,
                                                ArrayList<LinkedList<V>> paths, ArrayList<E> dists) {
 
-        throw new UnsupportedOperationException("Not supported yet.");
+        paths.clear();
+        dists.clear();
+
+        for (V vert : g.vertices()){
+            LinkedList<V> newPaths = new LinkedList<>();
+            dists.add(g.key(vert), shortestPath(g, vOrig, vert, ce, sum, zero, newPaths));
+            paths.add(g.key(vert), newPaths);
+        }
+
     }
 
     /**
@@ -259,7 +261,14 @@ public class Algorithms {
     private static <V, E> void getPath(Graph<V, E> g, V vOrig, V vDest,
                                        V[] pathKeys, LinkedList<V> path) {
 
-        throw new UnsupportedOperationException("Not supported yet.");
+        V v = vDest;
+
+        while (pathKeys[g.key(v)] != null) {
+            path.push(v);
+            v = pathKeys[g.key(v)]; // predecessor
+        }
+        if (v != null && g.key(vOrig) == g.key(v))
+            path.push(v);
     }
 
     /**
@@ -271,9 +280,25 @@ public class Algorithms {
      * @return the minimum distance graph
      */
     public static <V, E> MatrixGraph<V, E> minDistGraph(Graph<V, E> g, Comparator<E> ce, BinaryOperator<E> sum) {
+        int n = g.numVertices();
+        var matrix = (MatrixGraph<V,E>) g.clone();
 
-        for (int k = 0; k < g.numVertices(); k++) {
-
+        for (int k = 0; k < n; k++) {
+            for(int i = 0; i< n; i++){
+                if(i != k && g.edge(i, k) != null){
+                    for (int j = 0; j < n; j++){
+                        if(i != j && k != j && g.edge(k, j) != null){
+                            E weight = sum.apply(g.edge(i, k).getWeight(), g.edge(k, j).getWeight());
+                            var edge = matrix.edge(i, j);
+                            if (edge == null){
+                                matrix.addEdge(g.vertex(i), g.vertex(j), weight);
+                            } else if (ce.compare(edge.getWeight(), weight) > 0){
+                                edge.setWeight(weight);
+                            }
+                        }
+                    }
+                }
+            }
         }
         return null;
     }
