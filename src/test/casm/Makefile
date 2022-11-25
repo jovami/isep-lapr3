@@ -39,6 +39,9 @@ flags:
 ${PROGNAME}: ${OBJ}
 	$(CC) -o $@ ${notdir $^} ${LDFLAGS}
 
+run: ${PROGNAME}
+	./$<
+
 clean:
 	rm -f *.o ${PROGNAME}
 
