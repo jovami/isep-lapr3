@@ -10,7 +10,7 @@ __rnd_gen:
 
     ## update state ##
     movabsq $6364136223846793005, %rax
-    mulq   %rcx
+    mulq    %rcx
 
     orq     $1, %rsi
     leaq    (%rax, %rsi,), %rax
