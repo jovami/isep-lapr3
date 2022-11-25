@@ -148,7 +148,6 @@ public class Algorithms {
                 if (!visited[g.key(vAdj)] && ce.compare(dist[g.key(vAdj)], sum.apply(dist[g.key(vOrig)], edge.getWeight())) > 0) {
                     dist[g.key(vAdj)] = sum.apply(dist[g.key(vOrig)], edge.getWeight());
                     pathKeys[g.key(vAdj)] = vOrig;
-                    visited[g.key(vAdj)] = true;
                 }
             }
             vOrig = getVertMinDist(g, visited, dist, ce);
@@ -157,10 +156,10 @@ public class Algorithms {
 
     private static <V, E> V getVertMinDist(Graph<V, E> g, boolean[] visited, E[] dist, Comparator<E> ce) {
         V result = null;
-        E min = dist[1];
+        E min = null;
 
         int i;
-        for (i = 2; i < dist.length; i++) {
+        for (i = 0; i < dist.length; i++) {
             if (!visited[i] && ce.compare(min, dist[i]) > 0) {
                 min = dist[i];
                 result = g.vertex(i);
@@ -186,8 +185,15 @@ public class Algorithms {
     public static <V, E> E shortestPath(Graph<V, E> g, V vOrig, V vDest,
                                         Comparator<E> ce, BinaryOperator<E> sum, E zero,
                                         LinkedList<V> shortPath) {
-        if (!g.validVertex(vOrig) || !g.validVertex(vDest))
+        if (vOrig == null || vDest == null || !g.validVertex(vOrig) || !g.validVertex(vDest))
             return null;
+
+        shortPath.clear();
+
+        if(g.key(vOrig) == g.key(vDest)){
+            shortPath.push(vDest);
+            return zero;
+        }
 
         @SuppressWarnings("unchecked")
         var dist = (E[]) new Object[g.numVertices()];
@@ -204,18 +210,19 @@ public class Algorithms {
         dist[g.key(vOrig)] = zero;
 
         shortestPathDijkstra(g, vOrig, Comparator.nullsLast(ce), sum, zero, visited, pathKeys, dist);
-        V v = vDest;
-        E minDist = zero;
 
-        while (v != vOrig && v != null) {
+        if (pathKeys[g.key(vDest)] == null)
+            return null;
+
+        E minDist = dist[g.key(vDest)];
+        V v = vDest;
+
+        while (pathKeys[g.key(v)] != null) {
             shortPath.push(v);
-            minDist = sum.apply(minDist, dist[g.key(v)]);
             v = pathKeys[g.key(v)]; // predecessor
         }
-        if (v != null) {
+        if (v != null)
             shortPath.push(v);
-            minDist = sum.apply(minDist, dist[g.key(v)]);
-        }
 
         return minDist;
     }
