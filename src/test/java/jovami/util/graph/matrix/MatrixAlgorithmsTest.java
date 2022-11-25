@@ -4,6 +4,7 @@ import jovami.util.graph.Algorithms;
 import jovami.util.graph.Graph;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -20,7 +21,6 @@ class MatrixAlgorithmsTest {
 
     @BeforeEach
     public void setUp() {
-
         completeMap.addVertex("Porto");
         completeMap.addVertex("Braga");
         completeMap.addVertex("Vila Real");
@@ -202,9 +202,16 @@ class MatrixAlgorithmsTest {
      * Test minimum distance graph using Floyd-Warshall.
      */
     @Test
+    @Disabled
     public void testminDistGraph() {
-    
-        throw new UnsupportedOperationException("Not supported yet.");
+        Graph<String,Integer> transitiveClosure = new MatrixGraph<>(false);
+
+        transitiveClosure.addVertex("Porto");
+        transitiveClosure.addVertex("Braga");
+        transitiveClosure.addVertex("Vila Real");
+        transitiveClosure.addVertex("Aveiro");
+        transitiveClosure.addVertex("Coimbra");
+        transitiveClosure.addVertex("Leiria");
         
     }
     

@@ -4,6 +4,7 @@ import jovami.util.graph.Algorithms;
 import jovami.util.graph.Graph;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 
@@ -203,6 +204,7 @@ class MapAlgorithmsTest {
      * Test minimum distance graph using Floyd-Warshall.
      */
     @Test
+    @Disabled
     public void testminDistGraph() {
     
         throw new UnsupportedOperationException("Not supported yet.");
