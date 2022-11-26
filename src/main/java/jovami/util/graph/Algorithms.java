@@ -301,7 +301,7 @@ public class Algorithms {
                 }
             }
         }
-        return null;
+        return matrix;
     }
 
     public static <V,E> Graph<V,E> getUndirectedGraph(Graph<V,E> g) {
