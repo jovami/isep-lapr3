@@ -73,24 +73,28 @@ public class WateringControllerParser implements CSVParser {
         for (int i = PLOT_DATA_START; i < len; i++) {
             var line = data.get(i);
 
-            // TODO: parse String into Plot
-            var plot = line[PlotColumns.PLOT.col];
+            String plot = line[PlotColumns.PLOT.col];
 
             int duration;
-
             try {
                 duration = Integer.parseInt(line[PlotColumns.DURATION.col]);
             } catch (NumberFormatException e) {
-                // TODO: Log error?
-                continue;
+                throw new InvalidCSVFileException(
+                    String.format("File contained and invalid duration for plot %s: %s (line %d)",
+                                  plot,
+                                  line[PlotColumns.DURATION.col],
+                                  i+1)
+                );
             }
 
             WateringFrequency freq;
             try {
-                freq = WateringFrequency.valueOf(line[PlotColumns.FREQUENCY.col].toUpperCase());
-            } catch (IllegalArgumentException e) {
-                //TODO: handle exception
-                continue;
+                var freqCol = line[PlotColumns.FREQUENCY.col];
+                freq = WateringFrequency.getFrequency(freqCol.charAt(0));
+            } catch (NullPointerException | IllegalArgumentException e) {
+                throw new InvalidCSVFileException(
+                    String.format("File contained no known frequency value on line %d", i+1)
+                );
             }
 
             plotList.add(new Triplet<>(plot, duration, freq));
