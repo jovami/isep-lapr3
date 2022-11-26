@@ -31,6 +31,9 @@ public class CSVLoaderUI implements UserStory {
         }
 
         System.out.println("Data loaded with success!!");
+
+        if (this.handler.populateNetwork())
+            System.out.println("Hub Network populated with success!!");
     }
 
     private void loadResources()

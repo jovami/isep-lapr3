@@ -3,6 +3,7 @@ package jovami.model.store;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import jovami.model.User;
 
@@ -14,7 +15,7 @@ public class UserStore implements Iterable<User> {
     private final Map<String, User> users;
 
     public UserStore() {
-        this(2 << 4);
+        this(1 << 4);
     }
 
     public UserStore(int initialCapacity) {
@@ -30,6 +31,10 @@ public class UserStore implements Iterable<User> {
     {
         var user = new User(userID, locationID, latitude, longitude);
         return this.addUser(user);
+    }
+
+    public Optional<User> getUser(String key) {
+        return Optional.ofNullable(this.users.get(key));
     }
 
     @Override

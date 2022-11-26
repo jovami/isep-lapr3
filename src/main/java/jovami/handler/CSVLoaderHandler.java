@@ -108,4 +108,27 @@ public class CSVLoaderHandler {
 
         return true;
     }
+
+    public boolean populateNetwork() {
+        var users = this.app.userStore();
+        var distances = this.app.distanceStore();
+
+        var network = this.app.hubNetwork();
+
+        int edges = network.numEdges();
+        int verts = network.numVertices();
+
+
+        users.forEach(network::addVertex);
+
+        distances.forEach(distance -> {
+            var orig = users.getUser(distance.getLocID1());
+            var dest = users.getUser(distance.getLocID2());
+
+            if (orig.isPresent() && dest.isPresent())
+                network.addEdge(orig.get(), dest.get(), distance);
+        });
+
+        return edges < network.numEdges() || verts < network.numVertices();
+    }
 }

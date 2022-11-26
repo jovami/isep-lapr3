@@ -1,5 +1,6 @@
 package jovami;
 
+import jovami.model.HubNetwork;
 import jovami.model.store.DistanceStore;
 import jovami.model.store.UserStore;
 import jovami.model.store.WateringControllerStore;
@@ -14,10 +15,14 @@ public final class App {
     private final DistanceStore distStore;
     private final WateringControllerStore wcStore;
 
+    private final HubNetwork network;
+
     private App() {
         this.userStore = new UserStore();
         this.distStore = new DistanceStore();
         this.wcStore = new WateringControllerStore();
+
+        this.network = new HubNetwork();
     }
 
     public UserStore userStore() {
@@ -30,6 +35,10 @@ public final class App {
 
     public WateringControllerStore wateringControllerStore() {
         return this.wcStore;
+    }
+
+    public HubNetwork hubNetwork() {
+        return this.network;
     }
 
     /* singleton pattern */
