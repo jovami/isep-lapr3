@@ -15,4 +15,4 @@ pipelines:
           caches:
             - maven
           script:
-            - mvn -B verify --file pom.xml
+            - make check
