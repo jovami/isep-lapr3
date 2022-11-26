@@ -3,6 +3,7 @@ package jovami.model;
 import java.util.Objects;
 
 import jovami.model.shared.UserType;
+import jovami.util.Coordinate;
 
 /**
  * User
