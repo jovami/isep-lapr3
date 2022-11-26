@@ -23,7 +23,7 @@ public class WateringControllerParser implements CSVParser {
     private final String timeFmt;
 
     public WateringControllerParser() {
-        this("HH:mm");
+        this("H:mm");
     }
 
     public WateringControllerParser(String timeFormat) {

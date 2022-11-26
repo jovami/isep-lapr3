@@ -1,13 +1,25 @@
 package jovami.model.csv;
 
 public enum CSVHeader {
+    NO_HEADER(0, ",") {
+        @Override
+        public String toString() {
+            return null;
+        }
+    },
     BUNDLES(22, ",") {
         @Override
         public String toString() {
             return "Clientes-Produtores,Dia,Prod1,Prod2,Prod3,Prod4,Prod5,Prod6,Prod7,Prod8,Prod9,Prod10,Prod11,Prod12,Prod13,Prod14,Prod15,Prod16,Prod17,Prod18,Prod19,Prod20";
         }
     },
-    CLIENTS_PROVIDERS(4, ",") {
+    BUNDLES_SMALL(14, ",") {
+        @Override
+        public String toString() {
+            return "\"Clientes-Produtores\",\"Dia\",\"Prod1\",\"Prod2\",\"Prod3\",\"Prod4\",\"Prod5\",\"Prod6\",\"Prod7\",\"Prod8\",\"Prod9\",\"Prod10\",\"Prod11\",\"Prod12\"";
+        }
+    },
+    USERS(4, ",") {
         @Override
         public String toString() {
             return "Loc id,lat,lng,Clientes-Produtores";

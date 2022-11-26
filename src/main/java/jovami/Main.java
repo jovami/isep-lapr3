@@ -14,12 +14,15 @@ public class Main {
         /* Init App */
         App.getInstance();
 
-        List<Runnable> uis = new LinkedList<>();
+        List<UserStory> uis = new LinkedList<>();
         uis.add(new CSVLoaderUI());
+        // TODO: add remaining US's
+        uis.add(new WateringControllerUI());
 
         uis.forEach(ui -> {
-            // TODO: make this prettier
-            System.out.printf("<----- %s ----->\n", ui.getClass().getSimpleName());
+            var name = ui.getClass().getSimpleName();
+
+            System.out.printf("%s\n%s\n", name, "=".repeat(name.length()));
             ui.run();
             System.out.println();
         });

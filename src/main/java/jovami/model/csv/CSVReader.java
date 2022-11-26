@@ -2,11 +2,15 @@ package jovami.model.csv;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import jovami.model.exceptions.InvalidCSVHeaderException;
 
@@ -15,36 +19,62 @@ import jovami.model.exceptions.InvalidCSVHeaderException;
  */
 public class CSVReader {
 
-    private final CSVHeader header;
+    private static CSVHeader HEADER;
 
-    private final int EXPECTED_COLUMNS;
+    private static int EXPECTED_COLUMNS;
 
-    private final String DEFAULT_DELIMITER;
+    private static String DEFAULT_DELIMITER;
 
     private static final char BOM = '\ufeff';
 
-    public CSVReader(CSVHeader header) {
-        this.header = header;
-        this.EXPECTED_COLUMNS = header.getColumnCount();
-        this.DEFAULT_DELIMITER = header.getDelimiter();
+    private static void setup(CSVHeader header) {
+        HEADER = header;
+        EXPECTED_COLUMNS = header.getColumnCount();
+        DEFAULT_DELIMITER = header.getDelimiter();
     }
 
-    public List<String[]> readCSV(File dir) {
+    public static List<String[]> readFromResources(String bundle, CSVHeader header)
+    throws IOException
+    {
+        Objects.requireNonNull(bundle);
+
+        InputStream is = CSVHeader.class.getResourceAsStream(bundle);
+        if (is == null)
+            throw new IOException("Error: could not find the resource file: " + bundle);
+
+        return readCSV(is, header);
+    }
+
+    public static List<String[]> readCSV(File file, CSVHeader header)
+    throws FileNotFoundException
+    {
+        Objects.requireNonNull(file);
+        return readCSV(new FileInputStream(file), header);
+    }
+
+    private static List<String[]> readCSV(InputStream stream, CSVHeader header) {
+        setup(header);
+
         List<String[]> info = new ArrayList<>();
         String delimiter = DEFAULT_DELIMITER;
 
         String line;
         String[] tmp;
 
-        try (var br = new BufferedReader(new FileReader(dir))) {
-            maybeSkipBOM(br);
-            line = br.readLine();
+        boolean quotationMarks = false;
 
-            if (!isHeader(line)) {
-                throw new InvalidCSVHeaderException();
+        try (var br = new BufferedReader(new InputStreamReader(stream))) {
+            maybeSkipBOM(br);
+
+            if (HEADER != CSVHeader.NO_HEADER) {
+                line = br.readLine();
+
+                if (!isHeader(line))
+                    throw new InvalidCSVHeaderException();
             }
 
-            boolean quotationMarks = checkQuotationMark(br);
+            if (HEADER != CSVHeader.BUNDLES_SMALL)
+                quotationMarks = checkQuotationMark(br);
 
             if (quotationMarks)
                 delimiter = '"' + delimiter + '"';
@@ -52,7 +82,7 @@ public class CSVReader {
             while ((line = br.readLine()) != null) {
                 tmp = line.split(delimiter);
 
-                if (tmp.length == EXPECTED_COLUMNS) {
+                if (HEADER == CSVHeader.NO_HEADER || tmp.length == EXPECTED_COLUMNS) {
                     // remove " at begining and " at end
                     if(quotationMarks) {
                         tmp[0] = tmp[0].replaceAll("\"", "");
@@ -68,10 +98,8 @@ public class CSVReader {
         return info;
     }
 
-    private boolean isHeader(String line) {
-        return line.trim()
-                   .replaceAll("\"", "")
-                   .equalsIgnoreCase(this.header.toString());
+    private static boolean isHeader(String line) {
+        return line.trim().equalsIgnoreCase(HEADER.toString());
     }
 
     /**
@@ -83,9 +111,10 @@ public class CSVReader {
      * @param reader READER
      * @throws IOException excep
      */
-    private void maybeSkipBOM(Reader reader) throws IOException {
-        reader.mark(1);
-        char[] buf = new char[1];
+    private static void maybeSkipBOM(Reader reader) throws IOException {
+        final char[] buf = new char[1];
+
+        reader.mark(buf.length);
         reader.read(buf);
 
         if (buf[0] != BOM)
@@ -99,12 +128,14 @@ public class CSVReader {
      * @param reader    the {@code BufferedReader} used
      * @throws {@code IOException} if an error occurs while checking for quotes
      */
-    private boolean checkQuotationMark(BufferedReader reader) throws IOException {
+    private static boolean checkQuotationMark(BufferedReader reader) throws IOException {
         final int bigNum = 500;
+        final char[] buf = new char[bigNum];
 
-        reader.mark(bigNum);
-        String line = reader.readLine();
+        reader.mark(buf.length);
+        reader.read(buf);
         reader.reset();
-        return line.matches("^\".*\"$");
+
+        return (new String(buf)).matches("^\".*\"$");
     }
 }
