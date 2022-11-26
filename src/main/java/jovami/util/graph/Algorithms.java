@@ -5,6 +5,7 @@ import jovami.util.graph.matrix.MatrixGraph;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.function.BinaryOperator;
 
 public class Algorithms {
@@ -301,5 +302,27 @@ public class Algorithms {
             }
         }
         return null;
+    }
+
+    public static <V,E> Graph<V,E> getUndirectedGraph(Graph<V,E> g) {
+        Objects.requireNonNull(g);
+
+        if (!g.isDirected())
+            return g;
+
+        Graph<V,E> newGraph = g.clone();
+
+        for (var e : newGraph.edges())
+            newGraph.addEdge(e.getVDest(), e.getVOrig(), e.getWeight());
+
+        return newGraph;
+    }
+
+    public static <V,E> boolean isConnected(Graph<V, E> g) {
+        Objects.requireNonNull(g);
+
+        g = getUndirectedGraph(g);
+
+        return BreadthFirstSearch(g, g.vertex(0)).size() == g.numVertices();
     }
 }
