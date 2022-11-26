@@ -1,8 +1,14 @@
 package jovami.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.function.BinaryOperator;
 
 import jovami.util.Triplet;
+import jovami.util.graph.Algorithms;
 import jovami.util.graph.Graph;
 import jovami.util.graph.map.MapGraph;
 
@@ -10,6 +16,16 @@ import jovami.util.graph.map.MapGraph;
  * HubNetwork
  */
 public class HubNetwork extends MapGraph<User, Distance> {
+
+    public static final Comparator<Distance> distCmp;
+    public static final BinaryOperator<Distance> distSum;
+    public static final Distance distZero;
+
+    static {
+        distCmp  = Distance.cmp;
+        distSum  = Distance.sum;
+        distZero = Distance.zero;
+    }
 
     public HubNetwork() {
         this(false);
