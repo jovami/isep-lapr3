@@ -40,17 +40,30 @@ public class HubNetwork extends MapGraph<User, Distance> {
     }
 
     public boolean addVertices(Collection<User> users) {
-        int oldNum = numVerts;
+        int oldNum = this.numVerts;
         users.forEach(this::addVertex);
 
-        return oldNum != numVerts;
+        return oldNum != this.numVerts;
     }
 
     public boolean addEdges(Collection<Triplet<User, User, Distance>> dists) {
-        int oldNum = numEdges;
+        int oldNum = this.numEdges;
 
         dists.forEach(e -> this.addEdge(e.first(), e.second(), e.third()));
 
-        return oldNum != numEdges;
+        return oldNum != this.numEdges;
+    }
+
+    public Distance shortestPath(User origin, User dest, LinkedList<User> path) {
+        return Algorithms.shortestPath(this, origin, dest, distCmp, distSum, distZero, path);
+    }
+
+    public List<LinkedList<User>> shortestPaths(User origin, ArrayList<Distance> dists) {
+        var paths = new ArrayList<LinkedList<User>>();
+        if (!dists.isEmpty())
+            dists.clear();
+
+        Algorithms.shortestPaths(this, origin, distCmp, distSum, distZero, paths, dists);
+        return paths;
     }
 }
