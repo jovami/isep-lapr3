@@ -202,17 +202,23 @@ class MatrixAlgorithmsTest {
      * Test minimum distance graph using Floyd-Warshall.
      */
     @Test
-    @Disabled
-    public void testminDistGraph() {
-        Graph<String,Integer> transitiveClosure = new MatrixGraph<>(false);
+    public void testMinDistGraph() {
+        Graph<String,Integer> transitiveClosure = new MatrixGraph<>(true, 5);
 
         transitiveClosure.addVertex("Porto");
         transitiveClosure.addVertex("Braga");
         transitiveClosure.addVertex("Vila Real");
         transitiveClosure.addVertex("Aveiro");
         transitiveClosure.addVertex("Coimbra");
-        transitiveClosure.addVertex("Leiria");
-        
+
+        transitiveClosure.addEdge("Porto", "Coimbra", 1);
+        transitiveClosure.addEdge("Braga", "Porto", 1);
+        transitiveClosure.addEdge("Vila Real", "Braga", 1);
+        transitiveClosure.addEdge("Vila Real", "Aveiro", 1);
+        transitiveClosure.addEdge("Coimbra", "Aveiro", 1);
+
+        var result = Algorithms.minDistGraph(transitiveClosure, Integer::compare, Integer::sum);
+        assertEquals(10, result.numEdges());
     }
     
     

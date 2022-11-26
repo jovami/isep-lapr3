@@ -300,6 +300,6 @@ public class Algorithms {
                 }
             }
         }
-        return null;
+        return matrix;
     }
 }
