@@ -8,11 +8,11 @@ extern uint32_t __rnd_gen(uint64_t *, uint64_t);
 static uint64_t state = 0;
 static uint64_t inc = 0;
 
-#if defined (__linux__)
+#if defined (__unix__) || defined (__APPLE__) || defined (__CYGWIN__)
 # define RND_FILE   ("/dev/urandom")
 #else
 # error "Host OS does not support /dev/urandom or similar"
-#endif /* defined (__linux__) */
+#endif /* defined (__unix__) || defined (__APPLE__) || defined (__CYGWIN__) */
 
 void
 rnd_init(void)

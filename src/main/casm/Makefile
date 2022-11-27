@@ -16,7 +16,7 @@ CSRC = main.c \
 	   rnd/rnd.c \
 
 
-SSRC = rnd/__rnd_gen.s \
+SSRC = rnd/rnd_gen.s \
 
 
 

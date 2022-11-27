@@ -16,15 +16,21 @@ public class Distance {
     /**
      * Compares two instances of {@code Distance} using their distance value
      */
-    public static final Comparator<Distance> cmp =
-        Comparator.comparingInt(Distance::getDistance);
+    public static final Comparator<Distance> cmp;
 
     /**
      * Joins two instances of {@code Distance} by adding up their
      * distance values and joining their location ids
-     *
      */
-    public static final BinaryOperator<Distance> sum = Distance::new;
+    public static final BinaryOperator<Distance> sum;
+
+    public static final Distance zero;
+
+    static {
+        zero = new Distance(null, null, 0);
+        cmp = Comparator.nullsLast(Comparator.comparingInt(Distance::getDistance));
+        sum = Distance::new;
+    }
 
     private Distance(Distance d1, Distance d2) {
         this.locID1 = d1.locID1;
@@ -54,7 +60,8 @@ public class Distance {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-        else if (!(o instanceof Distance dist))
+
+        if (!(o instanceof Distance dist))
             return false;
 
         return this.locID1.equals(dist.locID1)

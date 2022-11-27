@@ -1,5 +1,10 @@
 package jovami;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import jovami.ui.*;
+
 /**
  * Main
  */
@@ -9,6 +14,17 @@ public class Main {
         /* Init App */
         App.getInstance();
 
-        System.out.println("Hello World!");
+        List<UserStory> uis = new LinkedList<>();
+        uis.add(new CSVLoaderUI());
+        // TODO: add remaining US's
+        uis.add(new WateringControllerUI());
+
+        uis.forEach(ui -> {
+            var name = ui.getClass().getSimpleName();
+
+            System.out.printf("%s\n%s\n", name, "=".repeat(name.length()));
+            ui.run();
+            System.out.println();
+        });
     }
 }

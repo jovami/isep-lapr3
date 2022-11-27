@@ -13,27 +13,26 @@ asmtest: ctest
 c:
 	cd ${CDIR} && $(MAKE)
 
-
 ctest:
-	cd ${CTEST} && $(MAKE)
+	cd ${CTEST} && $(MAKE) run
 
 java:
-	./mvnw compile || ./mvnw.cmd compile
+	./mvnw compile
 
 jtest:
-	./mvnw test || ./mvnw.cmd test
+	./mvnw test
 
 package:
-	./mvnw package || ./mvnw.cmd package
+	./mvnw package
 
 tex:
-	cd ${TEXDIR} && $(MAKE)
+# 	cd ${TEXDIR} && $(MAKE)
 
 
 check: ctest jtest
 
 clean:
-	./mvnw clean || ./mvnw.cmd clean
+	./mvnw clean
 	cd ${CDIR} && $(MAKE) clean
 	cd ${CTEST} && $(MAKE) clean
 	cd ${TEXDIR} && $(MAKE) clean
