@@ -18,8 +18,8 @@ public class Algorithms {
      * @return a LinkedList with the vertices of breadth-first search
      */
     public static <V, E> LinkedList<V> BreadthFirstSearch(Graph<V, E> g, V vert) {
-        if (!g.vertices().contains(vert))
-            return null;
+        if (!g.validVertex(vert))                                                       //O(1)
+            return new LinkedList<>();
 
         LinkedList<V> qbfs = new LinkedList<>();
         LinkedList<V> qaux = new LinkedList<>();
@@ -71,7 +71,7 @@ public class Algorithms {
      * @return a LinkedList with the vertices of depth-first search
      */
     public static <V, E> LinkedList<V> DepthFirstSearch(Graph<V, E> g, V vert) {
-        if (!g.vertices().contains(vert))
+        if (!g.validVertex(vert))                                                       //O(1)
             return null;
 
         boolean[] visited = new boolean[g.numVertices()];
