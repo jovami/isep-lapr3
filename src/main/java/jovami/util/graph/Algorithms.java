@@ -282,7 +282,7 @@ public class Algorithms {
      */
     public static <V, E> MatrixGraph<V, E> minDistGraph(Graph<V, E> g, Comparator<E> ce, BinaryOperator<E> sum) {
         int n = g.numVertices();
-        var matrix = (MatrixGraph<V,E>) g.clone();
+        var matrix = new MatrixGraph<>(g);
 
         for (int k = 0; k < n; k++) {
             for(int i = 0; i< n; i++){
