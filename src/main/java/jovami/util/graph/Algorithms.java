@@ -285,17 +285,14 @@ public class Algorithms {
         var matrix = new MatrixGraph<>(g);
 
         for (int k = 0; k < n; k++) {
-            for(int i = 0; i< n; i++){
-                if(i != k && g.edge(i, k) != null){
+            for(int i = 0; i < n; i++){
+                if(i != k && matrix.edge(i, k) != null){
                     for (int j = 0; j < n; j++){
-                        if(i != j && k != j && g.edge(k, j) != null){
-                            E weight = sum.apply(g.edge(i, k).getWeight(), g.edge(k, j).getWeight());
+                        if(i != j && k != j && matrix.edge(k, j) != null){
+                            E weight = sum.apply(matrix.edge(i, k).getWeight(), matrix.edge(k, j).getWeight());
                             var edge = matrix.edge(i, j);
-                            if (edge == null){
-                                matrix.addEdge(g.vertex(i), g.vertex(j), weight);
-                            } else if (ce.compare(edge.getWeight(), weight) > 0){
-                                edge.setWeight(weight);
-                            }
+                            if (edge == null || ce.compare(edge.getWeight(), weight) > 0)
+                                matrix.addEdge(matrix.vertex(i), matrix.vertex(j), weight);
                         }
                     }
                 }
