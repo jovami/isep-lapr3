@@ -66,4 +66,10 @@ public class HubNetwork extends MapGraph<User, Distance> {
         Algorithms.shortestPaths(this, origin, distCmp, distSum, distZero, paths, dists);
         return paths;
     }
+
+    public LinkedList<Distance>
+    shortestPathsForPool(User origin, List<User> pool)
+    {
+        return Algorithms.shortestPathsForPool(this, origin, pool, distCmp, distSum, distZero);
+    }
 }

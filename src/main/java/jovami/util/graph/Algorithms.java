@@ -5,6 +5,7 @@ import jovami.util.graph.matrix.MatrixGraph;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.BinaryOperator;
 
@@ -72,7 +73,7 @@ public class Algorithms {
      */
     public static <V, E> LinkedList<V> DepthFirstSearch(Graph<V, E> g, V vert) {
         if (!g.validVertex(vert))                                                       //O(1)
-            return null;
+            return new LinkedList<>();
 
         boolean[] visited = new boolean[g.numVertices()];
         LinkedList<V> qdfs = new LinkedList<>();
@@ -237,7 +238,6 @@ public class Algorithms {
     public static <V, E> void shortestPaths(Graph<V, E> g, V vOrig,
                                                Comparator<E> ce, BinaryOperator<E> sum, E zero,
                                                ArrayList<LinkedList<V>> paths, ArrayList<E> dists) {
-
         paths.clear();
         dists.clear();
 
@@ -246,7 +246,34 @@ public class Algorithms {
             dists.add(g.key(vert), shortestPath(g, vOrig, vert, ce, sum, zero, newPaths));
             paths.add(g.key(vert), newPaths);
         }
+    }
 
+    /**
+     * Computes the shortest path distance between a vertex and all vertices in a poll
+     * @param <V>               Class that represents a vertex
+     * @param <E>               Class that represents the distance between two connected vertices
+     * @param g                 The graph to search in
+     * @param vOrig             The source vertex
+     * @param pool              Pool of destinations for which to compute the shortest path distance
+     * @param ce                Comparator between elements of type E
+     * @param sum               Sum two elements of type E
+     * @param zero              Neutral element of the sum in elements of type E
+     * @return                  LinkedList of all the distances computed
+    */
+    public static <V, E> LinkedList<E>
+    shortestPathsForPool(Graph<V,E> g, V vOrig, List<V> pool,
+                         Comparator<E> ce, BinaryOperator<E> sum, E zero)
+    {
+        var dists = new LinkedList<E>();
+
+        // Required by shortestPath()
+        var tmp = new LinkedList<V>();
+
+        for (V dest : pool) {
+            dists.push(shortestPath(g, vOrig, dest, ce, sum, zero, tmp));
+        }
+
+        return dists;
     }
 
     /**

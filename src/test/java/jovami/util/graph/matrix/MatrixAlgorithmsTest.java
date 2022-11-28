@@ -65,7 +65,7 @@ class MatrixAlgorithmsTest {
     public void testBreadthFirstSearch() {
         System.out.println("Test BreadthFirstSearch");
 
-        Assertions.assertNull(Algorithms.BreadthFirstSearch(completeMap, "LX"), "Should be null if vertex does not exist");
+        assertEquals(0, Algorithms.BreadthFirstSearch(completeMap, "LX").size(), "Size should be 0");
 
         LinkedList<String> path = Algorithms.BreadthFirstSearch(incompleteMap, "Faro");
 
@@ -99,7 +99,7 @@ class MatrixAlgorithmsTest {
     public void testDepthFirstSearch() {
         System.out.println("Test of DepthFirstSearch");
 
-        assertNull(Algorithms.DepthFirstSearch(completeMap, "LX"), "Should be null if vertex does not exist");
+        assertEquals(0, Algorithms.DepthFirstSearch(completeMap, "LX").size(), "Size should be 0");
 
         LinkedList<String> path = Algorithms.DepthFirstSearch(incompleteMap, "Faro");
         assertEquals(1, path.size(), "Should be just one");

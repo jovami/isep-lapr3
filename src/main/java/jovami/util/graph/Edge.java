@@ -45,6 +45,8 @@ public class Edge<V, E> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
+        @SuppressWarnings("unchecked")
         Edge<V, E> edge = (Edge<V, E>) o;
         return  vOrig.equals(edge.vOrig) &&
                 vDest.equals(edge.vDest);
