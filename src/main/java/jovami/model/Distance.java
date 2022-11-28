@@ -33,9 +33,22 @@ public class Distance {
     }
 
     private Distance(Distance d1, Distance d2) {
-        this.locID1 = d1.locID1;
-        this.locID2 = d2.locID2;
-        this.distance = d1.distance + d2.distance;
+        Objects.requireNonNull(d1);
+        Objects.requireNonNull(d2);
+
+        if (d1.locID1 == null && d1.locID2 == null) {
+            this.locID1 = d2.locID1;
+            this.locID2 = d2.locID2;
+            this.distance = d2.distance;
+        } else if (d2.locID1 == null && d2.locID2 == null) {
+            this.locID1 = d1.locID1;
+            this.locID2 = d1.locID2;
+            this.distance = d1.distance;
+        } else {
+            this.locID1 = d1.locID1;
+            this.locID2 = d2.locID2;
+            this.distance = d1.distance + d2.distance;
+        }
     }
 
     public Distance(String locID1, String locID2, int distance) {
