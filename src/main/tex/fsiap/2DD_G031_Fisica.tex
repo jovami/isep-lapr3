@@ -1,0 +1,181 @@
+\documentclass[12pt, a4paper]{article}
+
+% Preamble {{{
+
+% Packages {{{
+
+% lang & encoding
+\usepackage[utf8]{inputenc}
+% \usepackage[english]{babel}
+% \usepackage[T1]{fontenc}
+\usepackage[inline]{enumitem}
+
+% images
+\usepackage{graphicx}
+\graphicspath{ {./img/} }
+
+% index
+\usepackage{imakeidx}
+
+
+% layout and navi
+\usepackage{indentfirst} % indent first line of a section
+\usepackage[hidelinks]{hyperref}
+\usepackage[export]{adjustbox}
+\usepackage[
+    left=2cm,
+    right=2cm,
+    top=2cm,
+    bottom=2cm
+]{geometry}
+
+% }}}
+
+\renewcommand{\baselinestretch}{1.3}
+\makeindex
+
+% Keywords
+\providecommand{\keywords}[1]
+{
+    \small
+    \textbf{Keywords:} #1
+}
+
+% bib
+\usepackage[backend=biber, style=ieee,urldate=iso,seconds=true,dateabbrev=false]{biblatex}
+\addbibresource{refs.bib}
+
+% fileinfo
+\title{
+    Resistência e Energia {\textemdash} T\'ermica
+}
+
+\author{
+    Marco Maia          {\textemdash}    1210951\\
+    R\'uben Ferreira    {\textemdash}    1210954\\
+    Jo\~ao Teixeira     {\textemdash}    1210957\\
+    Jos\'e Rente        {\textemdash}    1211155\\
+}
+
+% }}}
+
+% start
+\begin{document}
+
+% title page
+\makeatletter
+\begin{titlepage}
+    \begin{center}
+        \par
+        \noindent
+        \includegraphics[
+            width=0.3\textwidth,
+            valign=M,
+            margin=0ex 2ex
+        ]{isep-logo.png}
+        \hfill
+        \includegraphics[
+            width=0.3\textwidth,
+            valign=M,
+            margin=0ex 2ex
+        ]{dei-logo.png}\\[4ex]
+        \par
+        {\bfseries  \@title }\\[2ex]
+        {\@date}\\[2ex]
+        {\@author}
+    \end{center}
+\end{titlepage}
+\makeatother
+\thispagestyle{empty}
+\newpage
+
+\tableofcontents
+\printindex
+\newpage
+
+\section{Introducao}\label{sec:intro}
+
+% section Introducao (end)
+
+\section{Selecao de materiais}\label{sec:select}
+
+
+\subsection{Paredes Exteriores}\label{sub:Paredes Exteriores}
+
+% subsection Paredes Exteriores (end)
+
+
+\subsection{Paredes intermedia isolantes}\label{sub:Paredes intermedia isolantes}
+
+% subsection Paredes intermedia isolantes (end)
+
+
+\subsection{Paredes interiores}\label{sub:Paredes interiores}
+
+% subsection Paredes interiores (end)
+
+
+\subsection{Telhado}\label{sub:Telhado}
+
+% subsection Telhado (end)
+
+
+\subsection{Portas}\label{sub:Portas}
+
+% subsection Portas (end)
+
+
+\subsection{Janelas}\label{sub:Janelas}
+
+% subsection Janelas (end)
+
+
+%section Selecao de materiais (end)
+
+
+
+\section{Estrutura}\label{sec:Estrutura}
+
+
+\subsection{Croqui}\label{sub:Croqui}
+
+% subsection Croqui (end)
+
+
+\subsection{Resistencia Termica nas Seccoes}\label{sub:Resistencia Termica nas Seccoes}
+
+
+\subsubsection{Zona C}\label{ssub:Zona C}
+
+% subsubsection Zona C (end)
+
+
+\subsubsection{Zona D}\label{ssub:Zona D}
+
+% subsubsection Zona D (end)
+
+
+\subsubsection{Zona E}\label{ssub:Zona E}
+
+% subsubsection Zona E (end)
+
+
+\subsubsection{Estrutura Grande}\label{ssub:Estrutura Grande}
+
+% subsubsection Estrutura Grande (end)
+
+
+
+% subsection Resistencia Termica nas Seccoes (end)
+
+
+% section Estrutura (end)
+
+
+\section{Conclusao}\label{sec:Conclusao}
+
+% section Conclusao (end)
+
+\printbibliography{}
+
+\end{document}

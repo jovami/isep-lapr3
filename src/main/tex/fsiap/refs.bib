@@ -1,0 +1,41 @@
+% vim:foldmethod=marker
+
+TEMPLATES {{{
+
+% if in doubt, check the
+% already existing references
+
+replace `comment` with `book`
+@comment{nameXX,
+    author      = "<name>",
+    title       = "<title>",
+    year        = "XXXX",
+    publisher   = "<name of publisher>",
+    edition     = "X",
+    isbn        = "978-XXXXXXXXXX",
+}
+
+replace `comment` with `thesis`
+@comment{nameXX,
+    author = "<name>",
+    title = "<title>",
+    year = "XXXX",
+    type = "manual/patent/report/thesis",
+    institution = "<name of institution>",
+}
+
+% books and thesis can also have
+% `chapter` or `doi` components
+% but they're not mandatory
+
+
+replace `comment` with `online`
+@comment{nameXX,
+    author  = "<name>",
+    title   = "<title>",
+    year    = "XXXX",
+    url     = "https://....",
+    urldate = "date of access"
+}
+
+}}}
