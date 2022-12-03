@@ -40,7 +40,7 @@ BEGIN
     FOR record IN (
         SELECT
             pa.parcela_agricola_id parcela_id,
-            pa.area area,
+            pa.area_ha area,
             pa.designacao designacao,
             sum(
                 p.valor_mercado_por_ha * rc.quantidade_colhida_ton_por_ha
@@ -79,7 +79,7 @@ BEGIN
         INNER JOIN (
             SELECT
                 f.parcela_agricola_id,
-                sum(fp.preco_por_kg * f.quantidade_utilizada) custo
+                sum(fp.preco_por_kg * f.quantidade_utilizada_kg) custo
             FROM
                 fertilizacao f
             INNER JOIN
@@ -94,7 +94,7 @@ BEGIN
             ON custo_fator.parcela_agricola_id = pa.parcela_agricola_id
         GROUP BY
             pa.parcela_agricola_id,
-            pa.area,
+            pa.area_ha,
             pa.designacao,
             custo_fator.custo
         ORDER BY
