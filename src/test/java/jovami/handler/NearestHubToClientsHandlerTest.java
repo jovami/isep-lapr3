@@ -1,5 +1,12 @@
 package jovami.handler;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.ArrayList;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 import jovami.MainTest;
 import jovami.handler.data.NearestHubToClientsData;
 import jovami.model.Distance;
@@ -7,13 +14,6 @@ import jovami.model.HubNetwork;
 import jovami.model.User;
 import jovami.model.store.UserStore;
 import jovami.util.Triplet;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.Objects;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class NearestHubToClientsHandlerTest {
     NearestHubToClientsHandler handler;

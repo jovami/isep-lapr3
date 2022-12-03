@@ -1,7 +1,6 @@
 package jovami.ui;
 
 import jovami.handler.IsConnectedHandler;
-import jovami.ui.UserStory;
 
 public class IsConnectedUI implements UserStory {
 

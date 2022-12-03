@@ -5,11 +5,9 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.function.BinaryOperator;
-import java.util.function.Consumer;
 
 import jovami.util.graph.map.MapGraph;
 import jovami.util.graph.matrix.MatrixGraph;
