@@ -1,0 +1,137 @@
+@startuml
+
+left to right direction
+
+class Distance{
+    -locID1:String
+    -locID2:String
+    -distance:int
+    +cmp: {static} final Comparator<Distance>
+    +sum: {static} final BinaryOperator<Distance>
+}
+
+class Coordinates{
+    -MAX_LAT: {static} final double
+    -MIN_LAT: {static} final double
+    -MAX_LONG: {static} final double
+    -MIN_LONG: {static} final double 
+    -latitude: double
+    -longitude: double
+}
+
+class User{
+    -userID: String
+    -userType: UserType
+    -coords:Coordinates
+    -locationID: String
+}
+User ..> UserType
+User ..> Coordinates
+
+class MapGraph{
+    -mapVertices: final Map<V, MapVertex<V, E>> 
+}
+
+MapGraph -> CommonGraph
+
+'Localization
+ enum UserType{
+     PRODUCER
+     CLIENT
+     COMPANY
+ }
+
+class HubNetwork{
+    +distCmp: {static} final Comparator<Distance>
+    +distSum: {static} final BinaryOperator<Distance>
+    +distZero: {static} final Distance
+    +boolean addVertices(Collection<User> users)
+    +boolean addEdges(Collection<Triplet<User, User, Distance>> dists)
+    +Distance shortestPath(User origin, User dest, LinkedList<User> path)
+    +List<LinkedList<User>> shortestPaths(User origin, ArrayList<Distance> dists)
+    +LinkedList<Distance> shortestPathsForPool(User origin, List<User> pool)
+}
+HubNetwork -> User
+HubNetwork -> Distance
+HubNetwork -> MapGraph
+
+class MapGraph<V,E>{
+    -mapVertices: Map<V,MapVertex<V,E>>
+
+}
+
+class CommonGraph<V,E>{
+    #int numVerts;
+    #int numEdges;
+    #final boolean isDirected;
+    #ArrayList<V> vertices;    
+}
+CommonGraph ..> Graph
+
+interface Graph<V,E>{
+}
+
+'implements ..>
+'extends ->
+Graph ..> Edge
+
+
+class Edge{
+    -V final vOrig;
+    -V final vDest;
+    -E:final weight;
+}
+
+class WateringController{
+    -startedDate: final LocalDate
+    -endDate: final LocalDate
+    -wateringHours: final SortedSet<LocalTime>
+    -plotData: final LinkedHashMap<String,Pair<Integer, WateringFrequency>>
+    +boolean addWateringHours(LocalTime time)
+    +boolean addWateringHour(LocalTime time)
+    +boolean addPlotData(Triplet<String plotID, int duration, WateringFrequency frequency>)
+    +boolean addPlotData(String plotID, int duration, WateringFrequency frequency)
+    +LocalDate[] getValidRange()
+    -Option<LocalTime> previousWateringHour(LocalTime time)
+    +List<Pair<String,Long>> currentlyWatering()
+}
+
+WateringController ..> WateringFrequency
+
+
+enum WateringFrequency{
+    EVERYDAY
+    ODD_DAYS
+    EVEN_DAYS
+}
+
+
+'STORES
+class UserStore{
+    -users: Map<String,User>
+    +boolean addUser(User user)
+    +boolean addUser(String userID, String locationID, double latitude, double longitude)
+    +boolean addUser(Collection <User> usersCollection)
+    +Optional<User> getUser(String key)
+}
+UserStore -> User
+
+class DistanceStore{
+    -distances:final Set<Distance>
+    +boolean addDistance(Distance dist)
+    +boolean addDistance(String org, String dest, int distance)
+    +boolean addDistances(Collection <Distance> dists)
+}
+DistanceStore -> Distance
+
+class WateringControllerStore{
+    -store: LinkedHashMap<LocalDate, WateringController>
+    +boolean addController(WateringController ctrl)
+    +boolean addController(Collection<LocalTime> times)
+    +int size()
+    +boolean clearExpired()
+}
+WateringControllerStore -> WateringController
+
+
+@enduml
