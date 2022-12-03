@@ -62,7 +62,7 @@ public class CSVLoaderHandler {
     }
 
 
-    public boolean loadResources(boolean loadBig)
+    public void loadResources(boolean loadBig)
     {
         for (var fileEnum : CSVFiles.values()) {
             String fpath = fileEnum.path(loadBig);
@@ -75,7 +75,7 @@ public class CSVLoaderHandler {
                         : fileEnum.header);
             } catch (IOException e) {
                 e.printStackTrace();
-                return false;
+                return;
             }
 
             if (fileEnum != CSVFiles.BUNDLES)
@@ -87,26 +87,21 @@ public class CSVLoaderHandler {
             // else
             //     parsers.get(fileEnum.header).parse(data);
         }
-
-        return true;
     }
 
-    public boolean loadInteractive(Map<CSVHeader, File> files)
+    public void loadInteractive(Map<CSVHeader, File> files)
     {
         files.forEach((header, file) -> {
             List<String[]> data;
             try {
                 data = CSVReader.readCSV(file, header);
             } catch (FileNotFoundException e) {
-                // NOTE: should never happen
                 e.printStackTrace();
                 return;
             }
 
             this.parsers.get(header).parse(data);
         });
-
-        return true;
     }
 
     public boolean populateNetwork() {
