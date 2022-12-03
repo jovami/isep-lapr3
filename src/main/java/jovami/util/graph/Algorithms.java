@@ -1,12 +1,11 @@
 package jovami.util.graph;
 
+import jovami.util.graph.map.MapGraph;
+import jovami.util.graph.map.MapVertex;
 import jovami.util.graph.matrix.MatrixGraph;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+
 import java.util.function.BinaryOperator;
 
 public class Algorithms {
@@ -193,7 +192,7 @@ public class Algorithms {
 
         shortPath.clear();
 
-        if(g.key(vOrig) == g.key(vDest)){
+        if (g.key(vOrig) == g.key(vDest)) {
             shortPath.push(vDest);
             return zero;
         }
@@ -237,12 +236,13 @@ public class Algorithms {
      * @return if vOrig exists in the graph true, false otherwise
      */
     public static <V, E> void shortestPaths(Graph<V, E> g, V vOrig,
-                                               Comparator<E> ce, BinaryOperator<E> sum, E zero,
-                                               ArrayList<LinkedList<V>> paths, ArrayList<E> dists) {
+                                            Comparator<E> ce, BinaryOperator<E> sum, E zero,
+                                            ArrayList<LinkedList<V>> paths, ArrayList<E> dists)
+    {
         paths.clear();
         dists.clear();
 
-        for (V vert : g.vertices()){
+        for (V vert : g.vertices()) {
             LinkedList<V> newPaths = new LinkedList<>();
             dists.add(g.key(vert), shortestPath(g, vOrig, vert, ce, sum, zero, newPaths));
             paths.add(g.key(vert), newPaths);
@@ -350,4 +350,28 @@ public class Algorithms {
 
         return BreadthFirstSearch(g, g.vertex(0)).size() == g.numVertices();
     }
+
+
+    public static <V, E> Graph<V, E> kruskalMST(Graph<V, E> g,Comparator<E> ce) {
+        PriorityQueue<Edge<V, E>> lstEdges = new PriorityQueue<>(Comparator.comparing(Edge::getWeight, ce));
+
+        Graph<V, E> mst = new MapGraph<>(g.isDirected());
+
+        for (V vertex : g.vertices()) {
+            mst.addVertex(vertex);
+        }
+
+        lstEdges.addAll(g.edges());
+        
+        while (!lstEdges.isEmpty()) {
+            Edge<V, E> e1 = lstEdges.poll();
+            //TODO: optimize
+            if (!DepthFirstSearch(mst, e1.getVOrig()).contains(e1.getVDest())) {
+                mst.addEdge(e1.getVOrig(), e1.getVDest(), e1.getWeight());
+            }
+        }
+        return mst;
+    }
+
 }
+
