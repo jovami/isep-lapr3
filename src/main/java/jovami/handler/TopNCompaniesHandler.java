@@ -2,7 +2,6 @@ package jovami.handler;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import jovami.App;
 import jovami.model.Distance;
@@ -15,14 +14,14 @@ public class TopNCompaniesHandler {
 
     private final App app;
     private final HubNetwork mapGraph;
-    
+
     ArrayList<Pair<User,Double>> companiesByOrder = new ArrayList<>();
-    
+
     public TopNCompaniesHandler(){
         app=App.getInstance();
         mapGraph = app.hubNetwork();
     }
-    
+
     private static Comparator <Pair<User,Double>> cmpDist = new Comparator<Pair<User, Double>>() {
         @Override
         public int compare(final Pair<User, Double> o1, final Pair<User, Double> o2) {
@@ -35,46 +34,49 @@ public class TopNCompaniesHandler {
 
         ArrayList<Distance> dists = new ArrayList<>();
 
-        for (User user : mapGraph.vertices()) {
+        for (User user : mapGraph.vertices()) {     // O(V)
 
             if(user.getUserType()==UserType.COMPANY){
 
                 //paths & dists are being cleared at Algorithms.shortestPaths()
-                mapGraph.shortestPaths(user, dists);
+                mapGraph.shortestPaths(user, dists);    // O(V^2)
 
                 //for each path
-                Double average = getAverageAllPaths( dists);
+                Double average = getAverageAllPaths( dists); // O(E)
 
-                companiesByOrder.add(new Pair<>(user,average));
-                
+                companiesByOrder.add(new Pair<>(user,average)); // O(1)
+
             }
         }
-        orderCompanies();
-        return getList();
+        orderCompanies();   // O(V*logV)
+        return getList();   // O(V)
+        // Net complexity:  O(V^3)
     }
 
     private void orderCompanies(){
         if (companiesByOrder.isEmpty())
             throw new ArrayIndexOutOfBoundsException("List with companies and correspondent weights is empty");
         else
-            companiesByOrder.sort(cmpDist);
+            companiesByOrder.sort(cmpDist);     // O(V*logV)
     }
 
     protected ArrayList<Pair<User,Double>> getList(){
+        // O(V)
         return new ArrayList<>(companiesByOrder);
     }
 
-    private Double getAverageAllPaths(ArrayList<Distance> dists) 
+    private Double getAverageAllPaths(ArrayList<Distance> dists)
     {
-        AtomicInteger somaForEach = new AtomicInteger(0);
+        int soma = 0;
 
-        for (Distance pathsDist: dists) {
-            somaForEach.addAndGet(pathsDist.getDistance());
+        for (Distance pathsDist: dists) {       // O(E)
+            soma += pathsDist.getDistance();
         }
 
-        return somaForEach.doubleValue()/dists.size();
+        // Net complexity: O(E)
+        return (double) soma / dists.size();
     }
-    
+
     protected ArrayList<Pair<User,Double>> getTopNCompanies(int n){
         ArrayList<Pair<User,Double>> topN = new ArrayList<>();
 
@@ -84,15 +86,16 @@ public class TopNCompaniesHandler {
 
         int counter=0;
 
-        for (Pair<User,Double> pair : companiesByOrder) {
+        for (Pair<User,Double> pair : companiesByOrder) { // O(V)
 
             topN.add(pair);
             counter++;
             if(counter==n)
                 break;
         }
-        return topN;
 
+        // Net complexity: O(V)
+        return topN;
     }
 
 
@@ -103,13 +106,13 @@ public class TopNCompaniesHandler {
         if(topN==null){
             System.out.println("There are no companies for the specified parameters");
             return false;
-        } 
+        }
         int place=1;
 
         System.out.println();
         System.out.println("||  Top  || Company || Average weight");
         for (Pair<User,Double> pair : topN) {
-            System.out.printf("||  %3d  ||   %3s   ||  %.2f\n",place,pair.first().getUserID(),pair.second());           
+            System.out.printf("||  %3d  ||   %3s   ||  %.2f\n",place,pair.first().getUserID(),pair.second());
             place++;
         }
 
