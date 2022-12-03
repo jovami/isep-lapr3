@@ -7,6 +7,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.TreeMap;
 
 import jovami.model.WateringController;
 import jovami.model.shared.WateringFrequency;
@@ -17,14 +20,14 @@ import jovami.util.Triplet;
  */
 public class WateringControllerStore implements Iterable<WateringController> {
 
-    private final LinkedHashMap<LocalDate, WateringController> store;
+    private final TreeMap<LocalDate, WateringController> store;
 
     public WateringControllerStore() {
         this(2 << 4);
     }
 
     public WateringControllerStore(int initialCapacity) {
-        this.store = new LinkedHashMap<>(initialCapacity);
+        this.store = new TreeMap<>(LocalDate::compareTo);
     }
 
     private boolean addController(WateringController ctrl) {
@@ -40,6 +43,16 @@ public class WateringControllerStore implements Iterable<WateringController> {
         plotData.forEach(ctrl::addPlotData);
 
         return this.addController(ctrl);
+    }
+
+    public Optional<WateringController> getActiveController() {
+        LocalDate now = LocalDate.now();
+        try {
+            LocalDate key = this.store.headMap(now, true).lastKey();
+            return Optional.of(this.store.get(key));
+        } catch (NoSuchElementException e) {
+            return Optional.empty();
+        }
     }
 
     public int size() {
