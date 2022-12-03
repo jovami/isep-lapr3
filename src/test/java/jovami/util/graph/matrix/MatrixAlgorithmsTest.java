@@ -2,9 +2,7 @@ package jovami.util.graph.matrix;
 
 import jovami.util.graph.Algorithms;
 import jovami.util.graph.Graph;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -203,8 +201,9 @@ class MatrixAlgorithmsTest {
      */
     @Test
     public void testMinDistGraph() {
-        Graph<String,Integer> transitiveClosure = new MatrixGraph<>(true, 5);
+        Graph<String,Integer> transitiveClosure = new MatrixGraph<>(true);
 
+        assertEquals(0, transitiveClosure.numEdges());
         transitiveClosure.addVertex("Porto");
         transitiveClosure.addVertex("Braga");
         transitiveClosure.addVertex("Vila Real");
@@ -219,6 +218,22 @@ class MatrixAlgorithmsTest {
 
         var result = Algorithms.minDistGraph(transitiveClosure, Integer::compare, Integer::sum);
         assertEquals(10, result.numEdges());
+    }
+
+    @Test
+    public void isConnected(){
+        Graph<String,Integer> disconnected = new MatrixGraph<>(true);
+
+        disconnected.addVertex("Porto");
+        disconnected.addVertex("Braga");
+        disconnected.addVertex("Vila Real");
+        disconnected.addVertex("Aveiro");
+
+        disconnected.addEdge("Porto", "Braga", 1);
+        disconnected.addEdge("Vila Real", "Aveiro", 1);
+
+        assertTrue(Algorithms.isConnected(completeMap));
+        assertFalse(Algorithms.isConnected(disconnected));
     }
     
     

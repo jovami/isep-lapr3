@@ -2,9 +2,7 @@ package jovami.util.graph.map;
 
 import jovami.util.graph.Algorithms;
 import jovami.util.graph.Graph;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 
@@ -204,10 +202,39 @@ class MapAlgorithmsTest {
      * Test minimum distance graph using Floyd-Warshall.
      */
     @Test
-    @Disabled
-    public void testminDistGraph() {
-    
-        throw new UnsupportedOperationException("Not supported yet.");
-        
+    public void testMinDistGraph() {
+        Graph<String,Integer> transitiveClosure = new MapGraph<>(true);
+
+        assertEquals(0, transitiveClosure.numEdges());
+        transitiveClosure.addVertex("Porto");
+        transitiveClosure.addVertex("Braga");
+        transitiveClosure.addVertex("Vila Real");
+        transitiveClosure.addVertex("Aveiro");
+        transitiveClosure.addVertex("Coimbra");
+
+        transitiveClosure.addEdge("Porto", "Coimbra", 1);
+        transitiveClosure.addEdge("Braga", "Porto", 1);
+        transitiveClosure.addEdge("Vila Real", "Braga", 1);
+        transitiveClosure.addEdge("Vila Real", "Aveiro", 1);
+        transitiveClosure.addEdge("Coimbra", "Aveiro", 1);
+
+        var result = Algorithms.minDistGraph(transitiveClosure, Integer::compare, Integer::sum);
+        assertEquals(10, result.numEdges());
+    }
+
+    @Test
+    public void isConnected(){
+        Graph<String,Integer> disconnected = new MapGraph<>(true);
+
+        disconnected.addVertex("Porto");
+        disconnected.addVertex("Braga");
+        disconnected.addVertex("Vila Real");
+        disconnected.addVertex("Aveiro");
+
+        disconnected.addEdge("Porto", "Braga", 1);
+        disconnected.addEdge("Vila Real", "Aveiro", 1);
+
+        assertTrue(Algorithms.isConnected(completeMap));
+        assertFalse(Algorithms.isConnected(disconnected));
     }
 }
