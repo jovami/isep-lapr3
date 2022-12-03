@@ -15,14 +15,16 @@ public class IsConnectedHandler {
     public IsConnectedHandler() {
         this.app = App.getInstance();
         this.network = app.hubNetwork();
-        this.connected = Algorithms.isConnected(network);
+        this.connected = Algorithms.isConnected(network);   // O(V*E)
     }
 
-    public Optional<Integer> minReachability(){
-        if (connected){
-            var matrix = Algorithms.minDistGraph(network, Distance.cmp, Distance.sum);
-            return Optional.of(matrix.numEdges());
+    public Optional<Integer> minReachability() {
+        if (connected) {
+            var matrix = Algorithms.minDistGraph(network, Distance.cmp, Distance.sum);  // O(V^3) (Floyd-Warshall)
+            return Optional.of(matrix.numEdges());  // O(1)
         }
+
+        // Net Complexity: O(V^3)
         return Optional.empty();
     }
 }
