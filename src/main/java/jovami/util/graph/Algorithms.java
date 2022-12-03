@@ -147,8 +147,9 @@ public class Algorithms {
             visited[g.key(vOrig)] = true;
             for (var edge : g.outgoingEdges(vOrig)) {
                 V vAdj = edge.getVDest();
-                if (!visited[g.key(vAdj)] && ce.compare(dist[g.key(vAdj)], sum.apply(dist[g.key(vOrig)], edge.getWeight())) > 0) {
-                    dist[g.key(vAdj)] = sum.apply(dist[g.key(vOrig)], edge.getWeight());
+                E distSum = sum.apply(dist[g.key(vOrig)], edge.getWeight());
+                if (!visited[g.key(vAdj)] && ce.compare(dist[g.key(vAdj)], distSum) > 0) {
+                    dist[g.key(vAdj)] = distSum;
                     pathKeys[g.key(vAdj)] = vOrig;
                 }
             }

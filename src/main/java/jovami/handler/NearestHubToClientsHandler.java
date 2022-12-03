@@ -77,4 +77,12 @@ public class NearestHubToClientsHandler {
 
         return Optional.empty();
     }
+
+    public HubNetwork getNetwork() {
+        return network;
+    }
+
+    public UserStore getUserStore() {
+        return userStore;
+    }
 }
