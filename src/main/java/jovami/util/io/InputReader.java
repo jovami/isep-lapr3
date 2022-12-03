@@ -32,6 +32,16 @@ public class InputReader {
         }
     }
 
+    public static int readInteger(String prompt) {
+        do {
+            try {
+                return Integer.parseInt(readLine(prompt));
+            } catch (NumberFormatException e){
+                System.out.println("\n\tCan't load characters that don't correspond to integers\n");
+            }
+        } while(true);
+    }
+
     public static boolean confirm(String prompt) {
         return readLine(prompt + " [y/N]").matches(YES_REGEX);
     }

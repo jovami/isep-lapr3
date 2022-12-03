@@ -365,7 +365,6 @@ public class Algorithms {
         }
 
         lstEdges.addAll(g.edges());
-
         while (!lstEdges.isEmpty()) {
             Edge<V, E> e1 = lstEdges.poll();
             //TODO: optimize
