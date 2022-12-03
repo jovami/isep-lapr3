@@ -27,7 +27,6 @@ DROP TABLE codigo_postal CASCADE CONSTRAINTS PURGE ;
 DROP TABLE utilizador CASCADE CONSTRAINTS PURGE ;
 DROP TABLE gestor_agricola CASCADE CONSTRAINTS PURGE ;
 DROP TABLE hub CASCADE CONSTRAINTS PURGE ;
-DROP TABLE deposito CASCADE CONSTRAINTS PURGE ;
 DROP TABLE incidente CASCADE CONSTRAINTS PURGE ;
 DROP TABLE estado_encomenda CASCADE CONSTRAINTS PURGE ;
 DROP TABLE encomenda CASCADE CONSTRAINTS PURGE ;
@@ -46,40 +45,40 @@ CREATE TABLE codigo_postal (
 );
 
 CREATE TABLE instalacao_agricola (
-    instalacao_agricola_id      INTEGER GENERATED AS IDENTITY CONSTRAINT pk_instalacao_agricola_id  PRIMARY KEY,
-    nome                        VARCHAR(40)     CONSTRAINT nn_instalacao_agricola_nome        NOT NULL,
-    morada                      VARCHAR(40)     CONSTRAINT nn_instalacao_agricola_morada      NOT NULL,
-
-    codigo_postal_id            VARCHAR(40) REFERENCES codigo_postal(codigo_postal_id)
+    instalacao_agricola_id      INTEGER GENERATED AS IDENTITY CONSTRAINT pk_instalacao_agricola_id  PRIMARY KEY,  
+    nome                        VARCHAR(40)     CONSTRAINT nn_instalacao_agricola_nome              NOT NULL,
+    morada                      VARCHAR(40)     CONSTRAINT nn_instalacao_agricola_morada            NOT NULL,
+    
+    codigo_postal_id            VARCHAR(40) REFERENCES codigo_postal(codigo_postal_id)              NOT NULL
 );
 
 CREATE TABLE caderno_campo (
     caderno_campo_id            INTEGER GENERATED AS IDENTITY CONSTRAINT pk_caderno_campo_id  PRIMARY KEY,
-    ano                         INTEGER CONSTRAINT nn_caderno_campo_ano NOT NULL,
-    designacao                  VARCHAR(40)     CONSTRAINT nn_caderno_campo_designacao NOT NULL
-
+    ano                         INTEGER CONSTRAINT nn_caderno_campo_ano                       NOT NULL,
+    designacao                  VARCHAR(40)     CONSTRAINT nn_caderno_campo_designacao        NOT NULL
+                        
 );
 
 
 CREATE TABLE tipo_cultura (
     tipo_cultura_id             INTEGER GENERATED AS IDENTITY CONSTRAINT pk_tipo_cultura_id  PRIMARY KEY,
-    designacao                  VARCHAR(40) CONSTRAINT un_tipo_cultura_designacao UNIQUE
+    designacao                  VARCHAR(40) CONSTRAINT un_tipo_cultura_designacao            UNIQUE
 );
 
 
 CREATE TABLE produto (
     produto_id                    INTEGER GENERATED AS IDENTITY CONSTRAINT pk_tipo_produto_id  PRIMARY KEY,
-    valor_mercado_por_ha          NUMBER(15,4) CONSTRAINT ck_produto_valor_mercado_por_ha  CHECK(valor_mercado_por_ha >= 0),
-    designacao                    VARCHAR(40) CONSTRAINT un_produto_id_designacao UNIQUE
+    valor_mercado_por_ha          NUMBER(15,4) CONSTRAINT ck_produto_valor_mercado_por_ha      CHECK(valor_mercado_por_ha >= 0),
+    designacao                    VARCHAR(40) CONSTRAINT un_produto_id_designacao              UNIQUE  
 );
 
 
 CREATE TABLE stock (
-
+      
     caderno_campo_id              INTEGER REFERENCES caderno_campo(caderno_campo_id)                NOT NULL,
     produto_id                    INTEGER REFERENCES produto(produto_id)                            NOT NULL,
     CONSTRAINT pk_stock           PRIMARY KEY(caderno_campo_id,produto_id),
-    stock_ton                     NUMBER(15,4) CONSTRAINT ck_stock_ton      CHECK(stock_ton >= 0)
+    stock_ton                     NUMBER(15,4) CONSTRAINT ck_stock_ton                              CHECK(stock_ton >= 0)
 );
 
 
@@ -91,10 +90,10 @@ CREATE TABLE tipo_edificio (
 
 CREATE TABLE edificio (
 
-    edificio_id                      INTEGER GENERATED AS IDENTITY CONSTRAINT pk_edificio_id  PRIMARY KEY,
-    designacao                       VARCHAR(40)     CONSTRAINT nn_edificio_designacao      NOT NULL,
-    area                             NUMBER(10,2)    CONSTRAINT nn_edificio_area            NOT NULL,
-    tipo_edificio_id                 INTEGER REFERENCES tipo_edificio(tipo_edificio_id)     NOT NULL,
+    edificio_id                      INTEGER GENERATED AS IDENTITY CONSTRAINT pk_edificio_id        PRIMARY KEY,
+    designacao                       VARCHAR(40)     CONSTRAINT nn_edificio_designacao              NOT NULL,
+    area_ha                          NUMBER(15,4)    CONSTRAINT ck_edificio_area_ha                 CHECK(area_ha > 0),
+    tipo_edificio_id                 INTEGER REFERENCES tipo_edificio(tipo_edificio_id)             NOT NULL,
     instalacao_agricola_id           INTEGER REFERENCES instalacao_agricola(instalacao_agricola_id) NOT NULL
 );
 
@@ -102,23 +101,23 @@ CREATE TABLE edificio (
 CREATE TABLE parcela_agricola (
 
     parcela_agricola_id             INTEGER GENERATED AS IDENTITY CONSTRAINT pk_parcela_agricola_id  PRIMARY KEY,
-    designacao                      VARCHAR(40) CONSTRAINT nn_parcela_agricola_designacao   NOT NULL,
-    area                            NUMBER(10,2) CONSTRAINT nn_parcela_agricola_area        NOT NULL,
-    instalacao_agricola_id          INTEGER REFERENCES instalacao_agricola(instalacao_agricola_id) NOT NULL
+    designacao                      VARCHAR(40)  CONSTRAINT nn_parcela_agricola_designacao           NOT NULL,
+    area_ha                         NUMBER(15,4) CONSTRAINT ck_parcela_agricola_area_ha              CHECK(area_ha > 0),            
+    instalacao_agricola_id          INTEGER REFERENCES instalacao_agricola(instalacao_agricola_id)   NOT NULL
 );
 
 
 CREATE TABLE registo_cultura (
 
-     caderno_campo_id                   INTEGER REFERENCES caderno_campo(caderno_campo_id)              NOT NULL,
+     caderno_campo_id                   INTEGER REFERENCES caderno_campo(caderno_campo_id)              NOT NULL,    
      parcela_agricola_id                INTEGER REFERENCES parcela_agricola(parcela_agricola_id)        NOT NULL,
      produto_id                         INTEGER REFERENCES produto(produto_id)                          NOT NULL,
      tipo_cultura_id                    INTEGER REFERENCES tipo_cultura(tipo_cultura_id)                NOT NULL,
      data_plantacao                     DATE    CONSTRAINT nn_registo_cultura_data_plantacao            NOT NULL,
      CONSTRAINT pk_registo_cultura      PRIMARY KEY(caderno_campo_id,parcela_agricola_id,produto_id,tipo_cultura_id,data_plantacao),
-
-     area_plantada_ha                   NUMBER(10,2) CONSTRAINT nn_registo_cultura_area_plantada_ha     NOT NULL,
-     data_colheita                      DATE ,
+     
+     area_plantada_ha                   NUMBER(15,4) CONSTRAINT ck_registo_cultura_area_plantada_ha                CHECK(area_plantada_ha > 0),
+     data_colheita                      DATE ,                                                                
      quantidade_colhida_ton_por_ha      NUMBER(15,4) CONSTRAINT ck_registo_colheita_quantidade_colhida_ton_por_ha  CHECK(quantidade_colhida_ton_por_ha >= 0)
 );
 
@@ -130,7 +129,7 @@ CREATE TABLE sensor(
                                                                             designacao = 'sensor de temperatura do solo' OR
                                                                             designacao = 'sensor de humidade do solo' OR
                                                                             designacao = 'sensor de velocidade do vento' OR
-                                                                            designacao = 'sensor de temperatura, de humidade do ar e pressão atmosférica')
+                                                                            designacao = 'sensor de temperatura, de humidade do ar e pressão atmosférica') 
 );
 
 
@@ -141,15 +140,15 @@ CREATE TABLE dado_meteorologico(
     data_registo_meteorologico          DATE CONSTRAINT nn_dado_meteorologico_data_registo_meteorologico    NOT NULL,
     CONSTRAINT pk_dado_meteorologico    PRIMARY KEY(caderno_campo_id,sensor_id,data_registo_meteorologico),
     designacao                          VARCHAR(40) CONSTRAINT ck_dado_meteorologico_designacao CHECK(designacao ='solo' OR designacao ='meteorologico')
-
+     
 );
 
 
 CREATE TABLE tipo_rega (
 
     tipo_rega_id             INTEGER GENERATED AS IDENTITY CONSTRAINT pk_tipo_rega  PRIMARY KEY,
-    designacao               VARCHAR(40) CONSTRAINT ck_un_tipo_rega_designacao CHECK(designacao ='pulverizacao' OR
-                                                                                     designacao ='gotejamento' OR
+    designacao               VARCHAR(40) CONSTRAINT ck_un_tipo_rega_designacao CHECK(designacao ='pulverizacao' OR 
+                                                                                     designacao ='gotejamento' OR 
                                                                                      designacao ='asprecao') UNIQUE
 );
 
@@ -157,7 +156,7 @@ CREATE TABLE tipo_rega (
 CREATE TABLE tipo_sistema (
 
     tipo_sistema_id          INTEGER GENERATED AS IDENTITY CONSTRAINT pk_tipo_sistema_id  PRIMARY KEY,
-    designacao               VARCHAR(40) CONSTRAINT ck_un_tipo_sistema_designacao CHECK(designacao ='gravidade' OR
+    designacao               VARCHAR(40) CONSTRAINT ck_un_tipo_sistema_designacao CHECK(designacao ='gravidade' OR 
                                                                                         designacao ='bombeada') UNIQUE
 
 );
@@ -165,46 +164,46 @@ CREATE TABLE tipo_sistema (
 
 CREATE TABLE plano_rega (
 
-    parcela_agricola_id                 INTEGER REFERENCES parcela_agricola(parcela_agricola_id)                  NOT NULL,
-    data_inicio                         DATE CONSTRAINT nn_plano_rega_data_inicio    NOT NULL,
-    data_fim                            DATE CONSTRAINT nn_plano_rega_data_fim    NOT NULL,
-
+    parcela_agricola_id                 INTEGER REFERENCES parcela_agricola(parcela_agricola_id)    NOT NULL,
+    data_inicio                         DATE CONSTRAINT nn_plano_rega_data_inicio                   NOT NULL,
+    data_fim                            DATE CONSTRAINT nn_plano_rega_data_fim                      NOT NULL,
+    
     CONSTRAINT pk_plano_rega    PRIMARY KEY(parcela_agricola_id,data_inicio,data_fim),
-
-    periodicidade_rega_hh          INTEGER CONSTRAINT nn_plano_rega_periodicidade_rega    NOT NULL,  --de quantas em quantas horas
-    tempo_rega_mm                  INTEGER CONSTRAINT nn_plano_rega_tempo_rega            NOT NULL  --tempo rega em minutos
+    
+    periodicidade_rega_hh          INTEGER CONSTRAINT ck_plano_rega_periodicidade_rega_hh           CHECK(periodicidade_rega_hh > 0), --de quantas em quantas horas
+    tempo_rega_mm                  INTEGER CONSTRAINT ck_plano_rega_tempo_rega_mm                   CHECK(tempo_rega_mm > 0) --tempo rega em minutos
 );
 
 
 CREATE TABLE rega_executada (
 
-    caderno_campo_id                   INTEGER REFERENCES caderno_campo(caderno_campo_id)              NOT NULL,
+    caderno_campo_id                   INTEGER REFERENCES caderno_campo(caderno_campo_id)              NOT NULL,    
     parcela_agricola_id                INTEGER REFERENCES parcela_agricola(parcela_agricola_id)        NOT NULL,
     data_realizacao                    DATE  CONSTRAINT nn_rega_executada_data_realizacao              NOT NULL,
     CONSTRAINT pk_rega_executada       PRIMARY KEY(caderno_campo_id,parcela_agricola_id,data_realizacao),
-
+      
     quantidade_rega                    NUMBER(15,4) CONSTRAINT ck_rega_executada_quantidade_rega      CHECK(quantidade_rega > 0 ),
-    tempo_rega_mm                      INTEGER CONSTRAINT nn_rega_executada_tempo_rega_mm            NOT NULL,
-    tipo_rega_id                       INTEGER REFERENCES tipo_rega(tipo_rega_id)                    NOT NULL,
-    tipo_sistema_id                    INTEGER REFERENCES tipo_sistema(tipo_sistema_id)              NOT NULL
+    tempo_rega_mm                      INTEGER CONSTRAINT ck_rega_executada_tempo_rega_mm             CHECK(tempo_rega_mm > 0),
+    tipo_rega_id                       INTEGER REFERENCES tipo_rega(tipo_rega_id)                     NOT NULL, 
+    tipo_sistema_id                    INTEGER REFERENCES tipo_sistema(tipo_sistema_id)               NOT NULL 
 );
 
 
 CREATE TABLE tipo_fator_producao (
-
+    
     tipo_fator_producao_id   INTEGER GENERATED AS IDENTITY CONSTRAINT pk_tipo_fator_producao_id  PRIMARY KEY,
-    designacao               VARCHAR(40) CONSTRAINT ck_un_tipo_fator_producao_designacao CHECK(designacao ='fertilizante' OR
-                                                                                                designacao ='adubo' OR
-                                                                                                designacao ='correctivo mineral' OR
+    designacao               VARCHAR(40) CONSTRAINT ck_un_tipo_fator_producao_designacao CHECK(designacao ='fertilizante' OR 
+                                                                                                designacao ='adubo' OR 
+                                                                                                designacao ='correctivo mineral' OR 
                                                                                                 designacao ='produto fitofarmaco') UNIQUE
 );
 
 
 CREATE TABLE formulacao (
-
+    
     formulacao_id   INTEGER GENERATED AS IDENTITY CONSTRAINT pk_formulacao_id  PRIMARY KEY,
-    designacao      VARCHAR(40) CONSTRAINT ck_un_formulacao_designacao CHECK(designacao ='liquido' OR
-                                                                             designacao ='granulado' OR
+    designacao      VARCHAR(40) CONSTRAINT ck_un_formulacao_designacao CHECK(designacao ='liquido' OR 
+                                                                             designacao ='granulado' OR 
                                                                              designacao ='po') UNIQUE
 );
 
@@ -214,37 +213,37 @@ CREATE TABLE fator_producao (
     fator_producao_id             INTEGER GENERATED AS IDENTITY CONSTRAINT pk_fator_producao_id    PRIMARY KEY,
     nome_comercial                VARCHAR(40)     CONSTRAINT nn_fator_producao_nome_comercial      NOT NULL,
     fornecedor                    VARCHAR(40)     CONSTRAINT nn_fator_producao_fornecedor          NOT NULL,
-    preco_por_kg                  NUMBER(10,2) CONSTRAINT ck_fator_producao_preco_por_kg      CHECK(preco_por_kg > 0 ),
+    preco_por_kg                  NUMBER(15,2) CONSTRAINT ck_fator_producao_preco_por_kg           CHECK(preco_por_kg > 0 ),
     formulacao_id                 INTEGER REFERENCES formulacao(formulacao_id)                     NOT NULL,
-    tipo_fator_producao_id        INTEGER REFERENCES tipo_fator_producao(tipo_fator_producao_id)   NOT NULL
+    tipo_fator_producao_id        INTEGER REFERENCES tipo_fator_producao(tipo_fator_producao_id)   NOT NULL      
 
 );
 
 CREATE TABLE tipo_fertilizacao (
 
     tipo_fertilizacao_id   INTEGER GENERATED AS IDENTITY CONSTRAINT pk_tipo_fertilizacao_id  PRIMARY KEY,
-    designacao             VARCHAR(40) CONSTRAINT ck_un_tipo_fertilizacao_designacao CHECK(designacao ='aplicacao direta solo' OR
-                                                                                           designacao ='fetirrega' OR
+    designacao             VARCHAR(40) CONSTRAINT ck_un_tipo_fertilizacao_designacao CHECK(designacao ='aplicacao direta solo' OR 
+                                                                                           designacao ='fetirrega' OR 
                                                                                            designacao ='foliar') UNIQUE
 
 );
 
 CREATE TABLE fertilizacao (
 
-    parcela_agricola_id            INTEGER REFERENCES parcela_agricola(parcela_agricola_id)       NOT NULL,
-    fator_producao_id              INTEGER REFERENCES fator_producao(fator_producao_id)           NOT NULL,
-    data_fertilizacao              DATE CONSTRAINT nn_fertilizacao_data_fertilizacao              NOT NULL,
+    parcela_agricola_id            INTEGER REFERENCES parcela_agricola(parcela_agricola_id)         NOT NULL, 
+    fator_producao_id              INTEGER REFERENCES fator_producao(fator_producao_id)             NOT NULL, 
+    data_fertilizacao              DATE CONSTRAINT nn_fertilizacao_data_fertilizacao                NOT NULL,
     CONSTRAINT pk_fertilizacao     PRIMARY KEY(parcela_agricola_id,fator_producao_id,data_fertilizacao),
-
-    quantidade_utilizada           NUMBER(10,4) CONSTRAINT ck_fertilizacao_quantidade_utilizada     CHECK(quantidade_utilizada > 0),
-    tipo_fertilizacao_id           INTEGER REFERENCES tipo_fertilizacao(tipo_fertilizacao_id)       NOT NULL
+    
+    quantidade_utilizada_kg        NUMBER(15,4) CONSTRAINT ck_fertilizacao_quantidade_utilizada_kg  CHECK(quantidade_utilizada_kg > 0), 
+    tipo_fertilizacao_id           INTEGER REFERENCES tipo_fertilizacao(tipo_fertilizacao_id)       NOT NULL 
 );
 
 
 CREATE TABLE tipo_composto (
 
     tipo_composto_id    INTEGER GENERATED AS IDENTITY CONSTRAINT pk_tipo_composto_id    PRIMARY KEY,
-    designacao          VARCHAR(40) CONSTRAINT ck_un_tipo_composto_designacao CHECK(designacao ='substancia' OR
+    designacao          VARCHAR(40) CONSTRAINT ck_un_tipo_composto_designacao CHECK(designacao ='substancia' OR 
                                                                                     designacao ='elemento') UNIQUE
 
 );
@@ -254,38 +253,38 @@ CREATE TABLE composto (
 
     composto_id             INTEGER GENERATED AS IDENTITY CONSTRAINT pk_composto_id    PRIMARY KEY,
     designacao              VARCHAR(40)     CONSTRAINT un_composto_designacao          UNIQUE,
-
+    
     tipo_composto_id        INTEGER REFERENCES tipo_composto(tipo_composto_id)         NOT NULL
 );
 
 
 CREATE TABLE ficha_tecnica (
 
-    fator_producao_id                 INTEGER REFERENCES fator_producao(fator_producao_id)    NOT NULL,
-    composto_id                       INTEGER REFERENCES composto(composto_id)                NOT NULL,
+    fator_producao_id                 INTEGER REFERENCES fator_producao(fator_producao_id)        NOT NULL,
+    composto_id                       INTEGER REFERENCES composto(composto_id)                    NOT NULL,    
     CONSTRAINT pk_ficha_tecnica       PRIMARY KEY(composto_id,fator_producao_id),
-
-    unidade_medida                    VARCHAR(40)  CONSTRAINT nn_ficha_tecnica_unidade_medida          NOT NULL,
-    quantidade_composto               NUMBER(10,4) CONSTRAINT ck_composto_quantidade_composto    CHECK(quantidade_composto > 0)
-
+    
+    unidade_medida                    VARCHAR(40)  CONSTRAINT nn_ficha_tecnica_unidade_medida    NOT NULL,			
+    quantidade_composto               NUMBER(15,4) CONSTRAINT ck_composto_quantidade_composto    CHECK(quantidade_composto > 0)
+    
 );
 
 
 CREATE TABLE instalacao_agricola_fator_producao (
-    instalacao_agricola_id            INTEGER REFERENCES instalacao_agricola(instalacao_agricola_id)                NOT NULL,
-    fator_producao_id                 INTEGER REFERENCES fator_producao(fator_producao_id)  NOT NULL,
+    instalacao_agricola_id            INTEGER REFERENCES instalacao_agricola(instalacao_agricola_id)                NOT NULL, 
+    fator_producao_id                 INTEGER REFERENCES fator_producao(fator_producao_id)  NOT NULL,  
     CONSTRAINT pk_instalacao_agricola_fator_producao     PRIMARY KEY (instalacao_agricola_id,fator_producao_id),
-
-    quantidade_kg                        NUMBER(15,2) CONSTRAINT ck_instalacao_agricola_fator_producao_quantidade_kg    CHECK(quantidade_kg >= 0)
+    
+    quantidade_kg                     NUMBER(15,4) CONSTRAINT ck_instalacao_agricola_fator_producao_quantidade_kg    CHECK(quantidade_kg >= 0)
 );
 
 
 CREATE TABLE tipo_utilizador (
 
      tipo_utilizador_id         INTEGER GENERATED AS IDENTITY CONSTRAINT pk_tipo_utilizador_id    PRIMARY KEY,
-     designacao                 VARCHAR(40) CONSTRAINT ck_un_tipo_utilizador_designacao CHECK(designacao ='cliente' OR
-                                                                                              designacao ='gestor agricola'  OR
-                                                                                              designacao ='condutor' OR
+     designacao                 VARCHAR(40) CONSTRAINT ck_un_tipo_utilizador_designacao CHECK(designacao ='cliente' OR 
+                                                                                              designacao ='gestor agricola'  OR 
+                                                                                              designacao ='condutor' OR 
                                                                                               designacao ='gestor distribuicao') UNIQUE
 );
 
@@ -293,8 +292,8 @@ CREATE TABLE tipo_utilizador (
 CREATE TABLE tipo_cliente (
 
      tipo_cliente_id         INTEGER GENERATED AS IDENTITY CONSTRAINT pk_tipo_cliente_id    PRIMARY KEY,
-     designacao              VARCHAR(40) CONSTRAINT ck_un_tipo_cliente_designacao CHECK(designacao ='A' OR
-                                                                                        designacao ='B'  OR
+     designacao              VARCHAR(40) CONSTRAINT ck_un_tipo_cliente_designacao CHECK(designacao ='A' OR 
+                                                                                        designacao ='B'  OR 
                                                                                         designacao ='C') UNIQUE
 );
 
@@ -302,66 +301,57 @@ CREATE TABLE tipo_cliente (
 CREATE TABLE utilizador (
 
      utilizador_id                      INTEGER GENERATED AS IDENTITY CONSTRAINT pk_utilizador_id    PRIMARY KEY,
-     codigo_interno                     INTEGER         CONSTRAINT un_utilizador_codigo_interno     UNIQUE,
-     nome                               VARCHAR(40)     CONSTRAINT nn_utilizador_nome               NOT NULL,
-     numero_fiscal                      INTEGER         CONSTRAINT un_utilizador_numero_fiscal      UNIQUE,
-     email                              VARCHAR(40)     CONSTRAINT un_utilizador_email              UNIQUE,
-     morada_correspondencia             VARCHAR(40)     CONSTRAINT nn_utilizador_morada             NOT NULL,
-     plafond                            NUMBER(10,4)    CONSTRAINT ck_utilizador_plafond            CHECK(plafond >= 0 OR plafond = NULL),
-     numero_incidentes                  INTEGER         CONSTRAINT ck_utilizador_numero_incidentes  CHECK(numero_incidentes >= 0 OR numero_incidentes = NULL),
+     codigo_interno                     INTEGER         CONSTRAINT un_utilizador_codigo_interno      UNIQUE,
+     nome                               VARCHAR(40)     CONSTRAINT nn_utilizador_nome                NOT NULL,
+     numero_fiscal                      INTEGER         CONSTRAINT un_utilizador_numero_fiscal       UNIQUE,
+     email                              VARCHAR(40)     CONSTRAINT un_utilizador_email               UNIQUE,
+     morada_correspondencia             VARCHAR(40)     CONSTRAINT nn_utilizador_morada              NOT NULL, 
+     plafond                            NUMBER(15,2)    CONSTRAINT ck_utilizador_plafond             CHECK(plafond >= 0 OR plafond = NULL), 
+     numero_incidentes                  INTEGER         CONSTRAINT ck_utilizador_numero_incidentes   CHECK(numero_incidentes >= 0 OR numero_incidentes = NULL),
      data_ultimo_incidente              DATE,
      numero_encomendas_ultimo_ano       INTEGER         CONSTRAINT ck_utilizador_numero_encomendas_ultimo_ano  CHECK(numero_encomendas_ultimo_ano >= 0 OR numero_encomendas_ultimo_ano = NULL),
-     valor_total_encomendas_ultimo_ano  NUMBER(10,4)    CONSTRAINT ck_utilizador_valor_total_encomendas_ultimo_ano    CHECK(valor_total_encomendas_ultimo_ano >= 0 OR valor_total_encomendas_ultimo_ano = NULL),
-
-     codigo_postal_id          VARCHAR(40) REFERENCES codigo_postal(codigo_postal_id)       NOT NULL,
-     tipo_utilizador_id        INTEGER REFERENCES tipo_utilizador(tipo_utilizador_id)       NOT NULL,
+     valor_total_encomendas_ultimo_ano  NUMBER(15,2)    CONSTRAINT ck_utilizador_valor_total_encomendas_ultimo_ano    CHECK(valor_total_encomendas_ultimo_ano >= 0 OR valor_total_encomendas_ultimo_ano = NULL),
+     
+     codigo_postal_id          VARCHAR(40) REFERENCES codigo_postal(codigo_postal_id)       NOT NULL, 
+     tipo_utilizador_id        INTEGER REFERENCES tipo_utilizador(tipo_utilizador_id)       NOT NULL,   
      tipo_cliente              INTEGER REFERENCES tipo_cliente(tipo_cliente_id)  --pode ser null, temos utilizadores que podem nao ser clientes
 );
-
+    
 
 CREATE TABLE gestor_agricola (
 
-    instalacao_agricola_id            INTEGER REFERENCES instalacao_agricola(instalacao_agricola_id)       NOT NULL,
-    gestor_agricola_id                INTEGER REFERENCES utilizador(utilizador_id)                         NOT NULL,
+    instalacao_agricola_id            INTEGER REFERENCES instalacao_agricola(instalacao_agricola_id)       NOT NULL, 
+    gestor_agricola_id                INTEGER REFERENCES utilizador(utilizador_id)                         NOT NULL,  
     data_inicio_contrato              DATE CONSTRAINT nn_gestor_agricola_data_inicio_contrato              NOT NULL,
     CONSTRAINT pk_gestor_agricola     PRIMARY KEY (instalacao_agricola_id,gestor_agricola_id,data_inicio_contrato),
-
-    data_fim_contrato          DATE
+    
+    data_fim_contrato          DATE 
 );
 
 
 CREATE TABLE hub (
 
-    hub_id                  INTEGER GENERATED AS IDENTITY CONSTRAINT pk_hub_id    PRIMARY KEY,
-    morada                  VARCHAR(40)     CONSTRAINT nn_hub_morada      NOT NULL,
-    codigo_postal_id        VARCHAR(40) REFERENCES codigo_postal(codigo_postal_id)
+    hub_id                  INTEGER GENERATED AS IDENTITY CONSTRAINT pk_hub_id      PRIMARY KEY,
+    morada                  VARCHAR(40)     CONSTRAINT nn_hub_morada                NOT NULL,
+    codigo_postal_id        VARCHAR(40) REFERENCES codigo_postal(codigo_postal_id)  NOT NULL
 );
 
-
-CREATE TABLE deposito (
-
-    condutor_id                 INTEGER REFERENCES utilizador(utilizador_id)           NOT NULL,
-    gestor_distribuicao_id      INTEGER REFERENCES utilizador(utilizador_id)           NOT NULL,
-    hub_id                      INTEGER REFERENCES hub(hub_id)                         NOT NULL,
-    data_deposito               DATE CONSTRAINT nn_hub_data_deposito                   NOT NULL,
-    CONSTRAINT pk_condutor      PRIMARY KEY (condutor_id,gestor_distribuicao_id,hub_id,data_deposito)
-);
 
 CREATE TABLE incidente (
 
     incidente_id                  INTEGER GENERATED AS IDENTITY CONSTRAINT pk_incidente_id    PRIMARY KEY,
-    valor_incidente               NUMBER(10,2) CONSTRAINT ck_incidente_valor_incidente    CHECK(valor_incidente > 0),
-    data_incidente                DATE CONSTRAINT nn_incidente_data_incidente                   NOT NULL,
+    valor_incidente               NUMBER(10,2) CONSTRAINT ck_incidente_valor_incidente        CHECK(valor_incidente > 0),  
+    data_incidente                DATE CONSTRAINT nn_incidente_data_incidente                 NOT NULL,
     data_incidente_liquidado      DATE ,
-    cliente_id                    INTEGER REFERENCES utilizador(utilizador_id)                  NOT NULL
+    cliente_id                    INTEGER REFERENCES utilizador(utilizador_id)                NOT NULL
 );
 
 
 CREATE TABLE estado_encomenda (
 
      estado_encomenda_id       INTEGER GENERATED AS IDENTITY CONSTRAINT pk_estado_encomenda_id    PRIMARY KEY,
-     designacao                VARCHAR(40) CONSTRAINT ck_un_estado_encomenda_designacao CHECK(designacao ='registado' OR
-                                                                                              designacao ='entregue'  OR
+     designacao                VARCHAR(40) CONSTRAINT ck_un_estado_encomenda_designacao CHECK(designacao ='registado' OR 
+                                                                                              designacao ='entregue'  OR 
                                                                                               designacao ='pago') UNIQUE
 );
 
@@ -372,37 +362,37 @@ CREATE TABLE encomenda (
     gestor_agricola_id          INTEGER REFERENCES utilizador(utilizador_id)                  NOT NULL,
     data_estimada_entrega       DATE CONSTRAINT nn_encomenda_data_estimada_entrega            NOT NULL,
     CONSTRAINT pk_encomenda     PRIMARY KEY (cliente_id,gestor_agricola_id,data_estimada_entrega),
-
-    valor_encomenda             NUMBER(10,2) CONSTRAINT ck_encomenda_valor_encomenda    CHECK(valor_encomenda > 0),
+    
+    valor_encomenda             NUMBER(10,2) CONSTRAINT ck_encomenda_valor_encomenda         CHECK(valor_encomenda > 0),
     data_limite_pagamento       DATE CONSTRAINT nn_encomenda_data_limite_pagamento           NOT NULL,
     endereco_entrega            VARCHAR(40) , --pode ser null caso a morada seja um hub ou a do proprio cliente
-
+    
     hub_id                      INTEGER REFERENCES hub(hub_id)    --pode ser null caso a morada nao seja um hub
 );
 
 
 CREATE TABLE registo_encomenda (
 
-    cliente_id                          INTEGER CONSTRAINT nn_registo_encomenda_cliente_id                         NOT NULL,
+    cliente_id                          INTEGER CONSTRAINT nn_registo_encomenda_cliente_id                         NOT NULL, 
     gestor_agricola_id                  INTEGER CONSTRAINT nn_registo_encomenda_gestor_agricola_id                 NOT NULL,
     data_estimada_entrega               DATE    CONSTRAINT nn_registo_encomenda_data_estimada_entrega              NOT NULL,
-    estado_encomenda_id                 INTEGER REFERENCES estado_encomenda(estado_encomenda_id)                   NOT NULL,
+    estado_encomenda_id                 INTEGER REFERENCES estado_encomenda(estado_encomenda_id)                   NOT NULL, 
     CONSTRAINT pk_registo_encomenda     PRIMARY KEY (cliente_id,gestor_agricola_id,data_estimada_entrega,estado_encomenda_id),
-
+    
     CONSTRAINT fk_registo_encomenda     FOREIGN KEY (cliente_id,gestor_agricola_id,data_estimada_entrega) REFERENCES encomenda(cliente_id,gestor_agricola_id,data_estimada_entrega),
-
+    
     data_registo_entrega_pagamento      DATE CONSTRAINT nn_registo_encomenda_data_entrega_registo_pagamento  NOT NULL
 );
 
 
 CREATE TABLE pagamento (
 
-    pagamento_id                INTEGER GENERATED AS IDENTITY CONSTRAINT pk_pagamento_id    PRIMARY KEY,
-
-    valor_pagamento             NUMBER(10,2) CONSTRAINT ck_pagamento_valor_pagamento    CHECK(valor_pagamento > 0),
-    data_pagamento              DATE CONSTRAINT nn_encomenda_data_pagamento             NOT NULL,
-
-    cliente_id                  INTEGER CONSTRAINT nn_pagamento_cliente_id                         NOT NULL,
+    pagamento_id                INTEGER GENERATED AS IDENTITY CONSTRAINT pk_pagamento_id            PRIMARY KEY,
+    
+    valor_pagamento             NUMBER(10,2) CONSTRAINT ck_pagamento_valor_pagamento                CHECK(valor_pagamento > 0),
+    data_pagamento              DATE CONSTRAINT nn_encomenda_data_pagamento                         NOT NULL,
+    
+    cliente_id                  INTEGER CONSTRAINT nn_pagamento_cliente_id                         NOT NULL, 
     gestor_agricola_id          INTEGER CONSTRAINT nn_pagamento_gestor_agricola_id                 NOT NULL,
     data_estimada_entrega       DATE    CONSTRAINT nn_pagamento_data_estimada_entrega              NOT NULL,
     CONSTRAINT fk_pagamento     FOREIGN KEY (cliente_id,gestor_agricola_id,data_estimada_entrega) REFERENCES encomenda(cliente_id,gestor_agricola_id,data_estimada_entrega)
@@ -411,15 +401,15 @@ CREATE TABLE pagamento (
 
 CREATE TABLE encomenda_produto (
 
-    cliente_id                          INTEGER CONSTRAINT nn_encomenda_produto_cliente_id                         NOT NULL,
+    cliente_id                          INTEGER CONSTRAINT nn_encomenda_produto_cliente_id                         NOT NULL, 
     gestor_agricola_id                  INTEGER CONSTRAINT nn_encomenda_produto_gestor_agricola_id                 NOT NULL,
     data_estimada_entrega               DATE    CONSTRAINT nn_encomenda_produto_data_estimada_entrega              NOT NULL,
-    produto_id                          INTEGER REFERENCES produto(produto_id)                                     NOT NULL,
+    produto_id                          INTEGER REFERENCES produto(produto_id)                                     NOT NULL, 
     CONSTRAINT pk_encomenda_produto     PRIMARY KEY (cliente_id,gestor_agricola_id,data_estimada_entrega,produto_id),
-
+    
     CONSTRAINT fk_encomenda_produto     FOREIGN KEY (cliente_id,gestor_agricola_id,data_estimada_entrega) REFERENCES encomenda(cliente_id,gestor_agricola_id,data_estimada_entrega),
-
-    quantidade_ton                       NUMBER(15,2) CONSTRAINT ck_encomenda_produto_quantidade_ton    CHECK(quantidade_ton >= 0)
+    
+    quantidade_ton                      NUMBER(15,4) CONSTRAINT ck_encomenda_produto_quantidade_ton    CHECK(quantidade_ton > 0)
 );
 
 
@@ -477,7 +467,7 @@ INSERT INTO utilizador(codigo_interno,nome,numero_fiscal,email,morada_correspond
             numero_encomendas_ultimo_ano,valor_total_encomendas_ultimo_ano,codigo_postal_id,tipo_utilizador_id,tipo_cliente)
             VALUES
             (null,'Quim',231432462,'quimisep@isep.ipp.pt','rua quim ISEP',NULL,NULL,NULL,NULL,NULL,'4480',2,NULL);
-
+            
 --O UTILIZADOR QUIM TRABALHOU EM 2019 O ANO QUASE TODO NA instalacao_agricola_id=1,POSTERIORMENTE
 --TRABALHOU NA instalacao_agricola_id=2 NO ANO 2020,VOLTANDO A instalacao_agricola_id=1 EM 2021
 INSERT INTO gestor_agricola(instalacao_agricola_id,gestor_agricola_id,data_inicio_contrato,data_fim_contrato) VALUES (1,1,TO_DATE('01/01/2019 08:00','DD/MM/YYYY HH24:MI'),TO_DATE('12/12/2019 08:00','DD/MM/YYYY HH24:MI'));
@@ -509,7 +499,7 @@ INSERT INTO utilizador(codigo_interno,nome,numero_fiscal,email,morada_correspond
             VALUES
             (1181478,'jonas',231432458,'1181478@isep.ipp.pt','rua jonas ISEP',10000,0,NULL,1,6000,'4440',1,2);
 
---cliente jose plafond 15000,incidentes 0, numero encomendas do ultimo ano 1, valor total encomendas 12000, tipo cliente A
+--cliente jose plafond 15000,incidentes 0, numero encomendas do ultimo ano 1, valor total encomendas 12000, tipo cliente A            
 INSERT INTO utilizador(codigo_interno,nome,numero_fiscal,email,morada_correspondencia,plafond,numero_incidentes,data_ultimo_incidente,
             numero_encomendas_ultimo_ano,valor_total_encomendas_ultimo_ano,codigo_postal_id,tipo_utilizador_id,tipo_cliente)
             VALUES
@@ -519,13 +509,13 @@ INSERT INTO utilizador(codigo_interno,nome,numero_fiscal,email,morada_correspond
             numero_encomendas_ultimo_ano,valor_total_encomendas_ultimo_ano,codigo_postal_id,tipo_utilizador_id,tipo_cliente)
             VALUES
             (1210951,'marco',231432456,'1210951@isep.ipp.pt','rua marco ISEP',13000,0,NULL,0,0,'4420',1,NULL);
-
+            
 INSERT INTO utilizador(codigo_interno,nome,numero_fiscal,email,morada_correspondencia,plafond,numero_incidentes,data_ultimo_incidente,
             numero_encomendas_ultimo_ano,valor_total_encomendas_ultimo_ano,codigo_postal_id,tipo_utilizador_id,tipo_cliente)
             VALUES
             (1210954,'ruben',231432455,'1210954@isep.ipp.pt','rua ruben ISEP',15000,0,NULL,0,0,'4410',1,NULL);
-
-
+            
+            
 -----------------------------------------------------------------------
 ------------------------------EDIFICIOS--------------------------------
 -----------------------------------------------------------------------
@@ -533,9 +523,9 @@ INSERT INTO tipo_edificio(designacao) VALUES ('armazem');
 INSERT INTO tipo_edificio(designacao) VALUES ('garagem');
 INSERT INTO tipo_edificio(designacao) VALUES ('estabulo');
 
-INSERT INTO edificio(designacao,area,tipo_edificio_id,instalacao_agricola_id) VALUES ('Almada', 1500.20, 1, 1);
-INSERT INTO edificio(designacao,area,tipo_edificio_id,instalacao_agricola_id) VALUES ('Lapa', 1300.10, 2, 1);
-INSERT INTO edificio(designacao,area,tipo_edificio_id,instalacao_agricola_id) VALUES ('Zapa', 1600.50, 3, 1);
+INSERT INTO edificio(designacao,area_ha,tipo_edificio_id,instalacao_agricola_id) VALUES ('Almada', 1500.20, 1, 1);
+INSERT INTO edificio(designacao,area_ha,tipo_edificio_id,instalacao_agricola_id) VALUES ('Lapa', 1300.10, 2, 1);
+INSERT INTO edificio(designacao,area_ha,tipo_edificio_id,instalacao_agricola_id) VALUES ('Zapa', 1600.50, 3, 1);
 
 
 -----------------------------------------------------------------------
@@ -549,10 +539,10 @@ INSERT INTO produto(valor_mercado_por_ha,designacao) VALUES (2000,'macas');
 INSERT INTO produto(valor_mercado_por_ha,designacao) VALUES (3000,'trigo');
 INSERT INTO produto(valor_mercado_por_ha,designacao) VALUES (0,'adubacao verde');
 
-INSERT INTO parcela_agricola(designacao,area,instalacao_agricola_id) VALUES ('Balmada', 1100.20, 1);
-INSERT INTO parcela_agricola(designacao,area,instalacao_agricola_id) VALUES ('Japa', 1000.10, 1);
-INSERT INTO parcela_agricola(designacao,area,instalacao_agricola_id) VALUES ('Opat', 200.50, 1);
-INSERT INTO parcela_agricola(designacao,area,instalacao_agricola_id) VALUES ('Xat', 500, 1);
+INSERT INTO parcela_agricola(designacao,area_ha,instalacao_agricola_id) VALUES ('Balmada', 1100.20, 1);
+INSERT INTO parcela_agricola(designacao,area_ha,instalacao_agricola_id) VALUES ('Japa', 1000.10, 1);
+INSERT INTO parcela_agricola(designacao,area_ha,instalacao_agricola_id) VALUES ('Opat', 200.50, 1);
+INSERT INTO parcela_agricola(designacao,area_ha,instalacao_agricola_id) VALUES ('Xat', 500, 1);
 
 --Parcela agricola com 2 produtos la plantados
 INSERT INTO registo_cultura(caderno_campo_id,parcela_agricola_id,produto_id,tipo_cultura_id,data_plantacao,
@@ -562,22 +552,22 @@ INSERT INTO registo_cultura(caderno_campo_id,parcela_agricola_id,produto_id,tipo
             area_plantada_ha,data_colheita,quantidade_colhida_ton_por_ha)
             VALUES (1,1,2,1,TO_DATE('04/01/2021 10:30','DD/MM/YYYY HH24:MI'),40,TO_DATE('20/12/2021 12:00','DD/MM/YYYY HH24:MI'),90);
 
---Parcela agricola com 2 produtos la plantados
+--Parcela agricola com 2 produtos la plantados                            
 INSERT INTO registo_cultura(caderno_campo_id,parcela_agricola_id,produto_id,tipo_cultura_id,data_plantacao,
-            area_plantada_ha,data_colheita,quantidade_colhida_ton_por_ha)
+            area_plantada_ha,data_colheita,quantidade_colhida_ton_por_ha)  
             VALUES (1,2,2,1,TO_DATE('04/01/2021 12:00','DD/MM/YYYY HH24:MI'),30,TO_DATE('21/12/2021 12:00','DD/MM/YYYY HH24:MI'),100);
 INSERT INTO registo_cultura(caderno_campo_id,parcela_agricola_id,produto_id,tipo_cultura_id,data_plantacao,
-            area_plantada_ha,data_colheita,quantidade_colhida_ton_por_ha)
+            area_plantada_ha,data_colheita,quantidade_colhida_ton_por_ha)  
             VALUES (1,2,3,2,TO_DATE('04/01/2021 12:30','DD/MM/YYYY HH24:MI'),20,TO_DATE('21/12/2021 12:00','DD/MM/YYYY HH24:MI'),90);
 
---Parcela agricola com 1 produto plantado
+--Parcela agricola com 1 produto plantado            
 INSERT INTO registo_cultura(caderno_campo_id,parcela_agricola_id,produto_id,tipo_cultura_id,data_plantacao,
-            area_plantada_ha,data_colheita,quantidade_colhida_ton_por_ha)
+            area_plantada_ha,data_colheita,quantidade_colhida_ton_por_ha)  
             VALUES (1,3,3,2,TO_DATE('04/01/2021 16:00','DD/MM/YYYY HH24:MI'),20,TO_DATE('22/12/2021 12:00','DD/MM/YYYY HH24:MI'),150);
 
---Parcela agricola com 1 produto plantado
+--Parcela agricola com 1 produto plantado            
 INSERT INTO registo_cultura(caderno_campo_id,parcela_agricola_id,produto_id,tipo_cultura_id,data_plantacao,
-            area_plantada_ha,data_colheita,quantidade_colhida_ton_por_ha)
+            area_plantada_ha,data_colheita,quantidade_colhida_ton_por_ha)  
             VALUES (1,4,4,1,TO_DATE('04/01/2021 18:00','DD/MM/YYYY HH24:MI'),10,TO_DATE('23/12/2021 12:00','DD/MM/YYYY HH24:MI'),200);
 
 
@@ -618,81 +608,81 @@ INSERT INTO tipo_sistema(designacao) VALUES('gravidade');
 INSERT INTO tipo_sistema(designacao) VALUES('bombeada');
 
 --PLANO DE REGA DA PARCELA AGRICOLA COM parcela_agricola_id=1
-INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm)
+INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm) 
             VALUES (1,TO_DATE('06/01/2021 12:00','DD/MM/YYYY HH24:MI'),TO_DATE('06/01/2021 12:30','DD/MM/YYYY HH24:MI'),24,30);
-INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm)
-            VALUES (1,TO_DATE('07/01/2021 12:00','DD/MM/YYYY HH24:MI'),TO_DATE('07/01/2021 12:30','DD/MM/YYYY HH24:MI'),24,30);
-INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm)
+INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm) 
+            VALUES (1,TO_DATE('07/01/2021 12:00','DD/MM/YYYY HH24:MI'),TO_DATE('07/01/2021 12:30','DD/MM/YYYY HH24:MI'),24,30);            
+INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm) 
             VALUES (1,TO_DATE('08/01/2021 12:00','DD/MM/YYYY HH24:MI'),TO_DATE('08/01/2021 12:30','DD/MM/YYYY HH24:MI'),24,30);
 --ESTA ULTIMA REGA FOI PLANEADA MAS NAO EXECUTADA , POIS NAO CONSTA DA TABELA REGA_EXECUTADA
-INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm)
+INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm) 
             VALUES (1,TO_DATE('09/01/2021 12:00','DD/MM/YYYY HH24:MI'),TO_DATE('09/01/2021 12:30','DD/MM/YYYY HH24:MI'),24,30);
-
---REGA EXECUTADA DA PARCELA AGRICOLA COM parcela_agricola_id=1
+            
+--REGA EXECUTADA DA PARCELA AGRICOLA COM parcela_agricola_id=1            
 INSERT INTO rega_executada(caderno_campo_id,parcela_agricola_id,data_realizacao,quantidade_rega,tempo_rega_mm,tipo_rega_id,tipo_sistema_id)
             VALUES(1,1,TO_DATE('06/01/2021 12:00','DD/MM/YYYY HH24:MI'),1000,30,1,1);
 INSERT INTO rega_executada(caderno_campo_id,parcela_agricola_id,data_realizacao,quantidade_rega,tempo_rega_mm,tipo_rega_id,tipo_sistema_id)
             VALUES(1,1,TO_DATE('07/01/2021 12:00','DD/MM/YYYY HH24:MI'),500,30,2,1);
 INSERT INTO rega_executada(caderno_campo_id,parcela_agricola_id,data_realizacao,quantidade_rega,tempo_rega_mm,tipo_rega_id,tipo_sistema_id)
             VALUES(1,1,TO_DATE('08/01/2021 12:00','DD/MM/YYYY HH24:MI'),100,30,3,2);
-
+            
 --PLANO DE REGA DA PARCELA AGRICOLA COM parcela_agricola_id=2
-INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm)
+INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm) 
             VALUES (2,TO_DATE('06/01/2021 14:00','DD/MM/YYYY HH24:MI'),TO_DATE('06/01/2021 14:30','DD/MM/YYYY HH24:MI'),24,30);
-INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm)
-            VALUES (2,TO_DATE('07/01/2021 14:00','DD/MM/YYYY HH24:MI'),TO_DATE('07/01/2021 14:30','DD/MM/YYYY HH24:MI'),24,30);
-INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm)
+INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm) 
+            VALUES (2,TO_DATE('07/01/2021 14:00','DD/MM/YYYY HH24:MI'),TO_DATE('07/01/2021 14:30','DD/MM/YYYY HH24:MI'),24,30);            
+INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm) 
             VALUES (2,TO_DATE('08/01/2021 14:00','DD/MM/YYYY HH24:MI'),TO_DATE('08/01/2021 14:30','DD/MM/YYYY HH24:MI'),24,30);
 --ESTA ULTIMA REGA FOI PLANEADA MAS NAO EXECUTADA , POIS NAO CONSTA DA TABELA REGA_EXECUTADA
-INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm)
+INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm) 
             VALUES (2,TO_DATE('09/01/2021 14:00','DD/MM/YYYY HH24:MI'),TO_DATE('09/01/2021 14:30','DD/MM/YYYY HH24:MI'),24,30);
-
---REGA EXECUTADA DA PARCELA AGRICOLA COM parcela_agricola_id=2
+            
+--REGA EXECUTADA DA PARCELA AGRICOLA COM parcela_agricola_id=2            
 INSERT INTO rega_executada(caderno_campo_id,parcela_agricola_id,data_realizacao,quantidade_rega,tempo_rega_mm,tipo_rega_id,tipo_sistema_id)
             VALUES(1,2,TO_DATE('06/01/2022 14:00','DD/MM/YYYY HH24:MI'),100,30,1,1);
 INSERT INTO rega_executada(caderno_campo_id,parcela_agricola_id,data_realizacao,quantidade_rega,tempo_rega_mm,tipo_rega_id,tipo_sistema_id)
             VALUES(1,2,TO_DATE('07/01/2022 14:00','DD/MM/YYYY HH24:MI'),50,30,2,1);
 INSERT INTO rega_executada(caderno_campo_id,parcela_agricola_id,data_realizacao,quantidade_rega,tempo_rega_mm,tipo_rega_id,tipo_sistema_id)
             VALUES(1,2,TO_DATE('08/01/2022 14:00','DD/MM/YYYY HH24:MI'),10,30,3,2);
-
+            
 --PLANO DE REGA DA PARCELA AGRICOLA COM parcela_agricola_id=3
-INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm)
+INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm) 
             VALUES (3,TO_DATE('06/01/2021 16:00','DD/MM/YYYY HH24:MI'),TO_DATE('06/01/2021 16:30','DD/MM/YYYY HH24:MI'),24,30);
-INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm)
-            VALUES (3,TO_DATE('07/01/2021 16:00','DD/MM/YYYY HH24:MI'),TO_DATE('07/01/2021 16:30','DD/MM/YYYY HH24:MI'),24,30);
-INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm)
+INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm) 
+            VALUES (3,TO_DATE('07/01/2021 16:00','DD/MM/YYYY HH24:MI'),TO_DATE('07/01/2021 16:30','DD/MM/YYYY HH24:MI'),24,30);            
+INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm) 
             VALUES (3,TO_DATE('08/01/2021 16:00','DD/MM/YYYY HH24:MI'),TO_DATE('08/01/2021 16:30','DD/MM/YYYY HH24:MI'),24,30);
 --ESTA ULTIMA REGA FOI PLANEADA MAS NAO EXECUTADA , POIS NAO CONSTA DA TABELA REGA_EXECUTADA
-INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm)
+INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm) 
             VALUES (3,TO_DATE('09/01/2021 16:00','DD/MM/YYYY HH24:MI'),TO_DATE('09/01/2021 16:30','DD/MM/YYYY HH24:MI'),24,30);
-
---REGA EXECUTADA DA PARCELA AGRICOLA COM parcela_agricola_id=3
+            
+--REGA EXECUTADA DA PARCELA AGRICOLA COM parcela_agricola_id=3            
 INSERT INTO rega_executada(caderno_campo_id,parcela_agricola_id,data_realizacao,quantidade_rega,tempo_rega_mm,tipo_rega_id,tipo_sistema_id)
             VALUES(1,3,TO_DATE('06/01/2021 16:00','DD/MM/YYYY HH24:MI'),10,30,1,1);
 INSERT INTO rega_executada(caderno_campo_id,parcela_agricola_id,data_realizacao,quantidade_rega,tempo_rega_mm,tipo_rega_id,tipo_sistema_id)
             VALUES(1,3,TO_DATE('07/01/2021 16:00','DD/MM/YYYY HH24:MI'),5,30,2,1);
 INSERT INTO rega_executada(caderno_campo_id,parcela_agricola_id,data_realizacao,quantidade_rega,tempo_rega_mm,tipo_rega_id,tipo_sistema_id)
             VALUES(1,3,TO_DATE('08/01/2021 16:00','DD/MM/YYYY HH24:MI'),1,30,3,2);
-
+            
 --PLANO DE REGA DA PARCELA AGRICOLA COM parcela_agricola_id=4
-INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm)
+INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm) 
             VALUES (4,TO_DATE('06/01/2021 18:00','DD/MM/YYYY HH24:MI'),TO_DATE('06/01/2021 18:30','DD/MM/YYYY HH24:MI'),24,30);
-INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm)
-            VALUES (4,TO_DATE('07/01/2021 18:00','DD/MM/YYYY HH24:MI'),TO_DATE('07/01/2021 18:30','DD/MM/YYYY HH24:MI'),24,30);
-INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm)
+INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm) 
+            VALUES (4,TO_DATE('07/01/2021 18:00','DD/MM/YYYY HH24:MI'),TO_DATE('07/01/2021 18:30','DD/MM/YYYY HH24:MI'),24,30);            
+INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm) 
             VALUES (4,TO_DATE('08/01/2021 18:00','DD/MM/YYYY HH24:MI'),TO_DATE('08/01/2021 18:30','DD/MM/YYYY HH24:MI'),24,30);
 --ESTA ULTIMA REGA FOI PLANEADA MAS NAO EXECUTADA , POIS NAO CONSTA DA TABELA REGA_EXECUTADA
-INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm)
+INSERT INTO plano_rega(parcela_agricola_id,data_inicio,data_fim,periodicidade_rega_hh,tempo_rega_mm) 
             VALUES (4,TO_DATE('09/01/2021 18:00','DD/MM/YYYY HH24:MI'),TO_DATE('09/01/2021 18:30','DD/MM/YYYY HH24:MI'),24,30);
-
---REGA EXECUTADA DA PARCELA AGRICOLA COM parcela_agricola_id=4
+            
+--REGA EXECUTADA DA PARCELA AGRICOLA COM parcela_agricola_id=4            
 INSERT INTO rega_executada(caderno_campo_id,parcela_agricola_id,data_realizacao,quantidade_rega,tempo_rega_mm,tipo_rega_id,tipo_sistema_id)
             VALUES(1,4,TO_DATE('06/01/2021 18:00','DD/MM/YYYY HH24:MI'),10000,30,1,1);
 INSERT INTO rega_executada(caderno_campo_id,parcela_agricola_id,data_realizacao,quantidade_rega,tempo_rega_mm,tipo_rega_id,tipo_sistema_id)
             VALUES(1,4,TO_DATE('07/01/2021 18:00','DD/MM/YYYY HH24:MI'),5000,30,2,1);
 INSERT INTO rega_executada(caderno_campo_id,parcela_agricola_id,data_realizacao,quantidade_rega,tempo_rega_mm,tipo_rega_id,tipo_sistema_id)
             VALUES(1,4,TO_DATE('08/01/2021 18:00','DD/MM/YYYY HH24:MI'),1000,30,3,2);
-
+            
 
 -----------------------------------------------------------------------
 -------------------------FATORES DE PRODUCAO---------------------------
@@ -716,7 +706,7 @@ INSERT INTO fator_producao(nome_comercial,fornecedor,preco_por_kg,formulacao_id,
 INSERT INTO fator_producao(nome_comercial,fornecedor,preco_por_kg,formulacao_id,tipo_fator_producao_id)
             VALUES('AMINOLUM ALFAFA','ALFREDO INESTA, SL',13,3,4);
 
-INSERT INTO tipo_composto(designacao) VALUES ('elemento');
+INSERT INTO tipo_composto(designacao) VALUES ('elemento');         
 INSERT INTO tipo_composto(designacao) VALUES ('substancia');
 
 INSERT INTO composto(designacao,tipo_composto_id) VALUES ('Azoto organico',1);
@@ -730,7 +720,7 @@ INSERT INTO composto(designacao,tipo_composto_id) VALUES ('Acidos fulvicos',2);
 INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidade_composto)
             VALUES (1,1,'kg',1);
 INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidade_composto)
-            VALUES (1,2,'l',2);
+            VALUES (1,2,'l',2);            
 INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidade_composto)
             VALUES (1,3,'kg',1);
 INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidade_composto)
@@ -739,12 +729,12 @@ INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidad
             VALUES (1,5,'kg',2);
 INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidade_composto)
             VALUES (1,6,'kg',5);
-
+            
 --FICHA TECNICA DO FATOR DE PRODUCAO COM fator_producao_id = 2
 INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidade_composto)
             VALUES (2,1,'kg',10);
 INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidade_composto)
-            VALUES (2,2,'l',20);
+            VALUES (2,2,'l',20);            
 INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidade_composto)
             VALUES (2,3,'kg',10);
 INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidade_composto)
@@ -753,12 +743,12 @@ INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidad
             VALUES (2,5,'kg',20);
 INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidade_composto)
             VALUES (2,6,'kg',50);
-
+            
 --FICHA TECNICA DO FATOR DE PRODUCAO COM fator_producao_id = 3
 INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidade_composto)
             VALUES (3,1,'kg',100);
 INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidade_composto)
-            VALUES (3,2,'l',200);
+            VALUES (3,2,'l',200);            
 INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidade_composto)
             VALUES (3,3,'kg',100);
 INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidade_composto)
@@ -767,12 +757,12 @@ INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidad
             VALUES (3,5,'kg',200);
 INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidade_composto)
             VALUES (3,6,'kg',500);
-
+            
 --FICHA TECNICA DO FATOR DE PRODUCAO COM fator_producao_id = 4
 INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidade_composto)
             VALUES (4,1,'kg',1000);
 INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidade_composto)
-            VALUES (4,2,'l',2000);
+            VALUES (4,2,'l',2000);            
 INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidade_composto)
             VALUES (4,3,'kg',1000);
 INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidade_composto)
@@ -781,20 +771,20 @@ INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidad
             VALUES (4,5,'kg',2000);
 INSERT INTO ficha_tecnica(fator_producao_id,composto_id,unidade_medida,quantidade_composto)
             VALUES (4,6,'kg',5000);
-
---NA instalacao_agricola_id = 1 o fator_producao_id=1 TEMOS 100 kg
+            
+--NA instalacao_agricola_id = 1 o fator_producao_id=1 TEMOS 100 kg           
 INSERT INTO instalacao_agricola_fator_producao(instalacao_agricola_id,fator_producao_id,quantidade_kg)
             VALUES(1,1,100);
-
---NA instalacao_agricola_id = 1 o fator_producao_id=2 TEMOS 1000 kg
+            
+--NA instalacao_agricola_id = 1 o fator_producao_id=2 TEMOS 1000 kg           
 INSERT INTO instalacao_agricola_fator_producao(instalacao_agricola_id,fator_producao_id,quantidade_kg)
             VALUES(1,2,1000);
-
---NA instalacao_agricola_id = 1 o fator_producao_id=2 TEMOS 10000 kg
+            
+--NA instalacao_agricola_id = 1 o fator_producao_id=2 TEMOS 10000 kg           
 INSERT INTO instalacao_agricola_fator_producao(instalacao_agricola_id,fator_producao_id,quantidade_kg)
             VALUES(1,3,10000);
-
---NA instalacao_agricola_id = 1 o fator_producao_id=2 TEMOS 100000 kg
+            
+--NA instalacao_agricola_id = 1 o fator_producao_id=2 TEMOS 100000 kg           
 INSERT INTO instalacao_agricola_fator_producao(instalacao_agricola_id,fator_producao_id,quantidade_kg)
             VALUES(1,4,100000);
 
@@ -807,36 +797,29 @@ INSERT INTO tipo_fertilizacao(designacao) VALUES ('fetirrega');
 INSERT INTO tipo_fertilizacao(designacao) VALUES ('foliar');
 
 --NA parcela_agricola_id=1 E USANDO fator_producao_id=1 , FERTILIZAMOS COM 50kg
-INSERT INTO fertilizacao(parcela_agricola_id,fator_producao_id,data_fertilizacao,quantidade_utilizada,tipo_fertilizacao_id)
+INSERT INTO fertilizacao(parcela_agricola_id,fator_producao_id,data_fertilizacao,quantidade_utilizada_kg,tipo_fertilizacao_id)
             VALUES(1,1,TO_DATE('03/01/2021 12:00','DD/MM/YYYY HH24:MI'),50,1);
 --NA parcela_agricola_id=2 E USANDO fator_producao_id=1 , FERTILIZAMOS COM 50kg
-INSERT INTO fertilizacao(parcela_agricola_id,fator_producao_id,data_fertilizacao,quantidade_utilizada,tipo_fertilizacao_id)
+INSERT INTO fertilizacao(parcela_agricola_id,fator_producao_id,data_fertilizacao,quantidade_utilizada_kg,tipo_fertilizacao_id)
             VALUES(2,1,TO_DATE('03/01/2021 14:00','DD/MM/YYYY HH24:MI'),50,2);
 --NA parcela_agricola_id=3 E USANDO fator_producao_id=1 , FERTILIZAMOS COM 50kg
-INSERT INTO fertilizacao(parcela_agricola_id,fator_producao_id,data_fertilizacao,quantidade_utilizada,tipo_fertilizacao_id)
+INSERT INTO fertilizacao(parcela_agricola_id,fator_producao_id,data_fertilizacao,quantidade_utilizada_kg,tipo_fertilizacao_id)
             VALUES(3,1,TO_DATE('03/01/2021 16:00','DD/MM/YYYY HH24:MI'),50,3);
 --NA parcela_agricola_id=4 E USANDO fator_producao_id=1 , FERTILIZAMOS COM 50kg
-INSERT INTO fertilizacao(parcela_agricola_id,fator_producao_id,data_fertilizacao,quantidade_utilizada,tipo_fertilizacao_id)
+INSERT INTO fertilizacao(parcela_agricola_id,fator_producao_id,data_fertilizacao,quantidade_utilizada_kg,tipo_fertilizacao_id)
             VALUES(4,1,TO_DATE('03/01/2021 18:00','DD/MM/YYYY HH24:MI'),50,1);
 
-
+            
 -----------------------------------------------------------------------
 ---------------------------------HUBS----------------------------------
------------------------------------------------------------------------
-
+-----------------------------------------------------------------------            
+            
 INSERT INTO hub(morada,codigo_postal_id) VALUES ('Trindade','4400');
-INSERT INTO hub(morada,codigo_postal_id) VALUES ('Foz','4390');
-
---CONDUTOR ANTONIO COM condutor_id/utilizador_id=2,  E GESTOR DISTRIBUICAO MANUEL COM condutor_id/utilizador_id=3
-INSERT INTO deposito(condutor_id,gestor_distribuicao_id,hub_id,data_deposito) VALUES (2,3,1,TO_DATE('14/02/2022 16:00','DD/MM/YYYY HH24:MI'));
-INSERT INTO deposito(condutor_id,gestor_distribuicao_id,hub_id,data_deposito) VALUES (2,3,1,TO_DATE('15/02/2022 16:00','DD/MM/YYYY HH24:MI'));
-INSERT INTO deposito(condutor_id,gestor_distribuicao_id,hub_id,data_deposito) VALUES (2,3,2,TO_DATE('16/02/2022 16:00','DD/MM/YYYY HH24:MI'));
-INSERT INTO deposito(condutor_id,gestor_distribuicao_id,hub_id,data_deposito) VALUES (2,3,2,TO_DATE('17/02/2022 16:00','DD/MM/YYYY HH24:MI'));
-
-
+INSERT INTO hub(morada,codigo_postal_id) VALUES ('Foz','4390');            
+            
 -----------------------------------------------------------------------
 ----------------------------ENCOMENDAS---------------------------------
----------------------E COISAS QUE ENVOLVAM ESTES-----------------------
+---------------------E COISAS QUE ENVOLVAM ESTES-----------------------     
 
 --VALORES IMPORTANTES A TER EM CONTA:
 --cliente_id/utilizador_id=4 , codigo_interno=1210957, nome = joao
@@ -865,13 +848,13 @@ INSERT INTO encomenda(cliente_id,gestor_agricola_id,data_estimada_entrega,valor_
 
 --cliente_id/utilizador_id=4 , codigo_interno=1210957, nome = joao
 --encomendou 10 toneladas de rosas, 10 toneladas de macas e 10 toneladas de trigo, daí o valor 60000 em cima mencionado
-INSERT INTO encomenda_produto(cliente_id,gestor_agricola_id,data_estimada_entrega,produto_id,quantidade_ton)
+INSERT INTO encomenda_produto(cliente_id,gestor_agricola_id,data_estimada_entrega,produto_id,quantidade_ton) 
             VALUES (4,1,TO_DATE('15/02/2022 16:00','DD/MM/YYYY HH24:MI'),1,10);
-INSERT INTO encomenda_produto(cliente_id,gestor_agricola_id,data_estimada_entrega,produto_id,quantidade_ton)
+INSERT INTO encomenda_produto(cliente_id,gestor_agricola_id,data_estimada_entrega,produto_id,quantidade_ton) 
             VALUES (4,1,TO_DATE('15/02/2022 16:00','DD/MM/YYYY HH24:MI'),2,10);
-INSERT INTO encomenda_produto(cliente_id,gestor_agricola_id,data_estimada_entrega,produto_id,quantidade_ton)
+INSERT INTO encomenda_produto(cliente_id,gestor_agricola_id,data_estimada_entrega,produto_id,quantidade_ton) 
             VALUES (4,1,TO_DATE('15/02/2022 16:00','DD/MM/YYYY HH24:MI'),3,10);
-
+ 
  --cliente_id/utilizador_id=4 , codigo_interno=1210957, nome = joao
  --teve a sua encomenda registada no dia 10 de fevereiro (estado_encomenda_id=1 'registada')
 INSERT INTO registo_encomenda(cliente_id,gestor_agricola_id,data_estimada_entrega,estado_encomenda_id,data_registo_entrega_pagamento)
@@ -880,44 +863,44 @@ INSERT INTO registo_encomenda(cliente_id,gestor_agricola_id,data_estimada_entreg
 --sendo a sua encomenda entregue no dia 16 de fevereiro, um dia depois da data estimada (estado_encomenda_id=2 'entregue')
 INSERT INTO registo_encomenda(cliente_id,gestor_agricola_id,data_estimada_entrega,estado_encomenda_id,data_registo_entrega_pagamento)
             VALUES(4,1,TO_DATE('15/02/2022 16:00','DD/MM/YYYY HH24:MI'),2,TO_DATE('16/02/2022 16:00','DD/MM/YYYY HH24:MI'));
-
---efectuou o pagamento no dia 20 de marco
-INSERT INTO pagamento(valor_pagamento,data_pagamento,cliente_id,gestor_agricola_id,data_estimada_entrega)
+            
+--efectuou o pagamento no dia 20 de marco            
+INSERT INTO pagamento(valor_pagamento,data_pagamento,cliente_id,gestor_agricola_id,data_estimada_entrega) 
             VALUES(60000,TO_DATE('20/03/2022 16:00','DD/MM/YYYY HH24:MI'),4,1,TO_DATE('15/02/2022 16:00','DD/MM/YYYY HH24:MI'));
 
 --sendo que gerou um incidente pois a data limite a quando do registo da encomenda era dia 15 de março
 --EM TEORIA OS INCIDENTES DEVEM SER GERIDOS POR UM TRIGGER QUE TODOS OS DIAS VÊ TODOS OS CLIENTES QUE GERARM INCIDENTES NESSE DIA
 --COMEÇANDO COM O ATRIBUTO "data_incidente_liquidado" a NULL , APOS CADA PAGAMENTO ESTES DEVEM SER EFETUADOS COM UM TRIGGER TAMBEM
 --QUE APOS INSERIR UM PAGAMENTO ACUTALIZA OS VALORES NA TABELA INCIDENTE E LEMBRAR QUE OS ATRIBUTOS EM CLIENTE DEVEM TAMBEM SER ATUALIZADOS COM TRIGGERS
-INSERT INTO incidente(valor_incidente,data_incidente,data_incidente_liquidado,cliente_id)
-            VALUES(60000,TO_DATE('15/03/2022 16:01','DD/MM/YYYY HH24:MI'),TO_DATE('20/03/2022 16:00','DD/MM/YYYY HH24:MI'),4);
+INSERT INTO incidente(valor_incidente,data_incidente,data_incidente_liquidado,cliente_id) 
+            VALUES(60000,TO_DATE('15/03/2022 16:01','DD/MM/YYYY HH24:MI'),TO_DATE('20/03/2022 16:00','DD/MM/YYYY HH24:MI'),4);  
 
---apos o pagamento feito a encomenda passa a estar  estado_encomenda_id=3 'pago'
+--apos o pagamento feito a encomenda passa a estar  estado_encomenda_id=3 'pago'           
 INSERT INTO registo_encomenda(cliente_id,gestor_agricola_id,data_estimada_entrega,estado_encomenda_id,data_registo_entrega_pagamento)
             VALUES(4,1,TO_DATE('15/02/2022 16:00','DD/MM/YYYY HH24:MI'),3,TO_DATE('20/03/2022 16:00','DD/MM/YYYY HH24:MI'));
 
 --Conclusao
 --cliente_id/utilizador_id=4 , codigo_interno=1210957, nome = joao é um cliente do tipo C nos ultimos 12 meses pois tem um
---incidente apesar de ter 60000 euros em compras
+--incidente apesar de ter 60000 euros em compras 
 
-
-
+  
+          
 --CLIENTE_ID/UTILIZADOR_ID=5 , CODIGO_INTERNO=1181478, NOME=JONAS
 --produto_id= 1 valor_mercado_por_ha = 10 designacao= rosas;
 --produto_id= 2 valor_mercado_por_ha = 20 designacao= macas;
 --produto_id= 3 valor_mercado_por_ha = 30 designacao= trigo;
 --valor_encomenda = 1000*1 + 2000*1 + 3000*1 = 6000
 INSERT INTO encomenda(cliente_id,gestor_agricola_id,data_estimada_entrega,valor_encomenda,data_limite_pagamento,endereco_entrega,hub_id)
-            VALUES(5,1,TO_DATE('15/02/2022 12:00','DD/MM/YYYY HH24:MI'),6000,TO_DATE('15/03/2022 12:00','DD/MM/YYYY HH24:MI'),NULL,NULL);
+            VALUES(5,1,TO_DATE('15/02/2022 12:00','DD/MM/YYYY HH24:MI'),6000,TO_DATE('15/03/2022 12:00','DD/MM/YYYY HH24:MI'),NULL,NULL);            
 
 --encomendou 1 toneladas de rosas, 1 toneladas de macas e 1 toneladas de trigo, daí o valor 6000 em cima mencionado
-INSERT INTO encomenda_produto(cliente_id,gestor_agricola_id,data_estimada_entrega,produto_id,quantidade_ton)
+INSERT INTO encomenda_produto(cliente_id,gestor_agricola_id,data_estimada_entrega,produto_id,quantidade_ton) 
             VALUES (5,1,TO_DATE('15/02/2022 12:00','DD/MM/YYYY HH24:MI'),1,1);
-INSERT INTO encomenda_produto(cliente_id,gestor_agricola_id,data_estimada_entrega,produto_id,quantidade_ton)
+INSERT INTO encomenda_produto(cliente_id,gestor_agricola_id,data_estimada_entrega,produto_id,quantidade_ton) 
             VALUES (5,1,TO_DATE('15/02/2022 12:00','DD/MM/YYYY HH24:MI'),2,1);
-INSERT INTO encomenda_produto(cliente_id,gestor_agricola_id,data_estimada_entrega,produto_id,quantidade_ton)
-            VALUES (5,1,TO_DATE('15/02/2022 12:00','DD/MM/YYYY HH24:MI'),3,1);
-
+INSERT INTO encomenda_produto(cliente_id,gestor_agricola_id,data_estimada_entrega,produto_id,quantidade_ton) 
+            VALUES (5,1,TO_DATE('15/02/2022 12:00','DD/MM/YYYY HH24:MI'),3,1);            
+            
 --teve a sua encomenda registada no dia 10 de fevereiro (estado_encomenda_id=1 'registada')
 INSERT INTO registo_encomenda(cliente_id,gestor_agricola_id,data_estimada_entrega,estado_encomenda_id,data_registo_entrega_pagamento)
             VALUES(5,1,TO_DATE('15/02/2022 12:00','DD/MM/YYYY HH24:MI'),1,TO_DATE('10/02/2022 12:00','DD/MM/YYYY HH24:MI'));
@@ -925,12 +908,12 @@ INSERT INTO registo_encomenda(cliente_id,gestor_agricola_id,data_estimada_entreg
 --sendo a sua encomenda entregue no dia 17 de fevereiro, dois dia depois da data estimada (estado_encomenda_id=2 'entregue')
 INSERT INTO registo_encomenda(cliente_id,gestor_agricola_id,data_estimada_entrega,estado_encomenda_id,data_registo_entrega_pagamento)
             VALUES(5,1,TO_DATE('15/02/2022 12:00','DD/MM/YYYY HH24:MI'),2,TO_DATE('17/02/2022 12:00','DD/MM/YYYY HH24:MI'));
+            
+--efectuou o pagamento no dia 10 de marco            
+INSERT INTO pagamento(valor_pagamento,data_pagamento,cliente_id,gestor_agricola_id,data_estimada_entrega) 
+            VALUES(6000,TO_DATE('10/03/2022 12:00','DD/MM/YYYY HH24:MI'),5,1,TO_DATE('15/02/2022 12:00','DD/MM/YYYY HH24:MI'));            
 
---efectuou o pagamento no dia 10 de marco
-INSERT INTO pagamento(valor_pagamento,data_pagamento,cliente_id,gestor_agricola_id,data_estimada_entrega)
-            VALUES(6000,TO_DATE('10/03/2022 12:00','DD/MM/YYYY HH24:MI'),5,1,TO_DATE('15/02/2022 12:00','DD/MM/YYYY HH24:MI'));
-
---apos o pagamento feito a encomenda passa a estar  estado_encomenda_id=3 'pago'
+--apos o pagamento feito a encomenda passa a estar  estado_encomenda_id=3 'pago'           
 INSERT INTO registo_encomenda(cliente_id,gestor_agricola_id,data_estimada_entrega,estado_encomenda_id,data_registo_entrega_pagamento)
             VALUES(5,1,TO_DATE('15/02/2022 12:00','DD/MM/YYYY HH24:MI'),3,TO_DATE('10/03/2022 12:00','DD/MM/YYYY HH24:MI'));
 
@@ -948,12 +931,12 @@ INSERT INTO encomenda(cliente_id,gestor_agricola_id,data_estimada_entrega,valor_
             VALUES(6,1,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'),12000,TO_DATE('15/03/2022 10:00','DD/MM/YYYY HH24:MI'),NULL,NULL);
 
 --encomendou 2 toneladas de rosas, 2 toneladas de macas e 2 toneladas de trigo, daí o valor 12000 em cima mencionado
-INSERT INTO encomenda_produto(cliente_id,gestor_agricola_id,data_estimada_entrega,produto_id,quantidade_ton)
+INSERT INTO encomenda_produto(cliente_id,gestor_agricola_id,data_estimada_entrega,produto_id,quantidade_ton) 
             VALUES (6,1,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'),1,2);
-INSERT INTO encomenda_produto(cliente_id,gestor_agricola_id,data_estimada_entrega,produto_id,quantidade_ton)
+INSERT INTO encomenda_produto(cliente_id,gestor_agricola_id,data_estimada_entrega,produto_id,quantidade_ton) 
             VALUES (6,1,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'),2,2);
-INSERT INTO encomenda_produto(cliente_id,gestor_agricola_id,data_estimada_entrega,produto_id,quantidade_ton)
-            VALUES (6,1,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'),3,2);
+INSERT INTO encomenda_produto(cliente_id,gestor_agricola_id,data_estimada_entrega,produto_id,quantidade_ton) 
+            VALUES (6,1,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'),3,2);      
 
 --teve a sua encomenda registada no dia 10 de fevereiro (estado_encomenda_id=1 'registada')
 INSERT INTO registo_encomenda(cliente_id,gestor_agricola_id,data_estimada_entrega,estado_encomenda_id,data_registo_entrega_pagamento)
@@ -962,12 +945,12 @@ INSERT INTO registo_encomenda(cliente_id,gestor_agricola_id,data_estimada_entreg
 --sendo a sua encomenda entregue no dia 18 de fevereiro, TRES dia depois da data estimada (estado_encomenda_id=2 'entregue')
 INSERT INTO registo_encomenda(cliente_id,gestor_agricola_id,data_estimada_entrega,estado_encomenda_id,data_registo_entrega_pagamento)
             VALUES(6,1,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'),2,TO_DATE('18/02/2022 12:00','DD/MM/YYYY HH24:MI'));
+            
+--efectuou o pagamento no dia 10 de marco            
+INSERT INTO pagamento(valor_pagamento,data_pagamento,cliente_id,gestor_agricola_id,data_estimada_entrega) 
+            VALUES(12000,TO_DATE('10/03/2022 10:00','DD/MM/YYYY HH24:MI'),6,1,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'));            
 
---efectuou o pagamento no dia 10 de marco
-INSERT INTO pagamento(valor_pagamento,data_pagamento,cliente_id,gestor_agricola_id,data_estimada_entrega)
-            VALUES(12000,TO_DATE('10/03/2022 10:00','DD/MM/YYYY HH24:MI'),6,1,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'));
-
---apos o pagamento feito a encomenda passa a estar  estado_encomenda_id=3 'pago'
+--apos o pagamento feito a encomenda passa a estar  estado_encomenda_id=3 'pago'           
 INSERT INTO registo_encomenda(cliente_id,gestor_agricola_id,data_estimada_entrega,estado_encomenda_id,data_registo_entrega_pagamento)
             VALUES(6,1,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'),3,TO_DATE('10/03/2022 10:00','DD/MM/YYYY HH24:MI'));
 
@@ -1067,9 +1050,6 @@ SELECT count(*) AS "linhas/tuplos na tabela gestor_agricola" FROM gestor_agricol
 
 SELECT * FROM hub ;
 SELECT count(*) AS "linhas/tuplos na tabela hub" FROM hub;
-
-SELECT * FROM deposito ;
-SELECT count(*) AS "linhas/tuplos na tabela deposito" FROM deposito;
 
 SELECT * FROM incidente ;
 SELECT count(*) AS "linhas/tuplos na tabela incidente" FROM incidente;
