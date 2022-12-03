@@ -133,7 +133,7 @@ int gen_sens_values(char *data_temp,unsigned short *data_dir_vento, unsigned cha
 #define FREQUENCY 2
 #define INITIAL_BAD_VALUES 0
 #define TIMER 2
-#define CICLES 15
+#define CYCLES 15
 #define MAX_BAD_VALUES 10
 
 //TEMP

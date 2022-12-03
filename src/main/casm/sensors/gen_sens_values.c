@@ -18,7 +18,7 @@ int gen_sens_values(char *data_temp,unsigned short *data_dir_vento, unsigned cha
         humd_atm atm1;
         humd_solo solo1;
         pluvio plv1;
-        
+
         //MAX sens values
         sens_value min;
         sens_value max;
@@ -42,20 +42,20 @@ int gen_sens_values(char *data_temp,unsigned short *data_dir_vento, unsigned cha
 
         min.uc = VELC_VENTO_LIM_MIN;
         max.uc = VELC_VENTO_LIM_MAX;
-        first_value.uc = 50; 
+        first_value.uc = 50;
         sens_init(&velc1, MAX_BAD_VALUES, FREQUENCY, min, max, first_value);
 
         min.uc = HUMD_SOLO_LIM_MIN;
         max.uc = HUMD_SOLO_LIM_MAX;
-        first_value.uc = 40; 
+        first_value.uc = 40;
         sens_init(&solo1, MAX_BAD_VALUES, FREQUENCY, min, max, first_value);
 
         min.uc = HUMD_ATM_LIM_MIN;
         max.uc = HUMD_ATM_LIM_MAX;
-        first_value.uc = 30; 
+        first_value.uc = 30;
         sens_init(&atm1, MAX_BAD_VALUES, FREQUENCY, min, max, first_value);
 
-        
+
         char ult_temp ;
         unsigned char ult_pluvio;
         unsigned char ult_hmd_atm;
@@ -65,12 +65,12 @@ int gen_sens_values(char *data_temp,unsigned short *data_dir_vento, unsigned cha
         //unsigned char x;
 
         do{
-                
-                
+
+
                 ult_temp = sens_temp_update(&tmp1);
 
-                ult_pluvio = sens_pluvio_update(&plv1, &tmp1); 
-                
+                ult_pluvio = sens_pluvio_update(&plv1, &tmp1);
+
                 ult_hmd_atm =  sens_humd_atm_update(&atm1, &plv1);
 
                 ult_hmd_solo = sens_humd_solo_update(&solo1, &plv1);
@@ -78,9 +78,9 @@ int gen_sens_values(char *data_temp,unsigned short *data_dir_vento, unsigned cha
                 ult_velc_vento = sens_velc_vento_update(&velc1);
 
                 ult_dir_vento =sens_dir_vento_update(&dir1);
-                
+
 /*
-                do{ 
+                do{
 
                         x =sens_dir_vento_update(&dir1);
 
@@ -88,7 +88,7 @@ int gen_sens_values(char *data_temp,unsigned short *data_dir_vento, unsigned cha
                 }while( x < 30 );
 
                 */
-                data_temp[index] = ult_temp; 
+                data_temp[index] = ult_temp;
                 data_pluvio[index] = ult_pluvio;
                 data_humd_atm[index] = ult_hmd_atm;
                 data_humd_solo[index] = ult_hmd_solo;
@@ -100,19 +100,19 @@ int gen_sens_values(char *data_temp,unsigned short *data_dir_vento, unsigned cha
                 printf("Humd atm=%hhu\n",ult_hmd_atm);
                 printf("Humd solo=%hhu\n",ult_hmd_solo);
                 printf("Velc vent=%hhu\n",ult_velc_vento);
-                printf("Dir vent=%hhu\n",ult_dir_vento);
+                printf("Dir vent=%hu\n",ult_dir_vento);
 
                 printf("\n--------------------------%d-------------------------------------\n",index);
-                
+
 
                 sleep(TIMER);
                 index++;
 
-        }while(index < CICLES);
+        }while(index < CYCLES);
 
 
 
-        /*for(int i = 0; i < CICLES ; i++){
+        /*for(int i = 0; i < CYCLES ; i++){
                 printf("\n--------------------------%d-------------------------------------\n",i);
                 printf("Temp: %hhd\n", data_temp[i]);
                 printf("Pluvio: %hhu\n", data_pluvio[i]);
@@ -122,7 +122,7 @@ int gen_sens_values(char *data_temp,unsigned short *data_dir_vento, unsigned cha
                 //printf("dir vent=%hhu\n",data_dir_vento[i]);
         }*/
 
-        
+
         return 0;
 }
 
