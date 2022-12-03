@@ -5,8 +5,11 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.function.BinaryOperator;
+import java.util.function.Consumer;
 
 import jovami.util.graph.map.MapGraph;
 import jovami.util.graph.matrix.MatrixGraph;
@@ -44,6 +47,39 @@ public class Algorithms {
             }
         }
         return qbfs;
+    }
+
+    /**
+     * Checks if two vertices have a connection via a breadth-first search
+     *
+     * @param g         Graph instance
+     * @param source    The source vertex
+     * @param dest      The intended destination
+     */
+    public static <V, E> boolean hasConnection(Graph<V, E> g, V source, V dest) {
+        if (source == null || dest == null || !g.validVertex(source) || !g.validVertex(dest))
+            return false;
+        else if (g.key(source) == g.key(dest))
+            return true;
+
+        Queue<V> queue = new LinkedList<>();
+        boolean[] visited = new boolean[g.numVertices()];
+
+        queue.offer(source);
+
+        V next;
+        while ((next = queue.poll()) != null) {
+            for (V vAdj : g.adjVertices(next)) {
+                if (g.key(vAdj) == g.key(dest))
+                    return true;
+                else if (!visited[g.key(vAdj)]) {
+                    queue.offer(vAdj);
+                    visited[g.key(vAdj)] = true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -365,13 +401,13 @@ public class Algorithms {
         }
 
         lstEdges.addAll(g.edges());                 //O(E)
-        
+
         while (!lstEdges.isEmpty()) {               //O(E*log E)
             Edge<V, E> e1 = lstEdges.poll();
-            //TODO: optimize
-            if (!DepthFirstSearch(mst, e1.getVOrig()).contains(e1.getVDest())) {
+            if (!hasConnection(mst, e1.getVOrig(), e1.getVDest()))
+            // if (!DepthFirstSearch(mst, e1.getVOrig()).contains(e1.getVDest())) {
                 mst.addEdge(e1.getVOrig(), e1.getVDest(), e1.getWeight());
-            }
+            // }
         }
         return mst;
     }
