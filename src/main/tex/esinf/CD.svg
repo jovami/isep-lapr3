@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="1643px" preserveAspectRatio="none" style="width:1118px;height:1643px;background:#FFFFFF;" version="1.1" viewBox="0 0 1118 1643" width="1118px" zoomAndPan="magnify"><defs/><g><!--MD5=[cc15daeb8b4e6bacf34831777829d2c1]
+class Distance--><g id="elem_Distance"><rect codeLine="4" fill="#F1F1F1" height="143.3396" id="Distance" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="275" x="231.91" y="1493"/><ellipse cx="336.16" cy="1509" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M338.7225,1515.5156 Q337.0662,1516.1406 335.8631,1516.1406 Q334.285,1516.1406 332.9412,1515.2969 Q331.6131,1514.4375 330.8787,1512.7813 Q330.1444,1511.125 330.1444,1509.0469 Q330.1444,1506.9844 330.8631,1505.3281 Q331.5819,1503.6719 332.9256,1502.8125 Q334.2694,1501.9531 335.8631,1501.9531 Q337.0662,1501.9531 338.7225,1502.5625 L338.7225,1504.75 Q337.035,1503.7656 335.8006,1503.7656 Q334.8944,1503.7656 334.1287,1504.4063 Q333.3787,1505.0313 332.8944,1506.2969 Q332.41,1507.5469 332.41,1509.0469 Q332.41,1510.5625 332.91,1511.8438 Q333.41,1513.1094 334.16,1513.7188 Q334.91,1514.3281 335.8006,1514.3281 Q337.035,1514.3281 338.7225,1513.3438 L338.7225,1515.5156 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="58" x="356.66" y="1514.432">Distance</text><line style="stroke:#181818;stroke-width:0.5;" x1="232.91" x2="505.91" y1="1525" y2="1525"/><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="239.91" y="1537.034"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="87" x="251.91" y="1543.9659">locID1:String</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="239.91" y="1556.1019"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="87" x="251.91" y="1563.0339">locID2:String</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="239.91" y="1575.1698"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="79" x="251.91" y="1582.1018">distance:int</text><ellipse cx="242.91" cy="1597.2377" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" text-decoration="underline" textLength="225" x="251.91" y="1601.1697">cmp: final Comparator&lt;Distance&gt;</text><ellipse cx="242.91" cy="1616.3056" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" text-decoration="underline" textLength="249" x="251.91" y="1620.2376">sum: final BinaryOperator&lt;Distance&gt;</text><line style="stroke:#181818;stroke-width:0.5;" x1="232.91" x2="505.91" y1="1628.3396" y2="1628.3396"/></g><!--MD5=[f8ed75971b0a6b6896f5b0ea32ec4e3d]
+class Coordinates--><g id="elem_Coordinates"><rect codeLine="12" fill="#F1F1F1" height="162.4075" id="Coordinates" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="190" x="739.41" y="1070.5"/><ellipse cx="789.66" cy="1086.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M792.2225,1093.0156 Q790.5663,1093.6406 789.3631,1093.6406 Q787.785,1093.6406 786.4413,1092.7969 Q785.1131,1091.9375 784.3788,1090.2813 Q783.6444,1088.625 783.6444,1086.5469 Q783.6444,1084.4844 784.3631,1082.8281 Q785.0819,1081.1719 786.4256,1080.3125 Q787.7694,1079.4531 789.3631,1079.4531 Q790.5663,1079.4531 792.2225,1080.0625 L792.2225,1082.25 Q790.535,1081.2656 789.3006,1081.2656 Q788.3944,1081.2656 787.6288,1081.9063 Q786.8788,1082.5313 786.3944,1083.7969 Q785.91,1085.0469 785.91,1086.5469 Q785.91,1088.0625 786.41,1089.3438 Q786.91,1090.6094 787.66,1091.2188 Q788.41,1091.8281 789.3006,1091.8281 Q790.535,1091.8281 792.2225,1090.8438 L792.2225,1093.0156 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="81" x="810.16" y="1091.932">Coordinates</text><line style="stroke:#181818;stroke-width:0.5;" x1="740.41" x2="928.41" y1="1102.5" y2="1102.5"/><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="747.41" y="1114.534"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" text-decoration="underline" textLength="149" x="759.41" y="1121.4659">MAX_LAT: final double</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="747.41" y="1133.6019"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" text-decoration="underline" textLength="148" x="759.41" y="1140.5339">MIN_LAT: final double</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="747.41" y="1152.6698"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" text-decoration="underline" textLength="164" x="759.41" y="1159.6018">MAX_LONG: final double</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="747.41" y="1171.7377"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" text-decoration="underline" textLength="163" x="759.41" y="1178.6697">MIN_LONG: final double</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="747.41" y="1190.8056"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="107" x="759.41" y="1197.7376">latitude: double</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="747.41" y="1209.8735"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="120" x="759.41" y="1216.8055">longitude: double</text><line style="stroke:#181818;stroke-width:0.5;" x1="740.41" x2="928.41" y1="1224.9075" y2="1224.9075"/></g><!--MD5=[3fd616f346a44cd59a91eb10b19e157c]
+class User--><g id="elem_User"><rect codeLine="21" fill="#F1F1F1" height="124.2717" id="User" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="159" x="289.91" y="1174.5"/><ellipse cx="349.66" cy="1190.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M352.2225,1197.0156 Q350.5663,1197.6406 349.3631,1197.6406 Q347.785,1197.6406 346.4413,1196.7969 Q345.1131,1195.9375 344.3788,1194.2813 Q343.6444,1192.625 343.6444,1190.5469 Q343.6444,1188.4844 344.3631,1186.8281 Q345.0819,1185.1719 346.4256,1184.3125 Q347.7694,1183.4531 349.3631,1183.4531 Q350.5663,1183.4531 352.2225,1184.0625 L352.2225,1186.25 Q350.535,1185.2656 349.3006,1185.2656 Q348.3944,1185.2656 347.6288,1185.9063 Q346.8788,1186.5313 346.3944,1187.7969 Q345.91,1189.0469 345.91,1190.5469 Q345.91,1192.0625 346.41,1193.3438 Q346.91,1194.6094 347.66,1195.2188 Q348.41,1195.8281 349.3006,1195.8281 Q350.535,1195.8281 352.2225,1194.8438 L352.2225,1197.0156 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="31" x="370.16" y="1195.932">User</text><line style="stroke:#181818;stroke-width:0.5;" x1="290.91" x2="447.91" y1="1206.5" y2="1206.5"/><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="297.91" y="1218.534"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="94" x="309.91" y="1225.4659">userID: String</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="297.91" y="1237.6019"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="133" x="309.91" y="1244.5339">userType: UserType</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="297.91" y="1256.6698"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="130" x="309.91" y="1263.6018">coords:Coordinates</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="297.91" y="1275.7377"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="117" x="309.91" y="1282.6697">locationID: String</text><line style="stroke:#181818;stroke-width:0.5;" x1="290.91" x2="447.91" y1="1290.7717" y2="1290.7717"/></g><!--MD5=[eff099f41b4ab245f31ecac80b8c4343]
+class UserType--><g id="elem_UserType"><rect codeLine="37" fill="#F1F1F1" height="105.2038" id="UserType" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="95" x="786.91" y="1268"/><ellipse cx="801.91" cy="1284" fill="#EB937F" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M805.0819,1289.0469 L805.0819,1291 L797.5975,1291 L797.5975,1277.5781 L804.9569,1277.5781 L804.9569,1279.4063 L799.8006,1279.4063 L799.8006,1283.25 L804.4413,1283.25 L804.4413,1285.0781 L799.8006,1285.0781 L799.8006,1289.0469 L805.0819,1289.0469 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="63" x="815.91" y="1289.432">UserType</text><line style="stroke:#181818;stroke-width:0.5;" x1="787.91" x2="880.91" y1="1300" y2="1300"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="74" x="792.91" y="1318.9659">PRODUCER</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="48" x="792.91" y="1338.0339">CLIENT</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="69" x="792.91" y="1357.1018">COMPANY</text><line style="stroke:#181818;stroke-width:0.5;" x1="787.91" x2="880.91" y1="1365.2038" y2="1365.2038"/></g><!--MD5=[b122bab300f80f5d31a622e2bae54847]
+class MapGraph--><g id="elem_MapGraph"><rect codeLine="57" fill="#F1F1F1" height="86.1358" id="MapGraph" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="325" x="206.91" y="715.5"/><ellipse cx="319.16" cy="731.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M321.7225,738.0156 Q320.0662,738.6406 318.8631,738.6406 Q317.285,738.6406 315.9412,737.7969 Q314.6131,736.9375 313.8787,735.2813 Q313.1444,733.625 313.1444,731.5469 Q313.1444,729.4844 313.8631,727.8281 Q314.5819,726.1719 315.9256,725.3125 Q317.2694,724.4531 318.8631,724.4531 Q320.0662,724.4531 321.7225,725.0625 L321.7225,727.25 Q320.035,726.2656 318.8006,726.2656 Q317.8944,726.2656 317.1287,726.9063 Q316.3787,727.5313 315.8944,728.7969 Q315.41,730.0469 315.41,731.5469 Q315.41,733.0625 315.91,734.3438 Q316.41,735.6094 317.16,736.2188 Q317.91,736.8281 318.8006,736.8281 Q320.035,736.8281 321.7225,735.8438 L321.7225,738.0156 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="72" x="339.66" y="736.932">MapGraph</text><rect fill="#FFFFFF" height="18.3441" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" width="18" x="516.91" y="712.5"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="16" x="517.91" y="726.3281">V,E</text><line style="stroke:#181818;stroke-width:0.5;" x1="207.91" x2="530.91" y1="747.5" y2="747.5"/><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="214.91" y="759.534"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="299" x="226.91" y="766.4659">mapVertices: final Map&lt;V, MapVertex&lt;V, E&gt;&gt;</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="214.91" y="778.6019"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="257" x="226.91" y="785.5339">mapVertices: Map&lt;V,MapVertex&lt;V,E&gt;&gt;</text><line style="stroke:#181818;stroke-width:0.5;" x1="207.91" x2="530.91" y1="793.6358" y2="793.6358"/></g><!--MD5=[ef63e85e32976ed6c3ca2a05ce10893d]
+class CommonGraph--><g id="elem_CommonGraph"><rect codeLine="62" fill="#F1F1F1" height="124.2717" id="CommonGraph" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="190" x="274.41" y="836.5"/><ellipse cx="305.61" cy="852.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M308.1725,859.0156 Q306.5163,859.6406 305.3131,859.6406 Q303.735,859.6406 302.3913,858.7969 Q301.0631,857.9375 300.3288,856.2813 Q299.5944,854.625 299.5944,852.5469 Q299.5944,850.4844 300.3131,848.8281 Q301.0319,847.1719 302.3756,846.3125 Q303.7194,845.4531 305.3131,845.4531 Q306.5163,845.4531 308.1725,846.0625 L308.1725,848.25 Q306.485,847.2656 305.2506,847.2656 Q304.3444,847.2656 303.5788,847.9063 Q302.8288,848.5313 302.3444,849.7969 Q301.86,851.0469 301.86,852.5469 Q301.86,854.0625 302.36,855.3438 Q302.86,856.6094 303.61,857.2188 Q304.36,857.8281 305.2506,857.8281 Q306.485,857.8281 308.1725,856.8438 L308.1725,859.0156 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="102" x="323.21" y="857.932">CommonGraph</text><rect fill="#FFFFFF" height="18.3441" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" width="18" x="449.41" y="833.5"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="16" x="450.41" y="847.3281">V,E</text><line style="stroke:#181818;stroke-width:0.5;" x1="275.41" x2="463.41" y1="868.5" y2="868.5"/><polygon fill="none" points="285.41,878.534,289.41,882.534,285.41,886.534,281.41,882.534" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="91" x="294.41" y="887.4659">int numVerts;</text><polygon fill="none" points="285.41,897.6019,289.41,901.6019,285.41,905.6019,281.41,901.6019" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="98" x="294.41" y="906.5339">int numEdges;</text><polygon fill="none" points="285.41,916.6698,289.41,920.6698,285.41,924.6698,281.41,920.6698" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="164" x="294.41" y="925.6018">final boolean isDirected;</text><polygon fill="none" points="285.41,935.7377,289.41,939.7377,285.41,943.7377,281.41,939.7377" style="stroke:#B38D22;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="143" x="294.41" y="944.6697">ArrayList&lt;V&gt; vertices;</text><line style="stroke:#181818;stroke-width:0.5;" x1="275.41" x2="463.41" y1="952.7717" y2="952.7717"/></g><!--MD5=[c9a68b34cdd1a891bb73479aa7e90558]
+class HubNetwork--><g id="elem_HubNetwork"><rect codeLine="43" fill="#F1F1F1" height="200.5433" id="HubNetwork" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="535" x="101.91" y="479"/><ellipse cx="323.16" cy="495" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M325.7225,501.5156 Q324.0662,502.1406 322.8631,502.1406 Q321.285,502.1406 319.9412,501.2969 Q318.6131,500.4375 317.8787,498.7813 Q317.1444,497.125 317.1444,495.0469 Q317.1444,492.9844 317.8631,491.3281 Q318.5819,489.6719 319.9256,488.8125 Q321.2694,487.9531 322.8631,487.9531 Q324.0662,487.9531 325.7225,488.5625 L325.7225,490.75 Q324.035,489.7656 322.8006,489.7656 Q321.8944,489.7656 321.1287,490.4063 Q320.3787,491.0313 319.8944,492.2969 Q319.41,493.5469 319.41,495.0469 Q319.41,496.5625 319.91,497.8438 Q320.41,499.1094 321.16,499.7188 Q321.91,500.3281 322.8006,500.3281 Q324.035,500.3281 325.7225,499.3438 L325.7225,501.5156 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="84" x="343.66" y="500.432">HubNetwork</text><line style="stroke:#181818;stroke-width:0.5;" x1="102.91" x2="635.91" y1="511" y2="511"/><ellipse cx="112.91" cy="526.034" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" text-decoration="underline" textLength="252" x="121.91" y="529.9659">distCmp: final Comparator&lt;Distance&gt;</text><ellipse cx="112.91" cy="545.1019" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" text-decoration="underline" textLength="275" x="121.91" y="549.0339">distSum: final BinaryOperator&lt;Distance&gt;</text><ellipse cx="112.91" cy="564.1698" fill="none" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" text-decoration="underline" textLength="155" x="121.91" y="568.1018">distZero: final Distance</text><line style="stroke:#181818;stroke-width:0.5;" x1="102.91" x2="635.91" y1="576.2038" y2="576.2038"/><ellipse cx="112.91" cy="591.2377" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="299" x="121.91" y="595.1697">boolean addVertices(Collection&lt;User&gt; users)</text><ellipse cx="112.91" cy="610.3056" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="447" x="121.91" y="614.2376">boolean addEdges(Collection&lt;Triplet&lt;User, User, Distance&gt;&gt; dists)</text><ellipse cx="112.91" cy="629.3735" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="459" x="121.91" y="633.3055">Distance shortestPath(User origin, User dest, LinkedList&lt;User&gt; path)</text><ellipse cx="112.91" cy="648.4415" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="509" x="121.91" y="652.3734">List&lt;LinkedList&lt;User&gt;&gt; shortestPaths(User origin, ArrayList&lt;Distance&gt; dists)</text><ellipse cx="112.91" cy="667.5094" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="480" x="121.91" y="671.4414">LinkedList&lt;Distance&gt; shortestPathsForPool(User origin, List&lt;User&gt; pool)</text></g><!--MD5=[706e73df52f3df32f52be1ce9adb217e]
+class Graph--><g id="elem_Graph"><rect codeLine="70" fill="#F1F1F1" height="48" id="Graph" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="91" x="788.91" y="874.5"/><ellipse cx="803.91" cy="890.5" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M799.8319,897.5 L799.8319,895.6875 L802.6756,895.6875 L802.6756,885.9063 L799.8319,885.9063 L799.8319,884.0781 L807.7069,884.0781 L807.7069,885.9063 L804.8788,885.9063 L804.8788,895.6875 L807.7069,895.6875 L807.7069,897.5 L799.8319,897.5 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="39" x="817.91" y="895.932">Graph</text><rect fill="#FFFFFF" height="18.3441" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" width="18" x="864.91" y="871.5"/><text fill="#000000" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacing" textLength="16" x="865.91" y="885.3281">V,E</text><line style="stroke:#181818;stroke-width:0.5;" x1="789.91" x2="878.91" y1="906.5" y2="906.5"/><line style="stroke:#181818;stroke-width:0.5;" x1="789.91" x2="878.91" y1="914.5" y2="914.5"/></g><!--MD5=[2e2f8c8f62c4eb3bc59a59727cfd81a5]
+class Edge--><g id="elem_Edge"><rect codeLine="78" fill="#F1F1F1" height="105.2038" id="Edge" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="122" x="989.41" y="846"/><ellipse cx="1029.61" cy="862" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M1032.1725,868.5156 Q1030.5163,869.1406 1029.3131,869.1406 Q1027.735,869.1406 1026.3913,868.2969 Q1025.0631,867.4375 1024.3288,865.7813 Q1023.5944,864.125 1023.5944,862.0469 Q1023.5944,859.9844 1024.3131,858.3281 Q1025.0319,856.6719 1026.3756,855.8125 Q1027.7194,854.9531 1029.3131,854.9531 Q1030.5163,854.9531 1032.1725,855.5625 L1032.1725,857.75 Q1030.485,856.7656 1029.2506,856.7656 Q1028.3444,856.7656 1027.5788,857.4063 Q1026.8288,858.0313 1026.3444,859.2969 Q1025.86,860.5469 1025.86,862.0469 Q1025.86,863.5625 1026.36,864.8438 Q1026.86,866.1094 1027.61,866.7188 Q1028.36,867.3281 1029.2506,867.3281 Q1030.485,867.3281 1032.1725,866.3438 L1032.1725,868.5156 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="34" x="1049.21" y="867.432">Edge</text><line style="stroke:#181818;stroke-width:0.5;" x1="990.41" x2="1110.41" y1="878" y2="878"/><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="997.41" y="890.034"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="87" x="1009.41" y="896.9659">V final vOrig;</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="997.41" y="909.1019"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="87" x="1009.41" y="916.0339">V final vDest;</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="997.41" y="928.1698"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="96" x="1009.41" y="935.1018">E:final weight;</text><line style="stroke:#181818;stroke-width:0.5;" x1="990.41" x2="1110.41" y1="943.2038" y2="943.2038"/></g><!--MD5=[9d5edc7f63e5cdf1e90fe32108e92234]
+class WateringController--><g id="elem_WateringController"><rect codeLine="84" fill="#F1F1F1" height="257.7471" id="WateringController" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="620" x="59.41" y="185.5"/><ellipse cx="300.66" cy="201.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M303.2225,208.0156 Q301.5663,208.6406 300.3631,208.6406 Q298.785,208.6406 297.4413,207.7969 Q296.1131,206.9375 295.3788,205.2813 Q294.6444,203.625 294.6444,201.5469 Q294.6444,199.4844 295.3631,197.8281 Q296.0819,196.1719 297.4256,195.3125 Q298.7694,194.4531 300.3631,194.4531 Q301.5663,194.4531 303.2225,195.0625 L303.2225,197.25 Q301.535,196.2656 300.3006,196.2656 Q299.3944,196.2656 298.6288,196.9063 Q297.8788,197.5313 297.3944,198.7969 Q296.91,200.0469 296.91,201.5469 Q296.91,203.0625 297.41,204.3438 Q297.91,205.6094 298.66,206.2188 Q299.41,206.8281 300.3006,206.8281 Q301.535,206.8281 303.2225,205.8438 L303.2225,208.0156 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="129" x="321.16" y="206.932">WateringController</text><line style="stroke:#181818;stroke-width:0.5;" x1="60.41" x2="678.41" y1="217.5" y2="217.5"/><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="67.41" y="229.534"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="186" x="79.41" y="236.4659">startedDate: final LocalDate</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="67.41" y="248.6019"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="164" x="79.41" y="255.5339">endDate: final LocalDate</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="67.41" y="267.6698"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="290" x="79.41" y="274.6018">wateringHours: final SortedSet&lt;LocalTime&gt;</text><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="67.41" y="286.7377"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="500" x="79.41" y="293.6697">plotData: final LinkedHashMap&lt;String,Pair&lt;Integer, WateringFrequency&gt;&gt;</text><line style="stroke:#181818;stroke-width:0.5;" x1="60.41" x2="678.41" y1="301.7717" y2="301.7717"/><ellipse cx="70.41" cy="316.8056" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="295" x="79.41" y="320.7376">boolean addWateringHours(LocalTime time)</text><ellipse cx="70.41" cy="335.8735" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="288" x="79.41" y="339.8055">boolean addWateringHour(LocalTime time)</text><ellipse cx="70.41" cy="354.9415" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="594" x="79.41" y="358.8734">boolean addPlotData(Triplet&lt;String plotID, int duration, WateringFrequency frequency&gt;)</text><ellipse cx="70.41" cy="374.0094" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="534" x="79.41" y="377.9414">boolean addPlotData(String plotID, int duration, WateringFrequency frequency)</text><ellipse cx="70.41" cy="393.0773" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="185" x="79.41" y="397.0093">LocalDate[] getValidRange()</text><rect fill="#F24D5C" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="67.41" y="409.1452"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="395" x="79.41" y="416.0772">Option&lt;LocalTime&gt; previousWateringHour(LocalTime time)</text><ellipse cx="70.41" cy="431.2131" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="294" x="79.41" y="435.1451">List&lt;Pair&lt;String,Long&gt;&gt; currentlyWatering()</text></g><!--MD5=[e10a1fe21c327f16d8b04512bb29e968]
+class WateringFrequency--><g id="elem_WateringFrequency"><rect codeLine="101" fill="#F1F1F1" height="105.2038" id="WateringFrequency" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="164" x="752.41" y="262"/><ellipse cx="767.41" cy="278" fill="#EB937F" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M770.5819,283.0469 L770.5819,285 L763.0975,285 L763.0975,271.5781 L770.4569,271.5781 L770.4569,273.4063 L765.3006,273.4063 L765.3006,277.25 L769.9413,277.25 L769.9413,279.0781 L765.3006,279.0781 L765.3006,283.0469 L770.5819,283.0469 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="132" x="781.41" y="283.432">WateringFrequency</text><line style="stroke:#181818;stroke-width:0.5;" x1="753.41" x2="915.41" y1="294" y2="294"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="68" x="758.41" y="312.9659">EVERYDAY</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="72" x="758.41" y="332.0339">ODD_DAYS</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="76" x="758.41" y="351.1018">EVEN_DAYS</text><line style="stroke:#181818;stroke-width:0.5;" x1="753.41" x2="915.41" y1="359.2038" y2="359.2038"/></g><!--MD5=[93af8b4494db78ec46e98fad8955a5aa]
+class UserStore--><g id="elem_UserStore"><rect codeLine="109" fill="#F1F1F1" height="143.3396" id="UserStore" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="595" x="71.91" y="996"/><ellipse cx="332.16" cy="1012" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M334.7225,1018.5156 Q333.0662,1019.1406 331.8631,1019.1406 Q330.285,1019.1406 328.9412,1018.2969 Q327.6131,1017.4375 326.8787,1015.7813 Q326.1444,1014.125 326.1444,1012.0469 Q326.1444,1009.9844 326.8631,1008.3281 Q327.5819,1006.6719 328.9256,1005.8125 Q330.2694,1004.9531 331.8631,1004.9531 Q333.0662,1004.9531 334.7225,1005.5625 L334.7225,1007.75 Q333.035,1006.7656 331.8006,1006.7656 Q330.8944,1006.7656 330.1287,1007.4063 Q329.3787,1008.0313 328.8944,1009.2969 Q328.41,1010.5469 328.41,1012.0469 Q328.41,1013.5625 328.91,1014.8438 Q329.41,1016.1094 330.16,1016.7188 Q330.91,1017.3281 331.8006,1017.3281 Q333.035,1017.3281 334.7225,1016.3438 L334.7225,1018.5156 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="66" x="352.66" y="1017.432">UserStore</text><line style="stroke:#181818;stroke-width:0.5;" x1="72.91" x2="665.91" y1="1028" y2="1028"/><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="79.91" y="1040.034"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="167" x="91.91" y="1046.9659">users: Map&lt;String,User&gt;</text><line style="stroke:#181818;stroke-width:0.5;" x1="72.91" x2="665.91" y1="1055.0679" y2="1055.0679"/><ellipse cx="82.91" cy="1070.1019" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="188" x="91.91" y="1074.0339">boolean addUser(User user)</text><ellipse cx="82.91" cy="1089.1698" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="569" x="91.91" y="1093.1018">boolean addUser(String userID, String locationID, double latitude, double longitude)</text><ellipse cx="82.91" cy="1108.2377" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="347" x="91.91" y="1112.1697">boolean addUser(Collection &lt;User&gt; usersCollection)</text><ellipse cx="82.91" cy="1127.3056" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="237" x="91.91" y="1131.2376">Optional&lt;User&gt; getUser(String key)</text></g><!--MD5=[2b10236ac8bf20578c475e31272f454d]
+class DistanceStore--><g id="elem_DistanceStore"><rect codeLine="118" fill="#F1F1F1" height="124.2717" id="DistanceStore" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="413" x="162.91" y="1333.5"/><ellipse cx="318.66" cy="1349.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M321.2225,1356.0156 Q319.5662,1356.6406 318.3631,1356.6406 Q316.785,1356.6406 315.4412,1355.7969 Q314.1131,1354.9375 313.3787,1353.2813 Q312.6444,1351.625 312.6444,1349.5469 Q312.6444,1347.4844 313.3631,1345.8281 Q314.0819,1344.1719 315.4256,1343.3125 Q316.7694,1342.4531 318.3631,1342.4531 Q319.5662,1342.4531 321.2225,1343.0625 L321.2225,1345.25 Q319.535,1344.2656 318.3006,1344.2656 Q317.3944,1344.2656 316.6287,1344.9063 Q315.8787,1345.5313 315.3944,1346.7969 Q314.91,1348.0469 314.91,1349.5469 Q314.91,1351.0625 315.41,1352.3438 Q315.91,1353.6094 316.66,1354.2188 Q317.41,1354.8281 318.3006,1354.8281 Q319.535,1354.8281 321.2225,1353.8438 L321.2225,1356.0156 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="93" x="339.16" y="1354.932">DistanceStore</text><line style="stroke:#181818;stroke-width:0.5;" x1="163.91" x2="574.91" y1="1365.5" y2="1365.5"/><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="170.91" y="1377.534"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="197" x="182.91" y="1384.4659">distances:final Set&lt;Distance&gt;</text><line style="stroke:#181818;stroke-width:0.5;" x1="163.91" x2="574.91" y1="1392.5679" y2="1392.5679"/><ellipse cx="173.91" cy="1407.6019" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="237" x="182.91" y="1411.5339">boolean addDistance(Distance dist)</text><ellipse cx="173.91" cy="1426.6698" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="387" x="182.91" y="1430.6018">boolean addDistance(String org, String dest, int distance)</text><ellipse cx="173.91" cy="1445.7377" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="337" x="182.91" y="1449.6697">boolean addDistances(Collection &lt;Distance&gt; dists)</text></g><!--MD5=[b2b1c72b448dfe241a0c28e2d1440a67]
+class WateringControllerStore--><g id="elem_WateringControllerStore"><rect codeLine="126" fill="#F1F1F1" height="143.3396" id="WateringControllerStore" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="394" x="172.41" y="7"/><ellipse cx="283.16" cy="23" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M285.7225,29.5156 Q284.0662,30.1406 282.8631,30.1406 Q281.285,30.1406 279.9412,29.2969 Q278.6131,28.4375 277.8787,26.7813 Q277.1444,25.125 277.1444,23.0469 Q277.1444,20.9844 277.8631,19.3281 Q278.5819,17.6719 279.9256,16.8125 Q281.2694,15.9531 282.8631,15.9531 Q284.0662,15.9531 285.7225,16.5625 L285.7225,18.75 Q284.035,17.7656 282.8006,17.7656 Q281.8944,17.7656 281.1287,18.4063 Q280.3787,19.0313 279.8944,20.2969 Q279.41,21.5469 279.41,23.0469 Q279.41,24.5625 279.91,25.8438 Q280.41,27.1094 281.16,27.7188 Q281.91,28.3281 282.8006,28.3281 Q284.035,28.3281 285.7225,27.3438 L285.7225,29.5156 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="164" x="303.66" y="28.432">WateringControllerStore</text><line style="stroke:#181818;stroke-width:0.5;" x1="173.41" x2="565.41" y1="39" y2="39"/><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="180.41" y="51.034"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="368" x="192.41" y="57.9659">store: LinkedHashMap&lt;LocalDate, WateringController&gt;</text><line style="stroke:#181818;stroke-width:0.5;" x1="173.41" x2="565.41" y1="66.0679" y2="66.0679"/><ellipse cx="183.41" cy="81.1019" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="314" x="192.41" y="85.0339">boolean addController(WateringController ctrl)</text><ellipse cx="183.41" cy="100.1698" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="349" x="192.41" y="104.1018">boolean addController(Collection&lt;LocalTime&gt; times)</text><ellipse cx="183.41" cy="119.2377" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="56" x="192.41" y="123.1697">int size()</text><ellipse cx="183.41" cy="138.3056" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="150" x="192.41" y="142.2376">boolean clearExpired()</text></g><!--MD5=[bd92bcef9bb2c0ec2d0c690472fc3676]
+link User to UserType--><g id="link_User_UserType"><path codeLine="27" d="M449.21,1250.8 C543.68,1267.94 699.39,1296.19 780.53,1310.91 " fill="none" id="User-to-UserType" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#181818" points="785.22,1311.76,777.085,1306.2083,780.3013,1310.8618,775.6479,1314.0782,785.22,1311.76" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[298c603ea9ef90de1de2462af7fbe32b]
+link User to Coordinates--><g id="link_User_Coordinates"><path codeLine="28" d="M449.21,1222.03 C527.41,1207.68 647.56,1185.62 732.65,1170 " fill="none" id="User-to-Coordinates" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#181818" points="737.48,1169.11,727.9067,1166.7967,732.5618,1170.0107,729.3478,1174.6659,737.48,1169.11" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[7e7fe92a5523e911c73a9daab762bfae]
+link MapGraph to CommonGraph--><g id="link_MapGraph_CommonGraph"><path codeLine="34" d="M369.41,801.88 C369.41,811.16 369.41,820.45 369.41,829.73 " fill="none" id="MapGraph-to-CommonGraph" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="369.41,834.64,373.41,825.64,369.41,829.64,365.41,825.64,369.41,834.64" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[5661fa8c3cd0390e3879ade4a50c9587]
+link HubNetwork to User--><g id="link_HubNetwork_User"><path codeLine="53" d="M101.57,643.95 C72.23,662.28 46.75,685.8 29.41,716 C6,756.76 6,1098.24 29.41,1139 C78.44,1224.37 199.41,1241.05 282.98,1241.6 " fill="none" id="HubNetwork-to-User" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="287.92,1241.6,278.92,1237.6,282.92,1241.6,278.92,1245.6,287.92,1241.6" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[b816f7ed01ac47a9220a6384560d1739]
+link HubNetwork to Distance--><g id="link_HubNetwork_Distance"><path codeLine="54" d="M101.57,643.95 C72.23,662.28 46.75,685.8 29.41,716 C8.88,751.75 8.88,1422.25 29.41,1458 C68.21,1525.56 151.14,1552.42 225.38,1562.28 " fill="none" id="HubNetwork-to-Distance" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="230.12,1562.88,221.6947,1557.7796,225.1597,1562.251,220.6883,1565.7161,230.12,1562.88" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[65b47c207f83b067f7ac515579588d48]
+link HubNetwork to MapGraph--><g id="link_HubNetwork_MapGraph"><path codeLine="55" d="M369.41,680.44 C369.41,689.84 369.41,699.24 369.41,708.64 " fill="none" id="HubNetwork-to-MapGraph" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="369.41,713.63,373.41,704.63,369.41,708.63,365.41,704.63,369.41,713.63" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[73cb6a84480518af2d88af90c1d954ca]
+link CommonGraph to Graph--><g id="link_CommonGraph_Graph"><path codeLine="68" d="M464.66,898.5 C560.59,898.5 705.72,898.5 782.15,898.5 " fill="none" id="CommonGraph-to-Graph" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#181818" points="786.92,898.5,777.92,894.5,781.92,898.5,777.92,902.5,786.92,898.5" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[627c719221e760b279cf7d2e52d47228]
+link Graph to Edge--><g id="link_Graph_Edge"><path codeLine="75" d="M880.27,898.5 C910.04,898.5 949.62,898.5 983.02,898.5 " fill="none" id="Graph-to-Edge" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#181818" points="987.66,898.5,978.66,894.5,982.66,898.5,978.66,902.5,987.66,898.5" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[e0b9aaa73a37ec9b0cfe0f10a59bc4eb]
+link WateringController to WateringFrequency--><g id="link_WateringController_WateringFrequency"><path codeLine="98" d="M679.88,314.5 C703.45,314.5 725.79,314.5 745.77,314.5 " fill="none" id="WateringController-to-WateringFrequency" style="stroke:#181818;stroke-width:1.0;stroke-dasharray:7.0,7.0;"/><polygon fill="#181818" points="750.66,314.5,741.66,310.5,745.66,314.5,741.66,318.5,750.66,314.5" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[d1e0f6ecc4becbdb384d024f9b519f21]
+link UserStore to User--><g id="link_UserStore_User"><path codeLine="116" d="M369.41,1139.13 C369.41,1148.7 369.41,1158.26 369.41,1167.83 " fill="none" id="UserStore-to-User" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="369.41,1172.6,373.41,1163.6,369.41,1167.6,365.41,1163.6,369.41,1172.6" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[b13e193ed3a37295ab0036841b3f51a1]
+link DistanceStore to Distance--><g id="link_DistanceStore_Distance"><path codeLine="124" d="M369.41,1457.67 C369.41,1467.2 369.41,1476.74 369.41,1486.28 " fill="none" id="DistanceStore-to-Distance" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="369.41,1491.03,373.41,1482.03,369.41,1486.03,365.41,1482.03,369.41,1491.03" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[342bf4f2fa20b9769356576403832e0b]
+link WateringControllerStore to WateringController--><g id="link_WateringControllerStore_WateringController"><path codeLine="133" d="M369.41,150.35 C369.41,159.94 369.41,169.54 369.41,179.13 " fill="none" id="WateringControllerStore-to-WateringController" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="369.41,183.92,373.41,174.92,369.41,178.92,365.41,174.92,369.41,183.92" style="stroke:#181818;stroke-width:1.0;"/></g><!--MD5=[1cbdff874d3f816fa49246a0717196c4]
+@startuml
+
+left to right direction
+
+class Distance{
+    -locID1:String
+    -locID2:String
+    -distance:int
+    +cmp: {static} final Comparator<Distance>
+    +sum: {static} final BinaryOperator<Distance>
+}
+
+class Coordinates{
+    -MAX_LAT: {static} final double
+    -MIN_LAT: {static} final double
+    -MAX_LONG: {static} final double
+    -MIN_LONG: {static} final double 
+    -latitude: double
+    -longitude: double
+}
+
+class User{
+    -userID: String
+    -userType: UserType
+    -coords:Coordinates
+    -locationID: String
+}
+User ..> UserType
+User ..> Coordinates
+
+class MapGraph{
+    -mapVertices: final Map<V, MapVertex<V, E>> 
+}
+
+MapGraph -> CommonGraph
+
+'Localization
+ enum UserType{
+     PRODUCER
+     CLIENT
+     COMPANY
+ }
+
+class HubNetwork{
+    +distCmp: {static} final Comparator<Distance>
+    +distSum: {static} final BinaryOperator<Distance>
+    +distZero: {static} final Distance
+    +boolean addVertices(Collection<User> users)
+    +boolean addEdges(Collection<Triplet<User, User, Distance>> dists)
+    +Distance shortestPath(User origin, User dest, LinkedList<User> path)
+    +List<LinkedList<User>> shortestPaths(User origin, ArrayList<Distance> dists)
+    +LinkedList<Distance> shortestPathsForPool(User origin, List<User> pool)
+}
+HubNetwork -> User
+HubNetwork -> Distance
+HubNetwork -> MapGraph
+
+class MapGraph<V,E>{
+    -mapVertices: Map<V,MapVertex<V,E>>
+
+}
+
+class CommonGraph<V,E>{
+    #int numVerts;
+    #int numEdges;
+    #final boolean isDirected;
+    #ArrayList<V> vertices;    
+}
+CommonGraph ..> Graph
+
+interface Graph<V,E>{
+}
+
+'implements ..>
+'extends ->
+Graph ..> Edge
+
+
+class Edge{
+    -V final vOrig;
+    -V final vDest;
+    -E:final weight;
+}
+
+class WateringController{
+    -startedDate: final LocalDate
+    -endDate: final LocalDate
+    -wateringHours: final SortedSet<LocalTime>
+    -plotData: final LinkedHashMap<String,Pair<Integer, WateringFrequency>>
+    +boolean addWateringHours(LocalTime time)
+    +boolean addWateringHour(LocalTime time)
+    +boolean addPlotData(Triplet<String plotID, int duration, WateringFrequency frequency>)
+    +boolean addPlotData(String plotID, int duration, WateringFrequency frequency)
+    +LocalDate[] getValidRange()
+    -Option<LocalTime> previousWateringHour(LocalTime time)
+    +List<Pair<String,Long>> currentlyWatering()
+}
+
+WateringController ..> WateringFrequency
+
+
+enum WateringFrequency{
+    EVERYDAY
+    ODD_DAYS
+    EVEN_DAYS
+}
+
+
+'STORES
+class UserStore{
+    -users: Map<String,User>
+    +boolean addUser(User user)
+    +boolean addUser(String userID, String locationID, double latitude, double longitude)
+    +boolean addUser(Collection <User> usersCollection)
+    +Optional<User> getUser(String key)
+}
+UserStore -> User
+
+class DistanceStore{
+    -distances:final Set<Distance>
+    +boolean addDistance(Distance dist)
+    +boolean addDistance(String org, String dest, int distance)
+    +boolean addDistances(Collection <Distance> dists)
+}
+DistanceStore -> Distance
+
+class WateringControllerStore{
+    -store: LinkedHashMap<LocalDate, WateringController>
+    +boolean addController(WateringController ctrl)
+    +boolean addController(Collection<LocalTime> times)
+    +int size()
+    +boolean clearExpired()
+}
+WateringControllerStore -> WateringController
+
+
+@enduml
+
+@startuml
+
+left to right direction
+
+class Distance{
+    -locID1:String
+    -locID2:String
+    -distance:int
+    +cmp: {static} final Comparator<Distance>
+    +sum: {static} final BinaryOperator<Distance>
+}
+
+class Coordinates{
+    -MAX_LAT: {static} final double
+    -MIN_LAT: {static} final double
+    -MAX_LONG: {static} final double
+    -MIN_LONG: {static} final double 
+    -latitude: double
+    -longitude: double
+}
+
+class User{
+    -userID: String
+    -userType: UserType
+    -coords:Coordinates
+    -locationID: String
+}
+User ..> UserType
+User ..> Coordinates
+
+class MapGraph{
+    -mapVertices: final Map<V, MapVertex<V, E>> 
+}
+
+MapGraph -> CommonGraph
+
+ enum UserType{
+     PRODUCER
+     CLIENT
+     COMPANY
+ }
+
+class HubNetwork{
+    +distCmp: {static} final Comparator<Distance>
+    +distSum: {static} final BinaryOperator<Distance>
+    +distZero: {static} final Distance
+    +boolean addVertices(Collection<User> users)
+    +boolean addEdges(Collection<Triplet<User, User, Distance>> dists)
+    +Distance shortestPath(User origin, User dest, LinkedList<User> path)
+    +List<LinkedList<User>> shortestPaths(User origin, ArrayList<Distance> dists)
+    +LinkedList<Distance> shortestPathsForPool(User origin, List<User> pool)
+}
+HubNetwork -> User
+HubNetwork -> Distance
+HubNetwork -> MapGraph
+
+class MapGraph<V,E>{
+    -mapVertices: Map<V,MapVertex<V,E>>
+
+}
+
+class CommonGraph<V,E>{
+    #int numVerts;
+    #int numEdges;
+    #final boolean isDirected;
+    #ArrayList<V> vertices;    
+}
+CommonGraph ..> Graph
+
+interface Graph<V,E>{
+}
+
+Graph ..> Edge
+
+
+class Edge{
+    -V final vOrig;
+    -V final vDest;
+    -E:final weight;
+}
+
+class WateringController{
+    -startedDate: final LocalDate
+    -endDate: final LocalDate
+    -wateringHours: final SortedSet<LocalTime>
+    -plotData: final LinkedHashMap<String,Pair<Integer, WateringFrequency>>
+    +boolean addWateringHours(LocalTime time)
+    +boolean addWateringHour(LocalTime time)
+    +boolean addPlotData(Triplet<String plotID, int duration, WateringFrequency frequency>)
+    +boolean addPlotData(String plotID, int duration, WateringFrequency frequency)
+    +LocalDate[] getValidRange()
+    -Option<LocalTime> previousWateringHour(LocalTime time)
+    +List<Pair<String,Long>> currentlyWatering()
+}
+
+WateringController ..> WateringFrequency
+
+
+enum WateringFrequency{
+    EVERYDAY
+    ODD_DAYS
+    EVEN_DAYS
+}
+
+
+class UserStore{
+    -users: Map<String,User>
+    +boolean addUser(User user)
+    +boolean addUser(String userID, String locationID, double latitude, double longitude)
+    +boolean addUser(Collection <User> usersCollection)
+    +Optional<User> getUser(String key)
+}
+UserStore -> User
+
+class DistanceStore{
+    -distances:final Set<Distance>
+    +boolean addDistance(Distance dist)
+    +boolean addDistance(String org, String dest, int distance)
+    +boolean addDistances(Collection <Distance> dists)
+}
+DistanceStore -> Distance
+
+class WateringControllerStore{
+    -store: LinkedHashMap<LocalDate, WateringController>
+    +boolean addController(WateringController ctrl)
+    +boolean addController(Collection<LocalTime> times)
+    +int size()
+    +boolean clearExpired()
+}
+WateringControllerStore -> WateringController
+
+
+@enduml
+
+PlantUML version 1.2022.7(Mon Aug 22 18:01:30 BST 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
