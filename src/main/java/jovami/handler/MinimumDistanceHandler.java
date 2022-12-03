@@ -25,9 +25,8 @@ public class MinimumDistanceHandler {
     public int getMinimumCost(Graph<User, Distance> mst){
         int minimumCost=0;
         for (Edge<User,Distance> edge: mst.edges()) {
-            minimumCost = minimumCost + edge.getWeight().getDistance();
+            minimumCost += edge.getWeight().getDistance();
         }
         return minimumCost;
     }
-
 }

@@ -20,7 +20,6 @@ public class MainTest {
     @BeforeEach
     public void beforeEach() {
         resetSingleton();
-
     }
 
     public static void readUsers(List<String[]> user, List<String[]> distance){
@@ -38,23 +37,4 @@ public class MainTest {
             e.printStackTrace(); // Should not happen
         }
     }
-
-
-
-    /**
-     * Rigourous Test :-)
-     */
-    @Test
-    public void testMain() {
-        assertTrue(true);
-    }
-
-
-    public void readUser(){
-
-
-
-    }
-
-
 }

@@ -1,12 +1,15 @@
 package jovami.util.graph;
 
-import jovami.util.graph.map.MapGraph;
-import jovami.util.graph.map.MapVertex;
-import jovami.util.graph.matrix.MatrixGraph;
-
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
+import java.util.PriorityQueue;
 import java.util.function.BinaryOperator;
+
+import jovami.util.graph.map.MapGraph;
+import jovami.util.graph.matrix.MatrixGraph;
 
 public class Algorithms {
 
@@ -362,7 +365,7 @@ public class Algorithms {
         }
 
         lstEdges.addAll(g.edges());
-        
+
         while (!lstEdges.isEmpty()) {
             Edge<V, E> e1 = lstEdges.poll();
             //TODO: optimize

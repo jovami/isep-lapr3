@@ -1,29 +1,26 @@
-package jovami.model;
+package jovami.ui;
 
-import jovami.App;
 import jovami.handler.MinimumDistanceHandler;
-import jovami.ui.UserStory;
-import jovami.util.graph.Algorithms;
+import jovami.model.Distance;
+import jovami.model.User;
 import jovami.util.graph.Edge;
 import jovami.util.graph.Graph;
 
-import java.util.Comparator;
-
-public class US305 implements UserStory {
+public class MinimumDistanceUI implements UserStory {
 
     private final MinimumDistanceHandler handler;
 
-    public US305() {
+    public MinimumDistanceUI() {
         this.handler = new MinimumDistanceHandler();
     }
-    
+
     @Override
     public void run() {
         Graph<User,Distance> mst =handler.getMinimalUserNetwork();
         printGraph(mst);
         System.out.printf("Minimum Cost: %d\n",handler.getMinimumCost(mst));
     }
-
+    //int test=0;
     private void printGraph(Graph<User,Distance> mst) {
         System.out.println("Minimum Distance Network:\n");
         System.out.println("VOrig -> VDest (Distance)");
@@ -32,5 +29,4 @@ public class US305 implements UserStory {
                     edge.getVDest().getUserID(),edge.getWeight().getDistance());
         }
     }
-
 }
