@@ -372,43 +372,49 @@ public class Algorithms {
         if (!g.isDirected())
             return g;
 
-        Graph<V,E> newGraph = g.clone();
+        Graph<V,E> newGraph = g.clone();    // O(V*E)
 
-        for (var e : newGraph.edges())
+        for (var e : newGraph.edges())      // O(E)
             newGraph.addEdge(e.getVDest(), e.getVOrig(), e.getWeight());
 
+        // Net complexity: O(V*E)
         return newGraph;
     }
 
     public static <V,E> boolean isConnected(Graph<V, E> g) {
         Objects.requireNonNull(g);
 
-        g = getUndirectedGraph(g);
+        g = getUndirectedGraph(g);  // O(V*E)
 
+        // O(V*E)
         return BreadthFirstSearch(g, g.vertex(0)).size() == g.numVertices();
     }
 
 
-    public static <V, E> Graph<V, E> kruskalMST(Graph<V, E> g,Comparator<E> ce) {   //O(E*log E)
-        PriorityQueue<Edge<V, E>> lstEdges = new PriorityQueue<>(Comparator.comparing(Edge::getWeight, ce));
+    public static <V,E> Graph<V,E> kruskalMST(Graph<V,E> g, Comparator<E> ce) {   //O(E*log E)
+        PriorityQueue<Edge<V,E>> lstEdges = new PriorityQueue<>(Comparator.comparing(Edge::getWeight, ce));
 
         Graph<V, E> mst = new MapGraph<>(g.isDirected());
 
-        for (V vertex : g.vertices()) {             //O(V)
+        for (V vertex : g.vertices()) {             // O(V)
             mst.addVertex(vertex);
         }
 
-        lstEdges.addAll(g.edges());                 //O(E)
+        lstEdges.addAll(g.edges());                 // O(E)
 
-        while (!lstEdges.isEmpty()) {               //O(E*log E)
+        // Kruskal stops when V-1 edges are 'selected'
+        int n = g.numVertices() - 1;
+
+        while (n > 0 && !lstEdges.isEmpty()) {      // O(V)
             Edge<V, E> e1 = lstEdges.poll();
-            if (!hasConnection(mst, e1.getVOrig(), e1.getVDest()))
-            // if (!DepthFirstSearch(mst, e1.getVOrig()).contains(e1.getVDest())) {
+            if (!hasConnection(mst, e1.getVOrig(), e1.getVDest())) { // O(V*E)
                 mst.addEdge(e1.getVOrig(), e1.getVDest(), e1.getWeight());
-            // }
+                n--;
+            }
         }
+
+        // O(V^2*E)
         return mst;
     }
-
 }
 
