@@ -6,9 +6,11 @@
 
 % lang & encoding
 \usepackage[utf8]{inputenc}
-% \usepackage[english]{babel}
-% \usepackage[T1]{fontenc}
-\usepackage[inline]{enumitem}
+\usepackage[portuguese]{babel}
+\usepackage{csquotes}
+\usepackage[T1]{fontenc}
+\usepackage{hyphenat}
+\usepackage{textcomp} % ordinals: º && ª
 
 % images
 \usepackage{graphicx}
@@ -16,7 +18,16 @@
 
 % index
 \usepackage{imakeidx}
+\usepackage[inline]{enumitem}
 
+% tables
+\usepackage{tablefootnote}
+\usepackage{multirow}
+\usepackage{booktabs}
+
+% symbols
+\usepackage{gensymb}
+\usepackage{amsmath}
 
 % layout and navi
 \usepackage{indentfirst} % indent first line of a section
@@ -47,14 +58,14 @@
 
 % fileinfo
 \title{
-    Resistência e Energia {\textemdash} T\'ermica
+    Resist\^{e}ncia e Energia {\textemdash} T\'ermica
 }
 
 \author{
     Marco Maia          {\textemdash}    1210951\\
-    R\'uben Ferreira    {\textemdash}    1210954\\
-    Jo\~ao Teixeira     {\textemdash}    1210957\\
-    Jos\'e Rente        {\textemdash}    1211155\\
+    R\'{u}ben Ferreira  {\textemdash}    1210954\\
+    Jo\~{a}o Teixeira   {\textemdash}    1210957\\
+    Jos\'{e} Rente      {\textemdash}    1211155\\
 }
 
 % }}}
@@ -65,25 +76,25 @@
 % title page
 \makeatletter
 \begin{titlepage}
-    \begin{center}
-        \par
-        \noindent
-        \includegraphics[
-            width=0.3\textwidth,
-            valign=M,
-            margin=0ex 2ex
-        ]{isep-logo.png}
-        \hfill
-        \includegraphics[
-            width=0.3\textwidth,
-            valign=M,
-            margin=0ex 2ex
-        ]{dei-logo.png}\\[4ex]
-        \par
-        {\bfseries  \@title }\\[2ex]
-        {\@date}\\[2ex]
-        {\@author}
-    \end{center}
+	\begin{center}
+		\par
+		\noindent
+		\includegraphics[
+			width=0.3\textwidth,
+			valign=M,
+			margin=0ex 2ex
+		]{isep-logo.png}
+		\hfill
+		\includegraphics[
+			width=0.3\textwidth,
+			valign=M,
+			margin=0ex 2ex
+		]{dei-logo.png}\\[4ex]
+		\par
+		{\bfseries  \@title }\\[2ex]
+		{\@date}\\[2ex]
+		{\@author}
+	\end{center}
 \end{titlepage}
 \makeatother
 \thispagestyle{empty}
@@ -93,16 +104,111 @@
 \printindex
 \newpage
 
-\section{Introducao}\label{sec:intro}
+\section{Introdução}\label{sec:intro}
 
-% section Introducao (end)
+% section Introdução (end)
 
-\section{Selecao de materiais}\label{sec:select}
+\section{Seleção de materiais}\label{sec:select}
+
+Perante o problema apresentado, investigar um conjunto de materiais para fazerem parte de uma
+estrutura, iniciou-se uma pesquisa em busca das melhores alternativas. Para tal, procurou-se
+materiais com um \textbf{baixo valor de condutividade térmica ($k$)}.
+
+\subsection{Paredes Exteriores}\label{sec:pext}
+
+Perante uma situação de diferentes temperaturas nas diversas secções da estrutura, optou-se por manter a consistência
+e utilizar os \textbf{mesmos materiais em todas as paredes exteriores}.
+
+No final, obteve-se uma espessura de $32cm$.
+
+\subsubsection{Camada Exterior}\label{sec:pext_ce}
+
+Para a camada exterior das paredes, escolheu-se o \textbf{cimento}. Este material é usado em infraestruturas de todo o mundo
+dado, não só às suas \textbf{características térmicas satisfatórias} mas, também, ao seu \textbf{baixo custo}.
+
+Optou-se pela seguinte disposição:
+
+\begin{center}
+	\begin{tabular}{||c c c||}
+		\hline
+		Material & $k \hspace{1mm} (Wm^{-1}K^{-1})$ & $\Delta x \hspace{1mm} (m)$ \\ [0.5ex]
+		\hline\hline
+		Cimento  & $0,46$                           & $0,09$                      \\
+		\hline
+	\end{tabular}
+\end{center}
+
+\subsubsection{Camada Isolante e Estrutural}\label{sec:pext_cie}
+
+Para a camada isolante e estrutural, destacaram-se os seguintes materiais:
+
+\begin{center}
+	\begin{itemize}
+		\item ICF;
+		\item Tijolo refratário, ($k=0,78 \hspace{1mm} Wm^{-1}K^{-1}$).
+	\end{itemize}
+\end{center}
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[width=0.3\textwidth]{icf-exemplo.png}
+	
+	\caption{Sistema ICF, ainda por preencher com betão armado}\label{fig:icf1}
+\end{figure}
+
+Entre ambos, foi decidido utilizar o ICF.\@ O ICF é uma sistema de construção distinguido pelo seu elevado
+\textbf{isolamento térmico} e acústico, baixo custo de manutenção e fácil aplicação. Este sistema é constituído por
+\textbf{dois blocos isolantes verticais} de \textbf{poliestireno expandido} que, após a sua respetiva montagem,
+são preenchidos por \textbf{betão armado}.
 
 
-\subsection{Paredes Exteriores}\label{sub:Paredes Exteriores}
+Tendo sido desenvolvidos há pouco mais de 30 anos, estes sistemas têm sido utilizados um pouco por todo o mundo,
+com especial ênfase nos EUA e no Canadá, dadas as suas ótimas capacidades \textbf{térmicas} e acústicas
 
-% subsection Paredes Exteriores (end)
+Apesar de, na figura~\ref{fig:icf1}, estar representado um reforço com barras de metal, essas serão
+ignoradas neste trabalho experimental.
+
+Optou-se pela seguinte disposição:
+
+\begin{center}
+	\begin{tabular}{||c c c||}
+		\hline
+		Material               & $k \hspace{1mm} (Wm^{-1}K^{-1})$ & $\Delta x \hspace{1mm} (m)$ \\ [0.5ex]
+		\hline\hline
+		Poliestireno Expandido & $0,037$                          & $0,02$                      \\
+		\hline
+		Betão Armado           & $2$                              & $0,18$                      \\
+		\hline
+		Poliestireno Expandido & $0,037$                          & $0,02$                      \\
+		\hline
+	\end{tabular}
+\end{center}
+
+\subsubsection{Camada Interior}\label{pext_ci}
+
+Para a camada interior, destacaram-se os seguintes materiais:
+
+\begin{center}
+	\begin{itemize}
+		\item Gesso, ($k=0,25 \hspace{1mm} Wm^{-1}K^{-1}$);
+		\item Estuque, ($k=0,4 \hspace{1mm} Wm^{-1}K^{-1}$).
+	\end{itemize}
+\end{center}
+
+Pelas claras diferenças nos valores de condutividade térmica, escolheu-se o \textbf{gesso} para o revestimento interior
+das paredes exteriores.
+
+Optou-se pela seguinte disposição:
+
+\begin{center}
+	\begin{tabular}{||c c c||}
+		\hline
+		Material & $k \hspace{1mm} (Wm^{-1}K^{-1})$ & $\Delta x \hspace{1mm} (m)$ \\ [0.5ex]
+		\hline\hline
+		Gesso    & $0,25$                           & $0,01$                      \\
+		\hline
+	\end{tabular}
+\end{center}
 
 
 \subsection{Paredes intermedia isolantes}\label{sub:Paredes intermedia isolantes}
@@ -114,8 +220,44 @@
 
 % subsection Paredes interiores (end)
 
-
 \subsection{Telhado}\label{sub:Telhado}
+
+Para o telhado, optou-se por um modelo de duas águas. Para a \textbf{estrutura exterior}, o que fez mais sentido foi
+uma cobertura de \textbf{cimento}, sobreposto por uma camada de \textbf{telha}. O cimento, pelas mesmas razões referidas no tópico
+\ref{sec:pext_ce}, foi a melhor decisão, dado aos seus baixos valores de condutividade térmica de $k=0,46 \hspace{1mm} Wm^{-1}K^{-1}$.
+
+Já o \textbf{material isolante} escolhido, difere do material isolante das paredes exteriores. Optou-se
+por \textbf{espuma de poliuretano} que, permite obter um isolamento térmico que satisfaz as necessidades
+do caso de estudo. Este material apresenta um valor de condutividade térmica de
+$k=0,028 \hspace{1mm} Wm^{-1}K^{-1}$ e, é muito popular nas indústrias que dependem de \textbf{espaços
+	com temperaturas controladas}.
+
+\begin{figure}[htpb]
+	\centering
+	\includegraphics[width=0.3\textwidth]{espuma_poliuretano.jpg}
+	\caption{Espuma de poliuretano}\label{fig:poliuretano}
+\end{figure}
+
+Por fim, e, à semelhança das paredes exteriores, decidiu-se aplicar uma camada de \textbf{gesso}, como
+\textbf{revestimento interior do telhado}.
+
+Optou-se pela seguinte disposição:
+
+\begin{center}
+	\begin{tabular}{||c c c c||}
+		\hline
+		Estrutura & Material              & $k \hspace{1mm} (Wm^{-1}K^{-1})$ & $\Delta x \hspace{1mm} (m)$ \\ [0.5ex]
+		\hline\hline
+		Exterior  & Telha                 & $1,2$                            & $0,06$                      \\
+		\hline
+		Cobertura & Cimento               & $0,46$                           & $0,04$                      \\
+		\hline
+		Isolante  & Espuma de Poliuretano & $0,028$                          & $0,17$                      \\
+		\hline
+		Interior  & Gesso                 & $0,25$                           & $0,03$                      \\
+		\hline
+	\end{tabular}
+\end{center}
 
 % subsection Telhado (end)
 
@@ -126,6 +268,25 @@
 
 
 \subsection{Janelas}\label{sub:Janelas}
+
+Por fim, foram idealizadas duas janelas que satisfazem as necessidades térmicas do espaço.
+Para tal, optou-se por uma construção de \textbf{duas folhas}, com uma \textbf{estrutura de alumínio} e
+vidro duplo.
+\begin{center}
+	\begin{tabular}{||c c c c||}
+		\hline
+		Estrutura & Material & $k \hspace{1mm} (Wm^{-1}K^{-1})$ & $\Delta x \hspace{1mm} (m)$ \\ [0.5ex]
+		\hline\hline
+		Perfil    & Alumínio & $237$                            & $0,053$                     \\
+		\hline
+		Vidro     & Vidro    & $0,79$                           & $0,004$                     \\
+		\hline
+		Ar        & Ar       & $0,025$                          & $0,023$                     \\
+		\hline
+		Vidro     & Vidro    & $0,79$                           & $0,004$                     \\
+		\hline
+	\end{tabular}
+\end{center}
 
 % subsection Janelas (end)
 
@@ -144,9 +305,520 @@
 
 \subsection{Resistencia Termica nas Seccoes}\label{sub:Resistencia Termica nas Seccoes}
 
+\subsubsection{Zona A}\label{ssub:zonaa}
+
+Tendo em conta os materiais apresentados na secção e, o croqui da estrutura, \textbf{a zona A}, para funcionar
+à temperatura de $ 15^\circ C $ possui as seguintes características:
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c c c c}
+			\toprule{}
+			Secção                     & Material               & $ k \hspace{1mm} (Wm^{-1}K^{-1}$) & $ \Delta x \hspace{1mm} (m)$ & Área $(m^2) $ \\
+				\midrule{}
+
+				% Exterior
+			\multirow{5}{*}{}          & Cimento                & $0.46$                            & $0.09$                       & $48,5$          \\
+				\cline{2-5}
+			Parede                     & Poliestireno Expandido & $0.037$                           & $0.02$                       & $48,5$          \\
+				\cline{2-5}
+			Exterior                   & Betão Armado           & $2$                               & $0.18$                       & $48,5$          \\
+				\cline{2-5}
+			($\times 2$)               & Poliestireno Expandido & $0.037$                           & $0.02$                       & $48,5$          \\
+				\cline{2-5}
+			                           & Gesso                  & $0.25$                            & $0.01$                       & $48,5$          \\
+				\midrule{}
+
+				% Interior não estrutural
+			Parede \multirow{4}{*}{}   & Gesso                  & $0.25$                            & $0.01$                       & $40$          \\
+				\cline{2-5}
+			Interior                   & Poliestireno Extrudido & $0.033$                           & $0.08$                       & $40$          \\
+				\cline{2-5}
+			Não Estrutural             & Madeira Pinus          & $0.12$                            & $0.1$                        & $40$          \\
+				\cline{2-5}
+			($\times 1$)               & Gesso                  & $0.25$                            & $0.01$                       & $40$          \\
+				\midrule{}
+
+				% Interior estrutural
+			\multirow{5}{*}{}          & Gesso                  & $0.25$                            & $0.01$                       & $37$          \\
+				\cline{2-5}
+			Parede                     & Poliestireno Extrudido & $0.033$                           & $0.02$                       & $37$          \\
+				\cline{2-5}
+			Interior                   & Betão Armado           & $2$                               & $0.18$                       & $37$          \\
+				\cline{2-5}
+			Estrutural ($\times 1$)    & Poliestireno Extrudido & $0.033$                           & $0.02$                       & $37$          \\
+				\cline{2-5}
+			                           & Gesso                  & $0.25$                            & $0.01$                       & $37$          \\
+				\midrule{}
+
+			\multirow{5}{*}{}		   & Alumínio 				& $237$                            	& $0,053$                      & $0,66$		   \\
+				\cline{2-5}
+			Janela    				   & Vidro    				& $0,79$                           	& $0,004$                      & $1,34$		   \\
+				\cline{2-5}
+			($\times 1$)			   & Ar       				& $0,025$                          	& $0,023$                      & $1,34$		   \\
+				\cline{2-5}
+									   & Vidro    				& $0,79$                           	& $0,004$                      & $1,34$		   \\
+				\midrule{}
+				% Porta
+			Porta de Subir ($\times 1$) & Fibra de vidro        & $0.04$                            & $0.1$                        & $15$           \\
+			\bottomrule{}
+		\end{tabular}
+	\end{center}
+	\caption{Composição da zona A}\label{tab:zona_a}
+\end{table}
+
+Com base na tabela \ref*{tab:zona_a}, o cálculo das resistências para esta sucede-se da seguinte forma:
+
+\paragraph{Janela:}\label{par:zona_a_janela}Os vidros e o ar estão associados em série:
+
+\begin{equation}
+	R_{janelas} = \dfrac{1}{\dfrac{1}{R_{aluminio}} + \dfrac{1}{2 \times R_{vidro} + R_{ar}}}
+	\label{eq:zona_a_janelas}
+\end{equation}
+
+\begin{equation}
+	\Leftrightarrow 
+	R_{janelas} =
+	\dfrac{1}{
+		\dfrac{1}{
+			\dfrac{0,053}{237 \times 0,66}
+		}+
+		\dfrac{1}{
+			2 \times \dfrac{0.004}{0.79 \times 1.34} +
+			\dfrac{0.023}{0.025 \times 1.34}
+		}
+	}
+		= 3.40 \times 10^{-4} \hspace{1mm} KW^{-1}
+	\label{eq:zona_a_janelas2}
+\end{equation}
+
+% paragraph Janelas (end)
+
+\paragraph{Parede exterior:}\label{par:zona_a_ext}Camadas associadas em série:
+
+\begin{equation}
+    R_{parede\_n\tilde{a}o\_ext + porta + janela} =
+        \dfrac{1}{
+			\dfrac{1}{
+			R_{cimento} + 2 \times R_{poliestireno} + R_{bet\tilde{a}o} + R_{gesso}
+			}  
+			+
+			\dfrac{1}{
+				R_{porta}
+			}  
+			+
+			\dfrac{1}{
+				R_{janela}
+			}  
+		}
+    \label{eq:zona_a_ext_1}
+\end{equation}
+
+\begin{equation}
+    \Leftrightarrow R =
+        \dfrac{1}{
+			\dfrac{1}{
+				\dfrac{0.09}{0.46 \times 48.5} +
+				2 \times \dfrac{0.02}{0.037 \times 48.5} +
+				\dfrac{0.18}{2 \times 48.5} +
+				\dfrac{0.01}{0.25 \times 48.5} 
+        	}
+			+
+			\dfrac{1}{
+            	\dfrac{0.1}{0.04 \times 15}
+			}
+			+
+			\dfrac{1}{
+            	3.40 \times 10^{-4}
+			}
+		}
+    \label{eq:zona_a_ext_2}
+\end{equation}
+
+\begin{equation}
+	\Leftrightarrow R_{parede\_n\tilde{a}o\_ext + porta + janela} = 2.47 \times 10^{-2} \hspace{1mm} KW^{-1}
+	\label{eq:zona_a_ext_3}
+\end{equation}
+
+\paragraph{Parede Interior N\~ao Estrutural com porta:}\label{par:zona_a_int_n_est}Paralelo entre a parede e a porta. 
+
+\begin{equation}
+    R_{parede\_n\tilde{a}o\_estrut + porta} =
+        \dfrac{1}{
+			\dfrac{1}{
+            2 \times R_{gesso} + R_{poliestireno\_extrudido} + R_{madeira\_pinus}
+			}  
+			+
+			\dfrac{1}{
+				R_{porta}
+			}  
+		}
+    \label{eq:zona_a_int_n_est_1}
+\end{equation}
+
+\begin{equation}
+    \Leftrightarrow R_{parede\_n\tilde{a}o\_estrut + porta} =
+        \dfrac{1}{
+			\dfrac{1}{
+            2 \times \dfrac{0.01}{0.25 \times 40} +
+            \dfrac{0.08}{0.033 \times 40} +
+            \dfrac{0.1}{0.12 \times 40}
+        	}
+			+
+			\dfrac{1}{
+            \dfrac{0.1}{0.12 \times 3}
+			}
+		}
+    \label{eq:zona_a_int_n_est_2}
+\end{equation}
+
+\begin{equation}
+    \Leftrightarrow R_{parede\_n\tilde{a}o\_estrut + porta} =
+	\dfrac{1}{
+        8.34 \times 10^{-2} + 2.78 \times 10^{-2}
+	}
+	= 3.61 \times 10^{-2} \hspace{1mm} KW^{-1}
+    \label{eq:zona_a_int_n_est_3}
+\end{equation}
+
+\paragraph{Parede Interior Estrutural:}\label{par:zona_a_int_est}
+
+\begin{equation}
+	R_{parede\_estrut} = 2 \times R_{gesso} + 2 \times R_{poliestireno} + R_{bet\tilde{a}o}
+	\label{eq:zona_a_int_est_1}
+\end{equation}
+
+\begin{equation}
+	\Leftrightarrow R_{parede\_estrut} =
+		2 \times \dfrac{0.01}{0.25 \times 37} +
+		2 \times \dfrac{0.02}{0.033 \times 37} +
+		\dfrac{0.18}{2 \times 37}
+		= 3.74 \times 10^{-2} \hspace{1mm} KW^{-1}
+	\label{eq:zona_a_int_est_2}
+\end{equation}
+
+
+\paragraph{Total:}\label{par:zona_a_total} Tendo em conta que os componentes est\~ao
+associados em série e considerando os resultados das
+equa\c{c}\~oes~\ref*{eq:zona_a_ext_3},~\ref*{eq:zona_a_int_n_est_3} e~\ref*{eq:zona_a_int_est_2}
+
+\begin{equation}
+	R_{total} =
+		2.47 \times 10^{-2} + 3.61 \times 10^{-2} + 6.28 \times 10^{-2} = 1.23 \times 10^{-1} \hspace{1mm} KW^{-1}
+	\label{eq:zona_a_total}
+\end{equation}
+
+
+\subsubsection{Zona B}\label{ssub:zonab}
+
+Tendo em conta os materiais apresentados na secção e, o croqui da estrutura, \textbf{a zona B}, para funcionar
+à temperatura de $ 20^\circ C $ possui as seguintes características:
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c c c c}
+			\toprule{}
+			Secção                     & Material               & $ k \hspace{1mm} (Wm^{-1}K^{-1}$) & $ \Delta x \hspace{1mm} (m)$ & Área $(m^2) $ \\
+				\midrule{}
+
+				% Exterior
+			\multirow{5}{*}{}          & Cimento                & $0.46$                            & $0.09$                       & $57.5$          \\
+				\cline{2-5}
+			Parede                     & Poliestireno Expandido & $0.037$                           & $0.02$                       & $57.5$          \\
+				\cline{2-5}
+			Exterior                   & Betão Armado           & $2$                               & $0.18$                       & $57.5$          \\
+				\cline{2-5}
+			($\times 2$)               & Poliestireno Expandido & $0.037$                           & $0.02$                       & $57.5$          \\
+				\cline{2-5}
+			                           & Gesso                  & $0.25$                            & $0.01$                       & $57.5$          \\
+				\midrule{}
+
+				% Interior não estrutural
+			Parede \multirow{4}{*}{}   & Gesso                  & $0.25$                            & $0.01$                       & $25$          \\
+				\cline{2-5}
+			Interior                   & Poliestireno Extrudido & $0.033$                           & $0.08$                       & $25$          \\
+				\cline{2-5}
+			Não Estrutural             & Madeira Pinus          & $0.12$                            & $0.1$                        & $25$          \\
+				\cline{2-5}
+			($\times 1$)               & Gesso                  & $0.25$                            & $0.01$                       & $25$          \\
+				\midrule{}
+
+				% Interior estrutural
+			\multirow{5}{*}{}          & Gesso                  & $0.25$                            & $0.01$                       & $40$          \\
+				\cline{2-5}
+			Parede                     & Poliestireno Extrudido & $0.033$                           & $0.02$                       & $40$          \\
+				\cline{2-5}
+			Interior                   & Betão Armado           & $2$                               & $0.18$                       & $40$          \\
+				\cline{2-5}
+			Estrutural ($\times 1$)    & Poliestireno Extrudido & $0.033$                           & $0.02$                       & $40$          \\
+				\cline{2-5}
+			                           & Gesso                  & $0.25$                            & $0.01$                       & $40$          \\
+				\midrule{}
+
+			\multirow{5}{*}{}		   & Alumínio 				& $237$                            	& $0,053$                      & $0,66$		   \\
+				\cline{2-5}
+			Janela    				   & Vidro    				& $0,79$                           	& $0,004$                      & $1,34$		   \\
+				\cline{2-5}
+			($\times 1$)			   & Ar       				& $0,025$                          	& $0,023$                      & $1,34$		   \\
+				\cline{2-5}
+									   & Vidro    				& $0,79$                           	& $0,004$                      & $1,34$		   \\
+				\midrule{}
+				% Porta
+			Porta dupla ($\times 1$)   & Madeira Pinus          & $0.12$                            & $0.1$                        & $6$           \\
+			\bottomrule{}
+		\end{tabular}
+	\end{center}
+	\caption{Composição da zona B}\label{tab:zona_b}
+\end{table}
+
+Com base na tabela \ref*{tab:zona_b}, o cálculo das resistências para esta secção sucede-se da seguinte forma:
+
+\paragraph{Janela:}\label{par:zona_b_janela}Os vidros e o ar estão associados em série:
+
+\begin{equation}
+	R_{janelas} = \dfrac{1}{\dfrac{1}{R_{aluminio}} + \dfrac{1}{2 \times R_{vidro} + R_{ar}}}
+	\label{eq:zona_b_janelas}
+\end{equation}
+
+\begin{equation}
+	\Leftrightarrow 
+	R_{janelas} =
+	\dfrac{1}{
+		\dfrac{1}{
+			\dfrac{0,053}{237 \times 0,66}
+		}+
+		\dfrac{1}{
+			2 \times \dfrac{0.004}{0.79 \times 1.34} +
+			\dfrac{0.023}{0.025 \times 1.34}
+		}
+	}
+		= 3.40 \times 10^{-4} \hspace{1mm} KW^{-1}
+	\label{eq:zona_b_janelas2}
+\end{equation}
+
+% paragraph Janelas (end)
+
+\paragraph{Parede exterior:}\label{par:zona_b_ext}Camadas associadas em série:
+
+\begin{equation}
+    R_{parede\_n\tilde{a}o\_ext + porta + janela} =
+        \dfrac{1}{
+			\dfrac{1}{
+			R_{cimento} + 2 \times R_{poliestireno} + R_{bet\tilde{a}o} + R_{gesso}
+			}  
+			+
+			\dfrac{1}{
+				R_{porta}
+			}  
+			+
+			\dfrac{1}{
+				R_{janela}
+			}  
+		}
+    \label{eq:zona_b_ext_1}
+\end{equation}
+
+\begin{equation}
+    \Leftrightarrow R =
+        \dfrac{1}{
+			\dfrac{1}{
+				\dfrac{0.09}{0.46 \times 57.5} +
+				2 \times \dfrac{0.02}{0.037 \times 57.5} +
+				\dfrac{0.18}{2 \times 57.5} +
+				\dfrac{0.01}{0.25 \times 57.5} 
+        	}
+			+
+			\dfrac{1}{
+            	\dfrac{0.1}{0.12 \times 6}
+			}
+			+
+			\dfrac{1}{
+            	3.40 \times 10^{-4}
+			}
+		}
+    \label{eq:zona_b_ext_2}
+\end{equation}
+
+\begin{equation}
+	\Leftrightarrow R_{parede\_n\tilde{a}o\_ext + porta + janela} = 3.34 \times 10^{-4} \hspace{1mm} KW^{-1}
+	\label{eq:zona_b_ext_3}
+\end{equation}
+
+\paragraph{Parede Interior N\~ao Estrutural com porta:}\label{par:zona_b_int_n_est}
+
+\begin{equation}
+	R_{parede\_n\tilde{a}o\_estrut} = 2 \times R_{gesso} + R_{poliestireno\_extrudido} + R_{madeira\_pinus}
+	\label{eq:zona_b_int_n_est_1}
+\end{equation}
+
+\begin{equation}
+	\Leftrightarrow R_{parede\_n\tilde{a}o\_estrut} =
+	2 \times \dfrac{0.01}{0.25 \times 25} +
+	\dfrac{0.08}{0.033 \times 25} +
+	\dfrac{0.1}{0.12 \times 25} = 1.34 \times 10^{-1} \hspace{1mm} KW^{-1}
+	\label{eq:zona_b_int_n_est_2}
+\end{equation}
+
+\paragraph{Parede Interior Estrutural:}\label{par:zona_b_int_est}
+
+\begin{equation}
+	R_{parede\_estrut} = 2 \times R_{gesso} + 2 \times R_{poliestireno} + R_{bet\tilde{a}o}
+	\label{eq:zona_b_int_est_1}
+\end{equation}
+
+\begin{equation}
+	\Leftrightarrow R_{parede\_estrut} =
+		2 \times \dfrac{0.01}{0.25 \times 40} +
+		2 \times \dfrac{0.02}{0.033 \times 40} +
+		\dfrac{0.18}{2 \times 40}
+		= 3.46 \times 10^{-2} \hspace{1mm} KW^{-1}
+	\label{eq:zona_b_int_est_2}
+\end{equation}
+
+
+\paragraph{Total:}\label{par:zona_b_total} Tendo em conta que os componentes est\~ao
+associados em série e considerando os resultados das
+equa\c{c}\~oes~\ref*{eq:zona_b_ext_3},~\ref*{eq:zona_b_int_n_est_2} e~\ref*{eq:zona_b_int_est_2}
+
+\begin{equation}
+	R_{total} =
+		3.34 \times 10^{-4} + 1.34 \times 10^{-1} + 3.46 \times 10^{-2} = 1.69 \times 10^{-1} \hspace{1mm} KW^{-1}
+	\label{eq:zona_b_total}
+\end{equation}
+
 
 \subsubsection{Zona C}\label{ssub:Zona C}
 
+Tendo em conta os materiais apresentados na secção e, o croqui da estrutura, \textbf{a zona C}, para funcionar
+à temperatura de $ -10^\circ C $ possui as seguintes características:
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c c c c}
+			\toprule{}
+			Secção                     & Material               & $ k \hspace{1mm} (Wm^{-1}K^{-1}$) & $ \Delta x \hspace{1mm} (m)$ & Área $(m^2) $ \\
+				\midrule{}
+
+				% Exterior
+			\multirow{5}{*}{}          & Cimento                & $0.46$                            & $0.09$                       & $40$          \\
+				\cline{2-5}
+			Parede                     & Poliestireno Expandido & $0.037$                           & $0.02$                       & $40$          \\
+				\cline{2-5}
+			Exterior                   & Betão Armado           & $2$                               & $0.18$                       & $40$          \\
+				\cline{2-5}
+			($\times 1$)               & Poliestireno Expandido & $0.037$                           & $0.02$                       & $40$          \\
+				\cline{2-5}
+			                           & Gesso                  & $0.25$                            & $0.01$                       & $40$          \\
+				\midrule{}
+
+				% Interior não estrutural
+			Parede \multirow{4}{*}{}   & Gesso                  & $0.25$                            & $0.01$                       & $50$          \\
+				\cline{2-5}
+			Interior                   & Poliestireno Extrudido & $0.033$                           & $0.08$                       & $50$          \\
+				\cline{2-5}
+			Não Estrutural             & Madeira Pinus          & $0.12$                            & $0.1$                        & $50$          \\
+				\cline{2-5}
+			($\times2$)                & Gesso                  & $0.25$                            & $0.01$                       & $50$          \\
+				\midrule{}
+
+				% Interior estrutural
+			\multirow{5}{*}{}          & Gesso                  & $0.25$                            & $0.01$                       & $37$          \\
+				\cline{2-5}
+			Parede                     & Poliestireno Extrudido & $0.033$                           & $0.02$                       & $37$          \\
+				\cline{2-5}
+			Interior                   & Betão Armado           & $2$                               & $0.18$                       & $37$          \\
+				\cline{2-5}
+			Estrutural ($\times 1$)    & Poliestireno Extrudido & $0.033$                           & $0.02$                       & $37$          \\
+				\cline{2-5}
+			                           & Gesso                  & $0.25$                            & $0.01$                       & $37$          \\
+				\midrule{}
+
+				% Porta
+			Porta Simples ($\times 1$) & Madeira Pinus          & $0.12$                            & $0.1$                        & $3$           \\
+			\bottomrule{}
+		\end{tabular}
+	\end{center}
+	\caption{Composição da zona C}\label{tab:zona_c}
+\end{table}
+
+
+Com base na tabela \ref*{tab:zona_c}, o cálculo das resistências para esta secção sucede-se da seguinte forma:
+
+\paragraph{Parede exterior:}\label{par:zona_c_ext}Camadas associadas em série:
+
+\begin{equation}
+	R_{parede\_ext} = R_{cimento} + 2 \times R_{poliestireno} + R_{bet\tilde{a}o} + R_{gesso}
+	\label{eq:zona_c_ext_1}
+\end{equation}
+
+\begin{equation}
+	\Leftrightarrow R_{parede\_ext} =
+	\dfrac{0.09}{0.46 \times 40} +
+	2 \times \dfrac{0.02}{0.037 \times 40} +
+	\dfrac{0.18}{2 \times 40} +
+	\dfrac{0.01}{0.25 \times 40} = 3.52 \times 10^{-2} \hspace{1mm} KW^{-1}
+	\label{eq:zona_c_ext_2}
+\end{equation}
+
+% paragraph Parede Exterior (end)
+
+\paragraph{Paredes Interiores Não Estruturais:}\label{par:zona_c_int_n_est}
+
+\begin{equation}
+	R_{parede\_n\tilde{a}o\_estrut} = 2 \times R_{gesso} + R_{poliestireno\_extrudido} + R_{madeira\_pinus}
+	\label{eq:zona_c_int_n_est_1}
+\end{equation}
+
+\begin{equation}
+	\Leftrightarrow R_{parede\_n\tilde{a}o\_estrut} =
+	2 \times \dfrac{0.01}{0.25 \times 50} +
+	\dfrac{0.08}{0.033 \times 50} +
+	\dfrac{0.1}{0.12 \times 50} = 6.67 \times 10^{-2} \hspace{1mm} KW^{-1}
+	\label{eq:zona_c_int_n_est_2}
+\end{equation}
+
+\paragraph{Parede Interior Estrutural com porta:}\label{par:zona_c_int_est}Paralelo entre a parede e a porta.
+
+\begin{equation}
+	R_{parede\_estrut + porta} =
+	\dfrac{1}{
+		2 \times R_{gesso} + 2 \times R_{poliestireno} + R_{bet\tilde{a}o}
+	}
+	+
+	\dfrac{1}{
+		R_{porta}
+	}
+	\label{eq:zona_c_int_est_1}
+\end{equation}
+
+\begin{equation}
+	\Leftrightarrow R_{parede\_estrut + porta} =
+	\dfrac{1}{
+		2 \times \dfrac{0.01}{0.25 \times 37} +
+		2 \times \dfrac{0.02}{0.033 \times 37} +
+		\dfrac{0.18}{2 \times 37}
+	}
+	+
+	\dfrac{1}{
+		\dfrac{0.1}{0.12 \times 3}
+	}
+	\label{eq:zona_c_int_est_2}
+\end{equation}
+
+\begin{equation}
+	\Leftrightarrow R_{parede\_estrut + porta} = 3.29 \times 10^{-2} \hspace{1mm} KW^{-1}
+	\label{eq:zona_c_int_est_3}
+\end{equation}
+
+\paragraph{Total:}\label{par:zona_c_total:} Tendo em conta que os componentes est\~ao
+associados em série e considerando os resultados das
+equa\c{c}\~oes~\ref{eq:zona_c_ext_2},~\ref{eq:zona_c_int_n_est_2} e~\ref{eq:zona_c_int_est_3}
+
+\begin{equation}
+	R_{total} =
+			3.52 \times 10^{-2} + 6.67 \times 10^{-2} + 3.29 \times 10^{-2} = 1.34 \times 10^{-1} \hspace{1mm} KW^{-1}
+	\label{eq:zona_c_total}
+\end{equation}
 % subsubsection Zona C (end)
 
 
@@ -157,24 +829,164 @@
 
 \subsubsection{Zona E}\label{ssub:Zona E}
 
+Tendo em conta os materiais apresentados na secção e, o croqui da estrutura, \textbf{a zona E}, para funcionar
+à temperatura de $ 10^\circ C $ possui as seguintes características:
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c c c c}
+			\toprule{}
+			Secção                     & Material               & $ k \hspace{1mm} (Wm^{-1}K^{-1}$) & $ \Delta x \hspace{1mm} (m)$ & Área $(m^2) $ \\
+				\midrule{}
+
+				% Exterior
+			\multirow{5}{*}{}          & Cimento                & $0.46$                            & $0.09$                       & $90$          \\
+				\cline{2-5}
+			Paredes                    & Poliestireno Expandido & $0.037$                           & $0.02$                       & $90$          \\
+				\cline{2-5}
+			Exteriores                 & Betão Armado           & $2$                               & $0.18$                       & $90$          \\
+				\cline{2-5}
+			(Área com base no croqui)  & Poliestireno Expandido & $0.037$                           & $0.02$                       & $90$          \\
+				\cline{2-5}
+			                           & Gesso                  & $0.25$                            & $0.01$                       & $90$          \\
+				\midrule{}
+
+				% Interior não estrutural
+			Parede \multirow{4}{*}{}   & Gesso                  & $0.25$                            & $0.01$                       & $47$          \\
+				\cline{2-5}
+			Interior                   & Poliestireno Extrudido & $0.033$                           & $0.08$                       & $47$          \\
+				\cline{2-5}
+			Não Estrutural             & Madeira Pinus          & $0.12$                            & $0.1$                        & $47$          \\
+				\cline{2-5}
+			($\times1$)                & Gesso                  & $0.25$                            & $0.01$                       & $47$          \\
+				\midrule{}
+
+				% Porta
+			Porta Simples ($\times 1$) & Madeira Pinus          & $0.12$                            & $0.1$                        & $3$           \\
+			\bottomrule{}
+		\end{tabular}
+	\end{center}
+	\caption{Composição da zona E}\label{tab:zona_e}
+\end{table}
+
+Com base na tabela \ref*{tab:zona_e}, o cálculo das resistências para esta secção sucede-se da seguinte forma:
+
+\paragraph{Parede exterior:}\label{par:zona_e_ext}Camadas associadas em série:
+
+\begin{equation}
+	R_{parede\_ext} = R_{cimento} + 2 \times R_{poliestireno} + R_{bet\tilde{a}o} + R_{gesso}
+	\label{eq:zona_e_ext_1}
+\end{equation}
+
+\begin{equation}
+	\Leftrightarrow R_{parede\_ext} =
+	\dfrac{0.09}{0.46 \times 90} +
+	2 \times \dfrac{0.02}{0.037 \times 90} +
+	\dfrac{0.18}{2 \times 90} +
+	\dfrac{0.01}{0.25 \times 90} = 1.56 \times 10^{-2} \hspace{1mm} KW^{-1}
+	\label{eq:zona_e_ext_2}
+\end{equation}
+
+\paragraph{Parede Interior N\~ao Estrutural com porta:}\label{par:zona_e_int_n_est}Paralelo entre a parede e a porta. 
+
+\begin{equation}
+    R_{parede\_n\tilde{a}o\_estrut + porta} =
+        \dfrac{1}{
+			\dfrac{1}{
+            2 \times R_{gesso} + R_{poliestireno\_extrudido} + R_{madeira\_pinus}
+			}  
+			+
+			\dfrac{1}{
+				R_{porta}
+			}  
+		}
+    \label{eq:zona_e_int_n_est_1}
+\end{equation}
+
+\begin{equation}
+    \Leftrightarrow R_{parede\_n\tilde{a}o\_estrut + porta} =
+        \dfrac{1}{
+			\dfrac{1}{
+            2 \times \dfrac{0.01}{0.25 \times 47} +
+            \dfrac{0.08}{0.033 \times 47} +
+            \dfrac{0.1}{0.12 \times 47}
+        	}
+			+
+			\dfrac{1}{
+            \dfrac{0.1}{0.12 \times 3}
+			}
+		}
+    \label{eq:zona_e_int_n_est_2}
+\end{equation}
+
+\begin{equation}
+    \Leftrightarrow R_{parede\_n\tilde{a}o\_estrut + porta} =
+	\dfrac{1}{
+        7.10 \times 10^{-2} + 2,78 \times 10^{-2}
+	}
+	= 5.66 \times 10^{-2} \hspace{1mm} KW^{-1}
+    \label{eq:zona_e_int_n_est_3}
+\end{equation}
+
+
+\paragraph{Total:}\label{par:zona_e_total:} Tendo em conta que os componentes est\~ao
+associados em série e considerando os resultados das
+equa\c{c}\~oes~\ref{eq:zona_e_ext_2} e ~\ref{eq:zona_e_int_n_est_3}
+
+\begin{equation}
+	R_{total} =
+			1.56 \times 10^{-2} + 5.65 \times 10^{-2} = 7.21 \times 10^{-2} \hspace{1mm} KW^{-1}
+	\label{eq:zona_e_total}
+\end{equation}
+% paragraph Parede Interior Não Estrutural com porta (end)
+
 % subsubsection Zona E (end)
 
-
-\subsubsection{Estrutura Grande}\label{ssub:Estrutura Grande}
-
-% subsubsection Estrutura Grande (end)
-
-
-
 % subsection Resistencia Termica nas Seccoes (end)
+
+\subsubsection{Telhado}\label{ssub:Telhado}
+
+Para cada uma das secções, \textbf{a área do telhado é igual}. Deste modo, ao calcular a resistência do telhado 
+para uma secção, estamos a obter também o seu valor para todas as outras.
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c c c c}
+			\toprule{}
+			Secção                     & Material               & $ k \hspace{1mm} (Wm^{-1}K^{-1}$) & $ \Delta x \hspace{1mm} (m)$ & Área $(m^2) $ \\
+				\midrule{}
+
+			\multirow{5}{*}{}          & Telha                  & $1.2$                             & $0.06$                       & $80.1$        \\
+				\cline{2-5}
+			Telhado                    & Cimento				& $0.46$                            & $0.04$                       & $80.1$        \\
+				\cline{2-5}
+			                           & Espuma de Poliuretano  & $0.028$                           & $0.17$                       & $80.1$        \\
+				\cline{2-5}
+									   & Gesso				 	& $0.25$                            & $0.03$                       & $80.1$        \\
+			\bottomrule{}
+		\end{tabular}
+	\end{center}
+	\caption{Composição da zona C}\label{tab:telhado}
+\end{table}
+
+Com base na tabela \ref*{tab:telhado}, o cálculo das resistência para o telhado sucede-se da seguinte forma:
+
+\begin{equation}
+	R_{telhado} = R_{telha} + R_{cimento} + R_{poliuretano} + R_{gesso}
+	\label{eq:telhado1}
+\end{equation}
+
+\begin{equation}
+	\Leftrightarrow R_{telhado} =
+	\dfrac{0.06}{1.2 \times 80.1} +
+	\dfrac{0.04}{0.46 \times 80.1} +
+	\dfrac{0.17}{0.028 \times 80.1} +
+	\dfrac{0.03}{0.25 \times 80.1} = 7.90 \times 10^{-2} \hspace{1mm} KW^{-1}
+	\label{eq:telhado2}
+\end{equation}
 
 
 % section Estrutura (end)
 
-
-\section{Conclusao}\label{sec:Conclusao}
-
-% section Conclusao (end)
 
 \printbibliography{}
 
