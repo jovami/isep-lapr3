@@ -307,10 +307,12 @@ public class Algorithms {
         // Required by shortestPath()
         var tmp = new LinkedList<V>();
 
-        for (V dest : pool) {
+        for (V dest : pool) {   // O(V)
+            // O(V^2)
             dists.push(shortestPath(g, vOrig, dest, ce, sum, zero, tmp));
         }
 
+        // Net complexity: O(V^3)
         return dists;
     }
 

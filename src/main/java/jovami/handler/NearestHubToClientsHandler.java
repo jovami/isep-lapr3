@@ -39,7 +39,7 @@ public class NearestHubToClientsHandler {
         var clients = new ArrayList<User>();
 
         // Get all existing companies && clients to speed up the process
-        for (User u : network.vertices()) {
+        for (User u : network.vertices()) {     // O(V)
             switch (u.getUserType()) {
                 case COMPANY:
                     companies.add(u);
@@ -50,8 +50,8 @@ public class NearestHubToClientsHandler {
             }
         }
 
-        for (User client : clients) {
-            var companyDist = nearestHub(client, companies);
+        for (User client : clients) {           // O(V)
+            var companyDist = nearestHub(client, companies);    // O(V^3)
 
             if (companyDist.isPresent()) {
                 Distance d = companyDist.get();
@@ -59,30 +59,23 @@ public class NearestHubToClientsHandler {
             }
         }
 
+        // O(V^4)
         return list;
     }
 
     private Optional<Distance> nearestHub(User client, List<User> companies) {
+        // O(V^3)
         var dists = this.network.shortestPathsForPool(client, companies);
 
         // Closest Hubs first
         dists.sort(Distance.cmp);
 
-        for (Distance d : dists) {
+        for (Distance d : dists) {  // O(E)
             if (userStore.getUser(d.getLocID2()).isPresent())
                 return Optional.of(d); // NOTE: User is guaranteed to be a company because of findNearestHubs()
         }
 
         // Nothing found :(
-
-        return Optional.empty();
-    }
-
-    public HubNetwork getNetwork() {
-        return network;
-    }
-
-    public UserStore getUserStore() {
-        return userStore;
+        return Optional.empty();    // Net complexity: O(V^3)
     }
 }
