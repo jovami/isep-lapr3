@@ -30,6 +30,7 @@ public class DistanceParser implements CSVParser {
 
     @Override
     public void parse(List<String[]> data) {
+        // O(l); l => lines of the file
         data.forEach(line -> {
             String loc1, loc2;
             int length;
@@ -43,7 +44,10 @@ public class DistanceParser implements CSVParser {
                 throw new InvalidCSVFileException("CSV File contained an invalid length!!");
             }
 
+            // O(1)
             app.distanceStore().addDistance(loc1, loc2, length);
         });
+
+        // Net Complexity: O(l)
     }
 }

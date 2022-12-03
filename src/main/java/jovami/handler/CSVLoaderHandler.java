@@ -64,14 +64,14 @@ public class CSVLoaderHandler {
 
     public void loadResources(boolean loadBig)
     {
-        for (var fileEnum : CSVFiles.values()) {
+        for (var fileEnum : CSVFiles.values()) {                    // O(1) (enum values)
             String fpath = fileEnum.path(loadBig);
             List<String[]> data;
 
             try {
-                data = CSVReader.readFromResources(fpath,
-                        fileEnum == CSVFiles.BUNDLES && !loadBig
-                        ? CSVHeader.BUNDLES_SMALL
+                data = CSVReader.readFromResources(fpath,           // O(l*c);
+                        fileEnum == CSVFiles.BUNDLES && !loadBig    // l => lines of the file(s)
+                        ? CSVHeader.BUNDLES_SMALL                   // c => columns of the file(s)
                         : fileEnum.header);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -79,7 +79,7 @@ public class CSVLoaderHandler {
             }
 
             if (fileEnum != CSVFiles.BUNDLES)
-                this.parsers.get(fileEnum.header).parse(data);
+                this.parsers.get(fileEnum.header).parse(data);      // get: O(1); parse: O(l)
 
             /* NOTE: bundles are disabled because they're not yet needed */
             // if (fileEnum == CSVFiles.BUNDLES && !loadBig)
@@ -87,21 +87,25 @@ public class CSVLoaderHandler {
             // else
             //     parsers.get(fileEnum.header).parse(data);
         }
+
+        // Net complexity: O(l*c)
     }
 
     public void loadInteractive(Map<CSVHeader, File> files)
     {
-        files.forEach((header, file) -> {
+        files.forEach((header, file) -> {                           // O(1) (keys => enum values)
             List<String[]> data;
             try {
-                data = CSVReader.readCSV(file, header);
+                data = CSVReader.readCSV(file, header);             // O(l*c)
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 return;
             }
 
-            this.parsers.get(header).parse(data);
+            this.parsers.get(header).parse(data);                   // O(l)
         });
+
+        // Net complexity: O(l*c)
     }
 
     public boolean populateNetwork() {
@@ -110,20 +114,21 @@ public class CSVLoaderHandler {
 
         var network = this.app.hubNetwork();
 
-        int edges = network.numEdges();
-        int verts = network.numVertices();
+        int edges = network.numEdges();                             // O(1)
+        int verts = network.numVertices();                          // O(1)
 
 
-        users.forEach(network::addVertex);
+        users.forEach(network::addVertex);                          // O(V) ~ O(l)
 
-        distances.forEach(distance -> {
-            var orig = users.getUser(distance.getLocID1());
-            var dest = users.getUser(distance.getLocID2());
+        distances.forEach(distance -> {                             // O(E)
+            var orig = users.getUser(distance.getLocID1());         // O(1)
+            var dest = users.getUser(distance.getLocID2());         // O(1)
 
             if (orig.isPresent() && dest.isPresent())
-                network.addEdge(orig.get(), dest.get(), distance);
+                network.addEdge(orig.get(), dest.get(), distance);  // O(1)
         });
 
+        // Net complexity: O(E), since E ~ V^2
         return edges < network.numEdges() || verts < network.numVertices();
     }
 }

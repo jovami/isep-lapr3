@@ -30,6 +30,7 @@ public class UserParser implements CSVParser {
 
     @Override
     public void parse(List<String[]> data) {
+        // O(l); l => lines of the file
         data.forEach(line -> {
             String locID, userID;
             double latitude, longitude;
@@ -45,7 +46,10 @@ public class UserParser implements CSVParser {
 
             userID = line[UserColumns.USER_ID.col];
 
+            // O(1)
             this.app.userStore().addUser(userID, locID, latitude, longitude);
         });
+
+        // Net Complexity: O(l)
     }
 }
