@@ -1,0 +1,24 @@
+[0] Config.pm:307> INFO - This is Biber 2.17
+[1] Config.pm:310> INFO - Logfile is '2DD_G031_Fisica.blg'
+[98] biber:340> INFO - === Sat Dec  3, 2022, 23:24:37
+[123] Biber.pm:418> INFO - Reading '2DD_G031_Fisica.bcf'
+[193] Biber.pm:972> INFO - Found 2 citekeys in bib section 0
+[210] Biber.pm:4383> INFO - Processing section 0
+[229] Biber.pm:4574> INFO - Looking for bibtex file 'refs.bib' for section 0
+[231] bibtex.pm:1713> INFO - LaTeX decoding ...
+[236] bibtex.pm:1518> INFO - Found BibTeX data source 'refs.bib'
+[281] UCollate.pm:68> INFO - Overriding locale 'pt-PT' defaults 'normalization = NFD' with 'normalization = prenormalized'
+[281] UCollate.pm:68> INFO - Overriding locale 'pt-PT' defaults 'variable = shifted' with 'variable = non-ignorable'
+[281] Biber.pm:4203> INFO - Sorting list 'none/global//global/global' of type 'entry' with template 'none' and locale 'pt-PT'
+[282] Biber.pm:4209> INFO - No sort tailoring available for locale 'pt-PT'
+[287] bbl.pm:654> INFO - Writing '2DD_G031_Fisica.bbl' with encoding 'UTF-8'
+[288] bbl.pm:757> INFO - Output to 2DD_G031_Fisica.bbl
+[289] Biber.pm:130> WARN - legacy month field 'sep' in entry 'gesso_k' is not an integer - this will probably not sort properly.
+[289] Biber.pm:130> WARN - BibTeX subsystem: /tmp/biber_tmp_5_f6/8fe4c9854184545302f21ebf0d47516c_27936.utf8, line 9, warning: 38 characters of junk seen at toplevel
+[289] Biber.pm:130> WARN - BibTeX subsystem: /tmp/biber_tmp_5_f6/8fe4c9854184545302f21ebf0d47516c_27936.utf8, line 10, warning: possible runaway string started at line 9
+[289] Biber.pm:130> WARN - BibTeX subsystem: /tmp/biber_tmp_5_f6/8fe4c9854184545302f21ebf0d47516c_27936.utf8, line 19, warning: 28 characters of junk seen at toplevel
+[289] Biber.pm:130> WARN - BibTeX subsystem: /tmp/biber_tmp_5_f6/8fe4c9854184545302f21ebf0d47516c_27936.utf8, line 20, warning: possible runaway string started at line 19
+[289] Biber.pm:130> WARN - BibTeX subsystem: /tmp/biber_tmp_5_f6/8fe4c9854184545302f21ebf0d47516c_27936.utf8, line 33, warning: 28 characters of junk seen at toplevel
+[289] Biber.pm:130> WARN - BibTeX subsystem: /tmp/biber_tmp_5_f6/8fe4c9854184545302f21ebf0d47516c_27936.utf8, line 34, warning: possible runaway string started at line 33
+[289] Biber.pm:130> WARN - BibTeX subsystem: /tmp/biber_tmp_5_f6/8fe4c9854184545302f21ebf0d47516c_27936.utf8, line 43, warning: 3 characters of junk seen at toplevel
+[289] Biber.pm:132> INFO - WARNINGS: 8

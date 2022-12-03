@@ -415,7 +415,7 @@ obtivemos a seguinte estrutura para responder ao problema apresentado pelo clien
 
 \begin{figure}[htpb]
     \begin{center}
-        \includegraphics[width=0.95\textwidth]{img/sketch3.png}
+        \includegraphics[width=0.95\textwidth]{img/sketch4.png}
     \end{center}
     \caption{Croqui da estrutura concebida}\label{fig:croqui}
 \end{figure}
@@ -501,7 +501,7 @@ Com base na tabela~\ref*{tab:zona_a}, o cálculo das resistências para esta suc
 	R_{janelas} =
 	\dfrac{1}{
 		\dfrac{1}{
-			\dfrac{0,053}{237 \times 0,66}
+			\dfrac{0.053}{237 \times 0.66}
 		}+
 		\dfrac{1}{
 			2 \times \dfrac{0.004}{0.79 \times 1.34} +
@@ -514,57 +514,52 @@ Com base na tabela~\ref*{tab:zona_a}, o cálculo das resistências para esta suc
 
 % paragraph Janelas (end)
 
-\paragraph{Parede exterior:}\label{par:zona_a_ext}Camadas associadas em série:
+\paragraph{Parede Exterior com Porta da Subir e Janela:}\label{par:zona_a_ext}Camadas associadas em série:
 
 \begin{equation}
-    R_{parede\_n\tilde{a}o\_ext + porta + janela} =
-        \dfrac{1}{
-			\dfrac{1}{
+    \dfrac{1}{R}= 
+		\dfrac{1}{
 			R_{cimento} + 2 \times R_{poliestireno} + R_{bet\tilde{a}o} + R_{gesso}
-			}
-			+
-			\dfrac{1}{
-				R_{porta}
-			}
-			+
-			\dfrac{1}{
-				R_{janela}
-			}
+		}
+		+
+		\dfrac{1}{
+			R_{porta\_subir}
+		}
+		+
+		\dfrac{1}{
+			R_{janela}
 		}
     \label{eq:zona_a_ext_1}
 \end{equation}
 
 \begin{equation}
-    \Leftrightarrow R =
-        \dfrac{1}{
-			\dfrac{1}{
-				\dfrac{0.09}{0.46 \times 48.5} +
-				2 \times \dfrac{0.02}{0.037 \times 48.5} +
-				\dfrac{0.18}{2 \times 48.5} +
-				\dfrac{0.01}{0.25 \times 48.5}
-        	}
-			+
-			\dfrac{1}{
-            	\dfrac{0.1}{0.04 \times 15}
-			}
-			+
-			\dfrac{1}{
-            	3.40 \times 10^{-4}
-			}
+    \Leftrightarrow \dfrac{1}{R}=
+		\dfrac{1}{
+			\dfrac{0.09}{0.460 \times 48.5} +
+			2 \times \dfrac{0.02}{0.037 \times 48.5} +
+			\dfrac{0.18}{2 \times 48.5} +
+			\dfrac{0.01}{0.25 \times 48.5}
+        }
+		+
+		\dfrac{1}{
+        	\dfrac{0.1}{0.04 \times 15}
+		}
+		+
+		\dfrac{1}{
+        	3.40 \times 10^{-4}
 		}
     \label{eq:zona_a_ext_2}
 \end{equation}
 
 \begin{equation}
-	\Leftrightarrow R_{parede\_n\tilde{a}o\_ext + porta + janela} = 2.47 \times 10^{-2} \hspace{1mm} KW^{-1}
+	\Leftrightarrow R_{parede\_ext + porta + janela} = 3.35 \times 10^{-4} \hspace{1mm} KW^{-1}
 	\label{eq:zona_a_ext_3}
 \end{equation}
 
 \paragraph{Parede Interior N\~ao Estrutural com porta:}\label{par:zona_a_int_n_est}Paralelo entre a parede e a porta.
 
 \begin{equation}
-    R_{parede\_n\tilde{a}o\_estrut + porta} =
-        \dfrac{1}{
+    \dfrac{1}{R} =
 			\dfrac{1}{
             2 \times R_{gesso} + R_{poliestireno\_extrudido} + R_{madeira\_pinus}
 			}
@@ -572,13 +567,11 @@ Com base na tabela~\ref*{tab:zona_a}, o cálculo das resistências para esta suc
 			\dfrac{1}{
 				R_{porta}
 			}
-		}
     \label{eq:zona_a_int_n_est_1}
 \end{equation}
 
 \begin{equation}
-    \Leftrightarrow R_{parede\_n\tilde{a}o\_estrut + porta} =
-        \dfrac{1}{
+    \Leftrightarrow \dfrac{1}{R} =
 			\dfrac{1}{
             2 \times \dfrac{0.01}{0.25 \times 40} +
             \dfrac{0.08}{0.033 \times 40} +
@@ -588,23 +581,25 @@ Com base na tabela~\ref*{tab:zona_a}, o cálculo das resistências para esta suc
 			\dfrac{1}{
             \dfrac{0.1}{0.12 \times 3}
 			}
-		}
     \label{eq:zona_a_int_n_est_2}
 \end{equation}
 
 \begin{equation}
-    \Leftrightarrow R_{parede\_n\tilde{a}o\_estrut + porta} =
+    \Leftrightarrow \dfrac{1}{R_{parede\_n\tilde{a}o\_estrut + porta}} =
 	\dfrac{1}{
-        8.34 \times 10^{-2} + 2.78 \times 10^{-2}
+        8.34 \times 10^{-2}
+	} +
+	\dfrac{1}{
+    	2.78 \times 10^{-1}
 	}
-	= 3.61 \times 10^{-2} \hspace{1mm} KW^{-1}
+	= 6.42 \times 10^{-2} \hspace{1mm} KW^{-1}
     \label{eq:zona_a_int_n_est_3}
 \end{equation}
 
 \paragraph{Parede Interior Estrutural:}\label{par:zona_a_int_est}
 
 \begin{equation}
-	R_{parede\_estrut} = 2 \times R_{gesso} + 2 \times R_{poliestireno} + R_{bet\tilde{a}o}
+	R= 2 \times R_{gesso} + 2 \times R_{poliestireno} + R_{bet\tilde{a}o}
 	\label{eq:zona_a_int_est_1}
 \end{equation}
 
@@ -624,7 +619,18 @@ equa\c{c}\~oes~\ref*{eq:zona_a_ext_3},~\ref*{eq:zona_a_int_n_est_3} e~\ref*{eq:z
 
 \begin{equation}
 	R_{total} =
-		2.47 \times 10^{-2} + 3.61 \times 10^{-2} + 6.28 \times 10^{-2} = 1.23 \times 10^{-1} \hspace{1mm} KW^{-1}
+	\dfrac{1}{
+		\dfrac{1}{
+		3.35 \times 10^{-4}
+		} + 
+		\dfrac{1}{
+		6.42 \times 10^{-2}
+		} + 
+		\dfrac{1}{
+		3.74 \times 10^{-2} 
+		}
+	}
+	= 3.31 \times 10^{-4} \hspace{1mm} KW^{-1}
 	\label{eq:zona_a_total}
 \end{equation}
 
@@ -633,7 +639,7 @@ equa\c{c}\~oes~\ref*{eq:zona_a_ext_3},~\ref*{eq:zona_a_int_n_est_3} e~\ref*{eq:z
 
 Tendo em conta os materiais apresentados na secção e, o croqui da estrutura, \textbf{a zona B}, para funcionar
 à temperatura de $ 20^\circ C $ possui as seguintes características:
-
+\newpage
 \begin{table}[htpb]
 	\begin{center}
 		\begin{tabular}{c c c c c}
@@ -696,51 +702,46 @@ Com base na tabela~\ref*{tab:zona_b}, o cálculo das resistências para esta sec
 \paragraph{Janela:}\label{par:zona_b_janela}Os vidros e o ar estão associados em série:
 
 \begin{equation}
-	R_{janelas} = \dfrac{1}{\dfrac{1}{R_{aluminio}} + \dfrac{1}{2 \times R_{vidro} + R_{ar}}}
+	\dfrac{1}{R} = \dfrac{1}{R_{aluminio}} + \dfrac{1}{2 \times R_{vidro} + R_{ar}}
 	\label{eq:zona_b_janelas}
 \end{equation}
 
 \begin{equation}
 	\Leftrightarrow
-	R_{janelas} =
-	\dfrac{1}{
+	\dfrac{1}{R_{janelas}} =
 		\dfrac{1}{
-			\dfrac{0,053}{237 \times 0,66}
+			\dfrac{0.053}{237 \times 0.66}
 		}+
 		\dfrac{1}{
 			2 \times \dfrac{0.004}{0.79 \times 1.34} +
 			\dfrac{0.023}{0.025 \times 1.34}
 		}
-	}
 		= 3.40 \times 10^{-4} \hspace{1mm} KW^{-1}
 	\label{eq:zona_b_janelas2}
 \end{equation}
 
 % paragraph Janelas (end)
 
-\paragraph{Parede exterior:}\label{par:zona_b_ext}Camadas associadas em série:
+\paragraph{Parede Exterior com Porta Dupla e Janela:}\label{par:zona_b_ext}Camadas associadas em série:
 
 \begin{equation}
-    R_{parede\_n\tilde{a}o\_ext + porta + janela} =
-        \dfrac{1}{
+    \dfrac{1}{R} =
 			\dfrac{1}{
 			R_{cimento} + 2 \times R_{poliestireno} + R_{bet\tilde{a}o} + R_{gesso}
 			}
 			+
 			\dfrac{1}{
-				R_{porta}
+				R_{porta\_dupla}
 			}
 			+
 			\dfrac{1}{
 				R_{janela}
 			}
-		}
     \label{eq:zona_b_ext_1}
 \end{equation}
 
 \begin{equation}
-    \Leftrightarrow R =
-        \dfrac{1}{
+    \Leftrightarrow \dfrac{1}{R} =
 			\dfrac{1}{
 				\dfrac{0.09}{0.46 \times 57.5} +
 				2 \times \dfrac{0.02}{0.037 \times 57.5} +
@@ -755,16 +756,15 @@ Com base na tabela~\ref*{tab:zona_b}, o cálculo das resistências para esta sec
 			\dfrac{1}{
             	3.40 \times 10^{-4}
 			}
-		}
     \label{eq:zona_b_ext_2}
 \end{equation}
 
 \begin{equation}
-	\Leftrightarrow R_{parede\_n\tilde{a}o\_ext + porta + janela} = 3.34 \times 10^{-4} \hspace{1mm} KW^{-1}
+	\Leftrightarrow R_{parede\_ext + porta\_dupla + janela} = 3.34 \times 10^{-4} \hspace{1mm} KW^{-1}
 	\label{eq:zona_b_ext_3}
 \end{equation}
 
-\paragraph{Parede Interior N\~ao Estrutural com porta:}\label{par:zona_b_int_n_est}
+\paragraph{Parede Interior N\~ao Estrutural:}\label{par:zona_b_int_n_est}
 
 \begin{equation}
 	R_{parede\_n\tilde{a}o\_estrut} = 2 \times R_{gesso} + R_{poliestireno\_extrudido} + R_{madeira\_pinus}
@@ -802,7 +802,18 @@ equa\c{c}\~oes~\ref*{eq:zona_b_ext_3},~\ref*{eq:zona_b_int_n_est_2} e~\ref*{eq:z
 
 \begin{equation}
 	R_{total} =
-		3.34 \times 10^{-4} + 1.34 \times 10^{-1} + 3.46 \times 10^{-2} = 1.69 \times 10^{-1} \hspace{1mm} KW^{-1}
+	\dfrac{1}{
+		\dfrac{1}{
+		3.34 \times 10^{-4} 
+		} +
+		\dfrac{1}{ 
+		1.34 \times 10^{-1} 
+		}+
+		\dfrac{1}{ 
+		3.46 \times 10^{-2} 
+		}
+	}
+	= 3.30 \times 10^{-4} \hspace{1mm} KW^{-1}
 	\label{eq:zona_b_total}
 \end{equation}
 
@@ -811,7 +822,7 @@ equa\c{c}\~oes~\ref*{eq:zona_b_ext_3},~\ref*{eq:zona_b_int_n_est_2} e~\ref*{eq:z
 
 Tendo em conta os materiais apresentados na secção e, o croqui da estrutura, \textbf{a zona C}, para funcionar
 à temperatura de $ -10^\circ C $ possui as seguintes características:
-
+\newpage
 \begin{table}[htpb]
 	\begin{center}
 		\begin{tabular}{c c c c c}
@@ -893,11 +904,11 @@ Com base na tabela \ref*{tab:zona_c}, o cálculo das resistências para esta sec
 	\Leftrightarrow R_{parede\_n\tilde{a}o\_estrut} =
 	2 \times \dfrac{0.01}{0.25 \times 50} +
 	\dfrac{0.08}{0.033 \times 50} +
-	\dfrac{0.1}{0.12 \times 50} = 6.67 \times 10^{-2} \hspace{1mm} KW^{-1}
+	\dfrac{0.1}{0.12 \times 50} = 6.68 \times 10^{-2} \hspace{1mm} KW^{-1}
 	\label{eq:zona_c_int_n_est_2}
 \end{equation}
 
-\paragraph{Parede Interior Estrutural com porta:}\label{par:zona_c_int_est}Paralelo entre a parede e a porta.
+\paragraph{Parede Interior Estrutural com Porta:}\label{par:zona_c_int_est}Paralelo entre a parede e a porta.
 
 \begin{equation}
 	R_{parede\_estrut + porta} =
@@ -936,7 +947,18 @@ equa\c{c}\~oes~\ref{eq:zona_c_ext_2},~\ref{eq:zona_c_int_n_est_2} e~\ref{eq:zona
 
 \begin{equation}
 	R_{total} =
-			3.52 \times 10^{-2} + 6.67 \times 10^{-2} + 3.29 \times 10^{-2} = 1.34 \times 10^{-1} \hspace{1mm} KW^{-1}
+	\dfrac{1}{
+		\dfrac{1}{
+			3.52 \times 10^{-2} 
+		} +
+		\dfrac{1}{
+			6.67 \times 10^{-2}
+		} +
+		\dfrac{1}{
+			3.29 \times 10^{-2} 
+		}
+	}
+	= 2.30 \times 10^{-2} \hspace{1mm} KW^{-1}
 	\label{eq:zona_c_total}
 \end{equation}
 % subsubsection Zona C (end)
@@ -946,7 +968,7 @@ equa\c{c}\~oes~\ref{eq:zona_c_ext_2},~\ref{eq:zona_c_int_n_est_2} e~\ref{eq:zona
 
 Tendo em conta os materiais apresentados na sec\c{c}\~ao~\ref{sec:select} e o croqui da
 sec\c{c}\~ao~\ref{sub:croqui}, a zona D possui as seguintes caracter\'{\i}sticas:
-
+\newpage
 \begin{table}[htpb]
     \begin{center}
         \begin{tabular}{c c c c c}
@@ -999,7 +1021,7 @@ sec\c{c}\~ao~\ref{sub:croqui}, a zona D possui as seguintes caracter\'{\i}sticas
 Como esta zona deveria funcionar com uma temperatura interna de $0{\celsius}$, o c\'alculo das
 resist\^encias sucede-se da seguinte maneira:
 
-\paragraph{Parede exterior:}\label{par:zona_d_ext}Camadas associadas em s\'erie:
+\paragraph{Parede Exterior:}\label{par:zona_d_ext}Camadas associadas em s\'erie:
 
 \begin{equation}
     R_{parede\_ext} = R_{cimento} + 2 \times R_{poliestireno} + R_{bet\tilde{a}o} + R_{gesso}
@@ -1017,7 +1039,7 @@ resist\^encias sucede-se da seguinte maneira:
 
 % paragraph Parede Exterior (end)
 
-\paragraph{Parede Interior N\~ao Estrutural com porta:}\label{par:zona_d_int_n_est}Paralelo entre a parede e a porta. Como existem duas paredes, o c\'alculo possui o dobro do valor.
+\paragraph{Parede Interior N\~ao Estrutural com Porta:}\label{par:zona_d_int_n_est}Paralelo entre a parede e a porta. Como existem duas paredes, o c\'alculo possui o dobro do valor.
 
 \begin{equation}
     \dfrac{1}{R_{parede\_n\tilde{a}o\_estrut + porta}} = 2 \left(
@@ -1049,13 +1071,13 @@ resist\^encias sucede-se da seguinte maneira:
 
 \begin{equation}
     \Leftrightarrow R_{parede\_n\tilde{a}o\_estrut + porta} =
-        \dfrac{1}{2} \times 9.81 \times 10^{-2} = 4.90 \times 10^{-2} \hspace{1mm} KW^{-1}
+        \dfrac{1}{2} \times 9.81 \times 10^{-2} = 4.91 \times 10^{-2} \hspace{1mm} KW^{-1}
     \label{eq:zona_d_int_n_est_3}
 \end{equation}
 
 % paragraph Parede Interior Não Estrutural com porta (end)
 
-\paragraph{Parede Interior Estrutural com porta:}\label{par:zona_d_int_est}Paralelo entre a parede e a porta.
+\paragraph{Parede Interior Estrutural com Porta:}\label{par:zona_d_int_est}Paralelo entre a parede e a porta.
 
 \begin{equation}
     \dfrac{1}{R_{parede\_estrut + porta}} =
@@ -1178,11 +1200,10 @@ Com base na tabela \ref*{tab:zona_e}, o cálculo das resistências para esta sec
 	\label{eq:zona_e_ext_2}
 \end{equation}
 
-\paragraph{Parede Interior N\~ao Estrutural com porta:}\label{par:zona_e_int_n_est}Paralelo entre a parede e a porta.
+\paragraph{Parede Interior N\~ao Estrutural com Porta:}\label{par:zona_e_int_n_est}Paralelo entre a parede e a porta.
 
 \begin{equation}
-    R_{parede\_n\tilde{a}o\_estrut + porta} =
-        \dfrac{1}{
+    \dfrac{1}{R_{parede\_n\tilde{a}o\_estrut + porta}} =
 			\dfrac{1}{
             2 \times R_{gesso} + R_{poliestireno\_extrudido} + R_{madeira\_pinus}
 			}
@@ -1190,13 +1211,11 @@ Com base na tabela \ref*{tab:zona_e}, o cálculo das resistências para esta sec
 			\dfrac{1}{
 				R_{porta}
 			}
-		}
     \label{eq:zona_e_int_n_est_1}
 \end{equation}
 
 \begin{equation}
-    \Leftrightarrow R_{parede\_n\tilde{a}o\_estrut + porta} =
-        \dfrac{1}{
+    \Leftrightarrow \dfrac{1}{R_{parede\_n\tilde{a}o\_estrut + porta}} =
 			\dfrac{1}{
             2 \times \dfrac{0.01}{0.25 \times 47} +
             \dfrac{0.08}{0.033 \times 47} +
@@ -1206,7 +1225,6 @@ Com base na tabela \ref*{tab:zona_e}, o cálculo das resistências para esta sec
 			\dfrac{1}{
             \dfrac{0.1}{0.12 \times 3}
 			}
-		}
     \label{eq:zona_e_int_n_est_2}
 \end{equation}
 
@@ -1226,7 +1244,15 @@ equa\c{c}\~oes~\ref{eq:zona_e_ext_2} e ~\ref{eq:zona_e_int_n_est_3}
 
 \begin{equation}
 	R_{total} =
-			1.56 \times 10^{-2} + 5.65 \times 10^{-2} = 7.21 \times 10^{-2} \hspace{1mm} KW^{-1}
+	\dfrac{1}{
+		\dfrac{1}{
+			1.56 \times 10^{-2} 
+		}	+ 
+		\dfrac{1}{	
+			5.65 \times 10^{-2} 
+		}	
+	}		
+	= 1.22 \times 10^{-2} \hspace{1mm} KW^{-1}
 	\label{eq:zona_e_total}
 \end{equation}
 % paragraph Parede Interior Não Estrutural com porta (end)
