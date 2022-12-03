@@ -5,7 +5,7 @@ CTEST = src/test/casm
 
 TEXDIR = src/main/tex
 
-all: c package tex
+all: c java tex
 
 asm: c
 asmtest: ctest
@@ -26,7 +26,7 @@ package:
 	./mvnw package
 
 tex:
-# 	cd ${TEXDIR} && $(MAKE)
+	cd ${TEXDIR} && $(MAKE)
 
 
 check: ctest jtest
