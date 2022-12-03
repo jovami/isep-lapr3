@@ -3,11 +3,11 @@ package jovami.ui;
 import jovami.handler.TopNCompaniesHandler;
 import jovami.util.io.InputReader;
 
-public class Us303UI implements UserStory{
+public class TopNCompaniesUI implements UserStory{
 
     private final TopNCompaniesHandler ctrl;
 
-    public Us303UI (){
+    public TopNCompaniesUI (){
         ctrl= new TopNCompaniesHandler();
     }
 
