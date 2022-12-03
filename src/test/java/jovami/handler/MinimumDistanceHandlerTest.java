@@ -48,13 +48,11 @@ public class MinimumDistanceHandlerTest {
     }
 
     @Test
-    void getMiniumCost() {
-        Collection<Edge<User,Distance>> edge = minimumDistanceHandler.getMinimalUserNetwork().edges();
+    void getMinimumCost() {
         Graph<User, Distance> mst = minimumDistanceHandler.getMinimalUserNetwork();
-        int i=0,sum=0;
-        for (Edge<User, Distance> edges :edge) {
-            sum = sum + weight.get(i);
-            i++;
+        int sum=0;
+        for (Integer wei : weight) {
+            sum = sum + wei;
         }
         assertEquals(sum, minimumDistanceHandler.getMinimumCost(mst));
 

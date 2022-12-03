@@ -20,7 +20,7 @@ public class MinimumDistanceUI implements UserStory {
         printGraph(mst);
         System.out.printf("Minimum Cost: %d\n",handler.getMinimumCost(mst));
     }
-    //int test=0;
+
     private void printGraph(Graph<User,Distance> mst) {
         System.out.println("Minimum Distance Network:\n");
         System.out.println("VOrig -> VDest (Distance)");

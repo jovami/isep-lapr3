@@ -355,17 +355,18 @@ public class Algorithms {
     }
 
 
-    public static <V, E> Graph<V, E> kruskalMST(Graph<V, E> g,Comparator<E> ce) {
+    public static <V, E> Graph<V, E> kruskalMST(Graph<V, E> g,Comparator<E> ce) {   //O(E*log E)
         PriorityQueue<Edge<V, E>> lstEdges = new PriorityQueue<>(Comparator.comparing(Edge::getWeight, ce));
 
         Graph<V, E> mst = new MapGraph<>(g.isDirected());
 
-        for (V vertex : g.vertices()) {
+        for (V vertex : g.vertices()) {             //O(V)
             mst.addVertex(vertex);
         }
 
-        lstEdges.addAll(g.edges());
-        while (!lstEdges.isEmpty()) {
+        lstEdges.addAll(g.edges());                 //O(E)
+        
+        while (!lstEdges.isEmpty()) {               //O(E*log E)
             Edge<V, E> e1 = lstEdges.poll();
             //TODO: optimize
             if (!DepthFirstSearch(mst, e1.getVOrig()).contains(e1.getVDest())) {
