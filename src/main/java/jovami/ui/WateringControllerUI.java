@@ -27,5 +27,18 @@ public class WateringControllerUI implements UserStory {
         }
 
         System.out.println("Data loaded with success!!");
+
+        var watering = this.handler.currentlyWatering();
+
+        if (!watering.isEmpty()) {
+            System.out.println("Plots being watered:");
+
+            System.out.println("Plots || Time left");
+            watering.forEach(pair -> {
+                System.out.printf("%5s || %dmin\n", pair.first(), pair.second());
+            });
+        } else {
+            System.out.println("No plots are currently being watered.");
+        }
     }
 }

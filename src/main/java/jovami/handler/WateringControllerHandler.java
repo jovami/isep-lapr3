@@ -3,12 +3,15 @@ package jovami.handler;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import jovami.App;
+import jovami.model.WateringController;
 import jovami.model.csv.CSVHeader;
 import jovami.model.csv.CSVReader;
 import jovami.model.csv.WateringControllerParser;
+import jovami.util.Pair;
 
 /**
  * WateringControllerHandler
@@ -27,6 +30,17 @@ public class WateringControllerHandler {
 
     private void load(List<String[]> data) {
         parser.parse(data);
+    }
+
+    public List<Pair<String, Long>> currentlyWatering() {
+        var opt = this.app.wateringControllerStore().getActiveController();
+
+        if (opt.isPresent()) {
+            WateringController ctrl = opt.get();
+            return ctrl.currentlyWatering();
+        }
+
+        return Collections.emptyList();
     }
 
 
