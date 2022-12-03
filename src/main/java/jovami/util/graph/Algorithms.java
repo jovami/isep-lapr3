@@ -1,12 +1,15 @@
 package jovami.util.graph;
 
-import jovami.util.graph.map.MapGraph;
-import jovami.util.graph.map.MapVertex;
-import jovami.util.graph.matrix.MatrixGraph;
-
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Objects;
+import java.util.PriorityQueue;
 import java.util.function.BinaryOperator;
+
+import jovami.util.graph.map.MapGraph;
+import jovami.util.graph.matrix.MatrixGraph;
 
 public class Algorithms {
 
@@ -352,18 +355,18 @@ public class Algorithms {
     }
 
 
-    public static <V, E> Graph<V, E> kruskalMST(Graph<V, E> g,Comparator<E> ce) {
+    public static <V, E> Graph<V, E> kruskalMST(Graph<V, E> g,Comparator<E> ce) {   //O(E*log E)
         PriorityQueue<Edge<V, E>> lstEdges = new PriorityQueue<>(Comparator.comparing(Edge::getWeight, ce));
 
         Graph<V, E> mst = new MapGraph<>(g.isDirected());
 
-        for (V vertex : g.vertices()) {
+        for (V vertex : g.vertices()) {             //O(V)
             mst.addVertex(vertex);
         }
 
-        lstEdges.addAll(g.edges());
+        lstEdges.addAll(g.edges());                 //O(E)
         
-        while (!lstEdges.isEmpty()) {
+        while (!lstEdges.isEmpty()) {               //O(E*log E)
             Edge<V, E> e1 = lstEdges.poll();
             //TODO: optimize
             if (!DepthFirstSearch(mst, e1.getVOrig()).contains(e1.getVDest())) {

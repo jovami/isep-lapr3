@@ -1,0 +1,621 @@
+% vim:foldmethod=marker spelllang=pt,en
+\documentclass[12pt, a4paper]{article}
+
+% Preamble {{{
+
+% Packages {{{
+
+% lang & encoding
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage{csquotes}
+\usepackage[T1]{fontenc}
+\usepackage{hyphenat}
+\usepackage{textcomp}
+
+% images
+\usepackage{graphicx}
+\graphicspath{ {./img/} }
+
+% index
+\usepackage{imakeidx}
+\usepackage[inline]{enumitem}
+
+% layout and navi
+\usepackage{indentfirst} % indent first line of a section
+\usepackage[
+    hidelinks,
+    colorlinks=true,
+    linkcolor=blue
+]{hyperref}
+\usepackage[export]{adjustbox}
+\usepackage[
+    left=2cm,
+    right=2cm,
+    top=2cm,
+    bottom=2cm
+]{geometry}
+
+% }}}
+
+\renewcommand{\baselinestretch}{1.3}
+\makeindex
+
+% Keywords
+\providecommand{\keywords}[1]
+{
+    \small
+    \textbf{Keywords:} #1
+}
+
+% bib
+% \usepackage[backend=biber, style=ieee,urldate=iso,seconds=true,dateabbrev=false]{biblatex}
+% \addbibresource{refs.bib}
+
+% fileinfo
+\title{Dicion\'ario do Modelo de Dados (2DD, Groupo 31)}
+
+\author{
+    Marco Maia          {\textemdash}    1210951\\
+    R\'uben Ferreira    {\textemdash}    1210954\\
+    Jo\~{a}o Teixeira   {\textemdash}    1210957\\
+    Jos\'e Rente        {\textemdash}    1211155\\
+}
+
+% }}}
+
+% start
+\begin{document}
+
+% title page
+\makeatletter
+\begin{titlepage}
+    \begin{center}
+        \par
+        \noindent
+        \includegraphics[
+            width=0.3\textwidth,
+            valign=M,
+            margin=0ex 2ex
+        ]{isep-logo.png}
+        \hfill
+        \includegraphics[
+            width=0.3\textwidth,
+            valign=M,
+            margin=0ex 2ex
+        ]{dei-logo.png}\\[4ex]
+        \par
+        {\bfseries  \@title}\\[2ex]
+        {\@date}\\[2ex]
+        {\@author}
+    \end{center}
+\end{titlepage}
+\makeatother
+\thispagestyle{empty}
+\newpage
+
+{
+    \hypersetup{hidelinks}
+    \tableofcontents
+    \printindex
+    \newpage
+}
+
+\section{Introdu\c{c}\~ao}\label{sc:intro}
+
+O presente documento consiste num dicion\'ario de dados, criado com o intuito de detalhar os aspetos mais relevantes dos elementos da base de dados.
+
+%% mais algo aq?
+
+% TODO: sort entries alphabetically and fix spelling mistakes
+
+\section{Dicion\'ario}\label{sc:dict}
+
+%%
+
+\subsection{Caderno de Campo}\label{ssc:cad_campo}
+
+Entidade que modela o conceito de \emph{Caderno de Campo}, introduzido pelo Cliente.
+
+Um caderno de campo trata-se de um documento formal que permite registar todas as
+opera\c{c}\~oes agr\'{\i}colas relevantes que ocorreram na explora\c{c}\~ao.
+
+%%
+
+\subsection{C\'odigo Postal}\label{ssc:codigo_post}
+
+O c\'odigo postal trata-se de uma sequ\^encia alfanum\'erica utilizada
+para permitir a identifica\c{c}\~ao de endereços.
+
+% \begin{itemize}
+%     \item \textbf{Primary Key:}
+%         codigo{\_}postal{\_}id
+% \end{itemize}
+
+%%
+
+\subsection{Composto}\label{ssc:composto}
+
+Entidade que modela um componente que pertence \`a da constitui\c{c}\~ao de um
+fator de produ\c{c}\~ao~(\ref{ssc:fator_prod}).
+
+%%
+
+\subsection{Dado Meteorol\'ogico}\label{ssc:dado_met}
+
+Para melhorar o processo de gest\~ao de culturas \'e fulcral registar a informa\c{c}\~ao
+meteorol\'ogica, como
+\begin{enumerate*}[label = (\roman*)]
+    \item a \textbf{temperatura},
+    \item a \textbf{humidade do ar},
+    \item a \textbf{pluviosidade}
+        e
+    \item a \textbf{velocidade do vento}
+\end{enumerate*}.
+
+%%
+
+% NOTE: table removed
+% \subsection{Dep\'osito}\label{ssc:deposito}
+
+% Um condutor deposita entregas em \textbf{Hubs} (\ref{ssc:hub}),
+% sendo o Gestor de Distribuição quem as respetivas entregas.
+
+% \begin{itemize}
+%     \item \textbf{Primary Key:} Chave concatenada dos seguintes atributos:
+%         \begin{itemize}
+%             \item
+%                 data{\_}deposito,
+%             \item
+%                 condutor{\_}id,
+%             \item
+%                 hub{\_}id,
+%             \item
+%                 gestor{\_}distribuição
+%         \end{itemize}
+%     \item \textbf{Foreign Keys:}
+%         \begin{itemize}
+%             \item
+%                 condutor{\_}id,
+%             \item
+%                 hub{\_}id,
+%             \item
+%                 gestor{\_}distribuição
+%         \end{itemize}
+% \end{itemize}
+
+%%
+
+\subsection{Edif\'{\i}cio}\label{ssc:edificio}
+
+Locais onde s\~ao armazenados os diversos componentes fulcrais para a produ\c{c}\~ao
+agr\'{\i}cola como, por exemplo,
+\begin{enumerate*}[label = (\roman*)]
+    \item \textbf{tratores}
+    \item \textbf{fertilizantes}~(\ref{ssc:fert})
+        ou, at\'e mesmo,
+    \item \textbf{produtos resultantes da explora\c{c}\~ao agr\'{\i}cola}~(\ref{ssc:prod})
+\end{enumerate*}.
+
+%%
+
+\subsection{Encomenda}\label{ssc:encomenda}
+
+Quando um cliente pretende comprar um ou v\'arios produtos~(\ref{ssc:prod}),
+uma encomenda \'e criada.
+
+Esta ter\'a um \textbf{valor}, uma \textbf{data limite de pagamento},
+bem como um \textbf{endere\c{c}o de entrega}.
+
+% \begin{itemize}
+%     \item \textbf{Primary Key:} Chave concatenada dos seguintes atributos:
+%         \begin{itemize}
+%             \item
+%                 data{\_}estimada{\_}entrega,
+%             \item
+%                 gestor{\_}agricola{\_}id,
+%             \item
+%                 cliente{\_}id
+%         \end{itemize}
+%     \item \textbf{Foreign Key:}
+%         hub{\_}id
+% \end{itemize}
+
+%%
+
+\subsection{Encomenda{\textendash}Produto}\label{ssc:encomenda_prod}
+
+Cada \textbf{Encomenda}~(\ref{ssc:encomenda}) pode conter um ou
+m\'ultiplos \textbf{Produtos}~(\ref{ssc:prod}).
+
+Nesta entidade, ser\'a armazenada a informação relativa \`a
+lista de produtos de cada encomenda.
+
+% \begin{itemize}
+%     \item \textbf{Primary Key:} Chave concatenada dos seguintes atributos:
+%         \begin{itemize}
+%             \item
+%                 gestor{\_}agricola{\_}id,
+%             \item
+%                 cliente{\_}id
+%             \item
+%                 data{\_}estimada{\_}entrega
+%             \item
+%                 produto{\_}id
+%         \end{itemize}
+%     \item \textbf{Foreign Keys:}
+%         \begin{itemize}
+%             \item
+%                 gestor{\_}agricola{\_}id,
+%             \item
+%                 cliente{\_}id
+%             \item
+%                 data{\_}estimada{\_}entrega
+%             \item
+%                 produto{\_}id
+%         \end{itemize}
+% \end{itemize}
+
+%%
+
+\subsection{Estado da Encomenda}\label{ssc:encomenda_state}
+
+Como foi mencionado na Subsec\c{c}\~ao~\ref{ssc:encomenda_reg}, a encomenda pode-se
+encontrar em tr\^es estados diferentes:
+\begin{enumerate*}[label = (\roman*)]
+    \item \textbf{Registada},
+    \item \textbf{Entregue}
+        ou
+    \item \textbf{Paga}
+\end{enumerate*}.
+
+% \begin{itemize}
+%     \item \textbf{Primary Key:}
+%         estado{\_}encomenda{\_}id
+% \end{itemize}
+
+%%
+
+\subsection{Fator de Produ\c{c}\~ao}\label{ssc:fator_prod}
+
+Um fator de produ\c{c}\~ao consiste todo o produto que possa ser aplicado no solo ou nas
+plantas da instala\c{c}\~ao, de forma a melhorar a qualidade do solo, a nutrir as plantas,
+prevenir doen\c{c}as, combater pragas, entre outros.
+
+%%
+
+\subsection{Fertiliza\c{c}\~ao}\label{ssc:fert}
+
+Entidade que modela o processo de fertiliza\c{c}\~ao. Entende-se por fertiliza\c{c}\~ao
+como a aplica\c{c}\~ao de um fator de produ\c{c}\~ao~(\ref{ssc:fator_prod}) numa
+parcela agr\'{\i}cola~(\ref{ssc:parcela_agr}).
+
+%%
+
+\subsection{Ficha T\'ecnica}\label{ssc:ficha}
+
+Ficha que cont\'em a as subst\^ancias contidas no
+fator de produ\c{c}\~ao~(\ref{ssc:fator_prod}), bem como as respetivas quantidades.
+
+%%
+
+\subsection{Formula\c{c}\~ao}\label{ssc:formulacao}
+
+Um fator de produ\c{c}\~ao~(\ref{ssc:fator_prod}) pode assumir diferentes estados,
+\begin{enumerate*}[label = (\roman*)]
+    \item \textbf{l\'{\i}quido},
+    \item \textbf{granulado}
+        ou
+    \item \textbf{em p\'o}
+\end{enumerate*}, dependendo do \textbf{tipo de fator}~(\ref{ssc:tipo_fator_prod})
+em concreto e/ou do fabricante.
+
+%%
+
+\subsection{Gestor Agr\'{\i}cola}\label{ssc:gest_agr}
+
+Um gestor agr\'{\i}cola desempenha a função de gerir as culturas nas
+parcelas~(\ref{ssc:parcela_agr}), realizar as diferentes ações culturais e regist\'a-las no
+\textbf{Caderno de Campo}~(\ref{ssc:cad_campo}), bem como gerir os
+pedidos~(\ref{ssc:encomenda}) efetuados pelos Clientes.
+
+% \begin{itemize}
+%     \item \textbf{Primary Key:} Chave concatenada dos seguintes atributos:
+%         \begin{itemize}
+%             \item
+%                 gestor{\_}agricola{\_}id,
+%             \item
+%                 instalacao{\_}agricola{\_}id,
+%             \item
+%                 data{\_}inicio{\_}contrato,
+%             \item
+%                 data{\_}fim{\_}contrato
+%         \end{itemize}
+%     \item \textbf{Foreign Keys:}
+%         \begin{itemize}
+%             \item
+%                 gestor{\_}agricola{\_}id,
+%             \item
+%                 instalacao{\_}agricola{\_}id
+%         \end{itemize}
+% \end{itemize}
+
+%%
+
+\subsection{Hub}\label{ssc:hub}
+
+Local onde as encomendas~(\ref{ssc:encomenda}) entregadas s\~ao depositadas e,
+posteriormente, recolhidas pelos clientes.
+
+% \begin{itemize}
+%     \item \textbf{Primary Key:}
+%         hub{\_}id
+%     \item \textbf{Foreign Key:}
+%         codigo{\_}postal{\_}id
+% \end{itemize}
+
+%%
+
+\subsection{Incidente}\label{ssc:incidente}
+
+Entidade que modela o evento de quando, por algum motivo,
+um cliente que fez uma encomenda~(\ref{ssc:encomenda})
+n\~ao p\^ode efetuar o pagamento até uma determinada data limite.
+
+% \begin{itemize}
+%     \item \textbf{Primary Key:}
+%         incidente{\_}id
+%     \item \textbf{Foreign Key:}
+%         cliente{\_}id
+% \end{itemize}
+
+%%
+
+\subsection{Instalacao Agr\'{\i}cola}\label{ssc:inst_agr}
+
+Regi\~ao composta por v\'arios edif\'{\i}cios~(\ref{ssc:edificio}) e setores~(\ref{ssc:parcela_agr}).
+
+%%
+
+\subsection{Instalacao Agr\'{\i}cola{\textendash}Fator de Produ\c{c}\~ao}\label{ssc:inst_agr_fat_prod}
+
+Como cada instala\c{c}\~ao agr\'{\i}cola~(\ref{ssc:inst_agr}) utiliza uma s\'erie de
+fatores de produ\c{c}\~ao~(\ref{ssc:fator_prod}) e em diferentes quantidades, \'e
+bastante importante registar esta movimenta\c{c}\~ao dentro de cada instala\c{c}\~ao
+agr\'{\i}cola, de modo a melhor ger\'{\i}-la.
+
+%%
+
+\subsection{Pagamento}\label{ssc:pagamento}
+
+Um cliente pode pagar a sua \textbf{Encomenda} (\ref{ssc:encomenda})
+por inteiro ou parcelada.
+
+Para tal, aquando do pagamento, este escolhe o valor que pretende pagar,
+sendo registada a data em que este foi efetuado.
+
+% \begin{itemize}
+%     \item \textbf{Primary Key:}
+%         pagamento{\_}id
+%     \item \textbf{Foreign Keys:}
+%         \begin{itemize}
+%             \item
+%                 data{\_}estimada{\_}entrega,
+%             \item
+%                 cliente{\_}id,
+%             \item
+%                 gestor{\_}agricola{\_}id
+%         \end{itemize}
+% \end{itemize}
+
+%%
+
+\subsection{Parcela Agr\'{\i}cola}\label{ssc:parcela_agr}
+
+Entidade modela o local onde decorre a planta\c{c}\~ao das diversas culturas;
+i\.e\., dos diversos produtos~(\ref{ssc:prod}).
+
+%%
+
+\subsection{Plano de Rega}\label{ssc:plano_rega}
+
+Para manter com regularidade a boa qualidade dos produtos~(\ref{ssc:prod}) produzidos e,
+em simult\^aneo, reduzir os custos de produ\c{c}\~ao, \'e de grande import\^ancia manter
+um plano de rega e de registar a hora quando as opera\c{c}\~oes de rega devem ocorrer.
+
+%%
+
+\subsection{Produto}\label{ssc:prod}
+
+Entidade que modela aquilo que foi produzido nas culturas
+de cada parcela agr\'{\i}cola~(\ref{ssc:parcela_agr}) e que posteriormente
+ser\'a vendido a um cliente.
+
+%%
+
+\subsection{Rega Executada}\label{ssc:rega_exec}
+
+Como nem todas as regas inclu\'{\i}das no plano de rega~(\ref{ssc:plano_rega}) poder\~ao ser
+executadas~{\textemdash} por exemplo, se chover n\~ao ser\'a necess\'ario acionar
+o sistema de rega~{\textemdash}, \'e necess\'ario manter um registo fi\'avel de todas
+as regas que realmente decorreram.
+
+%%
+
+\subsection{Registo de Cultura}\label{ssc:reg_cult}
+
+Entidade que modela o registo de todos os processos de planta\c{c}\~ao e colheita, bem como
+as \textbf{data} em que ocorreram e a \textbf{quantidade produzida}.
+
+%%
+
+\subsection{Registo de Encomenda}\label{ssc:encomenda_reg}
+
+Uma \textbf{Encomenda} (\ref{ssc:encomenda}) pode-se encontrar
+em diferentes \textbf{Estados} (\ref{ssc:encomenda_state}),
+sendo, portanto, crucial guardar a informa\c{c}\~ao relativa
+a cada um destas, bem como a data em que ocorreu a transi\c{c}\~ao
+entre cada um dos estados.
+
+% \begin{itemize}
+%     \item \textbf{Primary Key:} Chave concatenada dos seguintes atributos:
+%         \begin{itemize}
+%             \item
+%                 estado{\_}encomenda{\_}id,
+%             \item
+%                 gestor{\_}cliente{\_}id,
+%             \item
+%                 cliente{\_}id
+%             \item
+%                 data{\_}estimada{\_}entrega
+%         \end{itemize}
+%     \item \textbf{Foreign Keys:}
+%         \begin{itemize}
+%             \item
+%                 estado{\_}encomenda{\_}id,
+%             \item
+%                 gestor{\_}cliente{\_}id,
+%             \item
+%                 cliente{\_}id
+%             \item
+%                 data{\_}estimada{\_}entrega
+%         \end{itemize}
+% \end{itemize}
+
+%%
+
+\subsection{Tipo de Composto}\label{ssc:tipo_composto}
+
+Cada composto~(\ref{ssc:composto}) pode ser de um de dois tipos:
+\begin{enumerate*}[label = (\roman*)]
+    \item \textbf{elementos}
+        ou
+    \item \textbf{subst\^ancias}
+\end{enumerate*}.
+
+%%
+
+\subsection{Tipo de Cliente}\label{ssc:tipo_cliente}
+
+Cada cliente pode pertencer a um de tr\^es n\'{\i}veis (tipos) {\textemdash}
+A, B ou C {\textemdash},
+consoante o seu \textbf{n\'umero de incidentes} (\ref{ssc:incidente})
+e \textbf{volume total de encomendas pagas} (\ref{ssc:encomenda_reg})
+
+% \begin{itemize}
+%     \item \textbf{Primary Key:} tipo{\_}cliente{\_}id
+% \end{itemize}
+
+%%
+
+\subsection{Tipo de Cultura}\label{ssc:tipo_cult}
+
+Entidade que descreve a perman\^encia de uma cultura; i\.e\., se a cultura de um determinado
+produto~(\ref{ssc:prod}) de uma parcela~(\ref{ssc:parcela_agr}) \'e permanente ou tempor\'aria.
+
+%%
+
+\subsection{Tipo de Edif\'{\i}cio}\label{ssc:tipoedificio}
+
+Cada edif\'{\i}cio possui um tipo, j\'a que cada um tem uma determinada fun\c{c}\~ao
+dentro de uma instala\c{c}\~ao, tais como
+\begin{enumerate*}[label = (\roman*)]
+    \item \textbf{garagem}
+    \item \textbf{est\'abulo}
+\end{enumerate*}, entre outros.
+
+%%
+
+\subsection{Tipo de Fator de Produ\c{c}\~ao}\label{ssc:tipo_fator_prod}
+
+Cada fator de produ\c{c}\~ao tem um certo tipo como, por exemplo,
+\begin{enumerate*}[label = (\roman*)]
+    \item \textbf{adubo org\^anico},
+    \item \textbf{fertilizante}
+\end{enumerate*}, entre outros.
+
+%%
+
+\subsection{Tipo de Fertiliza\c{c}\~ao}\label{ssc:tipo_fert}
+
+Cada fertiliza\c{c}\~ao pode decorrer de diferentes maneiras, tais como
+\begin{enumerate*}[label = (\roman*)]
+    \item a \textbf{fertirriga\c{c}\~ao}
+        e
+    \item a \textbf{rega foliar}
+\end{enumerate*}
+
+%%
+
+\subsection{Tipo de Rega}\label{ssc:tipo_rega}
+
+Entidade que modela os diversos tipos de rega~(\ref{ssc:rega_exec}), tais como
+\begin{enumerate*}[label = (\roman*)]
+    \item \textbf{gotejamento}
+        e
+    \item a \textbf{aspre\c{c}\~ao}
+\end{enumerate*}.
+
+%%
+
+\subsection{Tipo de Sistema}\label{ssc:tipo_sys}
+
+Entidade que modela os diversos sistemas de rega~(\ref{ssc:rega_exec}), tais como
+\begin{enumerate*}[label = (\roman*)]
+    \item a \textbf{rega bombeada}
+        e
+    \item a \textbf{rega por gravidade}
+\end{enumerate*}.
+
+%%
+
+\subsection{Tipo de Utilizador}\label{ssc:tipo_user}
+
+Cada utilizador tem uma função associada, sendo que esta pode ser uma de quatro tipos:
+
+\begin{enumerate}
+    \item \textbf{Cliente}
+    \item \textbf{Gestor Agr\i{\i}cola}
+    \item \textbf{Condutor}
+    \item \textbf{Gestor Distribui\c{c}\~ao}
+\end{enumerate}
+
+% \begin{itemize}
+%     \item \textbf{Primary Key:} tipo{\_}utilizador{\_}id
+% \end{itemize}
+
+%%
+
+\subsection{Sensor}\label{ssc:sensor}
+
+Entidade que modela o objeto com a fun\c{c}\~ao de gerar os
+dados meteorol\'ogicos~(\ref{ssc:dado_met}).
+
+%%
+
+\subsection{Stock}\label{ssc:stock}
+
+Entidade que modela o registo das movimenta\c{c}\~oes dos produtos~(\ref{ssc:prod}) produzidos.
+
+%%
+
+\subsection{Utilizador}\label{ssc:user}
+
+Todos os utilizadores do sistema t\^em um tipo de utilizador associado,
+que indica a fun\c{c}\~ao do mesmo no contexto do projeto desenvolvido.
+
+Cada utilizador tem um s\'o tipo de função~(\ref{ssc:tipo_user}), não sendo assim poss\'{\i}vel
+ter um utilizador a desempenhar m\'ultiplas fun\c{c}\~oes.
+
+% \begin{itemize}
+%     \item \textbf{Primary Key:}
+%         utilizador{\_}id {\textemdash} identificador gerado de forma autom\'atica
+%     \item \textbf{Foreign Keys:}
+%         tipo{\_}utilizador{\_}id,
+%         tipo{\_}cliente{\_}id,
+%         codigo{\_}postal{\_}id
+% \end{itemize}
+
+%%
+
+\end{document}

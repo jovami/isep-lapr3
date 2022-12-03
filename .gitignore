@@ -44,3 +44,14 @@ Thumbs.db
 *.o
 
 compile_flags.txt
+
+
+####
+*.aux
+*.log
+*.i??
+*.b??
+*.out
+*.toc
+*.run.xml
+

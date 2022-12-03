@@ -12,7 +12,6 @@ import jovami.util.graph.Algorithms;
 import jovami.util.graph.Edge;
 import jovami.util.graph.Graph;
 import jovami.util.graph.map.MapGraph;
-import jovami.util.graph.map.MapVertex;
 
 /**
  * HubNetwork
@@ -77,6 +76,7 @@ public class HubNetwork extends MapGraph<User, Distance> {
         return new Distance(vert.getLocationID(), vert.getLocationID(), 0);
     }
 
+    // TODO: check if we still need to override this
     @Override
     public Collection<Edge<User, Distance>> outgoingEdges(User vert) {
 
@@ -84,16 +84,30 @@ public class HubNetwork extends MapGraph<User, Distance> {
 
         var list = new ArrayList<Edge<User, Distance>>();
 
-        edges.forEach(a -> {
-            Distance dist = a.getWeight();
+        edges.forEach(e -> {
+            Distance dist = e.getWeight();
 
-            if(dist.getLocID1().equals(a.getVDest().getLocationID()) && dist.getLocID2().equals(a.getVOrig().getLocationID())){
-                list.add(new Edge<>(a.getVOrig(), a.getVDest(), new Distance(dist.getLocID2(), dist.getLocID1(), dist.getDistance())));
-            }else{
-                list.add(a);
-            }
+            if (dist.getLocID1().equals(e.getVDest().getLocationID())
+            &&  dist.getLocID2().equals(e.getVOrig().getLocationID()))
+                list.add(new Edge<>(e.getVOrig(), e.getVDest(), dist.reverse()));
+            else
+                list.add(e);
+
         });
 
         return list;
+    }
+
+    @Override
+    public boolean addEdge(User vOrig, User vDest, Distance weight) {
+        boolean ok = super.addEdge(vOrig, vDest, weight);
+
+        if (ok && !this.isDirected) {
+            var edge = this.edge(vDest, vOrig);
+            var w = edge.getWeight();
+            edge.setWeight(w.reverse());
+        }
+
+        return ok;
     }
 }

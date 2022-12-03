@@ -57,6 +57,14 @@ public class Distance {
         this.distance = distance;
     }
 
+    public static Distance reverse(Distance d) {
+        return d.reverse();
+    }
+
+    public Distance reverse() {
+        return new Distance(this.locID2, this.locID1, this.distance);
+    }
+
     public String getLocID1() {
         return this.locID1;
     }

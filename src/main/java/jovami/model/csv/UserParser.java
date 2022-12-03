@@ -3,6 +3,7 @@ package jovami.model.csv;
 import java.util.List;
 
 import jovami.App;
+import jovami.model.exceptions.InvalidCSVFileException;
 
 /**
  * UserParser
@@ -39,8 +40,7 @@ public class UserParser implements CSVParser {
                 latitude = Double.parseDouble(line[UserColumns.LATITUDE.col]);
                 longitude = Double.parseDouble(line[UserColumns.LONGITUDE.col]);
             } catch (NumberFormatException e) {
-                // TODO: add custom exception class
-                throw new RuntimeException("CSV File contained invalid coordinates!!");
+                throw new InvalidCSVFileException("CSV File contained invalid coordinates!!");
             }
 
             userID = line[UserColumns.USER_ID.col];

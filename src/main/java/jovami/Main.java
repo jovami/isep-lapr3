@@ -3,7 +3,6 @@ package jovami;
 import java.util.LinkedList;
 import java.util.List;
 
-import jovami.model.US305;
 import jovami.ui.*;
 
 /**
@@ -18,8 +17,9 @@ public class Main {
         List<UserStory> uis = new LinkedList<>();
         uis.add(new CSVLoaderUI());
         // TODO: add remaining US's
+        uis.add(new Us303UI());
         uis.add(new NearestHubToClientsUI());
-        uis.add(new US305());
+        uis.add(new MinimumDistanceUI());
         uis.add(new WateringControllerUI());
 
         uis.forEach(ui -> {

@@ -19,15 +19,14 @@ public class MinimumDistanceHandler {
     }
 
     public Graph<User, Distance> getMinimalUserNetwork(){
-        return Algorithms.kruskalMST(hubNetwork, HubNetwork.distCmp);
+        return Algorithms.kruskalMST(hubNetwork, HubNetwork.distCmp);   //O(E*log E)
     }
 
     public int getMinimumCost(Graph<User, Distance> mst){
         int minimumCost=0;
-        for (Edge<User,Distance> edge: mst.edges()) {
-            minimumCost = minimumCost + edge.getWeight().getDistance();
+        for (Edge<User,Distance> edge: mst.edges()) {                   //O(E)
+            minimumCost += edge.getWeight().getDistance();
         }
         return minimumCost;
     }
-
 }

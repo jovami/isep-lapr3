@@ -38,7 +38,7 @@ public class CSVLoaderUI implements UserStory {
 
     private void loadResources()
     {
-        boolean loadBig = InputReader.readLine("Load big or small files?")
+        boolean loadBig = InputReader.readLine("Load 'big' or 'small' files? [default: small]")
                                      .trim()
                                      .toLowerCase()
                                      .matches("^big");

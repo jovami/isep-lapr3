@@ -3,6 +3,7 @@ package jovami.model.csv;
 import java.util.List;
 
 import jovami.App;
+import jovami.model.exceptions.InvalidCSVFileException;
 
 /**
  * DistanceParser
@@ -37,10 +38,9 @@ public class DistanceParser implements CSVParser {
             loc2 = line[DistanceColumns.LOC_ID_2.col];
 
             try {
-                length = Integer.parseInt(line[DistanceColumns.LENGTH.col]);
+                length = Integer.parseUnsignedInt(line[DistanceColumns.LENGTH.col]);
             } catch (NumberFormatException e) {
-                // TODO: add custom exception class
-                throw new RuntimeException("CSV File contained invalid coordinates!!");
+                throw new InvalidCSVFileException("CSV File contained an invalid length!!");
             }
 
             app.distanceStore().addDistance(loc1, loc2, length);

@@ -22,6 +22,10 @@ public class UserStore implements Iterable<User> {
         this.users = new LinkedHashMap<>(initialCapacity);
     }
 
+    public int size() {
+        return this.users.size();
+    }
+
     private boolean addUser(User user) {
         return this.users.putIfAbsent(user.getLocationID(), user) == null;
     }

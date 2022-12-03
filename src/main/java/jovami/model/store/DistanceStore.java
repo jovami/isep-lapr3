@@ -22,6 +22,10 @@ public class DistanceStore implements Iterable<Distance> {
         this.distances = new LinkedHashSet<>(initialCapacity);
     }
 
+    public int size() {
+        return this.distances.size();
+    }
+
     private boolean addDistance(Distance dist) {
         return this.distances.add(dist);
     }

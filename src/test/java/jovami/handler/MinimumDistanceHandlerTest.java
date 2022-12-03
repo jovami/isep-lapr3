@@ -1,36 +1,32 @@
 package jovami.handler;
 
-import jovami.MainTest;
-import jovami.model.Distance;
-import jovami.model.User;
-import jovami.model.csv.DistanceParser;
-import jovami.model.csv.UserParser;
-import jovami.util.graph.Edge;
-import jovami.util.graph.Graph;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import jovami.MainTest;
+import jovami.model.Distance;
+import jovami.model.User;
+import jovami.util.graph.Edge;
+import jovami.util.graph.Graph;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-class MinimumDistanceHandlerTest {
+public class MinimumDistanceHandlerTest {
 
     MinimumDistanceHandler minimumDistanceHandler;
     List<String[]> userList = addUsers();
     List<String[]> distanceList = addDistances();
-
-
     List<Integer> weight = Arrays.asList(56717, 62877, 69282, 65574, 125105, 43598, 50467, 68957, 43598, 68957, 110133, 50467, 62877, 65574, 95957, 125105, 63448, 89813, 89813, 95957, 62655, 62655, 90186, 62879, 90186, 110133, 62879, 69282, 56717, 67584, 63448, 67584);
 
     @BeforeEach
     public void setup(){
-
         MainTest.resetSingleton();
         minimumDistanceHandler = new MinimumDistanceHandler();
         MainTest.readUsers(userList,distanceList);
-        new UserParser().parse(userList);
-        new DistanceParser().parse(distanceList);
         new CSVLoaderHandler().populateNetwork();
     }
 
@@ -52,19 +48,15 @@ class MinimumDistanceHandlerTest {
     }
 
     @Test
-    void getMiniumCost() {
-        Collection<Edge<User,Distance>> edge = minimumDistanceHandler.getMinimalUserNetwork().edges();
+    void getMinimumCost() {
         Graph<User, Distance> mst = minimumDistanceHandler.getMinimalUserNetwork();
-        int i=0,sum=0;
-        for (Edge<User, Distance> edges :edge) {
-            sum = sum + weight.get(i);
-            i++;
+        int sum=0;
+        for (Integer wei : weight) {
+            sum = sum + wei;
         }
         assertEquals(sum, minimumDistanceHandler.getMinimumCost(mst));
 
     }
-
-
 
     public List<String[]> addDistances() {
         return Arrays.asList(
@@ -102,8 +94,8 @@ class MinimumDistanceHandlerTest {
                 new String[]{"CT5","CT6","100563"},
                 new String[]{"CT5","CT17","111134"}
         );
-
     }
+
     public List<String[]> addUsers() {
         return Arrays.asList(
                 new String[]{"CT1", "40.6389", "-8.6553", "C1"},
@@ -125,5 +117,4 @@ class MinimumDistanceHandlerTest {
                 new String[]{"CT10", "39.7444", "-8.8072", "P3"}
                 );
     }
-
 }

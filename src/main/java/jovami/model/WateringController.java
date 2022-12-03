@@ -97,7 +97,6 @@ public class WateringController {
 
         LocalTime previous = opt.get();
 
-        // NOTE: (linked) HashMap may be a better return type?
         var plots = new LinkedList<Pair<String, Long>>();
 
         // TODO: check if this is really the better way of iterating
@@ -109,7 +108,8 @@ public class WateringController {
                 /* We only want plots currently being watered so we need to check that
                  * (timeStarted + duration) is after nowTime; i.e., the difference is > 0
                  */
-                long timeDiff = Duration.between(previous.plusMinutes(pair.first()), nowTime).toMinutes();
+                long timeDiff = Duration.between(nowTime, previous.plusMinutes(pair.first()))
+                                        .toMinutes();
 
                 if (timeDiff > 0)
                     plots.add(new Pair<>(key, timeDiff));
