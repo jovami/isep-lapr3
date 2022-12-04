@@ -1,5 +1,5 @@
 .data
-        .equ MAXVAR, 5  #0,20 according to client specifications
+        .equ MAXVAR, 10  #0,20 according to client specifications
 
 .text
         .global sens_temp
@@ -16,33 +16,7 @@ verify:
         pushq %rdi
         pushq %rsi
         pushq %rdx
-/*
-        movb %dil, %r8b
-        shr $7,%r8b
-        cmpb $0, %r8b
-        je last_value_positive             #get absolute value
 
-        negb %dil
-        
-last_value_positive:
-        
-        xorb %cl, %cl
-
-        movsbw %dil, %ax
-        idiv %dl
-
-        cmpb %sil, %al
-        jg not_check
-
-        negb %al
- 
-        cmpb %sil, %al
-        jl not_check   
-
-        movb $1, %cl
-
-not_check:
-*/
         andb $0x7f, %dil
         movzbw %dil, %di
         movsbw %sil, %si
@@ -75,7 +49,6 @@ new_value:
 end:
         addb %sil, %dil
 keep_end:
-        jo over
         movb %dil, %al
 
         movq %rbp, %rsp         #epilogue
@@ -84,6 +57,3 @@ keep_end:
         ret
 
 
-over:
-        subb %sil, %dil
-        jmp keep_end

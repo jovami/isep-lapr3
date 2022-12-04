@@ -24,14 +24,21 @@ enum {
     MIN_COL,
 }; /* matrix cols */
 
-void print_matrix(sens_value matrix[6][3]);
+union matrix_value{
+    int i;
+    unsigned int ui;
 
-void
+};
+
+
+void print_matrix(union matrix_value matrix[6][3]);
+
+    void
 daily_matrix(const char *data_temp, const unsigned short *data_dir_vento, const unsigned char *data_velc_vento,
-             const unsigned char *data_humd_atm, const unsigned char *data_humd_solo, const unsigned char *data_pluvio)
+        const unsigned char *data_humd_atm, const unsigned char *data_humd_solo, const unsigned char *data_pluvio)
 {
 
-    sens_value matrix[NUM_ROWS][NUM_COLS];
+    union matrix_value matrix[NUM_ROWS][NUM_COLS];
     memset(matrix, 0x00, NUM_ROWS * NUM_COLS * sizeof(**matrix));
 
 
@@ -62,12 +69,13 @@ daily_matrix(const char *data_temp, const unsigned short *data_dir_vento, const 
     //TODO: optimize
     int i;
     for (i = 0; i < CYCLES; i++) {
-        matrix[TEMP_ROW][AVG_COL].c += *(data_temp+i);
-        matrix[DIR_VENTO_ROW][AVG_COL].us += *(data_dir_vento+i);
-        matrix[VELC_VENTO_ROW][AVG_COL].uc += *(data_velc_vento+i);
-        matrix[HUMD_ATM_ROW][AVG_COL].uc += *(data_humd_atm+i);
-        matrix[HUMD_SOLO_ROW][AVG_COL].uc += *(data_humd_solo+i);
-        matrix[PLUVIO_ROW][AVG_COL].uc += *(data_pluvio+i);
+
+        matrix[TEMP_ROW][AVG_COL].i += *(data_temp+i);
+        matrix[DIR_VENTO_ROW][AVG_COL].ui += *(data_dir_vento+i);
+        matrix[VELC_VENTO_ROW][AVG_COL].ui += *(data_velc_vento+i);
+        matrix[HUMD_ATM_ROW][AVG_COL].ui += *(data_humd_atm+i);
+        matrix[HUMD_SOLO_ROW][AVG_COL].ui += *(data_humd_solo+i);
+        matrix[PLUVIO_ROW][AVG_COL].ui += *(data_pluvio+i);
 
         temp_max = MAX(temp_max, *(data_temp+i));
         temp_min = MIN(temp_min, *(data_temp+i));
@@ -89,55 +97,78 @@ daily_matrix(const char *data_temp, const unsigned short *data_dir_vento, const 
     }
 
     /* averages */
-    matrix[TEMP_ROW][AVG_COL].c /= i;
-    matrix[DIR_VENTO_ROW][AVG_COL].us /= i;
-    matrix[VELC_VENTO_ROW][AVG_COL].uc /= i;
-    matrix[HUMD_ATM_ROW][AVG_COL].uc /= i;
-    matrix[HUMD_SOLO_ROW][AVG_COL].uc /= i;
-    matrix[PLUVIO_ROW][AVG_COL].uc /= i;
+    matrix[TEMP_ROW][AVG_COL].i /= i;
+    matrix[DIR_VENTO_ROW][AVG_COL].ui /= i;
+    matrix[VELC_VENTO_ROW][AVG_COL].ui /= i;
+    matrix[HUMD_ATM_ROW][AVG_COL].ui /= i;
+    matrix[HUMD_SOLO_ROW][AVG_COL].ui /= i;
+    matrix[PLUVIO_ROW][AVG_COL].ui /= i;
 
-    matrix[TEMP_ROW][MAX_COL].c = temp_max;
-    matrix[TEMP_ROW][MIN_COL].c = temp_min;
+    matrix[TEMP_ROW][MAX_COL].i = temp_max;
+    matrix[TEMP_ROW][MIN_COL].i = temp_min;
 
-    matrix[DIR_VENTO_ROW][MAX_COL].us = dir_vento_max;
-    matrix[DIR_VENTO_ROW][MIN_COL].us = dir_vento_min;
+    matrix[DIR_VENTO_ROW][MAX_COL].ui = dir_vento_max;
+    matrix[DIR_VENTO_ROW][MIN_COL].ui = dir_vento_min;
 
-    matrix[VELC_VENTO_ROW][MAX_COL].uc = velc_vento_max;
-    matrix[VELC_VENTO_ROW][MIN_COL].uc = velc_vento_min;
+    matrix[VELC_VENTO_ROW][MAX_COL].ui = velc_vento_max;
+    matrix[VELC_VENTO_ROW][MIN_COL].ui = velc_vento_min;
 
-    matrix[HUMD_ATM_ROW][MAX_COL].uc = humd_atm_max;
-    matrix[HUMD_ATM_ROW][MIN_COL].uc = humd_atm_min;
+    matrix[HUMD_ATM_ROW][MAX_COL].ui = humd_atm_max;
+    matrix[HUMD_ATM_ROW][MIN_COL].ui = humd_atm_min;
 
-    matrix[HUMD_SOLO_ROW][MAX_COL].uc = humd_solo_max;
-    matrix[HUMD_SOLO_ROW][MIN_COL].uc = humd_solo_min;
+    matrix[HUMD_SOLO_ROW][MAX_COL].ui = humd_solo_max;
+    matrix[HUMD_SOLO_ROW][MIN_COL].ui = humd_solo_min;
 
-    matrix[PLUVIO_ROW][MAX_COL].uc = pluvio_max;
-    matrix[PLUVIO_ROW][MIN_COL].uc = pluvio_min;
+    matrix[PLUVIO_ROW][MAX_COL].ui = pluvio_max;
+    matrix[PLUVIO_ROW][MIN_COL].ui = pluvio_min;
 
     print_matrix(matrix);
 }
 
-void
-print_matrix(sens_value matrix[NUM_ROWS][NUM_COLS])
+    void
+print_matrix(union matrix_value matrix[NUM_ROWS][NUM_COLS])
 {
-    const sens_value *p = &matrix[0][0];
+    const union matrix_value *p = &matrix[0][0];
 
     puts("\nDaily Matrix");
     puts("============\n");
 
     /* TODO: make this prettier */
-    puts("Average || Max || Min");
+    puts("Tipo de sensor       ||  Average ||  Max  ||  Min  ||");
 
-    for (int i = 0; i < NUM_ROWS * NUM_COLS; i++) {
-        if (i && !(i % NUM_COLS))
-            putchar('\n');
+    for (int i = 0; i < NUM_ROWS * NUM_COLS; i++) { 
+        if (!(i % NUM_COLS)){
+            if(i)
+                putchar('\n');
+            switch(i/NUM_COLS){
+                case TEMP_ROW:
+                    printf("%-22s","Temperatura");
+                    break;
+                case DIR_VENTO_ROW:
+                    printf("%-24s","Direção vento");
+                    break;
+                case VELC_VENTO_ROW:
+                    printf("%-22s","Velocidade vento");
+                    break;
+                case HUMD_ATM_ROW:
+                    printf("%-22s","Humidade de atmosfera");
+                    break;
+                case HUMD_SOLO_ROW:
+                    printf("%-22s","Humidade de solo");
+                    break;
+                case PLUVIO_ROW:
+                    printf("%-22s","Pluviosidade");
+                    break;
+
+            }
+            //printf("%d",i%NUM_COLS);
+        }
+
 
         if (i < NUM_COLS)
-            printf("%hhd ", (p+i)->c);
-        else if (i < 2*NUM_COLS)
-            printf("%hu ", (p+i)->us);
+            printf("%9d", (p+i)->i);
         else
-            printf("%hhu ", (p+i)->uc);
+            printf("%9u", (p+i)->ui);
     }
     putchar('\n');
 }

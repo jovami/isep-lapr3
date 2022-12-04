@@ -19,9 +19,11 @@ int gen_sens_values(char *data_temp,unsigned short *data_dir_vento, unsigned cha
         humd_solo solo1;
         pluvio plv1;
 
-        //MAX sens values
+        //limit sens values
         sens_value min;
         sens_value max;
+
+        //first values
         sens_value first_value;
 
         //init all sensors
@@ -62,7 +64,6 @@ int gen_sens_values(char *data_temp,unsigned short *data_dir_vento, unsigned cha
         unsigned char ult_hmd_solo;
         unsigned short ult_dir_vento;
         unsigned char ult_velc_vento;
-        //unsigned char x;
 
         do{
 
@@ -79,15 +80,6 @@ int gen_sens_values(char *data_temp,unsigned short *data_dir_vento, unsigned cha
 
                 ult_dir_vento =sens_dir_vento_update(&dir1);
 
-/*
-                do{
-
-                        x =sens_dir_vento_update(&dir1);
-
-                        ult_dir_vento = dir1.current.us;
-                }while( x < 30 );
-
-                */
                 data_temp[index] = ult_temp;
                 data_pluvio[index] = ult_pluvio;
                 data_humd_atm[index] = ult_hmd_atm;
@@ -95,33 +87,19 @@ int gen_sens_values(char *data_temp,unsigned short *data_dir_vento, unsigned cha
                 data_velc_vento[index] = ult_velc_vento;
                 data_dir_vento[index] = ult_dir_vento;
 
-                printf("Temp=%hhd\n",ult_temp);
-                printf("Pluvio=%hhu\n",ult_pluvio);
-                printf("Humd atm=%hhu\n",ult_hmd_atm);
-                printf("Humd solo=%hhu\n",ult_hmd_solo);
-                printf("Velc vent=%hhu\n",ult_velc_vento);
-                printf("Dir vent=%hu\n",ult_dir_vento);
-
-                printf("\n--------------------------%d-------------------------------------\n",index);
+                printf("Temp: %hhd\n", data_temp[index]);
+                printf("dir vent: %hhu\n", data_dir_vento[index]);
+                printf("Velc_vento: %hhu\n", data_velc_vento[index]);
+                printf("Humd_atm: %hhu\n", data_humd_atm[index]);
+                printf("Humd_solo: %hhu\n", data_humd_solo[index]);
+                printf("Pluvio: %hhu\n", data_pluvio[index]);
+                printf("\n--------------------------%d-------------------------------------\n",index+1);
 
 
                 sleep(TIMER);
                 index++;
 
         }while(index < CYCLES);
-
-
-
-        /*for(int i = 0; i < CYCLES ; i++){
-                printf("\n--------------------------%d-------------------------------------\n",i);
-                printf("Temp: %hhd\n", data_temp[i]);
-                printf("Pluvio: %hhu\n", data_pluvio[i]);
-                printf("Humd_atm: %hhu\n", data_humd_atm[i]);
-                printf("Humd_solo: %hhu\n", data_humd_solo[i]);
-                printf("Velc_vento: %hhu\n", data_velc_vento[i]);
-                //printf("dir vent=%hhu\n",data_dir_vento[i]);
-        }*/
-
 
         return 0;
 }

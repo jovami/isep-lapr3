@@ -1,5 +1,5 @@
 .data
-        .equ MINIMUM,6
+        .equ MINIMUM,4
         .equ SHIFT_GET_SINAL, 15
 
 .text
@@ -63,6 +63,7 @@ end:
 
 too_low:
         cmpw $MINIMUM, %si
+        movb $2,%al
         ja end
 
 is_valid:
