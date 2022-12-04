@@ -13,7 +13,7 @@ import jovami.model.store.UserStore;
 import jovami.util.Triplet;
 
 /**
- * US304
+ * NearestHubToClientsHandler
  */
 public class NearestHubToClientsHandler {
 
@@ -21,6 +21,9 @@ public class NearestHubToClientsHandler {
     private final HubNetwork network;
     private final UserStore userStore;
 
+    /**
+     * Instantiates a new Nearest hub to clients handler.
+     */
     public NearestHubToClientsHandler() {
         this.app = App.getInstance();
         this.network = app.hubNetwork();

@@ -24,6 +24,9 @@ public class Distance {
      */
     public static final BinaryOperator<Distance> sum;
 
+    /**
+     * The constant zero.
+     */
     public static final Distance zero;
 
     static {
@@ -51,28 +54,61 @@ public class Distance {
         }
     }
 
+    /**
+     * Instantiates a new Distance.
+     *
+     * @param locID1   the loc id 1
+     * @param locID2   the loc id 2
+     * @param distance the distance
+     */
     public Distance(String locID1, String locID2, int distance) {
         this.locID1 = locID1;
         this.locID2 = locID2;
         this.distance = distance;
     }
 
+    /**
+     * Reverse distance.
+     *
+     * @param d the d
+     * @return the distance
+     */
     public static Distance reverse(Distance d) {
         return d.reverse();
     }
 
+    /**
+     * Reverse distance.
+     *
+     * @return the distance
+     */
     public Distance reverse() {
         return new Distance(this.locID2, this.locID1, this.distance);
     }
 
+    /**
+     * Gets loc id 1.
+     *
+     * @return the loc id 1
+     */
     public String getLocID1() {
         return this.locID1;
     }
 
+    /**
+     * Gets loc id 2.
+     *
+     * @return the loc id 2
+     */
     public String getLocID2() {
         return this.locID2;
     }
 
+    /**
+     * Gets distance.
+     *
+     * @return the distance
+     */
     public int getDistance() {
         return this.distance;
     }

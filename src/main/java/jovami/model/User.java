@@ -15,6 +15,14 @@ public class User {
     private final Coordinate coords;
     private String locationID;
 
+    /**
+     * Instantiates a new User.
+     *
+     * @param userID     the user id
+     * @param locationID the location id
+     * @param latitude   the latitude
+     * @param longitude  the longitude
+     */
     public User(String userID, String locationID,
                 double latitude, double longitude)
     {
@@ -46,18 +54,38 @@ public class User {
 
     //===================== Getters =====================//
 
+    /**
+     * Gets user id.
+     *
+     * @return the user id
+     */
     public String getUserID() {
         return this.userID;
     }
 
+    /**
+     * Gets user type.
+     *
+     * @return the user type
+     */
     public UserType getUserType() {
         return this.userType;
     }
 
+    /**
+     * Gets coords.
+     *
+     * @return the coords
+     */
     public Coordinate getCoords() {
         return new Coordinate(this.coords);
     }
 
+    /**
+     * Gets location id.
+     *
+     * @return the location id
+     */
     public String getLocationID() {
         return this.locationID;
     }

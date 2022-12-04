@@ -25,7 +25,6 @@ public class CSVLoaderHandler {
     private enum CSVFiles {
         USERS("clientes-produtores_%s.csv", CSVHeader.USERS),
         DISTANCES("distancias_%s.csv", CSVHeader.DISTANCES),
-
         // Special snowflake
         BUNDLES("cabazes_%s.csv", CSVHeader.BUNDLES);
 
@@ -34,6 +33,12 @@ public class CSVLoaderHandler {
 
         private static final String PREFIX = "/csvfiles";
 
+        /**
+         * Path string.
+         *
+         * @param big the big
+         * @return the string
+         */
         public String path(boolean big) {
             String type = big ? "big" : "small";
             return String.format("%s/%s/%s",
@@ -48,6 +53,9 @@ public class CSVLoaderHandler {
 
     private final Map<CSVHeader, CSVParser> parsers;
 
+    /**
+     * Instantiates a new Csv loader handler.
+     */
     public CSVLoaderHandler() {
         app = App.getInstance();
 
@@ -62,6 +70,11 @@ public class CSVLoaderHandler {
     }
 
 
+    /**
+     * Load resources.
+     *
+     * @param loadBig the load big
+     */
     public void loadResources(boolean loadBig)
     {
         for (var fileEnum : CSVFiles.values()) {                    // O(1) (enum values)
@@ -86,6 +99,11 @@ public class CSVLoaderHandler {
         // Net complexity: O(l*c)
     }
 
+    /**
+     * Load interactive.
+     *
+     * @param files the files
+     */
     public void loadInteractive(Map<CSVHeader, File> files)
     {
         files.forEach((header, file) -> {                           // O(1) (keys => enum values)
@@ -103,6 +121,11 @@ public class CSVLoaderHandler {
         // Net complexity: O(l*c)
     }
 
+    /**
+     * Populate network.
+     *
+     * @return the boolean
+     */
     public boolean populateNetwork() {
         var users = this.app.userStore();
         var distances = this.app.distanceStore();

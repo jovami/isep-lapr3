@@ -6,6 +6,9 @@ import jovami.model.HubNetwork;
 import jovami.util.graph.Algorithms;
 import java.util.Optional;
 
+/**
+ * IsConnectedHandler.
+ */
 public class IsConnectedHandler {
     private final App app;
     private final HubNetwork network;
@@ -18,6 +21,11 @@ public class IsConnectedHandler {
         this.connected = Algorithms.isConnected(network);   // O(V*E)
     }
 
+    /**
+     * Min reachability calculation.
+     *
+     * @return the optional
+     */
     public Optional<Integer> minReachability() {
         if (connected) {
             var matrix = Algorithms.minDistGraph(network, Distance.cmp, Distance.sum);  // O(V^3) (Floyd-Warshall)

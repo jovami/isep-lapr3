@@ -10,26 +10,35 @@ import jovami.model.User;
 import jovami.model.shared.UserType;
 import jovami.util.Pair;
 
+/**
+ * TopNCompaniesHandler
+ */
 public class TopNCompaniesHandler {
 
     private final App app;
     private final HubNetwork mapGraph;
 
+    /**
+     * The Companies by order.
+     */
     ArrayList<Pair<User,Double>> companiesByOrder = new ArrayList<>();
 
+    /**
+     * Instantiates a new Top n companies handler.
+     */
     public TopNCompaniesHandler(){
         app=App.getInstance();
         mapGraph = app.hubNetwork();
     }
 
-    private static final Comparator <Pair<User,Double>> cmpDist = new Comparator<Pair<User, Double>>() {
-        @Override
-        public int compare(final Pair<User, Double> o1, final Pair<User, Double> o2) {
-            return Double.compare(o1.second(), o2.second());
-        }
-    };
+    private static final Comparator <Pair<User,Double>> cmpDist = Comparator.comparingDouble(Pair::second);
 
 
+    /**
+     * Find companies average weight array list.
+     *
+     * @return the array list
+     */
     public ArrayList<Pair<User,Double>> findCompaniesAverageWeight (){
 
         ArrayList<Distance> dists = new ArrayList<>();
@@ -60,6 +69,11 @@ public class TopNCompaniesHandler {
             companiesByOrder.sort(cmpDist);     // O(V*logV)
     }
 
+    /**
+     * Get list array list.
+     *
+     * @return the array list
+     */
     protected ArrayList<Pair<User,Double>> getList(){
         // O(V)
         return new ArrayList<>(companiesByOrder);
@@ -77,6 +91,12 @@ public class TopNCompaniesHandler {
         return (double) soma / dists.size();
     }
 
+    /**
+     * Get top n companies array list.
+     *
+     * @param n the n
+     * @return the array list
+     */
     protected ArrayList<Pair<User,Double>> getTopNCompanies(int n){
         ArrayList<Pair<User,Double>> topN = new ArrayList<>();
 
@@ -99,6 +119,12 @@ public class TopNCompaniesHandler {
     }
 
 
+    /**
+     * Print top n companies boolean.
+     *
+     * @param n the n
+     * @return the boolean
+     */
     public boolean printTopNCompanies(int n){
         ArrayList<Pair<User,Double>> topN = getTopNCompanies(n);
 

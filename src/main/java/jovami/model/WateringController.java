@@ -24,6 +24,9 @@ import jovami.util.Triplet;
 public class WateringController {
 
 
+    /**
+     * The constant MAX_DAYS.
+     */
     public static final long MAX_DAYS = 30;
 
     private final LocalDate startedDate;
@@ -32,10 +35,18 @@ public class WateringController {
     private final SortedSet<LocalTime> wateringHours;
     private final LinkedHashMap<String, Pair<Integer, WateringFrequency>> plotData;
 
+    /**
+     * Instantiates a new Watering controller.
+     */
     public WateringController() {
         this(2 << 4);
     }
 
+    /**
+     * Instantiates a new Watering controller.
+     *
+     * @param expectedPlots the expected plots
+     */
     public WateringController(int expectedPlots) {
         this.startedDate = LocalDate.now();
         this.endDate = startedDate.plusDays(MAX_DAYS);
@@ -46,11 +57,23 @@ public class WateringController {
 
     //========================== Getters && Setters ========================//
 
+    /**
+     * Add watering hour boolean.
+     *
+     * @param time the time
+     * @return the boolean
+     */
     public boolean addWateringHour(LocalTime time) {
         Objects.requireNonNull(time);
         return this.wateringHours.add(time);
     }
 
+    /**
+     * Add watering hours boolean.
+     *
+     * @param times the times
+     * @return the boolean
+     */
     public boolean addWateringHours(Collection<LocalTime> times) {
         Objects.requireNonNull(times);
         if (times.isEmpty())
@@ -58,16 +81,35 @@ public class WateringController {
         return this.wateringHours.addAll(times);
     }
 
+    /**
+     * Add plot data boolean.
+     *
+     * @param data the data
+     * @return the boolean
+     */
     public boolean addPlotData(Triplet<String, Integer, WateringFrequency> data) {
         return this.addPlotData(data.first(), data.second(), data.third());
     }
 
+    /**
+     * Add plot data boolean.
+     *
+     * @param plotID    the plot id
+     * @param duration  the duration
+     * @param frequency the frequency
+     * @return the boolean
+     */
     public boolean addPlotData(String plotID, int duration, WateringFrequency frequency) {
         Objects.requireNonNull(plotID);
 
         return this.plotData.putIfAbsent(plotID, new Pair<>(duration, frequency)) == null;
     }
 
+    /**
+     * Get valid range local date [ ].
+     *
+     * @return the local date [ ]
+     */
     public LocalDate[] getValidRange() {
         return new LocalDate[] { this.startedDate, this.endDate };
     }
@@ -82,6 +124,11 @@ public class WateringController {
         }
     }
 
+    /**
+     * Currently watering list.
+     *
+     * @return the list
+     */
     public List<Pair<String, Long>> currentlyWatering() {
         LocalDateTime now = LocalDateTime.now();
         int dayOfMonth = now.getDayOfMonth();

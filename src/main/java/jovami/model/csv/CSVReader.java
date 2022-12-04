@@ -33,6 +33,14 @@ public class CSVReader {
         DEFAULT_DELIMITER = header.getDelimiter();
     }
 
+    /**
+     * Read from resources list.
+     *
+     * @param bundle the bundle
+     * @param header the header
+     * @return the list
+     * @throws IOException the io exception
+     */
     public static List<String[]> readFromResources(String bundle, CSVHeader header)
     throws IOException
     {
@@ -45,6 +53,14 @@ public class CSVReader {
         return readCSV(is, header);
     }
 
+    /**
+     * Read csv list.
+     *
+     * @param file   the file
+     * @param header the header
+     * @return the list
+     * @throws FileNotFoundException the file not found exception
+     */
     public static List<String[]> readCSV(File file, CSVHeader header)
     throws FileNotFoundException
     {
@@ -126,7 +142,7 @@ public class CSVReader {
      * Needed because the lines need to be split according to the
      * correct delimiter.
      * @param reader    the {@code BufferedReader} used
-     * @throws {@code IOException} if an error occurs while checking for quotes
+     * @throws IOException if an error occurs while checking for quotes
      */
     private static boolean checkQuotationMark(BufferedReader reader) throws IOException {
         final int bigNum = 500;

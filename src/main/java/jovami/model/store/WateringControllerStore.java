@@ -21,11 +21,10 @@ public class WateringControllerStore implements Iterable<WateringController> {
 
     private final TreeMap<LocalDate, WateringController> store;
 
+    /**
+     * Instantiates a new Watering controller store.
+     */
     public WateringControllerStore() {
-        this(2 << 4);
-    }
-
-    public WateringControllerStore(int initialCapacity) {
         this.store = new TreeMap<>(LocalDate::compareTo);
     }
 
@@ -33,6 +32,13 @@ public class WateringControllerStore implements Iterable<WateringController> {
         return this.store.putIfAbsent(ctrl.getValidRange()[0], ctrl) == null;
     }
 
+    /**
+     * Add controller boolean.
+     *
+     * @param times    the times
+     * @param plotData the plot data
+     * @return the boolean
+     */
     public boolean addController(Collection<LocalTime> times,
             List<Triplet<String, Integer, WateringFrequency>> plotData)
     {
@@ -44,6 +50,11 @@ public class WateringControllerStore implements Iterable<WateringController> {
         return this.addController(ctrl);
     }
 
+    /**
+     * Gets active controller.
+     *
+     * @return the active controller
+     */
     public Optional<WateringController> getActiveController() {
         LocalDate now = LocalDate.now();
         try {
@@ -54,10 +65,20 @@ public class WateringControllerStore implements Iterable<WateringController> {
         }
     }
 
+    /**
+     * Size int.
+     *
+     * @return the int
+     */
     public int size() {
         return this.store.size();
     }
 
+    /**
+     * Clear expired boolean.
+     *
+     * @return the boolean
+     */
     public boolean clearExpired() {
         int oldSize = this.size();
 

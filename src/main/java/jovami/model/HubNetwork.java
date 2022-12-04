@@ -18,7 +18,13 @@ import jovami.util.graph.map.MapGraph;
  */
 public class HubNetwork extends MapGraph<User, Distance> {
 
+    /**
+     * The constant distCmp.
+     */
     public static final Comparator<Distance> distCmp;
+    /**
+     * The constant distSum.
+     */
     public static final BinaryOperator<Distance> distSum;
 
     static {
@@ -26,18 +32,37 @@ public class HubNetwork extends MapGraph<User, Distance> {
         distSum  = Distance.sum;
     }
 
+    /**
+     * Instantiates a new Hub network.
+     */
     public HubNetwork() {
         this(false);
     }
 
-	public HubNetwork(boolean directed) {
+    /**
+     * Instantiates a new Hub network.
+     *
+     * @param directed the directed
+     */
+    public HubNetwork(boolean directed) {
 		super(directed);
 	}
 
+    /**
+     * Instantiates a new Hub network.
+     *
+     * @param graph the graph
+     */
     public HubNetwork(Graph<User,Distance> graph) {
         super(graph);
     }
 
+    /**
+     * Add vertices boolean.
+     *
+     * @param users the users
+     * @return the boolean
+     */
     public boolean addVertices(Collection<User> users) {
         int oldNum = this.numVerts;
         users.forEach(this::addVertex);
@@ -45,6 +70,12 @@ public class HubNetwork extends MapGraph<User, Distance> {
         return oldNum != this.numVerts;
     }
 
+    /**
+     * Add edges boolean.
+     *
+     * @param dists the dists
+     * @return the boolean
+     */
     public boolean addEdges(Collection<Triplet<User, User, Distance>> dists) {
         int oldNum = this.numEdges;
 
@@ -53,10 +84,25 @@ public class HubNetwork extends MapGraph<User, Distance> {
         return oldNum != this.numEdges;
     }
 
+    /**
+     * Shortest path distance.
+     *
+     * @param origin the origin
+     * @param dest   the dest
+     * @param path   the path
+     * @return the distance
+     */
     public Distance shortestPath(User origin, User dest, LinkedList<User> path) {
         return Algorithms.shortestPath(this, origin, dest, distCmp, distSum, generateZero(origin), path);
     }
 
+    /**
+     * Shortest paths list.
+     *
+     * @param origin the origin
+     * @param dists  the dists
+     * @return the list
+     */
     public List<LinkedList<User>> shortestPaths(User origin, ArrayList<Distance> dists) {
         var paths = new ArrayList<LinkedList<User>>();
         if (!dists.isEmpty())
@@ -66,6 +112,13 @@ public class HubNetwork extends MapGraph<User, Distance> {
         return paths;
     }
 
+    /**
+     * Shortest paths for pool linked list.
+     *
+     * @param origin the origin
+     * @param pool   the pool
+     * @return the linked list
+     */
     public LinkedList<Distance>
     shortestPathsForPool(User origin, List<User> pool)
     {

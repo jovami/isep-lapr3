@@ -28,6 +28,9 @@ public class UserParser implements CSVParser {
         app = App.getInstance();
     }
 
+    /**
+     * @param data the data
+     */
     @Override
     public void parse(List<String[]> data) {
         // O(l); l => lines of the file

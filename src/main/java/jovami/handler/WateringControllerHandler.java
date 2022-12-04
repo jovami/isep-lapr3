@@ -21,6 +21,9 @@ public class WateringControllerHandler {
     private final App app;
     private final WateringControllerParser parser;
 
+    /**
+     * Instantiates a new Watering controller handler.
+     */
     public WateringControllerHandler() {
         this.app = App.getInstance();
         this.parser = new WateringControllerParser();
@@ -30,6 +33,11 @@ public class WateringControllerHandler {
         parser.parse(data);
     }
 
+    /**
+     * Currently watering list.
+     *
+     * @return the list
+     */
     public List<Pair<String, Long>> currentlyWatering() {
         var opt = this.app.wateringControllerStore().getActiveController();
 
@@ -42,6 +50,11 @@ public class WateringControllerHandler {
     }
 
 
+    /**
+     * Load default.
+     *
+     * @throws IOException the io exception
+     */
     public void loadDefault()
     throws IOException
     {
@@ -49,6 +62,12 @@ public class WateringControllerHandler {
         load(CSVReader.readFromResources(DEFAULT, CSVHeader.NO_HEADER));
     }
 
+    /**
+     * Load file.
+     *
+     * @param file the file
+     * @throws FileNotFoundException the file not found exception
+     */
     public void loadFile(File file)
     throws FileNotFoundException
     {

@@ -24,10 +24,16 @@ public class DistanceParser implements CSVParser {
         }
     }
 
+    /**
+     * Instantiates a new Distance parser.
+     */
     public DistanceParser() {
         this.app = App.getInstance();
     }
 
+    /**
+     * @param data the data
+     */
     @Override
     public void parse(List<String[]> data) {
         // O(l); l => lines of the file

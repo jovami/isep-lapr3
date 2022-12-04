@@ -11,8 +11,17 @@ import java.util.Objects;
  */
 public class InputReader {
 
+    /**
+     * The constant YES_REGEX.
+     */
     public static final String YES_REGEX = "^[yY]";
 
+    /**
+     * Read line string.
+     *
+     * @param prompt the prompt
+     * @return the string
+     */
     public static String readLine(String prompt) {
         Objects.requireNonNull(prompt);
 
@@ -32,6 +41,12 @@ public class InputReader {
         }
     }
 
+    /**
+     * Read integer int.
+     *
+     * @param prompt the prompt
+     * @return the int
+     */
     public static int readInteger(String prompt) {
         do {
             try {
@@ -42,10 +57,23 @@ public class InputReader {
         } while(true);
     }
 
+    /**
+     * Confirm boolean.
+     *
+     * @param prompt the prompt
+     * @return the boolean
+     */
     public static boolean confirm(String prompt) {
         return readLine(prompt + " [y/N]").matches(YES_REGEX);
     }
 
+    /**
+     * Confirm boolean.
+     *
+     * @param prompt     the prompt
+     * @param defaultYes the default yes
+     * @return the boolean
+     */
     public static boolean confirm(String prompt, boolean defaultYes) {
         var line = readLine(prompt + (defaultYes ? " [Y/n]" : "[ y/N]"));
 
@@ -55,6 +83,12 @@ public class InputReader {
         return line.matches(YES_REGEX);
     }
 
+    /**
+     * Gets file.
+     *
+     * @param prompt the prompt
+     * @return the file
+     */
     public static File getFile(String prompt) {
         String path = InputReader.readLine(prompt);
 

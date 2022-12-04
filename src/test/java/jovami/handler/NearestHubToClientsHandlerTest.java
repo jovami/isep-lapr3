@@ -11,7 +11,6 @@ import jovami.App;
 import jovami.MainTest;
 import jovami.handler.data.NearestHubToClientsData;
 import jovami.model.Distance;
-import jovami.model.HubNetwork;
 import jovami.model.User;
 import jovami.model.store.UserStore;
 import jovami.util.Triplet;
@@ -30,7 +29,6 @@ class NearestHubToClientsHandlerTest {
         new CSVLoaderHandler().populateNetwork();
 
         handler = new NearestHubToClientsHandler();
-        HubNetwork network = app.hubNetwork();
         userStore = app.userStore();
     }
 

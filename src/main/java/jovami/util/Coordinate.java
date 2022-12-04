@@ -7,27 +7,60 @@ import java.awt.geom.Point2D;
  */
 public final class Coordinate extends Point2D {
 
+    /**
+     * The constant MAX_LAT.
+     */
     public static final double MAX_LAT = 90.0;
+    /**
+     * The constant MIN_LAT.
+     */
     public static final double MIN_LAT = -MAX_LAT;
 
+    /**
+     * The constant MAX_LON.
+     */
     public static final double MAX_LON = 180.0;
+    /**
+     * The constant MIN_LON.
+     */
     public static final double MIN_LON = -MAX_LON;
 
     private double latitude;
 	private double longitude;
 
+    /**
+     * Instantiates a new Coordinate.
+     *
+     * @param latitude  the latitude
+     * @param longitude the longitude
+     */
     public Coordinate(double latitude, double longitude) {
         this.setLocation(latitude, longitude);
     }
 
+    /**
+     * Instantiates a new Coordinate.
+     *
+     * @param other the other
+     */
     public Coordinate(Coordinate other) {
         this(other.latitude, other.longitude);
     }
 
+    /**
+     * Gets latitude.
+     *
+     * @return the latitude
+     */
     public double getLatitude() {
         return this.latitude;
     }
 
+    /**
+     * Gets longitude.
+     *
+     * @return the longitude
+     */
     public double getLongitude() {
         return this.longitude;
     }

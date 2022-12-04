@@ -21,6 +21,10 @@ class IsConnectedHandlerTest {
 
     @Test
     void minReachability() {
-        assertEquals(272, handler.minReachability().get());
+        var min = handler.minReachability();
+        assertTrue(min.isPresent());
+        assertNotNull(min.get());
+
+        assertEquals(272, min.get());
     }
 }
