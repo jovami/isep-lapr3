@@ -1470,6 +1470,370 @@ BEGIN
 END;
 /
 
+create or replace procedure test_hub(
+    morada              hub.morada%TYPE,
+    codigo_postal_id    hub.codigo_postal_id%TYPE
+)
+AS
+BEGIN
+    -- Insert rows in a Table
+
+    INSERT INTO hub(morada,codigo_postal_id)
+    VALUES(morada,codigo_postal_id);
+
+    dbms_output.put_line('SUCCESS: hub inserted' );
+
+EXCEPTION
+    WHEN OTHERS THEN
+        if morada is null then
+            dbms_output.put_line('FAILED: morada cannot be null');
+        ELSIF codigo_postal_id IS NULL THEN
+            dbms_output.put_line('FAILED: codigo_postal_id cannot be null');
+        end if;
+END;
+/
+
+BEGIN
+    dbms_output.put_line('----------- Testing hub -----------');
+
+    INSERT INTO codigo_postal(codigo_postal_id) VALUES ('4400');
+
+    -- pass
+    test_hub('Trindade','4400');
+
+    -- dont pass
+    test_hub(null,'4400');
+
+     -- dont pass
+    test_hub('Trindade',null);
+
+    dbms_output.new_line();
+END;
+/
+
+
+create or replace procedure test_incidente(
+    valor_incidente             incidente.valor_incidente%TYPE,
+    data_incidente              incidente.data_incidente%TYPE,
+    data_incidente_liquidado    incidente.data_incidente_liquidado%TYPE,
+    cliente_id                  incidente.cliente_id%TYPE
+)
+AS
+BEGIN
+    -- Insert rows in a Table
+
+    INSERT INTO incidente(valor_incidente,data_incidente,data_incidente_liquidado,cliente_id)
+    VALUES(valor_incidente,data_incidente,data_incidente_liquidado,cliente_id);
+
+    dbms_output.put_line('SUCCESS: incidente inserted' );
+
+EXCEPTION
+    WHEN OTHERS THEN
+        if valor_incidente <= 0 then
+            dbms_output.put_line('FAILED: valor_incidente cannot be <= 0');
+        ELSIF data_incidente IS NULL THEN
+            dbms_output.put_line('FAILED: data_incidente cannot be null');
+        ELSIF cliente_id IS NULL THEN
+            dbms_output.put_line('FAILED: cliente_id cannot be null');
+        end if;
+END;
+/
+
+BEGIN
+    dbms_output.put_line('----------- Testing incidente -----------');
+
+
+
+    -- pass
+    test_incidente(60000,TO_DATE('15/03/2022 16:01','DD/MM/YYYY HH24:MI'),TO_DATE('20/03/2022 16:00','DD/MM/YYYY HH24:MI'),1);
+
+    -- dont pass
+    test_incidente(0,TO_DATE('15/03/2022 16:01','DD/MM/YYYY HH24:MI'),TO_DATE('20/03/2022 16:00','DD/MM/YYYY HH24:MI'),1);
+
+     -- dont pass
+    test_incidente(60000,null,TO_DATE('20/03/2022 16:00','DD/MM/YYYY HH24:MI'),1);
+
+    -- dont pass
+    test_incidente(60000,TO_DATE('15/03/2022 16:01','DD/MM/YYYY HH24:MI'),TO_DATE('20/03/2022 16:00','DD/MM/YYYY HH24:MI'),null);
+
+
+    dbms_output.new_line();
+END;
+/
+
+create or replace procedure test_estado_encomenda(
+    designacao estado_encomenda.designacao%TYPE
+)
+AS
+BEGIN
+    -- Insert rows in a Table
+
+    INSERT INTO estado_encomenda(designacao)
+    VALUES(designacao);
+
+    dbms_output.put_line('SUCCESS: ' || designacao);
+
+EXCEPTION
+    WHEN OTHERS THEN
+        if designacao is null then
+            dbms_output.put_line('FAILED: designacao cannot be null');
+        else
+            dbms_output.put_line(
+                'FAILED: designacao not equal to registado/entregue/pago'
+            );
+        end if;
+END;
+/
+
+BEGIN
+    dbms_output.put_line('----------- Testing estado_encomenda -----------');
+
+    -- pass
+    test_estado_encomenda('registado');
+
+    -- dont pass
+    test_estado_encomenda('sei la');
+
+    dbms_output.new_line();
+END;
+/
+
+create or replace procedure test_encomenda(
+    cliente_id              encomenda.cliente_id%TYPE,
+    gestor_agricola_id      encomenda.gestor_agricola_id%TYPE,
+    data_estimada_entrega   encomenda.data_estimada_entrega%TYPE,
+    valor_encomenda         encomenda.valor_encomenda%TYPE,
+    data_limite_pagamento   encomenda.data_limite_pagamento%TYPE,
+    endereco_entrega        encomenda.endereco_entrega%TYPE,
+    hub_id                  encomenda.hub_id%TYPE
+)
+AS
+BEGIN
+    -- Insert rows in a Table
+
+    INSERT INTO encomenda(cliente_id,gestor_agricola_id,data_estimada_entrega,valor_encomenda,data_limite_pagamento,endereco_entrega,hub_id)
+    VALUES(cliente_id,gestor_agricola_id,data_estimada_entrega,valor_encomenda,data_limite_pagamento,endereco_entrega,hub_id);
+
+    dbms_output.put_line('SUCCESS: encomenda inserted' );
+
+EXCEPTION
+    WHEN OTHERS THEN
+        if valor_encomenda <= 0 then
+            dbms_output.put_line('FAILED: valor_encomenda cannot be <= 0');
+        ELSIF cliente_id IS NULL THEN
+            dbms_output.put_line('FAILED: cliente_id cannot be null');
+        ELSIF data_estimada_entrega IS NULL THEN
+            dbms_output.put_line('FAILED: data_estimada_entrega cannot be null');
+        ELSIF gestor_agricola_id IS NULL THEN
+            dbms_output.put_line('FAILED: gestor_agricola_id cannot be null');
+        ELSIF data_limite_pagamento IS NULL THEN
+            dbms_output.put_line('FAILED: data_limite_pagamento cannot be null');
+        end if;
+END;
+/
+
+BEGIN
+    dbms_output.put_line('----------- Testing encomenda -----------');
+
+
+    -- pass
+    test_encomenda(1,9,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'),12000,TO_DATE('15/03/2022 10:00','DD/MM/YYYY HH24:MI'),NULL,NULL);
+
+    -- dont pass
+    test_encomenda(null,9,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'),12000,TO_DATE('15/03/2022 10:00','DD/MM/YYYY HH24:MI'),NULL,NULL);
+
+    -- dont pass
+    test_encomenda(1,null,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'),12000,TO_DATE('15/03/2022 10:00','DD/MM/YYYY HH24:MI'),NULL,NULL);
+
+    -- dont pass
+    test_encomenda(1,9,null,12000,TO_DATE('15/03/2022 10:00','DD/MM/YYYY HH24:MI'),NULL,NULL);
+
+    -- dont pass
+    test_encomenda(1,9,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'),0,TO_DATE('15/03/2022 10:00','DD/MM/YYYY HH24:MI'),NULL,NULL);
+
+    -- dont pass
+    test_encomenda(1,9,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'),12000,null,NULL,NULL);
+
+
+    dbms_output.new_line();
+END;
+/
+
+create or replace procedure test_registo_encomenda(
+    cliente_id                       registo_encomenda.cliente_id%TYPE,
+    gestor_agricola_id               registo_encomenda.gestor_agricola_id%TYPE,
+    data_estimada_entrega            registo_encomenda.data_estimada_entrega%TYPE,
+    estado_encomenda_id              registo_encomenda.estado_encomenda_id%TYPE,
+    data_registo_entrega_pagamento   registo_encomenda.data_registo_entrega_pagamento%TYPE
+)
+AS
+BEGIN
+    -- Insert rows in a Table
+
+    INSERT INTO registo_encomenda(cliente_id,gestor_agricola_id,data_estimada_entrega,estado_encomenda_id,data_registo_entrega_pagamento)
+    VALUES(cliente_id,gestor_agricola_id,data_estimada_entrega,estado_encomenda_id,data_registo_entrega_pagamento);
+
+    dbms_output.put_line('SUCCESS: registo_encomenda inserted' );
+
+EXCEPTION
+    WHEN OTHERS THEN
+        if data_registo_entrega_pagamento  IS NULL then
+            dbms_output.put_line('FAILED: data_registo_entrega_pagamento cannot be null');
+        ELSIF cliente_id IS NULL THEN
+            dbms_output.put_line('FAILED: cliente_id cannot be null');
+        ELSIF data_estimada_entrega IS NULL THEN
+            dbms_output.put_line('FAILED: data_estimada_entrega cannot be null');
+        ELSIF gestor_agricola_id IS NULL THEN
+            dbms_output.put_line('FAILED: gestor_agricola_id cannot be null');
+        ELSIF estado_encomenda_id IS NULL THEN
+            dbms_output.put_line('FAILED: estado_encomenda_id cannot be null');
+        end if;
+END;
+/
+
+BEGIN
+    dbms_output.put_line('----------- Testing registo_encomenda -----------');
+
+
+    -- pass
+    test_registo_encomenda(1,9,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'),1,TO_DATE('10/02/2022 12:00','DD/MM/YYYY HH24:MI'));
+
+    -- dont pass
+    test_registo_encomenda(NULL,9,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'),1,TO_DATE('10/02/2022 12:00','DD/MM/YYYY HH24:MI'));
+
+    -- dont pass
+    test_registo_encomenda(1,NULL,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'),1,TO_DATE('10/02/2022 12:00','DD/MM/YYYY HH24:MI'));
+
+    -- dont pass
+    test_registo_encomenda(1,9,NULL,1,TO_DATE('10/02/2022 12:00','DD/MM/YYYY HH24:MI'));
+
+    -- dont pass
+    test_registo_encomenda(1,9,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'),NULL,TO_DATE('10/02/2022 12:00','DD/MM/YYYY HH24:MI'));
+
+    -- dont pass
+    test_registo_encomenda(1,9,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'),1,NULL);
+
+
+    dbms_output.new_line();
+END;
+/
+
+create or replace procedure test_pagamento(
+    valor_pagamento                  pagamento.valor_pagamento%TYPE,
+    data_pagamento                   pagamento.data_pagamento%TYPE,
+    cliente_id                       pagamento.cliente_id%TYPE,
+    gestor_agricola_id               pagamento.gestor_agricola_id%TYPE,
+    data_estimada_entrega            pagamento.data_estimada_entrega%TYPE
+)
+AS
+BEGIN
+    -- Insert rows in a Table
+
+    INSERT INTO pagamento(valor_pagamento,data_pagamento,cliente_id,gestor_agricola_id,data_estimada_entrega)
+    VALUES(valor_pagamento,data_pagamento,cliente_id,gestor_agricola_id,data_estimada_entrega);
+
+    dbms_output.put_line('SUCCESS: pagamento inserted' );
+
+EXCEPTION
+    WHEN OTHERS THEN
+        if data_pagamento  IS NULL then
+            dbms_output.put_line('FAILED: data_pagamento cannot be null');
+        ELSIF cliente_id IS NULL THEN
+            dbms_output.put_line('FAILED: cliente_id cannot be null');
+        ELSIF data_estimada_entrega IS NULL THEN
+            dbms_output.put_line('FAILED: data_estimada_entrega cannot be null');
+        ELSIF gestor_agricola_id IS NULL THEN
+            dbms_output.put_line('FAILED: gestor_agricola_id cannot be null');
+        ELSIF valor_pagamento <= 0 THEN
+            dbms_output.put_line('FAILED: valor_pagamento cannot be <= 0');
+        end if;
+END;
+/
+
+BEGIN
+    dbms_output.put_line('----------- Testing registo_encomenda -----------');
+
+
+    -- pass
+    test_pagamento(6000,TO_DATE('10/03/2022 12:00','DD/MM/YYYY HH24:MI'),1,9,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'));
+
+    -- dont pass
+    test_pagamento(0,TO_DATE('10/03/2022 12:00','DD/MM/YYYY HH24:MI'),1,9,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'));
+
+    -- dont pass
+    test_pagamento(6000,null,1,9,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'));
+
+    -- dont pass
+    test_pagamento(6000,TO_DATE('10/03/2022 12:00','DD/MM/YYYY HH24:MI'),null,9,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'));
+
+    -- dont pass
+    test_pagamento(6000,TO_DATE('10/03/2022 12:00','DD/MM/YYYY HH24:MI'),1,null,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'));
+
+    -- dont pass
+    test_pagamento(6000,TO_DATE('10/03/2022 12:00','DD/MM/YYYY HH24:MI'),1,9,null);
+
+    dbms_output.new_line();
+END;
+/
+
+create or replace procedure test_encomenda_produto(
+    cliente_id                       encomenda_produto.cliente_id%TYPE,
+    gestor_agricola_id               encomenda_produto.gestor_agricola_id%TYPE,
+    data_estimada_entrega            encomenda_produto.data_estimada_entrega%TYPE,
+    produto_id                       encomenda_produto.produto_id%TYPE,
+    quantidade_ton                   encomenda_produto.quantidade_ton%TYPE
+)
+AS
+BEGIN
+    -- Insert rows in a Table
+
+    INSERT INTO encomenda_produto(cliente_id,gestor_agricola_id,data_estimada_entrega,produto_id,quantidade_ton)
+    VALUES(cliente_id,gestor_agricola_id,data_estimada_entrega,produto_id,quantidade_ton);
+
+    dbms_output.put_line('SUCCESS: encomenda produto inserted' );
+
+EXCEPTION
+    WHEN OTHERS THEN
+        if produto_id  IS NULL then
+            dbms_output.put_line('FAILED: produto_id cannot be null');
+        ELSIF cliente_id IS NULL THEN
+            dbms_output.put_line('FAILED: cliente_id cannot be null');
+        ELSIF data_estimada_entrega IS NULL THEN
+            dbms_output.put_line('FAILED: data_estimada_entrega cannot be null');
+        ELSIF gestor_agricola_id IS NULL THEN
+            dbms_output.put_line('FAILED: gestor_agricola_id cannot be null');
+        ELSIF quantidade_ton <= 0 THEN
+            dbms_output.put_line('FAILED: quantidade_ton cannot be <= 0');
+        end if;
+END;
+/
+
+BEGIN
+    dbms_output.put_line('----------- Testing encomenda_produto -----------');
+
+
+    -- pass
+    test_encomenda_produto(1,9,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'),4,2);
+
+    -- dont pass
+    test_encomenda_produto(null,9,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'),4,2);
+
+    -- dont pass
+    test_encomenda_produto(1,null,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'),4,2);
+
+    -- dont pass
+    test_encomenda_produto(1,9,null,4,2);
+
+    -- dont pass
+    test_encomenda_produto(1,9,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'),null,2);
+
+    -- dont pass
+     test_encomenda_produto(1,9,TO_DATE('15/02/2022 10:00','DD/MM/YYYY HH24:MI'),4,null);
+
+    dbms_output.new_line();
+END;
+/
+
 
 --- Cleanup
 DROP PROCEDURE test_codigo_postal;
@@ -1495,3 +1859,10 @@ DROP PROCEDURE test_tipo_utilizador;
 DROP PROCEDURE test_tipo_cliente;
 DROP PROCEDURE test_utilizador;
 DROP PROCEDURE test_gestor_agricola;
+DROP PROCEDURE test_hub;
+DROP PROCEDURE test_incidente;
+DROP PROCEDURE test_estado_encomenda;
+DROP PROCEDURE test_encomenda;
+DROP PROCEDURE test_registo_encomenda;
+DROP PROCEDURE test_pagamento;
+DROP PROCEDURE test_encomenda_produto;
