@@ -19,6 +19,209 @@
 
 \refsection{0}
   \datalist[entry]{none/global//global/global}
+    \entry{concrete}{article}{}
+      \name{author}{4}{}{%
+        {{hash=f2e5978a396e400b01fd84be2ae46f0b}{%
+           family={Asadi},
+           familyi={A\bibinitperiod},
+           given={Iman},
+           giveni={I\bibinitperiod}}}%
+        {{hash=6910890e86f2aa2ea8a26b8c2f72e3fe}{%
+           family={Shafigh},
+           familyi={S\bibinitperiod},
+           given={Payam},
+           giveni={P\bibinitperiod}}}%
+        {{hash=a5665387a6cc03a32257310e9010def2}{%
+           family={Hassan},
+           familyi={H\bibinitperiod},
+           given={Zahiruddin\bibnamedelimb Fitri\bibnamedelimb Bin\bibnamedelima Abu},
+           giveni={Z\bibinitperiod\bibinitdelim F\bibinitperiod\bibinitdelim B\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=6bb8d2e57b6e16c4ed9490e2705523e8}{%
+           family={Mahyuddin},
+           familyi={M\bibinitperiod},
+           given={Norhayati\bibnamedelima Binti},
+           giveni={N\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier {BV}}%
+      }
+      \strng{namehash}{1d29f03f4c9394315865fd651e94734f}
+      \strng{fullhash}{50ba656593e90112e4ea83e45873d322}
+      \strng{bibnamehash}{50ba656593e90112e4ea83e45873d322}
+      \strng{authorbibnamehash}{50ba656593e90112e4ea83e45873d322}
+      \strng{authornamehash}{1d29f03f4c9394315865fd651e94734f}
+      \strng{authorfullhash}{50ba656593e90112e4ea83e45873d322}
+      \field{extraname}{1}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Building Engineering}
+      \field{month}{11}
+      \field{title}{Thermal conductivity of concrete {–} A review}
+      \field{volume}{20}
+      \field{year}{2018}
+      \field{pages}{81\bibrangedash 93}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.1016/j.jobe.2018.07.002
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1016%2Fj.jobe.2018.07.002
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1016%2Fj.jobe.2018.07.002
+      \endverb
+    \endentry
+    \entry{brick}{article}{}
+      \name{author}{2}{}{%
+        {{hash=568af9b12e155345589712f09409b1d8}{%
+           family={RUH},
+           familyi={R\bibinitperiod},
+           given={EDWIN},
+           giveni={E\bibinitperiod}}}%
+        {{hash=721d4dbac7ea76f7dd6b71632e7453b4}{%
+           family={McDOWELL},
+           familyi={M\bibinitperiod},
+           given={J.\bibnamedelimi SPOTTS},
+           giveni={J\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Wiley}%
+      }
+      \strng{namehash}{644ec666695456f9d6e5a87fe659d16e}
+      \strng{fullhash}{644ec666695456f9d6e5a87fe659d16e}
+      \strng{bibnamehash}{644ec666695456f9d6e5a87fe659d16e}
+      \strng{authorbibnamehash}{644ec666695456f9d6e5a87fe659d16e}
+      \strng{authornamehash}{644ec666695456f9d6e5a87fe659d16e}
+      \strng{authorfullhash}{644ec666695456f9d6e5a87fe659d16e}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of the American Ceramic Society}
+      \field{month}{4}
+      \field{number}{4}
+      \field{title}{Thermal Conductivity of Refractory Brick}
+      \field{volume}{45}
+      \field{year}{1962}
+      \field{pages}{189\bibrangedash 195}
+      \range{pages}{7}
+      \verb{doi}
+      \verb 10.1111/j.1151-2916.1962.tb11118.x
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1111%2Fj.1151-2916.1962.tb11118.x
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1111%2Fj.1151-2916.1962.tb11118.x
+      \endverb
+    \endentry
+    \entry{poliestireno_k}{online}{}
+      \name{author}{1}{}{%
+        {{hash=5de2d3376fc2fc14302f9493ec43123a}{%
+           family={{Soprema}},
+           familyi={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{5de2d3376fc2fc14302f9493ec43123a}
+      \strng{fullhash}{5de2d3376fc2fc14302f9493ec43123a}
+      \strng{bibnamehash}{5de2d3376fc2fc14302f9493ec43123a}
+      \strng{authorbibnamehash}{5de2d3376fc2fc14302f9493ec43123a}
+      \strng{authornamehash}{5de2d3376fc2fc14302f9493ec43123a}
+      \strng{authorfullhash}{5de2d3376fc2fc14302f9493ec43123a}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{1}
+      \field{title}{CONDUTIBILIDADES TÉRMICAS DOS ISOLAMENTOS TÉRMICOS (EN 12667)}
+      \field{urlday}{29}
+      \field{urlmonth}{11}
+      \field{urlyear}{2022}
+      \field{year}{2021}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.soprema.pt/pt/sopra-xps-isolamento-termico-resistencia-termica
+      \endverb
+      \verb{url}
+      \verb https://www.soprema.pt/pt/sopra-xps-isolamento-termico-resistencia-termica
+      \endverb
+    \endentry
+    \entry{betao_armado}{article}{}
+      \name{author}{4}{}{%
+        {{hash=f2e5978a396e400b01fd84be2ae46f0b}{%
+           family={Asadi},
+           familyi={A\bibinitperiod},
+           given={Iman},
+           giveni={I\bibinitperiod}}}%
+        {{hash=6910890e86f2aa2ea8a26b8c2f72e3fe}{%
+           family={Shafigh},
+           familyi={S\bibinitperiod},
+           given={Payam},
+           giveni={P\bibinitperiod}}}%
+        {{hash=a5665387a6cc03a32257310e9010def2}{%
+           family={Hassan},
+           familyi={H\bibinitperiod},
+           given={Zahiruddin\bibnamedelimb Fitri\bibnamedelimb Bin\bibnamedelima Abu},
+           giveni={Z\bibinitperiod\bibinitdelim F\bibinitperiod\bibinitdelim B\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=6bb8d2e57b6e16c4ed9490e2705523e8}{%
+           family={Mahyuddin},
+           familyi={M\bibinitperiod},
+           given={Norhayati\bibnamedelima Binti},
+           giveni={N\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier {BV}}%
+      }
+      \strng{namehash}{1d29f03f4c9394315865fd651e94734f}
+      \strng{fullhash}{50ba656593e90112e4ea83e45873d322}
+      \strng{bibnamehash}{50ba656593e90112e4ea83e45873d322}
+      \strng{authorbibnamehash}{50ba656593e90112e4ea83e45873d322}
+      \strng{authornamehash}{1d29f03f4c9394315865fd651e94734f}
+      \strng{authorfullhash}{50ba656593e90112e4ea83e45873d322}
+      \field{extraname}{2}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Building Engineering}
+      \field{month}{11}
+      \field{title}{Thermal conductivity of concrete {–} A review}
+      \field{volume}{20}
+      \field{year}{2018}
+      \field{pages}{81\bibrangedash 93}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.1016/j.jobe.2018.07.002
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1016%2Fj.jobe.2018.07.002
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1016%2Fj.jobe.2018.07.002
+      \endverb
+    \endentry
+    \entry{gesso_k}{incollection}{}
+      \list{publisher}{1}{%
+        {{CRC} Press}%
+      }
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Spon{'}s Architects{'} and Builders{'} Price Book 2013}
+      \field{month}{9}
+      \field{title}{Typical Thermal Conductivity of Building Materials}
+      \field{year}{2012}
+      \verb{doi}
+      \verb 10.1201/b12706-61
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1201%2Fb12706-61
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1201%2Fb12706-61
+      \endverb
+    \endentry
     \entry{gesso_vantagens}{online}{}
       \name{author}{1}{}{%
         {{hash=21232f297a57a5a743894a0e4a801fc3}{%
@@ -31,8 +234,8 @@
       \strng{authorbibnamehash}{21232f297a57a5a743894a0e4a801fc3}
       \strng{authornamehash}{21232f297a57a5a743894a0e4a801fc3}
       \strng{authorfullhash}{21232f297a57a5a743894a0e4a801fc3}
-      \field{sortinit}{1}
-      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{month}{2}
@@ -49,26 +252,132 @@
       \verb https://budgetpainting.sg/why-plastering-your-wall-is-important/
       \endverb
     \endentry
-    \entry{gesso_k}{incollection}{}
-      \list{publisher}{1}{%
-        {{CRC} Press}%
+    \entry{poliestireno}{online}{}
+      \name{author}{1}{}{%
+        {{hash=ece0bb2e3cfbd2463b946d11f585da99}{%
+           family={{Fibrosom}},
+           familyi={F\bibinitperiod}}}%
       }
-      \field{sortinit}{2}
-      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \strng{namehash}{ece0bb2e3cfbd2463b946d11f585da99}
+      \strng{fullhash}{ece0bb2e3cfbd2463b946d11f585da99}
+      \strng{bibnamehash}{ece0bb2e3cfbd2463b946d11f585da99}
+      \strng{authorbibnamehash}{ece0bb2e3cfbd2463b946d11f585da99}
+      \strng{authornamehash}{ece0bb2e3cfbd2463b946d11f585da99}
+      \strng{authorfullhash}{ece0bb2e3cfbd2463b946d11f585da99}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{booktitle}{Spon{'}s Architects{'} and Builders{'} Price Book 2013}
-      \field{month}{9}
-      \field{title}{Typical Thermal Conductivity of Building Materials}
-      \field{year}{2012}
-      \verb{doi}
-      \verb 10.1201/b12706-61
-      \endverb
+      \field{month}{4}
+      \field{title}{Isolamento térmico com poliestireno extrudido}
+      \field{urlday}{29}
+      \field{urlmonth}{11}
+      \field{urlyear}{2022}
+      \field{year}{2019}
+      \field{urldateera}{ce}
       \verb{urlraw}
-      \verb https://doi.org/10.1201%2Fb12706-61
+      \verb http://www.fibrosom.com/Produtos.aspx?id=3
       \endverb
       \verb{url}
-      \verb https://doi.org/10.1201%2Fb12706-61
+      \verb http://www.fibrosom.com/Produtos.aspx?id=3
       \endverb
+    \endentry
+    \entry{poliuretano}{online}{}
+      \name{author}{1}{}{%
+        {{hash=f9e762337cf6bf4aa215ea45fefa4774}{%
+           family={Connor},
+           familyi={C\bibinitperiod},
+           given={Nick},
+           giveni={N\bibinitperiod}}}%
+      }
+      \strng{namehash}{f9e762337cf6bf4aa215ea45fefa4774}
+      \strng{fullhash}{f9e762337cf6bf4aa215ea45fefa4774}
+      \strng{bibnamehash}{f9e762337cf6bf4aa215ea45fefa4774}
+      \strng{authorbibnamehash}{f9e762337cf6bf4aa215ea45fefa4774}
+      \strng{authornamehash}{f9e762337cf6bf4aa215ea45fefa4774}
+      \strng{authorfullhash}{f9e762337cf6bf4aa215ea45fefa4774}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{month}{11}
+      \field{title}{O que é espuma de poliuretano {–} definição}
+      \field{urlday}{15}
+      \field{urlmonth}{10}
+      \field{urlyear}{2022}
+      \field{year}{2019}
+      \field{urldateera}{ce}
+      \verb{urlraw}
+      \verb https://www.thermal-engineering.org/pt-br/o-que-e-espuma-de-poliuretano-definicao/
+      \endverb
+      \verb{url}
+      \verb https://www.thermal-engineering.org/pt-br/o-que-e-espuma-de-poliuretano-definicao/
+      \endverb
+    \endentry
+    \entry{pine_wood}{article}{}
+      \name{author}{1}{}{%
+        {{hash=db046102d79a606aabfe41f65e3f8653}{%
+           family={Kol},
+           familyi={K\bibinitperiod},
+           given={Hamiyet},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{db046102d79a606aabfe41f65e3f8653}
+      \strng{fullhash}{db046102d79a606aabfe41f65e3f8653}
+      \strng{bibnamehash}{db046102d79a606aabfe41f65e3f8653}
+      \strng{authorbibnamehash}{db046102d79a606aabfe41f65e3f8653}
+      \strng{authornamehash}{db046102d79a606aabfe41f65e3f8653}
+      \strng{authorfullhash}{db046102d79a606aabfe41f65e3f8653}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{BioResources}
+      \field{month}{11}
+      \field{title}{Thermal and dielectric properties of pine wood in the transverse direction}
+      \field{volume}{4}
+      \field{year}{2009}
+    \endentry
+    \entry{glass_fiber}{book}{}
+      \name{author}{4}{}{%
+        {{hash=d8986880ce30c45fc26bf3af70ef1c37}{%
+           family={Bergman},
+           familyi={B\bibinitperiod},
+           given={Theodore\bibnamedelima L.},
+           giveni={T\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+        {{hash=b22ea78229af4420d0683e5c6d56ef10}{%
+           family={Lavine},
+           familyi={L\bibinitperiod},
+           given={Adrienne\bibnamedelima S.},
+           giveni={A\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+        {{hash=af629011276d698dac3cc48c1342c57b}{%
+           family={Incropera},
+           familyi={I\bibinitperiod},
+           given={Frank\bibnamedelima P.},
+           giveni={F\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+        {{hash=346802d5c6dd71081775c557ad324cf0}{%
+           family={DeWitt},
+           familyi={D\bibinitperiod},
+           given={David\bibnamedelima P.},
+           giveni={D\bibinitperiod\bibinitdelim P\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Wiley}%
+      }
+      \strng{namehash}{4278438025d29306773dfbae852b2059}
+      \strng{fullhash}{cdaddd6817d5001c8a2b5db88581b8af}
+      \strng{bibnamehash}{cdaddd6817d5001c8a2b5db88581b8af}
+      \strng{authorbibnamehash}{cdaddd6817d5001c8a2b5db88581b8af}
+      \strng{authornamehash}{4278438025d29306773dfbae852b2059}
+      \strng{authorfullhash}{cdaddd6817d5001c8a2b5db88581b8af}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{8}
+      \field{isbn}{978-1-119-35388-1}
+      \field{title}{Fundamentals of Heat and Mass Transfer}
+      \field{year}{2018}
     \endentry
   \enddatalist
 \endrefsection

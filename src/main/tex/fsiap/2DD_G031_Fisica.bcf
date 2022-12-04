@@ -2348,10 +2348,28 @@
     <bcf:datasource type="file" datatype="bibtex" glob="false">refs.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1">gesso_vantagens</bcf:citekey>
-    <bcf:citekey order="2">gesso_k</bcf:citekey>
-    <bcf:citekey order="3">gesso_vantagens</bcf:citekey>
-    <bcf:citekey order="4">gesso_k</bcf:citekey>
+    <bcf:citekey order="1">concrete</bcf:citekey>
+    <bcf:citekey order="2">brick</bcf:citekey>
+    <bcf:citekey order="3">poliestireno_k</bcf:citekey>
+    <bcf:citekey order="4">betao_armado</bcf:citekey>
+    <bcf:citekey order="5">gesso_k</bcf:citekey>
+    <bcf:citekey order="6">gesso_vantagens</bcf:citekey>
+    <bcf:citekey order="7">gesso_k</bcf:citekey>
+    <bcf:citekey order="8">poliestireno_k</bcf:citekey>
+    <bcf:citekey order="9">poliestireno</bcf:citekey>
+    <bcf:citekey order="10">poliuretano</bcf:citekey>
+    <bcf:citekey order="11">pine_wood</bcf:citekey>
+    <bcf:citekey order="12">glass_fiber</bcf:citekey>
+    <bcf:citekey order="13">concrete</bcf:citekey>
+    <bcf:citekey order="14">brick</bcf:citekey>
+    <bcf:citekey order="15">poliestireno_k</bcf:citekey>
+    <bcf:citekey order="16">betao_armado</bcf:citekey>
+    <bcf:citekey order="17">gesso_k</bcf:citekey>
+    <bcf:citekey order="18">gesso_vantagens</bcf:citekey>
+    <bcf:citekey order="19">poliestireno</bcf:citekey>
+    <bcf:citekey order="20">poliuretano</bcf:citekey>
+    <bcf:citekey order="21">pine_wood</bcf:citekey>
+    <bcf:citekey order="22">glass_fiber</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">
