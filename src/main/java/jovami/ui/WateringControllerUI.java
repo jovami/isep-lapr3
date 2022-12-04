@@ -17,7 +17,7 @@ public class WateringControllerUI implements UserStory {
     @Override
     public void run() {
         try {
-            if (InputReader.confirm("Load default files?", true))
+            if (InputReader.confirm("Load default file?", true))
                 this.handler.loadDefault();
             else
                 this.handler.loadFile(InputReader.getFile("Insert the path to the watering controller data file:"));
