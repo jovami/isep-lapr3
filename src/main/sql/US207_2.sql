@@ -6,7 +6,7 @@ SET serveroutput ON;
 
 CREATE or replace PROCEDURE
 hectares_lucro_desc(
-    user_id utilizador.utilizador_id%type,
+    v_user_id utilizador.utilizador_id%type,
     v_ano caderno_campo.ano%TYPE
 )
 AS
@@ -24,7 +24,7 @@ BEGIN
     FROM
         utilizador u
     WHERE
-        u.utilizador_id = user_id;
+        u.utilizador_id = v_user_id;
         
     SELECT UNIQUE
         ga.gestor_agricola_id
@@ -33,7 +33,7 @@ BEGIN
     FROM
         gestor_agricola ga
     WHERE
-        ga.gestor_agricola_id = user_id;
+        ga.gestor_agricola_id = v_user_id;
 
 
     dbms_output.put_line('Parcela ID  ||  DESIGNACAO  ||  AREA  ||  LUCRO');
@@ -42,6 +42,7 @@ BEGIN
             pa.parcela_agricola_id parcela_id,
             pa.area_ha area,
             pa.designacao designacao,
+            sum(rc.quantidade_colhida_ton_por_ha) qtd,
             sum(
                 p.valor_mercado_por_ha * rc.quantidade_colhida_ton_por_ha
                 ) - custo_fator.custo as lucro
@@ -57,7 +58,15 @@ BEGIN
                 utilizador usr
                 ON usr.utilizador_id = ga.gestor_agricola_id
             WHERE
-                usr.utilizador_id = user_id
+                usr.utilizador_id = v_user_id
+                AND ga.data_inicio_contrato = (
+                    SELECT
+                        MAX(data_inicio_contrato)
+                    FROM
+                        gestor_agricola ga2
+                    WHERE
+                        usr.utilizador_id = ga2.gestor_agricola_id
+                )
         ) instalacao_parcela
         INNER JOIN
             parcela_agricola pa
@@ -79,7 +88,7 @@ BEGIN
         INNER JOIN (
             SELECT
                 f.parcela_agricola_id,
-                sum(fp.preco_por_kg * f.quantidade_utilizada_kg) custo
+                sum(fp.preco_por_kg * f.quantidade_utilizada_kg) AS custo
             FROM
                 fertilizacao f
             INNER JOIN
@@ -94,8 +103,8 @@ BEGIN
             ON custo_fator.parcela_agricola_id = pa.parcela_agricola_id
         GROUP BY
             pa.parcela_agricola_id,
-            pa.area_ha,
             pa.designacao,
+            pa.area_ha,
             custo_fator.custo
         ORDER BY
             lucro DESC
@@ -106,6 +115,8 @@ BEGIN
             || record.designacao
             || ',   '
             || record.area
+            || ',   '
+            || record.qtd
             || ',   '
             || record.lucro
         );
@@ -129,10 +140,10 @@ END;
 /
 
 -- should result in:
--- 2, Japa,     1000.1,  939500
--- 3, Opat,     200.5,   899500
--- 1, Balmada,  1100.2,  559500
--- 4, Xat,      500,    -500
+-- 2, Japa,     1000.1,  190,  469500
+-- 3, Opat,     200.5,  150,   449500
+-- 1, Balmada,  1100.2, 190,   279500
+-- 4, Xat,      500,    200,   -500
 CALL hectares_lucro_desc(1, 2021);
 
 -- expected to fail; user is not a 'gestor agricola
