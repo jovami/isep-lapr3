@@ -1,0 +1,146 @@
+% vim:foldmethod=marker
+
+TEMPLATES {{{
+
+% if in doubt, check the
+% already existing references
+
+replace `comment` with `book`
+@comment{nameXX,
+    author      = "<name>",
+    title       = "<title>",
+    year        = "XXXX",
+    publisher   = "<name of publisher>",
+    edition     = "X",
+    isbn        = "978-XXXXXXXXXX",
+}
+
+replace `comment` with `thesis`
+@comment{nameXX,
+    author = "<name>",
+    title = "<title>",
+    year = "XXXX",
+    type = "manual/patent/report/thesis",
+    institution = "<name of institution>",
+}
+
+% books and thesis can also have
+% `chapter` or `doi` components
+% but they're not mandatory
+
+
+replace `comment` with `online`
+@comment{nameXX,
+    author  = "<name>",
+    title   = "<title>",
+    year    = "XXXX",
+    url     = "https://....",
+    urldate = "date of access"
+}
+
+}}}
+
+@online{gesso_vantagens,
+    author = {admin},
+    title = {Why Plastering Your Wall Is Important?},
+    year = 2021,
+    month = {2},
+    url = {https://budgetpainting.sg/why-plastering-your-wall-is-important/},
+    urldate = {2022-11-29},
+}
+
+@incollection{gesso_k,
+    doi = {10.1201/b12706-61},
+    url = {https://doi.org/10.1201%2Fb12706-61},
+    year = 2012,
+    month = {sep},
+    publisher = {{CRC} Press},
+    title = {Typical Thermal Conductivity of Building Materials},
+    booktitle = {Spon{\textquotesingle}s Architects{\textquotesingle} and Builders{\textquotesingle} Price Book 2013}
+}
+
+@online{poliestireno_k,
+    author = {{Soprema}},
+    title = {CONDUTIBILIDADES T{\'E}RMICAS DOS ISOLAMENTOS T{\'E}RMICOS (EN 12667)},
+    year = 2021,
+    month = {1},
+    url = {https://www.soprema.pt/pt/sopra-xps-isolamento-termico-resistencia-termica},
+    urldate = {2022-11-29},
+}
+
+
+@online{poliestireno,
+    author = {{Fibrosom}},
+    title = {Isolamento t{\'e}rmico com poliestireno extrudido},
+    year = 2019,
+    month = {4},
+    url = {http://www.fibrosom.com/Produtos.aspx?id=3},
+    urldate = {2022-11-29},
+}
+
+@online{poliuretano,
+    author = {Nick Connor},
+    title = {O que {\'{e}} espuma de poliuretano {\textendash} defini{\c{c}}{\~{a}}o},
+    year = 2019,
+    month = {11},
+    url = {https://www.thermal-engineering.org/pt-br/o-que-e-espuma-de-poliuretano-definicao/},
+    urldate = {2022-10-15},
+}
+
+@article{concrete,
+    doi = {10.1016/j.jobe.2018.07.002},
+    url = {https://doi.org/10.1016%2Fj.jobe.2018.07.002},
+    year = 2018,
+    month = {11},
+    publisher = {Elsevier {BV}},
+    volume = {20},
+    pages = {81--93},
+    author = {Iman Asadi and Payam Shafigh and Zahiruddin Fitri Bin Abu Hassan and Norhayati Binti Mahyuddin},
+    title = {Thermal conductivity of concrete {\textendash} A review},
+    journal = {Journal of Building Engineering}
+}
+
+@article{brick,
+    doi = {10.1111/j.1151-2916.1962.tb11118.x},
+    url = {https://doi.org/10.1111%2Fj.1151-2916.1962.tb11118.x},
+    year = 1962,
+    month = {4},
+    publisher = {Wiley},
+    volume = {45},
+    number = {4},
+    pages = {189--195},
+    author = {EDWIN RUH and J. SPOTTS McDOWELL},
+    title = {Thermal Conductivity of Refractory Brick},
+    journal = {Journal of the American Ceramic Society}
+}
+
+@book{glass_fiber,
+    title = {Fundamentals of Heat and Mass Transfer},
+    author = {Theodore L. Bergman and Adrienne S. Lavine and Frank P. Incropera and David P. DeWitt},
+    publisher = {Wiley},
+    isbn = {978-1-119-35388-1},
+    year = 2018,
+    edition = {8},
+}
+
+@article{pine_wood,
+    author = {Kol, Hamiyet},
+    year = {2009},
+    month = {11},
+    title = {Thermal and dielectric properties of pine wood in the transverse direction},
+    volume = {4},
+    journal = {BioResources}
+}
+
+@article{betao_armado,
+    doi = {10.1016/j.jobe.2018.07.002},
+    url = {https://doi.org/10.1016%2Fj.jobe.2018.07.002},
+    year = 2018,
+    month = {11},
+    publisher = {Elsevier {BV}},
+    volume = {20},
+    pages = {81--93},
+    author = {Iman Asadi and Payam Shafigh and Zahiruddin Fitri Bin Abu Hassan and Norhayati Binti Mahyuddin},
+    title = {Thermal conductivity of concrete {\textendash} A review},
+    journal = {Journal of Building Engineering}
+}
