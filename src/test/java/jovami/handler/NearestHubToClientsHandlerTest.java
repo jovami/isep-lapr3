@@ -19,7 +19,6 @@ import jovami.util.Triplet;
 class NearestHubToClientsHandlerTest {
     private NearestHubToClientsHandler handler;
     private App app;
-    private HubNetwork network;
     private UserStore userStore;
 
     @BeforeEach
@@ -31,7 +30,7 @@ class NearestHubToClientsHandlerTest {
         new CSVLoaderHandler().populateNetwork();
 
         handler = new NearestHubToClientsHandler();
-        network = app.hubNetwork();
+        HubNetwork network = app.hubNetwork();
         userStore = app.userStore();
     }
 

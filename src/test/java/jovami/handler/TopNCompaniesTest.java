@@ -34,7 +34,7 @@ public class TopNCompaniesTest {
         int i = 0;
         for (Pair<User,Double> company :list) {
             assertEquals(company.first().getUserID(),companies.get(i));
-            assertEquals(company.second().doubleValue(),weights.get(i),0.1d);
+            assertEquals(company.second(),weights.get(i),0.1d);
             i++;
         }
 
@@ -49,7 +49,7 @@ public class TopNCompaniesTest {
         int i = 0;
         for (Pair<User,Double> company : handler.getTopNCompanies(n)) {
             assertEquals(company.first().getUserID(),companies.get(i));
-            assertEquals(company.second().doubleValue(),weights.get(i),0.1d);
+            assertEquals(company.second(),weights.get(i),0.1d);
             i++;
         }
 

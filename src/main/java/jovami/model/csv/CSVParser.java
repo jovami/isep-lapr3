@@ -7,5 +7,5 @@ import java.util.List;
  */
 public interface CSVParser {
 
-    public void parse(List<String[]> data);
+    void parse(List<String[]> data);
 }

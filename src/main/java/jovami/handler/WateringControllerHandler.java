@@ -18,8 +18,6 @@ import jovami.util.Pair;
  */
 public class WateringControllerHandler {
 
-    private final String DEFAULT = "/csvfiles/rega_exemplo.csv";
-
     private final App app;
     private final WateringControllerParser parser;
 
@@ -47,6 +45,7 @@ public class WateringControllerHandler {
     public void loadDefault()
     throws IOException
     {
+        String DEFAULT = "/csvfiles/rega_exemplo.csv";
         load(CSVReader.readFromResources(DEFAULT, CSVHeader.NO_HEADER));
     }
 

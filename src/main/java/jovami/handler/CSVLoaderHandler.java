@@ -22,7 +22,7 @@ public class CSVLoaderHandler {
 
     private final App app;
 
-    private static enum CSVFiles {
+    private enum CSVFiles {
         USERS("clientes-produtores_%s.csv", CSVHeader.USERS),
         DISTANCES("distancias_%s.csv", CSVHeader.DISTANCES),
 
@@ -81,11 +81,6 @@ public class CSVLoaderHandler {
             if (fileEnum != CSVFiles.BUNDLES)
                 this.parsers.get(fileEnum.header).parse(data);      // get: O(1); parse: O(l)
 
-            /* NOTE: bundles are disabled because they're not yet needed */
-            // if (fileEnum == CSVFiles.BUNDLES && !loadBig)
-            //     ;// FIXME: parse differently
-            // else
-            //     parsers.get(fileEnum.header).parse(data);
         }
 
         // Net complexity: O(l*c)

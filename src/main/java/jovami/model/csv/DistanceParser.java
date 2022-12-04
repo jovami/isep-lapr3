@@ -12,7 +12,7 @@ public class DistanceParser implements CSVParser {
 
     private final App app;
 
-    private static enum DistanceColumns {
+    private enum DistanceColumns {
         LOC_ID_1(0),
         LOC_ID_2(1),
         LENGTH(2);

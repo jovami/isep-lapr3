@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+import jovami.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -81,7 +82,7 @@ public class CSVLoaderHandlerTest {
 
             var actualUsers = network.vertices()
                                      .stream()
-                                     .map(u -> u.getUserID())
+                                     .map(User::getUserID)
                                      .sorted(String::compareTo)
                                      .toList();
 

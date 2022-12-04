@@ -12,13 +12,13 @@ public class UserParser implements CSVParser {
 
     private final App app;
 
-    private static enum UserColumns {
+    private enum UserColumns {
         LOC_ID(0),
         LATITUDE(1),
         LONGITUDE(2),
         USER_ID(3);
 
-        private int col;
+        private final int col;
         UserColumns(int col) {
             this.col = col;
         }

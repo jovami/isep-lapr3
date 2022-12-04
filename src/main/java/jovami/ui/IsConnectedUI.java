@@ -4,7 +4,7 @@ import jovami.handler.IsConnectedHandler;
 
 public class IsConnectedUI implements UserStory {
 
-    private IsConnectedHandler handler;
+    private final IsConnectedHandler handler;
 
     public IsConnectedUI() {
         this.handler = new IsConnectedHandler();

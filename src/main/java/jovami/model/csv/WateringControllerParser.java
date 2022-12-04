@@ -30,7 +30,7 @@ public class WateringControllerParser implements CSVParser {
         this.timeFmt = timeFormat;
     }
 
-    private static enum PlotColumns {
+    private enum PlotColumns {
         PLOT(0),
         DURATION(1),
         FREQUENCY(2);

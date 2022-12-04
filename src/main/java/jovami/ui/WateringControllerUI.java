@@ -8,7 +8,7 @@ import jovami.util.io.InputReader;
  */
 public class WateringControllerUI implements UserStory {
 
-    private WateringControllerHandler handler;
+    private final WateringControllerHandler handler;
 
     public WateringControllerUI() {
         this.handler = new WateringControllerHandler();
@@ -34,9 +34,7 @@ public class WateringControllerUI implements UserStory {
             System.out.println("Plots being watered:");
 
             System.out.println("Plots || Time left");
-            watering.forEach(pair -> {
-                System.out.printf("%5s || %dmin\n", pair.first(), pair.second());
-            });
+            watering.forEach(pair -> System.out.printf("%5s || %dmin\n", pair.first(), pair.second()));
         } else {
             System.out.println("No plots are currently being watered.");
         }

@@ -22,7 +22,7 @@ public class TopNCompaniesHandler {
         mapGraph = app.hubNetwork();
     }
 
-    private static Comparator <Pair<User,Double>> cmpDist = new Comparator<Pair<User, Double>>() {
+    private static final Comparator <Pair<User,Double>> cmpDist = new Comparator<Pair<User, Double>>() {
         @Override
         public int compare(final Pair<User, Double> o1, final Pair<User, Double> o2) {
             return Double.compare(o1.second(), o2.second());

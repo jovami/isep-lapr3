@@ -103,9 +103,9 @@ public class WateringController {
         var keys = this.plotData.keySet();
         for (var key : keys) {
             var pair = this.plotData.get(key);
-            if (pair.second() == WateringFrequency.EVERYDAY     // always include 'EVERYDAY'
+            if (pair.second() == WateringFrequency.EVERYDAY     // always include 'EVERY DAY'
             || ((pair.second().i ^ dayOfMonth) & 1) == 0) {     // check if same parity
-                /* We only want plots currently being watered so we need to check that
+                /* We only want plots currently being watered, so we need to check that
                  * (timeStarted + duration) is after nowTime; i.e., the difference is > 0
                  */
                 long timeDiff = Duration.between(nowTime, previous.plusMinutes(pair.first()))
