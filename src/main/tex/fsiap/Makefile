@@ -28,6 +28,14 @@ tex2:
 	$(LC) -halt-on-error -file-line-error ${TEX}
 	@echo
 
+
+tex3:
+	@echo "Compiling for the third time"
+	@echo
+	${LC} -halt-on-error -file-line-error ${TEX}
+	@echo
+
+
 clean:
 	rm -f ${NAME}.{aux,log,{b,i}??,out,toc,run.xml}
 
