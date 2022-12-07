@@ -31,11 +31,13 @@ tex:
 
 check: ctest jtest
 
-clean:
-	./mvnw clean
+cclean:
 	cd ${CDIR} && $(MAKE) clean
+
+clean: cclean
 	cd ${CTEST} && $(MAKE) clean
+	./mvnw clean
 	cd ${TEXDIR} && $(MAKE) clean
 
 
-.PHONY: c ctest asm asmtest java jtest tex package check all clean
+.PHONY: c ctest cclean asm asmtest java jtest tex package check all clean
