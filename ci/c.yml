@@ -1,0 +1,23 @@
+# Copyright (c) 2022 jovami. All Rights Reserved.
+
+image: scottieg40/linux:buildEnv
+
+definitions:
+    steps:
+        - step: &Build_main
+          name: build main
+          script:
+              make clean c
+        - step: &Test_main
+          name: test main
+          script:
+              make clean ctest
+
+pipelines:
+  default:
+      - step: *Build_main
+      - step: *Test_main
+  branches:
+      '**/arqcp/**':
+          - step: *Build_main
+          - step: *Test_main
