@@ -55,3 +55,4 @@ compile_flags.txt
 *.toc
 *.run.xml
 
+/bitbucket-pipelines.yml
