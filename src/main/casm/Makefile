@@ -1,7 +1,7 @@
 PROGNAME = main
 
 CXXFLAGS = -Iinclude
-CFLAGS = -std=gnu17 -Wall -pedantic ${CXXFLAGS}
+CFLAGS = -std=gnu17 -Wall -pedantic -pipe -O2 ${CXXFLAGS}
 LDFLAGS =
 
 ifneq ($(strip ${DEBUG}),)
