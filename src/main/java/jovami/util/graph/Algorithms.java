@@ -193,7 +193,7 @@ public class Algorithms {
         }
     }
 
-    private static <V, E> V getVertMinDist(Graph<V, E> g, boolean[] visited, E[] dist, Comparator<E> ce) {
+    protected static <V, E> V getVertMinDist(Graph<V, E> g, boolean[] visited, E[] dist, Comparator<E> ce) {
         V result = null;
         E min = null;
 
@@ -347,7 +347,7 @@ public class Algorithms {
      * @param sum sum two elements of type E
      * @return the minimum distance graph
      */
-    public static <V, E> MatrixGraph<V, E> minDistGraph(Graph<V, E> g, Comparator<E> ce, BinaryOperator<E> sum) {
+    public static <V, E> Graph<V, E> minDistGraph(Graph<V, E> g, Comparator<E> ce, BinaryOperator<E> sum) {
         int n = g.numVertices();
         var matrix = new MatrixGraph<>(g);
 
