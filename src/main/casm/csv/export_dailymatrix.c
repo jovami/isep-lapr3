@@ -3,6 +3,9 @@
 
 #import "export_csv.h"
 
+#define NUM_ROWS    6
+#define NUM_COLS    3
+
 enum {
     TEMP_ROW,
     DIR_VENTO_ROW,
@@ -12,10 +15,20 @@ enum {
     PLUVIO_ROW,
 }; /* matrix rows */
 
-void export_dailymatrix(int matrix[6][3], char *filename)
+enum {
+    AVG_COL,
+    MAX_COL,
+    MIN_COL,
+}; /* matrix cols */
+
+
+void 
+export_dailymatrix(union matrix_value matrix[NUM_ROWS][NUM_COLS], char *filename)
 {
     int row, column;
     FILE *fp;
+    const union matrix_value *p = &matrix[0][0];
+
     fp = fopen(filename, "w"); // Creates an empty file for writing
 
     /**
@@ -26,39 +39,39 @@ void export_dailymatrix(int matrix[6][3], char *filename)
         printf("Can't open file %s!", filename);
         exit(1);
     }
-
     fprintf(fp, "Sensor Type;Average;Maximum;Minimum\n");
-    //TODO: optimize this for loop
-    for (row = 0; row < 6; row++)
-    {
-        switch(row){
-            case TEMP_ROW:
-                fprintf(fp, "Temperatura");
-                break;
-            case DIR_VENTO_ROW:
-                fprintf(fp, "Direção vento");
-                break;
-            case VELC_VENTO_ROW:
-                fprintf(fp, "Velocidade vento");
-                break;
-            case HUMD_ATM_ROW:
-                fprintf(fp, "Humidade de atmosfera");
-                break;
-            case HUMD_SOLO_ROW:
-                fprintf(fp, "Humidade de solo");
-                break;
-            case PLUVIO_ROW:
-                fprintf(fp, "Pluviosidade");
-                break;
+
+    for (int i = 0; i < NUM_ROWS * NUM_COLS; i++) { 
+        if (!(i % NUM_COLS)){
+            if(i)
+                fprintf(fp, "\n");
+            switch(i/NUM_COLS){
+                case TEMP_ROW:
+                    fprintf(fp, "Temperatura");
+                    break;
+                case DIR_VENTO_ROW:
+                    fprintf(fp, "Direção vento");
+                    break;
+                case VELC_VENTO_ROW:
+                    fprintf(fp, "Velocidade vento");
+                    break;
+                case HUMD_ATM_ROW:
+                    fprintf(fp, "Humidade de atmosfera");
+                    break;
+                case HUMD_SOLO_ROW:
+                    fprintf(fp, "Humidade de solo");
+                    break;
+                case PLUVIO_ROW:
+                    fprintf(fp, "Pluviosidade");
+                    break;
+
+            }
         }
 
-        for (column = 0; column < 3; column++)
-        {
-            fprintf(fp, "%d", matrix[row][column]);
-            if (column < 2) // Prevents a ";" at the end of each line
-                fprintf(fp, ";");
-        }
-        fprintf(fp, "\n");
+        if (i < NUM_COLS)
+            fprintf(fp, "%d", (p+i)->i);
+        else
+            fprintf(fp, "%u", (p+i)->ui);
     }
     fclose(fp);
 }

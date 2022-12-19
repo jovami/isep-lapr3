@@ -2,6 +2,7 @@
 #include <string.h>
 #include <sensors.h>
 #include <sensors_impl.h>
+#include <export_csv.h>
 
 #define MAX(X, Y)   ((X) > (Y) ? (X) : (Y))
 #define MIN(X, Y)   ((X) < (Y) ? (X) : (Y))
@@ -23,12 +24,6 @@ enum {
     MAX_COL,
     MIN_COL,
 }; /* matrix cols */
-
-union matrix_value{
-    int i;
-    unsigned int ui;
-
-};
 
 
 void print_matrix(union matrix_value matrix[6][3]);
@@ -125,7 +120,7 @@ daily_matrix(const char *data_temp, const unsigned short *data_dir_vento, const 
     print_matrix(matrix);
 }
 
-    void
+void
 print_matrix(union matrix_value matrix[NUM_ROWS][NUM_COLS])
 {
     const union matrix_value *p = &matrix[0][0];
@@ -171,4 +166,5 @@ print_matrix(union matrix_value matrix[NUM_ROWS][NUM_COLS])
             printf("%9u", (p+i)->ui);
     }
     putchar('\n');
+    export_dailymatrix(matrix, "dailymatrix.csv");
 }
