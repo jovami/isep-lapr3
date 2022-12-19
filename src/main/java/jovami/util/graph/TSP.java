@@ -86,6 +86,39 @@ public class TSP {
         return mst;
     }
 
+    private static <V,E> Graph<V,E> oddDegreeSubgraph(Graph<V,E> g) {
+        var list = new ArrayList<V>(g.numVertices());
+
+        for (V v : g.vertices()) {
+            if ((g.outDegree(v) & 1) == 1)
+                list.add(v);
+        }
+
+        final int size = list.size();
+        var odg = new MatrixGraph<V,E>(g.isDirected(), size);
+
+        for (int i = 0; i < size; i++) {
+            V v1 = list.get(i);
+
+            for (int j = 0; j < size; j++) {
+                var edge = g.edge(v1, list.get(j));
+                if (edge != null)
+                    odg.addEdge(edge.getVOrig(), edge.getVDest(), edge.getWeight());
+            }
+        }
+
+        // TODO: check if this is really needed
+        if (odg.numVertices() != size)
+            list.forEach(odg::addVertex);
+
+        return odg;
+    }
+
+    public static <V,E> Graph<V,E> perfectMatchingGraph(Graph<V,E> g)
+    {
+
+        return null;
+    }
 
 
     public static <V,E> Graph<V,E>
@@ -99,7 +132,15 @@ public class TSP {
         g = getCompleteGraph(g, ce, sum);
         var mst = mstPrim(g, vOrig, ce, zero);
 
-        // TODO: add the remaining parts
+        var pmg = perfectMatchingGraph(oddDegreeSubgraph(mst));
+
+
+        var pmgEdges = pmg.edges();
+        for (var edge : pmgEdges) {
+            mst.addEdge(edge.getVOrig(), edge.getVDest(), edge.getWeight());
+        }
+
+
 
         return mst;
     }
