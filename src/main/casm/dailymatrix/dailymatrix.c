@@ -166,5 +166,6 @@ print_matrix(union matrix_value matrix[NUM_ROWS][NUM_COLS])
             printf("%9u", (p+i)->ui);
     }
     putchar('\n');
-    export_dailymatrix(matrix, "dailymatrix.csv");
+
+    export_dailymatrix(matrix);
 }
