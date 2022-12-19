@@ -1,5 +1,7 @@
 #import <stdio.h>
+#include <string.h>
 #import <stdlib.h>
+#include <time.h>
 
 #import "export_csv.h"
 
@@ -22,12 +24,35 @@ enum {
 }; /* matrix cols */
 
 
-void 
-export_dailymatrix(union matrix_value matrix[NUM_ROWS][NUM_COLS], char *filename)
+char *get_date() {
+    // Get the current time
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+
+    // Allocate a buffer large enough to hold the formatted string
+    char *date = malloc(11);
+    if (date == NULL) {
+        perror("malloc failed!");
+        EXIT_FAILURE;
+    }
+
+    // Format the date string and add a null terminator
+    sprintf(date, "%d-%d-%d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+    date[10] = '\0';
+
+    return date;
+}
+
+void    
+export_dailymatrix(union matrix_value matrix[NUM_ROWS][NUM_COLS])
 {
+    const union matrix_value *p = &matrix[0][0];
     int row, column;
     FILE *fp;
-    const union matrix_value *p = &matrix[0][0];
+
+    char filename[100] = "dailymatrix";
+    strcat(filename, get_date());
+    strcat(filename, ".csv");
 
     fp = fopen(filename, "w"); // Creates an empty file for writing
 
