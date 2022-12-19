@@ -3,8 +3,10 @@ package jovami.util.graph;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.BinaryOperator;
 
+import jovami.util.Pair;
 import jovami.util.graph.map.MapGraph;
 import jovami.util.graph.matrix.MatrixGraph;
 
@@ -12,6 +14,12 @@ import jovami.util.graph.matrix.MatrixGraph;
  * TSP
  */
 public class TSP {
+
+    private static void ensureNonNull(Object... objs) {
+        for (var obj : objs) {
+            Objects.requireNonNull(obj);
+        }
+    }
 
     private static <V,E>
     Graph<V,E> getCompleteGraph(Graph<V,E> g, Comparator<E> ce, BinaryOperator<E> sum) {
@@ -28,10 +36,7 @@ public class TSP {
 
     public static <V,E> Graph<V,E>
     mstPrim(Graph<V,E> g, V vOrig, Comparator<E> ce, E zero) {
-        Objects.requireNonNull(g);
-        Objects.requireNonNull(ce);
-        Objects.requireNonNull(zero);
-        Objects.requireNonNull(vOrig);
+        ensureNonNull(g, vOrig, ce, zero);
 
         @SuppressWarnings("unchecked")
         var dist = (E[]) new Object[g.numVertices()];
@@ -107,9 +112,9 @@ public class TSP {
             }
         }
 
-        // TODO: check if this is really needed
-        if (odg.numVertices() != size)
-            list.forEach(odg::addVertex);
+        // TODO: check if this is needed
+        // if (odg.numVertices() != size)
+        //     list.forEach(odg::addVertex);
 
         return odg;
     }
@@ -120,19 +125,26 @@ public class TSP {
         return null;
     }
 
+    // private static <V,E> void
+    // hieholzerCircuit(Graph<V,E> g, V vOrig, Set<Pair<V,V>> visited, ) {
+
+    // }
+
 
     public static <V,E> Graph<V,E>
     travellingSalesman(Graph<V,E> g, V vOrig,
                        Comparator<E> ce, BinaryOperator<E> sum,
                        E zero)
     {
+        ensureNonNull(g, vOrig, ce, sum, zero);
+
         if (g.isDirected())
             throw new UnsupportedOperationException("TSP not implemented for directed graphs!");
 
         g = getCompleteGraph(g, ce, sum);
         var mst = mstPrim(g, vOrig, ce, zero);
 
-        var pmg = perfectMatchingGraph(oddDegreeSubgraph(mst));
+        var pmg = perfectMatchingGraph(oddDegreeSubgraph(g));
 
 
         var pmgEdges = pmg.edges();
