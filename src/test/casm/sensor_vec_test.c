@@ -5,6 +5,24 @@
 #include <sensor_vec.h>
 #include <sensor_new.h>
 
+__attribute__((__always_inline__))
+static inline void assert_sensor(const Sensor *s1, const Sensor *s2);
+
+static inline void
+assert_sensor(const Sensor *s1, const Sensor *s2)
+{
+    assert(s1->id == s2->id);
+    assert(s1->sensor_type == s2->sensor_type);
+    assert(s1->max_limit == s2->max_limit);
+    assert(s1->min_limit == s2->min_limit);
+    assert(s1->frequency == s2->frequency);
+    assert(s1->readings_size == s2->readings_size);
+    assert(s1->readings == s2->readings);
+    assert(s1->len == s1->len);
+    assert(s1->max_bad == s2->max_bad);
+    assert(s1->cur_bad == s2->cur_bad);
+}
+
 
 void
 sens_vec_run(void)
@@ -22,58 +40,37 @@ sens_vec_run(void)
         vec_init(pack+i, sizes[i]);
 
 
-    Sensor t1;
+    Sensor t1, t2, t3;
     sens_init(&t1, SENS_TEMP, 25, 0, 3600, 4);
+    sens_init(&t2, SENS_TEMP, 22, 4, 7200, 1);
+    sens_init(&t3, SENS_TEMP, 20, 1, 1400, 10);
 
     sensor_vec *v = pack+SENS_TEMP;
-    vec_push(v, &t1);
-
-    vec_push(v, sens_init(&t1, SENS_TEMP, 22, 4, 7200, 1));
-    vec_push(v, sens_init(&t1, SENS_TEMP, 20, 1, 1400, 10));
 
 
     {
-        puts("Checking v->max_len && v->len");
+        puts("Checking vec_push()...");
+        vec_push(v, &t1);
+        vec_push(v, &t2);
+        vec_push(v, &t3);
+        putchar('\n');
 
+
+        puts("Checking v->max_len && v->len...");
         assert(v->max_len >= 3);
         assert(v->len == 3);
-
         putchar('\n');
-    }
 
-    {
         puts("Checking first sensor was inserted in the right place...");
-
-        assert(v->data[0].readings);
-        assert(v->data[0].max_limit == 25);
-        assert(v->data[0].min_limit == 0);
-        assert(v->data[0].frequency == 3600);
-        assert(v->data[0].max_bad == 4);
-
+        assert_sensor(v->data+0, &t1);
         putchar('\n');
-    }
 
-    {
         puts("Checking second sensor was inserted in the right place...");
-
-        assert(v->data[1].readings);
-        assert(v->data[1].max_limit == 22);
-        assert(v->data[1].min_limit == 4);
-        assert(v->data[1].frequency == 7200);
-        assert(v->data[1].max_bad == 1);
-
+        assert_sensor(v->data+1, &t2);
         putchar('\n');
-    }
 
-    {
         puts("Checking third sensor was inserted in the right place...");
-
-        assert(v->data[2].readings);
-        assert(v->data[2].max_limit == 20);
-        assert(v->data[2].min_limit == 1);
-        assert(v->data[2].frequency == 1400);
-        assert(v->data[2].max_bad == 10);
-
+        assert_sensor(v->data+2, &t3);
         putchar('\n');
     }
 
@@ -83,11 +80,22 @@ sens_vec_run(void)
     {
         puts("Checking vec_remove() on an invalid position...");
 
+        Sensor *s1, *s2, *s3;
+        s1 = v->data+0;
+        s2 = v->data+1;
+        s3 = v->data+2;
+
         len = v->len;
         x = vec_remove(v, 3);
         assert(!x);
         assert(v->len == len);
 
+        putchar('\n');
+
+        puts("Checking no sensors got altered...");
+        assert_sensor(v->data+0, s1);
+        assert_sensor(v->data+1, s2);
+        assert_sensor(v->data+2, s3);
         putchar('\n');
     }
 
@@ -100,29 +108,14 @@ sens_vec_run(void)
         assert(v->len == len-1);
 
         putchar('\n');
-        {
-            puts("Checking first sensor remains in the index 0...");
 
-            assert(v->data[0].readings);
-            assert(v->data[0].max_limit == 25);
-            assert(v->data[0].min_limit == 0);
-            assert(v->data[0].frequency == 3600);
-            assert(v->data[0].max_bad == 4);
+        puts("Checking first sensor remains at index 0...");
+        assert_sensor(v->data+0, &t1);
+        putchar('\n');
 
-            putchar('\n');
-        }
-
-        {
-            puts("Checking second sensor remains in the index 1...");
-
-            assert(v->data[1].readings);
-            assert(v->data[1].max_limit == 22);
-            assert(v->data[1].min_limit == 4);
-            assert(v->data[1].frequency == 7200);
-            assert(v->data[1].max_bad == 1);
-
-            putchar('\n');
-        }
+        puts("Checking second sensor remains at index 1...");
+        assert_sensor(v->data+1, &t2);
+        putchar('\n');
     }
 
     {
@@ -135,17 +128,9 @@ sens_vec_run(void)
 
         putchar('\n');
 
-        {
-            puts("Checking second sensor got moved to index 0...");
-
-            assert(v->data[0].readings);
-            assert(v->data[0].max_limit == 22);
-            assert(v->data[0].min_limit == 4);
-            assert(v->data[0].frequency == 7200);
-            assert(v->data[0].max_bad == 1);
-
-            putchar('\n');
-        }
+        puts("Checking second sensor got moved to index 0...");
+        assert_sensor(v->data+0, &t2);
+        putchar('\n');
     }
 
     {
