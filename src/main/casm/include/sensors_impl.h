@@ -26,7 +26,7 @@ struct generic_sensor {
 };
 
 
-void sens_init(struct generic_sensor *sens, uintmax_t max_bad,
+void _sens_init(struct generic_sensor *sens, uintmax_t max_bad,
                uint16_t frequency, sens_value lim_min, sens_value lim_max, sens_value first_value);
 
 

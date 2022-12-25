@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include <rnd.h>
 
+#include <rnd.h>
 #include <sensor_vec.h>
 #include <sensor_new.h>
 
@@ -11,15 +11,21 @@ main(int argc, char **argv)
 {
     rnd_init();
 
-    /* FIXME: placeholder */
-    unsigned long freqs[SENS_LAST] = {0};
+    unsigned long sizes[SENS_LAST];
+
+    {
+        /* FIXME: placeholder */
+        for (int i = 0; i < SENS_LAST; i++)
+            sizes[i] = 14;
+    }
+
 
     sensor_vec pack[SENS_LAST];
 
     int i;
-    for (i = 0; i < SENS_LAST; i++)
-        vec_init(pack+i, freq_to_sz(freqs[i]));
-
+    for (i = 0; i < SENS_LAST; i++) {
+        vec_init(pack+i, sizes[i]);
+    }
 
     /* char data_temp[CYCLES]; */
     /* unsigned short data_dir_vento[CYCLES]; */
@@ -32,5 +38,8 @@ main(int argc, char **argv)
     /* gen_sens_values(data_temp,data_dir_vento,data_velc_vento,data_humd_atm,data_humd_solo,data_pluvio); */
 
     /* daily_matrix(data_temp, data_dir_vento, data_velc_vento, data_humd_atm, data_humd_solo, data_pluvio); */
+
+    for (i = 0; i < SENS_LAST; i++)
+        vec_free(pack+i);
     return 0;
 }
