@@ -49,9 +49,9 @@ sens_vec_run(void)
 
     {
         puts("Checking vec_push()...");
-        vec_push(v, &t1);
-        vec_push(v, &t2);
-        vec_push(v, &t3);
+        assert(vec_push(v, &t1));
+        assert(vec_push(v, &t2));
+        assert(vec_push(v, &t3));
         putchar('\n');
 
 
@@ -79,7 +79,7 @@ sens_vec_run(void)
     {
         puts("Checking vec_remove() on an invalid position...");
 
-        Sensor *s1, *s2, *s3;
+        const Sensor *s1, *s2, *s3;
         s1 = v->data+0;
         s2 = v->data+1;
         s3 = v->data+2;
