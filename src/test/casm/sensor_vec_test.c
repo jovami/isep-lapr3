@@ -1,6 +1,5 @@
 #include <assert.h>
 #include <stdio.h>
-#include <string.h>
 
 #include <sensor_vec.h>
 #include <sensor_new.h>
