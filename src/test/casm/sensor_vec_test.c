@@ -136,7 +136,7 @@ sens_vec_run(void)
         putchar('\n');
 
         {
-            puts("Checking third sensor got moved to index 0...");
+            puts("Checking second sensor got moved to index 0...");
 
             assert(v->data[0].readings);
             assert(v->data[0].max_limit == 22);
