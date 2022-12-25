@@ -16,12 +16,14 @@ endif
 CFILES = $(shell find ${PFX} -type f ! -iname 'main.c' -iname '*.c')
 SFILES = $(shell find ${PFX} -type f -iname '*.s')
 
-CSRC = tests.c rnd_gen_test.c ${CFILES}
+CSRC = tests.c rnd_gen_test.c sensor_vec_test.c ${CFILES}
 SSRC = ${SFILES}
 
 OBJ = ${CSRC:.c=.o} ${SSRC:.s=.o}
 
 all: flags ${PROGNAME}
+
+tests.c: tests.h
 
 flags:
 	@echo "${PROGNAME} build options:"
