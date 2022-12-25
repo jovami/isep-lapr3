@@ -38,12 +38,6 @@ unsigned char sens_humd_atm_update(humd_atm *p, pluvio *pluv);
 unsigned char sens_humd_solo_update(humd_solo *p, pluvio *pluv);
 unsigned char sens_pluvio_update(pluvio *p, temp *tp);
 
-void set_all();
-void set_temp();
-void set_velc_vento();
-void set_dir_vento();
-void set_humd_atm();
-void set_humd_solo();
 
 
 

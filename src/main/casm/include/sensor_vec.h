@@ -11,11 +11,17 @@ struct sensor_vec {
     size_t max_len;
     size_t len;
     Sensor *data;
-    uint8_t type;
 };
 
-sensor_vec *vec_init(size_t len, uint8_t type);
+enum {
+    VEC_FAIL = 0,
+    VEC_SUCCESS = 1,
+};
+
+
+/* returns self */
+sensor_vec *vec_init(sensor_vec *v, size_t len);
 void vec_free(sensor_vec *v);
 
-int vec_push(sensor_vec *v, unsigned short max, unsigned short min, unsigned long freq);
+int vec_push(sensor_vec *v, const Sensor *sens);
 int vec_remove(sensor_vec *v, size_t pos);

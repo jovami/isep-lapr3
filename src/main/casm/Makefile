@@ -18,6 +18,7 @@ CSRC = main.c \
 	   sensors/sensors_impl.c \
 	   dailymatrix/dailymatrix.c \
 	   sensors/sensor_vec.c \
+	   sensors/sensor_new.c \
 
 
 SSRC = rnd/rnd_gen.s \

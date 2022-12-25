@@ -1,22 +1,16 @@
+#include "sensor_new.h"
 #include <errno.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include <sensor_new.h>
 #include <sensor_vec.h>
 #include <util.h>
 
-static unsigned short sens_count = 0;
+static int extend(sensor_vec *v);
+
 static const float resize_f = 1.5f;
-
-#define DAYS_SECS       (24UL * 3600UL)
-#define freq_to_sz(f)   (DAYS_SECS / (f))
-
-enum {
-    VEC_FAIL = 0,
-    VEC_SUCCESS = 1,
-};
 
 static int
 extend(sensor_vec *v)
@@ -33,16 +27,13 @@ extend(sensor_vec *v)
 }
 
 sensor_vec *
-vec_init( size_t len, uint8_t type)
+vec_init(sensor_vec *v, size_t len)
 {
-    sensor_vec *v = arqcp_malloc(1, sizeof(sensor_vec));
-
-    v->type = type;
-
     v->data = arqcp_calloc(len, sizeof(Sensor));
     v->len = 0;
     v->max_len = len;
 
+    /* returns self for ease of use */
     return v;
 }
 
@@ -53,37 +44,23 @@ vec_free(sensor_vec *v)
     Sensor *data = v->data;
 
     for (i = 0; i < len; i++)
-        free(data->readings);
-    free(data);
-    free(v);
+        sens_free(data+i);
+    free(v->data);
+    memset(v, 0x00, sizeof(sensor_vec));
 }
 
 int
-vec_push(sensor_vec *v, unsigned short max, unsigned short min, unsigned long freq)
+vec_push(sensor_vec *v, const Sensor *sens)
 {
     if (v->len >= v->max_len && !extend(v)) {
         fprintf(stderr,
                 "vec_push: failed to extend vector size: %s\n",
                 strerror(errno));
         return VEC_FAIL;
-    } else if (freq > DAYS_SECS) {
-        fprintf(stderr,
-                "vec_push: frequency larger than maximum allowed (%ld)\n",
-                DAYS_SECS);
-        return VEC_FAIL;
     }
 
-    const unsigned long sz = freq_to_sz(freq);
-
-    Sensor *s = v->data+v->len++;
-    s->id = ++sens_count,
-    s->sensor_type = v->type,
-    s->max_limit = max,
-    s->min_limit = min,
-    s->frequency = freq,
-    s->readings_size = sz;
-    s->readings = arqcp_calloc(sz, sizeof(*s->readings));
-
+    /* Ugly :( */
+    memcpy(v->data + v->len++, sens, sizeof(Sensor));
     return VEC_SUCCESS;
 }
 
@@ -95,13 +72,15 @@ vec_remove(sensor_vec *v, size_t pos)
         return VEC_FAIL;
 
     Sensor *data = v->data;
-    free(data[pos].readings);
+    sens_free(data+pos);
 
     size_t i;
     for (i = pos+1; i < len; i++)
         data[i-1] = data[i];
-    v->len--;
+    /* clear previous last sensor, since it has been moved */
+    memset(data+(--v->len), 0x00, sizeof(Sensor));
 
+    /* TODO: maybe shrink v->data?? */
     return VEC_SUCCESS;
 }
 

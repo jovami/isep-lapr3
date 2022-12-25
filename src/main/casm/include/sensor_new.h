@@ -1,5 +1,8 @@
 #pragma once
 
+#include <stddef.h>
+#include <stdint.h>
+
 typedef struct Sensor Sensor;
 
 enum {
@@ -11,12 +14,12 @@ enum {
     SENS_PLUV,
 
     SENS_LAST
-    /* NOTE: use SENS_LAST if iterating through sensor types
-     * as value to 'terminate' the loop.
+    /* NOTE: use SENS_LAST as value to terminate
+     * loops if iterating through sensor types.
      * Otherwise SENS_LAST is useless.
      * -------------------------------
      * E.g:
-     *      for (int i = SENS_TEMP; i < SENS_LAST; i++) {
+     *      for (int i = 0; i < SENS_LAST; i++) {
      *          / * code here... * /
      *      }
      */
@@ -31,4 +34,19 @@ struct Sensor {
 
     unsigned long readings_size;
     unsigned short *readings;
+    size_t len;
+
+    uintmax_t max_bad, cur_bad;
 };
+
+/* returns self */
+Sensor *sens_init(Sensor *s,
+                  unsigned char type,
+                  unsigned short max_val,
+                  unsigned short min_val,
+                  unsigned long freq,
+                  uintmax_t max_bad);
+
+void sens_free(Sensor *s);
+
+/* EOF */
