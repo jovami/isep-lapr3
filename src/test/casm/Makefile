@@ -3,7 +3,7 @@ PROGNAME = tests
 PFX = ../../main/casm
 
 CXXFLAGS = -I${PFX}/include
-CFLAGS = -std=gnu17 -Wall -pedantic ${CXXFLAGS}
+CFLAGS = -std=gnu17 -Wall -pedantic -pipe -O2 ${CXXFLAGS}
 LDFLAGS =
 
 CC = cc
