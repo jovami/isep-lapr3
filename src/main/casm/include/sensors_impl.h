@@ -1,5 +1,7 @@
 #pragma once
 
+#error "Don't include this anymore"
+
 #include <stdint.h>
 
 typedef struct generic_sensor temp;

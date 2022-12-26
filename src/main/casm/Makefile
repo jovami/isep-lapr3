@@ -15,21 +15,21 @@ CSRC = main.c \
 	   menu.c \
 	   util.c \
 	   rnd/rnd.c \
-	   sensors/gen_sens_values.c \
-	   sensors/sensors_impl.c \
-	   dailymatrix/dailymatrix.c \
-	   sensors/sensor_vec.c \
 	   sensors/sensor_new.c \
+	   sensors/sensor_vec.c \
+	   sensors/gen_sens_values.c \
+	   dailymatrix/dailymatrix.c \
 
+# sensors/sensors_impl.c \
 
 SSRC = rnd/rnd_gen.s \
-	sensors/sens_dir_vento.s \
-	sensors/sens_humd_atm.s	\
-	sensors/sens_humd_solo.s \
-	sensors/sens_pluvio.s \
-	sensors/sens_temp.s \
-	sensors/sens_velc_vento.s \
-	sensors/verify_value_generated.s \
+	   sensors/sens_dir_vento.s \
+	   sensors/sens_humd_atm.s	\
+	   sensors/sens_humd_solo.s \
+	   sensors/sens_pluvio.s \
+	   sensors/sens_temp.s \
+	   sensors/sens_velc_vento.s \
+	   sensors/verify_value_generated.s \
 
 
 OBJ = ${CSRC:.c=.o} ${SSRC:.s=.o}
