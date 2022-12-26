@@ -54,10 +54,10 @@ enum {
     "2) Alter sensor frequencies\n" \
     "3) Generate sensor values\n" \
     "4) Daily matrix and export sensor values\n" \
-    "5) Quit\n" \
+    "0) Quit\n" \
 
 #define MENU_FST    ADD_SENS
-#define QUIT        MENU_LST
+#define QUIT        (MENU_FST-1)
 #define MATCH(X)    ((X) >= MENU_FST && (X) < MENU_LST)
 
 
@@ -65,11 +65,11 @@ __attribute__((__always_inline__))
 static inline char getchar_flush(void);
 
 
-static const MenuItem items[] = {
+static const MenuItem items[MENU_LST] = {
     &foo,
     &bar,
     &baz,
-    &idk
+    &idk,
 };
 
 
