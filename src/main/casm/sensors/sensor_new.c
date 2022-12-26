@@ -1,11 +1,35 @@
-#include <sensor_new.h>
+#include <errno.h>
 #include <stdlib.h>
+
+#include <sensor_new.h>
 #include <util.h>
 
 #define DAYS_SECS       (24UL * 3600UL)
 #define freq_to_sz(f)   (DAYS_SECS / (f))
 
 static unsigned short sens_count = 0;
+
+const char *
+strsens(enum SensorType type)
+{
+    switch (type) {
+    case SENS_TEMP:
+        return "Temperature";
+    case SENS_PLUV:
+        return "Pluviosity";
+    case SENS_DIR_VNT:
+        return "Wind direction";
+    case SENS_VEL_VNT:
+        return "Wind velocity";
+    case SENS_HUM_ATM:
+        return "Atmospheric humidity";
+    case SENS_HUM_SOL:
+        return "Soil humidity";
+    default:
+        errno = EINVAL;
+        return NULL;
+    }
+}
 
 Sensor *
 sens_init(Sensor *s,

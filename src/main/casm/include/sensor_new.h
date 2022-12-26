@@ -5,13 +5,13 @@
 
 typedef struct Sensor Sensor;
 
-enum {
+enum SensorType {
     SENS_TEMP,
+    SENS_PLUV,
     SENS_DIR_VNT,
     SENS_VEL_VNT,
     SENS_HUM_ATM,
     SENS_HUM_SOL,
-    SENS_PLUV,
 
     SENS_LAST
     /* NOTE: use SENS_LAST as value to terminate
@@ -38,6 +38,9 @@ struct Sensor {
 
     uintmax_t max_bad, cur_bad;
 };
+
+
+const char *strsens(enum SensorType type);
 
 /* returns self */
 Sensor *sens_init(Sensor *s,
