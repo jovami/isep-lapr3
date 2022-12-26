@@ -1,6 +1,6 @@
 PROGNAME = main
 
-CXXFLAGS = -Iinclude
+CXXFLAGS = -Iinclude -D_POSIX_C_SOURCE=200809L -D_DEFAULT_SOURCE
 CFLAGS = -std=gnu17 -Wall -pedantic -pipe -O2 ${CXXFLAGS}
 LDFLAGS =
 
@@ -12,6 +12,7 @@ endif
 CC = cc
 
 CSRC = main.c \
+	   menu.c \
 	   util.c \
 	   rnd/rnd.c \
 	   sensors/gen_sens_values.c \

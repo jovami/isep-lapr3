@@ -4,33 +4,7 @@
 #include <sensor_vec.h>
 #include <sensor_new.h>
 
-#include "dailymatrix/dailymatrix.h"
-
-#define MENU_OPTS_STR \
-    "1) WIP\n" \
-    "2) WIP\n" \
-    "3) Generate sensor values\n" \
-
-enum {
-    /* TODO: add remaining entries */
-    GENERATE_VALUES = 3
-};
-
-__attribute__((__always_inline__))
-static inline char getchar_flush(void)
-{
-    char _, c;
-    c = getchar();
-
-    while ((_ = getchar()) != '\n' && _ != EOF)
-        ; /* no-op */
-    return c;
-}
-
-void
-menu(void)
-{
-}
+#include "menu.h"
 
 int
 main(int argc, char **argv)
@@ -52,37 +26,7 @@ main(int argc, char **argv)
     }
 
     rnd_init();
-
-    char opt, bad_opt = 0, quit = 0;
-
-    do {
-        if (!bad_opt) {
-            puts("Main menu");
-            puts("=========\n");
-        }
-
-        fputs(MENU_OPTS_STR"\nChoose one: ", stdout);
-        opt = getchar_flush() - '0';
-        putchar('\n');
-
-        switch (opt) {
-        case 1:
-            /* ... */
-            break;
-        case 2:
-            /* ... */
-            break;
-        case GENERATE_VALUES:
-            /* ... */
-            break;
-        case 4:
-            quit = 1;
-        default:
-            fprintf(stderr, "error: invalid option: %hhd\n\n", opt);
-        }
-    } while (!quit);
-
-
+    menu(pack);
 
     /* char data_temp[CYCLES]; */
     /* unsigned short data_dir_vento[CYCLES]; */
