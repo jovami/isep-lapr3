@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 void
-sens_init(struct generic_sensor *sens, uintmax_t max_bad, uint16_t frequency, sens_value lim_min, sens_value lim_max,sens_value first_value)
+_sens_init(struct generic_sensor *sens, uintmax_t max_bad, uint16_t frequency, sens_value lim_min, sens_value lim_max,sens_value first_value)
 {
     sens->max_bad_values = max_bad;
     sens->current_bad_values = 0;
@@ -44,8 +44,8 @@ unsigned char sens_velc_vento_update(velc_vento *sens)
         }
         x = sens_velc_vento(sens->current.uc, rnd_next());
     }
-    
-    
+
+
     sens->current.uc = x;
     return x;
 }
@@ -62,8 +62,8 @@ sens_dir_vento_update(dir_vento *sens)
         }
         x = sens_dir_vento(sens->current.us, rnd_next());
     }
-    
-    
+
+
     sens->current.us = x;
     return x;
 }
@@ -80,7 +80,7 @@ sens_humd_atm_update(humd_atm *sens, pluvio *pluv)
         }
         x = sens_humd_atm(sens->current.uc, pluv->current.uc, rnd_next());
     }
-    
+
 
     sens->current.uc = x;
     return x;
@@ -98,7 +98,7 @@ sens_humd_solo_update(humd_solo *sens, pluvio *pluv)
         }
         x = sens_humd_solo(sens->current.uc, pluv->current.uc, rnd_next());
     }
-    
+
 
     sens->current.uc = x;
     return x;

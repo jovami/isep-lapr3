@@ -1,22 +1,25 @@
 PROGNAME = main
 
-CXXFLAGS = -Iinclude
+CXXFLAGS = -Iinclude -D_POSIX_C_SOURCE=200809L -D_DEFAULT_SOURCE
 CFLAGS = -std=gnu17 -Wall -pedantic -pipe -O2 ${CXXFLAGS}
 LDFLAGS =
 
 ifneq ($(strip ${DEBUG}),)
-	DEBUG_CXXFLAGS =
+	DEBUG_CXXFLAGS = -D_JOVAMI_DEBUG
 	DEBUG_CFLAGS = -g ${DEBUG_CXXFLAGS}
 endif
 
 CC = cc
 
 CSRC = main.c \
+	   menu.c \
 	   util.c \
 	   rnd/rnd.c \
 	   sensors/gen_sens_values.c \
 	   sensors/sensors_impl.c \
 	   dailymatrix/dailymatrix.c \
+	   sensors/sensor_vec.c \
+	   sensors/sensor_new.c \
 
 
 SSRC = rnd/rnd_gen.s \

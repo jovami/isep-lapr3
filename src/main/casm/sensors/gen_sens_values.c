@@ -30,32 +30,32 @@ int gen_sens_values(char *data_temp,unsigned short *data_dir_vento, unsigned cha
         min.c = TEMP_LIM_MIN;
         max.c = TEMP_LIM_MAX;
         first_value.c = 30;
-        sens_init(&tmp1, MAX_BAD_VALUES, FREQUENCY, min, max, first_value);
+        _sens_init(&tmp1, MAX_BAD_VALUES, FREQUENCY, min, max, first_value);
 
         min.us=DIR_VENTO_LIM_MIN;
         max.us = DIR_VENTO_LIM_MAX;
         first_value.us = 70;
-        sens_init(&dir1, MAX_BAD_VALUES, FREQUENCY, min,max, first_value);
+        _sens_init(&dir1, MAX_BAD_VALUES, FREQUENCY, min,max, first_value);
 
         min.uc = PLUVIO_LIM_MIN;
         max.uc = PLUVIO_LIM_MAX;
         first_value.uc = 80;
-        sens_init(&plv1, MAX_BAD_VALUES, FREQUENCY, min, max, first_value);
+        _sens_init(&plv1, MAX_BAD_VALUES, FREQUENCY, min, max, first_value);
 
         min.uc = VELC_VENTO_LIM_MIN;
         max.uc = VELC_VENTO_LIM_MAX;
         first_value.uc = 50;
-        sens_init(&velc1, MAX_BAD_VALUES, FREQUENCY, min, max, first_value);
+        _sens_init(&velc1, MAX_BAD_VALUES, FREQUENCY, min, max, first_value);
 
         min.uc = HUMD_SOLO_LIM_MIN;
         max.uc = HUMD_SOLO_LIM_MAX;
         first_value.uc = 40;
-        sens_init(&solo1, MAX_BAD_VALUES, FREQUENCY, min, max, first_value);
+        _sens_init(&solo1, MAX_BAD_VALUES, FREQUENCY, min, max, first_value);
 
         min.uc = HUMD_ATM_LIM_MIN;
         max.uc = HUMD_ATM_LIM_MAX;
         first_value.uc = 30;
-        sens_init(&atm1, MAX_BAD_VALUES, FREQUENCY, min, max, first_value);
+        _sens_init(&atm1, MAX_BAD_VALUES, FREQUENCY, min, max, first_value);
 
 
         char ult_temp ;

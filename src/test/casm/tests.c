@@ -7,10 +7,13 @@ main(int argc, char **argv)
 {
     puts("Testing all modules...\n");
 
-    puts("Testing US 101...\n");
-    rng_gen_run();
-    puts("\nUS101 tested with success!!\n");
+    const test_case *t;
+    for (t = tests; t->test; t++) {
+        printf("Testing %s...\n\n", t->name);
+        t->test();
+        printf("\n%s tested with success!!\n\n", t->name);
+    }
 
-    puts("\nAll tests succeeded!!");
+    puts("All tests succeeded!!");
     return 0;
 }
