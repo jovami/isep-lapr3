@@ -14,16 +14,16 @@ static void sensor_ammounts(unsigned long sizes[SENS_LAST]);
 
 
 long
-read_int(char **tmp_buf, size_t *n)
+read_int(char **bufp, size_t *n)
 {
     long d;
 
     ssize_t len = 0;
 
-    if ((len = getline(tmp_buf, n, stdin)) == -1)
+    if ((len = getline(bufp, n, stdin)) == -1)
         die("read_int: failed to read input: ");
 
-    char *line = *tmp_buf;
+    char *line = *bufp;
     line[len-1] = '\0';
 
     if (sscanf(line, "%ld", &d) <= 0) {
@@ -43,7 +43,7 @@ sensor_ammounts(unsigned long sizes[SENS_LAST])
     int i;
     long amt;
 
-    char *tmp;
+    char *tmp = NULL;
     size_t n = 0;
 
     for (i = 0; i < SENS_LAST; i++) {
