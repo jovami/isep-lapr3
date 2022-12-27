@@ -11,7 +11,6 @@
 #define freq_to_sz(f)   (DAYS_SECS / (f))
 
 static char check_len(const Sensor *s);
-static char bad_value(Sensor *s, unsigned short x);
 
 static unsigned short sens_count = 0;
 
@@ -54,25 +53,10 @@ check_len(const Sensor *s)
     return 1;
 }
 
-char
-bad_value(Sensor *s, unsigned short x)
-{
-    if (x > s->max_limit || x < s->min_limit) {
-        uintmax_t cur_bad = s->cur_bad + 1;
-        if (cur_bad > s->max_bad) {
-            rnd_init();
-            cur_bad = 0;
-        }
-        s->cur_bad = cur_bad;
-        return 1;
-    }
-
-    return 0;
-}
-
 Sensor *
 sens_init(Sensor *s,
           unsigned char type,
+          unsigned short first_val,
           unsigned short max_val,
           unsigned short min_val,
           unsigned long freq,
@@ -93,6 +77,8 @@ sens_init(Sensor *s,
     s->readings = arqcp_calloc(sz, sizeof(*s->readings));
     s->len = 0;
 
+    s->readings[s->len++] = first_val;
+
     /* TODO: ensure max_bad is non-zero */
     s->max_bad = max_bad;
     s->cur_bad = 0;
@@ -107,94 +93,173 @@ sens_free(Sensor *s)
     s->readings = NULL;
 }
 
-char
+void
 sens_temp_update(Sensor *s)
 {
     if (!check_len(s))
-        return 0;
+        return;
 
     char x, cur = s->readings[s->len-1];
-    do {
-        x = sens_temp(cur, rnd_next());
-    } while (bad_value(s, x));
+    char min = s->min_limit, max = s->max_limit;
 
+    x = sens_temp(cur, rnd_next());
+    uintmax_t cur_bad = s->cur_bad;
+    while (x > max || x < min) {
+        cur_bad++;
+        if (cur_bad > s->max_bad) {
+            rnd_init();
+            cur_bad = 0;
+        }
+        x = sens_temp(cur, rnd_next());
+    }
+
+    s->cur_bad = cur_bad;
     s->readings[s->len++] = x;
-    return x;
 }
 
-unsigned char
+void
 sens_pluvio_update(Sensor *s, const Sensor *temp)
 {
     if (!check_len(s) || !check_len(temp))
-        return 0;
+        return;
 
     unsigned char x, cur = s->readings[s->len-1];
-    do {
-        x = sens_pluvio(cur, temp->readings[temp->len-1], rnd_next());
-    } while (bad_value(s, x));
+    unsigned char min = s->min_limit, max = s->max_limit;
 
+    char ult_temp = temp->readings[temp->len-1];
+
+    x = sens_pluvio(cur, ult_temp, rnd_next());
+    uintmax_t cur_bad = s->cur_bad;
+    while (x > max || x < min) {
+        cur_bad++;
+        if (cur_bad > s->max_bad) {
+            rnd_init();
+            cur_bad = 0;
+        }
+        x = sens_pluvio(cur, ult_temp, rnd_next());
+    }
+
+    s->cur_bad = cur_bad;
     s->readings[s->len++] = x;
-    return x;
 }
 
-unsigned char
+void
 sens_velc_vento_update(Sensor *s)
 {
     if (!check_len(s))
-        return 0;
+        return;
 
     unsigned char x, cur = s->readings[s->len-1];
-    do {
-        x = sens_velc_vento(cur, rnd_next());
-    } while (bad_value(s, x));
+    unsigned char min = s->min_limit, max = s->max_limit;
 
+    x = sens_velc_vento(cur, rnd_next());
+    uintmax_t cur_bad = s->cur_bad;
+    while (x > max || x < min) {
+        cur_bad++;
+        if (cur_bad > s->max_bad) {
+            rnd_init();
+            cur_bad = 0;
+        }
+        x = sens_velc_vento(cur, rnd_next());
+    }
+
+    s->cur_bad = cur_bad;
     s->readings[s->len++] = x;
-    return x;
 }
 
-unsigned short
+void
 sens_dir_vento_update(Sensor *s)
 {
     if (!check_len(s))
-        return 0;
+        return;
 
     unsigned short x, cur = s->readings[s->len-1];
-    do {
-        x = sens_dir_vento(cur, rnd_next());
-    } while (bad_value(s, x));
+    unsigned short min = s->min_limit, max = s->max_limit;
 
+    x = sens_dir_vento(cur, rnd_next());
+    uintmax_t cur_bad = s->cur_bad;
+    while (x > max || x < min) {
+        cur_bad++;
+        if (cur_bad > s->max_bad) {
+            rnd_init();
+            cur_bad = 0;
+        }
+        x = sens_dir_vento(cur, rnd_next());
+    }
+
+    s->cur_bad = cur_bad;
     s->readings[s->len++] = x;
-    return x;
 }
 
-unsigned char
+void
 sens_humd_atm_update(Sensor *s, const Sensor *pluv)
 {
     if (!check_len(s) || !check_len(pluv))
-        return 0;
+        return;
 
     unsigned char x, cur = s->readings[s->len-1];
-    do {
-        x = sens_pluvio(cur, pluv->readings[pluv->len-1], rnd_next());
-    } while (bad_value(s, x));
+    unsigned char min = s->min_limit, max = s->max_limit;
 
+    unsigned char ult_pluv = pluv->readings[pluv->len-1];
+
+    x = sens_humd_atm(cur, ult_pluv, rnd_next());
+    uintmax_t cur_bad = s->cur_bad;
+    while (x > max || x < min) {
+        cur_bad++;
+        if (cur_bad > s->max_bad) {
+            rnd_init();
+            cur_bad = 0;
+        }
+        x = sens_humd_atm(cur, ult_pluv, rnd_next());
+    }
+
+    s->cur_bad = cur_bad;
     s->readings[s->len++] = x;
-    return x;
 }
 
-unsigned char
+void
 sens_humd_solo_update(Sensor *s, const Sensor *pluv)
 {
-    if (!check_len(s) || !check_len(pluv))
-        return 0;
+if (!check_len(s) || !check_len(pluv))
+        return;
 
     unsigned char x, cur = s->readings[s->len-1];
-    do {
-        x = sens_pluvio(cur, pluv->readings[pluv->len-1], rnd_next());
-    } while (bad_value(s, x));
+    unsigned char min = s->min_limit, max = s->max_limit;
 
+    unsigned char ult_pluv = pluv->readings[pluv->len-1];
+
+    x = sens_humd_solo(cur, ult_pluv, rnd_next());
+    uintmax_t cur_bad = s->cur_bad;
+    while (x > max || x < min) {
+        cur_bad++;
+        if (cur_bad > s->max_bad) {
+            rnd_init();
+            cur_bad = 0;
+        }
+        x = sens_humd_solo(cur, ult_pluv, rnd_next());
+    }
+
+    s->cur_bad = cur_bad;
     s->readings[s->len++] = x;
-    return x;
+}
+
+/* Wrappers (see header file) */
+void
+sens_temp_wrapper(Sensor *s, const Sensor *dummy)
+{
+    sens_temp_update(s);
+}
+
+void
+sens_dir_vnt_wrapper(Sensor *s, const Sensor *dummy)
+{
+    sens_dir_vento_update(s);
+}
+
+void
+sens_vel_vnt_wrapper(Sensor *s, const Sensor *dummy)
+{
+    sens_velc_vento_update(s);
 }
 
 /* EOF */

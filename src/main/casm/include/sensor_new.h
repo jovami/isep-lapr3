@@ -75,12 +75,18 @@ struct Sensor {
     uintmax_t max_bad, cur_bad;
 };
 
+union sens_value {
+    char c;
+    unsigned char uc;
+    unsigned short us;
+};
 
 const char *strsens(enum SensorType type);
 
 /* returns self */
 Sensor *sens_init(Sensor *s,
                   unsigned char type,
+                  unsigned short first_val,
                   unsigned short max_val,
                   unsigned short min_val,
                   unsigned long freq,
@@ -88,13 +94,14 @@ Sensor *sens_init(Sensor *s,
 
 void sens_free(Sensor *s);
 
-char sens_temp_update(Sensor *s);
-unsigned char sens_pluvio_update(Sensor *s, const Sensor *temp);
+void sens_temp_update(Sensor *s);
+void sens_pluvio_update(Sensor *s, const Sensor *temp);
+void sens_velc_vento_update(Sensor *s);
+void sens_dir_vento_update(Sensor *s);
+void sens_humd_atm_update(Sensor *s, const Sensor *pluv);
+void sens_humd_solo_update(Sensor *s, const Sensor *pluv);
 
-unsigned char sens_velc_vento_update(Sensor *s);
-unsigned short sens_dir_vento_update(Sensor *s);
-
-unsigned char sens_humd_atm_update(Sensor *s, const Sensor *pluv);
-unsigned char sens_humd_solo_update(Sensor *s, const Sensor *pluv);
-
-/* EOF */
+/* Wrappers for updates with only 1 param */
+void sens_temp_wrapper(Sensor *s, const Sensor *dummy);
+void sens_vel_vnt_wrapper(Sensor *s, const Sensor *dummy);
+void sens_dir_vnt_wrapper(Sensor *s, const Sensor *dummy);
