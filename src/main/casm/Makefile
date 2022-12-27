@@ -5,7 +5,7 @@ CFLAGS = -std=gnu17 -Wall -pedantic -pipe -O2 ${CXXFLAGS}
 LDFLAGS =
 
 ifneq ($(strip ${DEBUG}),)
-	DEBUG_CXXFLAGS =
+	DEBUG_CXXFLAGS = -D_JOVAMI_DEBUG
 	DEBUG_CFLAGS = -g ${DEBUG_CXXFLAGS}
 endif
 

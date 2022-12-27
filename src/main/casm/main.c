@@ -1,13 +1,13 @@
 #include <errno.h>
 #include <stdio.h>
-
-#include <rnd.h>
-#include <sensor_vec.h>
-#include <sensor_new.h>
 #include <stdlib.h>
 
+#include <rnd.h>
+#include <sensor_new.h>
+#include <sensor_vec.h>
+#include <util.h>
+
 #include "menu.h"
-#include "util.h"
 
 static long read_int(char **tmp_buf, size_t *n);
 static void sensor_ammounts(unsigned long sizes[SENS_LAST]);
@@ -17,8 +17,7 @@ long
 read_int(char **bufp, size_t *n)
 {
     long d;
-
-    ssize_t len = 0;
+    ssize_t len;
 
     if ((len = getline(bufp, n, stdin)) == -1)
         die("read_int: failed to read input: ");
@@ -26,13 +25,11 @@ read_int(char **bufp, size_t *n)
     char *line = *bufp;
     line[len-1] = '\0';
 
-    if (sscanf(line, "%ld", &d) <= 0) {
+    if (sscanf(line, "%ld", &d) <= 0 || d <= 0) {
         errno = EINVAL;
         return 0;
     }
 
-    if (d == 0)
-        errno = EINVAL;
     return d;
 }
 
@@ -40,22 +37,21 @@ read_int(char **bufp, size_t *n)
 void
 sensor_ammounts(unsigned long sizes[SENS_LAST])
 {
-    int i;
-    long amt;
+    /* NOTE: we use signed long to disallow the
+     * user to get away with typing '-1'
+     * and it being valid due to integer carry
+     */
+    signed long amt;
 
     char *tmp = NULL;
     size_t n = 0;
 
+    size_t i;
     for (i = 0; i < SENS_LAST; i++) {
         fprintf(stdout, "How many sensors of the type \"%s\"? ", strsens(i));
 
-        amt = read_int(&tmp, &n);
-
-        while (amt <= 0) {
+        while ((amt = read_int(&tmp, &n)) <= 0)
             fputs("error: invalid number\nTry again: ", stdout);
-            amt = read_int(&tmp, &n);
-        }
-
         sizes[i] = amt;
     }
     free(tmp);
@@ -69,9 +65,16 @@ main(int argc, char **argv)
     unsigned long sizes[SENS_LAST];
     sensor_ammounts(sizes);
 
+#if defined (_JOVAMI_DEBUG)
+    puts("====DEBUG====");
+    for (size_t __i = 0; __i < SENS_LAST; __i++)
+        printf("%s: %lu\n", strsens(__i), sizes[__i]);
+    puts("=============\n");
+#endif /* defined (_JOVAMI_DEBUG) */
+
     sensor_vec pack[SENS_LAST];
 
-    int i;
+    size_t i;
     for (i = 0; i < SENS_LAST; i++) {
         vec_init(pack+i, sizes[i]);
     }
