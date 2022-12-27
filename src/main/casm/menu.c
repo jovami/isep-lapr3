@@ -4,6 +4,7 @@
 
 #include "menu.h"
 #include "dailymatrix/dailymatrix.h"
+#include "sensors/gen_sens_values.h"
 
 
 /***********************************/
@@ -68,7 +69,7 @@ static inline char getchar_flush(void);
 static const MenuItem items[MENU_LST] = {
     &foo,
     &bar,
-    &baz,
+    &gen_sens_values,
     &idk,
 };
 
