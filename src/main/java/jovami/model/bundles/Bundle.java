@@ -22,7 +22,7 @@ public class Bundle {
     private boolean delivered;
 
     //Constructors
-    private Bundle(User client, int day){
+    public Bundle(User client, int day){
         this.orders = new ArrayList<>(2 << 4);
         if(setClient(client)){
             setDay(day);
@@ -84,6 +84,6 @@ public class Bundle {
 
     @Override 
     public String toString(){
-        return String.format("Cliente: %s\nDay: %i\nDelivered:\n--------------\n%s\n ",this.client,this.day,this.orders.toString(),this.delivered);
+        return String.format("Cliente: %s\nDay: %i\nDelivered: %d\n--------------\n%s\n ",this.client,this.day,this.orders.toString(),this.delivered);
     }
 }

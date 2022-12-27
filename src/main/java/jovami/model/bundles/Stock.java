@@ -25,8 +25,7 @@ public class Stock {
     }
     
     //TODO how to handle product(string??)
-    public void addProductStock(Product product,int provided,int day){
-
+    public void addProductStock(Product product,float provided,int day){
         stock.putIfAbsent(day, new HashMap<>(2 << 4));
         ProductStock ps = new ProductStock(product,provided,day);
         stock.get(day).putIfAbsent(product,ps);
@@ -43,7 +42,7 @@ public class Stock {
 
         //ver para os ultimos dois dias se há stock
         for (int i = day-DELTA_DAYS; i <= day; i++) {
-            if(day>= FIRST_DAY){
+            if(day >= FIRST_DAY){
                 prodStockForThatDay = stock.get(i).get(product);
 
                 if(!prodStockForThatDay.retrieveStock(qntToRetrieve)){

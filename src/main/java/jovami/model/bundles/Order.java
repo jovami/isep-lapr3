@@ -11,11 +11,9 @@ public class Order {
     private boolean delivered;
 
     public Order(Product prod, float quantity){
-        if(setProducer(producer)){
-            this.product = prod;
-            this.quantity = quantity;
-            this.producer = null;
-        }
+        this.product = prod;
+        this.quantity = quantity;
+        this.producer = null;
     }
 
     public boolean setProducer(User producer){
