@@ -91,9 +91,7 @@ public class CSVLoaderHandler {
                 return;
             }
 
-            if (fileEnum != CSVFiles.BUNDLES)
-                this.parsers.get(fileEnum.header).parse(data);      // get: O(1); parse: O(l)
-
+            this.parsers.get(fileEnum.header).parse(data);      // get: O(1); parse: O(l)
         }
 
         // Net complexity: O(l*c)
