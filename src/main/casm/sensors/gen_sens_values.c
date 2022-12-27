@@ -1,11 +1,9 @@
 #include <signal.h>
 #include <stdio.h>
-#include <stdint.h>
 #include <unistd.h>
 
-#include <rnd.h>
-#include <sensors.h>
 #include <sensor_new.h>
+#include <sensor_vec.h>
 #include <util.h>
 
 #include "gen_sens_values.h"
