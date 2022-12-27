@@ -1,111 +1,122 @@
+#include <signal.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <unistd.h>
 
 #include <rnd.h>
 #include <sensors.h>
-/* #include <sensors_impl.h> */
+#include <sensor_new.h>
+#include <util.h>
 
 #include "gen_sens_values.h"
+
+static void show_val(enum SensorType t, size_t idx, union sens_value *val);
+static void stop_handler(int);
+
+static const sens_upd_t wrappers[SENS_LAST] = {
+    [SENS_TEMP] = &sens_temp_wrapper,
+    [SENS_PLUV] = &sens_pluvio_update,
+    [SENS_DIR_VNT] = &sens_dir_vnt_wrapper,
+    [SENS_VEL_VNT] = &sens_vel_vnt_wrapper,
+    [SENS_HUM_ATM] = &sens_humd_atm_update,
+    [SENS_HUM_SOL] = &sens_humd_solo_update
+};
+
+static int running = 0;
+
+void
+show_val(enum SensorType t, size_t idx, union sens_value *val)
+{
+    const char *name = strsens(t);
+    switch (t) {
+        case SENS_TEMP:
+            printf("%s %zu: %hhd\n", name, idx, val->c);
+            break;
+        case SENS_DIR_VNT:
+            printf("%s %zu: %hu\n", name, idx, val->us);
+            break;
+        case SENS_PLUV:     /* FALLTHROUGH */
+        case SENS_VEL_VNT:
+        case SENS_HUM_ATM:
+        case SENS_HUM_SOL:
+            printf("%s %zu: %hhu\n", name, idx, val->uc);
+            break;
+        default:
+            break;
+    }
+}
+
+void
+stop_handler(int unused)
+{
+    running = 0;
+}
 
 void
 gen_sens_values(sensor_vec *pack)
 {
-    /* TODO: install sighandler */
-        /* int index=0; */
+    static const struct sigaction loop_action = { .sa_handler = &stop_handler };
+    static const struct sigaction stop_action = { .sa_handler = SIG_DFL };
 
-        /* //sensors */
-        /* temp tmp1; */
-        /* velc_vento velc1; */
-        /* dir_vento dir1; */
-        /* humd_atm atm1; */
-        /* humd_solo solo1; */
-        /* pluvio plv1; */
+    if (sigaction(SIGINT, &loop_action, NULL) == -1)
+        die("gen_sens_values: could not install signal: ");
 
-        /* //limit sens values */
-        /* sens_value min; */
-        /* sens_value max; */
+    static const unsigned int timeout = 3;
+    printf("Generation of values will begin in %u seconds\n"
+           "If you wish to exit early, hit \"Control + C\" on your keyboard\n",
+           timeout);
+    sleep(timeout);
 
-        /* //first values */
-        /* sens_value first_value; */
+    running = 1;
 
-        /* //init all sensors */
-        /* min.c = TEMP_LIM_MIN; */
-        /* max.c = TEMP_LIM_MAX; */
-        /* first_value.c = 30; */
-        /* _sens_init(&tmp1, MAX_BAD_VALUES, FREQUENCY, min, max, first_value); */
+    int time = 0;
+    while (running) {
+        printf("\n--------------------------%d--------------------------\n",
+               time+1);
 
-        /* min.us=DIR_VENTO_LIM_MIN; */
-        /* max.us = DIR_VENTO_LIM_MAX; */
-        /* first_value.us = 70; */
-        /* _sens_init(&dir1, MAX_BAD_VALUES, FREQUENCY, min,max, first_value); */
+        for (enum SensorType i = 0; i < SENS_LAST; i++) {
+            sensor_vec *aux_v = NULL;
+            switch (i) {
+            case SENS_PLUV:
+                aux_v = pack + SENS_TEMP;
+                break;
+            case SENS_HUM_ATM:
+                aux_v = pack + SENS_PLUV;
+                break;
+            case SENS_HUM_SOL:
+                aux_v = pack + SENS_PLUV;
+                break;
+            case SENS_TEMP: /* no op */
+            case SENS_DIR_VNT:
+            case SENS_VEL_VNT:
+            default:
+                break;
+            }
 
-        /* min.uc = PLUVIO_LIM_MIN; */
-        /* max.uc = PLUVIO_LIM_MAX; */
-        /* first_value.uc = 80; */
-        /* _sens_init(&plv1, MAX_BAD_VALUES, FREQUENCY, min, max, first_value); */
+            const Sensor *aux = aux_v ? aux_v->data + aux_v->len-1 : NULL;
 
-        /* min.uc = VELC_VENTO_LIM_MIN; */
-        /* max.uc = VELC_VENTO_LIM_MAX; */
-        /* first_value.uc = 50; */
-        /* _sens_init(&velc1, MAX_BAD_VALUES, FREQUENCY, min, max, first_value); */
+            const sensor_vec *v = (pack+i);
+            Sensor *data = v->data;
+            const size_t len = v->len;
 
-        /* min.uc = HUMD_SOLO_LIM_MIN; */
-        /* max.uc = HUMD_SOLO_LIM_MAX; */
-        /* first_value.uc = 40; */
-        /* _sens_init(&solo1, MAX_BAD_VALUES, FREQUENCY, min, max, first_value); */
+            sens_upd_t wrapper = wrappers[i];
+            for (size_t j = 0; j < len; j++) {
+                Sensor *s = data+j;
 
-        /* min.uc = HUMD_ATM_LIM_MIN; */
-        /* max.uc = HUMD_ATM_LIM_MAX; */
-        /* first_value.uc = 30; */
-        /* _sens_init(&atm1, MAX_BAD_VALUES, FREQUENCY, min, max, first_value); */
+                /* NOTE: we only want to generate new values if
+                 * time is a multiple of the frequency */
+                if ((time % s->frequency) == 0) {
+                    wrapper(s, aux);
+                    show_val(i, j+1, &(union sens_value) { .us = s->readings[s->len-1] });
+                }
+            }
+        }
 
+        time++;
+        sleep(1);
+    }
 
-        /* char ult_temp ; */
-        /* unsigned char ult_pluvio; */
-        /* unsigned char ult_hmd_atm; */
-        /* unsigned char ult_hmd_solo; */
-        /* unsigned short ult_dir_vento; */
-        /* unsigned char ult_velc_vento; */
-
-        /* do{ */
-
-
-        /*         ult_temp = sens_temp_update(&tmp1); */
-
-        /*         ult_pluvio = sens_pluvio_update(&plv1, &tmp1); */
-
-        /*         ult_hmd_atm =  sens_humd_atm_update(&atm1, &plv1); */
-
-        /*         ult_hmd_solo = sens_humd_solo_update(&solo1, &plv1); */
-
-        /*         ult_velc_vento = sens_velc_vento_update(&velc1); */
-
-        /*         ult_dir_vento =sens_dir_vento_update(&dir1); */
-
-        /*         data_temp[index] = ult_temp; */
-        /*         data_pluvio[index] = ult_pluvio; */
-        /*         data_humd_atm[index] = ult_hmd_atm; */
-        /*         data_humd_solo[index] = ult_hmd_solo; */
-        /*         data_velc_vento[index] = ult_velc_vento; */
-        /*         data_dir_vento[index] = ult_dir_vento; */
-
-        /*         printf("Temp: %hhd\n", data_temp[index]); */
-        /*         printf("dir vent: %hhu\n", data_dir_vento[index]); */
-        /*         printf("Velc_vento: %hhu\n", data_velc_vento[index]); */
-        /*         printf("Humd_atm: %hhu\n", data_humd_atm[index]); */
-        /*         printf("Humd_solo: %hhu\n", data_humd_solo[index]); */
-        /*         printf("Pluvio: %hhu\n", data_pluvio[index]); */
-        /*         printf("\n--------------------------%d-------------------------------------\n",index+1); */
-
-
-        /*         sleep(TIMER); */
-        /*         index++; */
-
-        /* }while(index < CYCLES); */
-
-        /* return 0; */
-
-    /* TODO: uninstall sighandler */
+    if (sigaction(SIGINT, &stop_action, NULL) == -1)
+        die("gen_sens_values: could not install signal: ");
 }
 

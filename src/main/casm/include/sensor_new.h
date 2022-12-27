@@ -40,6 +40,7 @@
 /***************************************/
 
 typedef struct Sensor Sensor;
+typedef void (*sens_upd_t)(Sensor *, const Sensor *);
 
 enum SensorType {
     SENS_TEMP,
