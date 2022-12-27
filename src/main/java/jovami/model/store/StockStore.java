@@ -4,22 +4,23 @@ import java.util.HashMap;
 
 import jovami.model.User;
 import jovami.model.bundles.Stock;
+import jovami.model.shared.UserType;
 
 public class StockStore {
     
 
     private final HashMap<User,Stock> stocks;
 
-    private StockStore(){
+    public StockStore(){
         this(2 << 4);
     }
 
-    private StockStore(int initialCapacity) {
+    public StockStore(int initialCapacity) {
         this.stocks = new HashMap<>(initialCapacity);
     }
 
     public boolean addProducer(User producer){
-        return stocks.put(producer,new Stock()) != null;
+        return stocks.putIfAbsent(producer, new Stock()) == null;
     }
 
     public Stock getStock(User producer){
