@@ -8,7 +8,7 @@
 
 #include "gen_sens_values.h"
 
-static void show_val(enum SensorType t, size_t idx, union sens_value *val);
+static void show_val(enum SensorType t, size_t idx, const union sens_value *val);
 static void stop_handler(int);
 
 static const sens_upd_t wrappers[SENS_LAST] = {
@@ -23,7 +23,7 @@ static const sens_upd_t wrappers[SENS_LAST] = {
 static int running = 0;
 
 void
-show_val(enum SensorType t, size_t idx, union sens_value *val)
+show_val(enum SensorType t, size_t idx, const union sens_value *val)
 {
     const char *name = strsens(t);
     switch (t) {
@@ -61,7 +61,7 @@ gen_sens_values(sensor_vec *pack)
 
     static const unsigned int timeout = 3;
     printf("Generation of values will begin in %u seconds\n"
-           "If you wish to exit early, hit \"Control + C\" on your keyboard\n",
+           "If you wish to exit earlier, hit \"Control + C\" on your keyboard\n",
            timeout);
     sleep(timeout);
 
@@ -116,5 +116,7 @@ gen_sens_values(sensor_vec *pack)
 
     if (sigaction(SIGINT, &stop_action, NULL) == -1)
         die("gen_sens_values: could not install signal: ");
+
+    putchar('\n');
 }
 
