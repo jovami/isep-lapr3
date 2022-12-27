@@ -88,7 +88,6 @@ public class BundleParser implements CSVParser {
                 case CLIENT -> parseClientLine(line, product, len, user, day);
             }
         });
-        System.out.println();
     }
 
     private void parseProducerLine(String[] line, String[] product, int len, User user, int day) {
