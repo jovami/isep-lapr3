@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#include <sensor_new.h>
+#include <sensor_impl.h>
 #include <sensor_vec.h>
 #include <util.h>
 

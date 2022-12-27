@@ -4,7 +4,7 @@
 
 #include <rnd.h>
 #include <sensors.h>
-#include <sensor_new.h>
+#include <sensor_impl.h>
 #include <util.h>
 
 #define DAYS_SECS       (24UL * 3600UL)

@@ -15,12 +15,10 @@ CSRC = main.c \
 	   menu.c \
 	   util.c \
 	   rnd/rnd.c \
-	   sensors/sensor_new.c \
+	   sensors/sensor_impl.c \
 	   sensors/sensor_vec.c \
 	   sensors/gen_sens_values.c \
 	   dailymatrix/dailymatrix.c \
-
-# sensors/sensors_impl.c \
 
 SSRC = rnd/rnd_gen.s \
 	   sensors/sens_dir_vento.s \

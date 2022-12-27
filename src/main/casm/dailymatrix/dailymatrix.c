@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include <sensor_new.h>
+#include <sensor_impl.h>
 #include <sensor_vec.h>
 
 #include "dailymatrix.h"

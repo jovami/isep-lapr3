@@ -3,7 +3,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-#include <sensor_new.h>
+#include <sensor_impl.h>
 
 typedef struct sensor_vec sensor_vec;
 
