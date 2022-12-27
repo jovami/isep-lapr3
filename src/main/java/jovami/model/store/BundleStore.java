@@ -8,17 +8,17 @@ import jovami.model.bundles.Bundle;
 
 public class BundleStore{
 
-    private final HashMap<Integer,ArrayList<Bundle>> bundles;
+    private final HashMap<Integer,ArrayList<Bundle>> bundles; // key -> day, each day has a list of bundles
 
-    private BundleStore(){
+    public BundleStore(){
         this(2 << 4);
     }
 
-    private BundleStore(int initialCapacity) {
+    public BundleStore(int initialCapacity) {
         this.bundles = new HashMap<>(initialCapacity);
     }
 
-    private void addNewDay(int day) {
+    public void addNewDay(int day) {
         bundles.put(day, new ArrayList<Bundle>(2 << 4));
     }
 
