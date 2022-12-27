@@ -21,9 +21,11 @@ public class ProductStore {
         return this.products.values().iterator();
     }
 
-    public Product checkProduct(String productName){
+    public Product getProduct(String productName){
         return products.get(productName);
-
     }
 
+    public void addProduct(Product product){
+        products.put(product.getNome(), product);
+    }
 }
