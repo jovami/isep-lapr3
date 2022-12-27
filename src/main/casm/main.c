@@ -79,18 +79,62 @@ main(int argc, char **argv)
         vec_init(pack+i, sizes[i]);
     }
 
+    {
+        /* FIXME: do this in a better way */
+        Sensor t1, p1, dv1, vv1, ha1, hs1;
+        sens_init(&t1,
+                  SENS_TEMP,
+                  30,
+                  TEMP_LIM_MAX,
+                  TEMP_LIM_MIN,
+                  2,
+                  MAX_BAD_VALUES);
+        sens_init(&p1,
+                  SENS_PLUV,
+                  70,
+                  PLUVIO_LIM_MAX,
+                  PLUVIO_LIM_MIN,
+                  1,
+                  MAX_BAD_VALUES);
+        sens_init(&dv1,
+                  SENS_DIR_VNT,
+                  70,
+                  DIR_VENTO_LIM_MAX,
+                  DIR_VENTO_LIM_MIN,
+                  2,
+                  MAX_BAD_VALUES);
+        sens_init(&vv1,
+                  SENS_VEL_VNT,
+                  50,
+                  VELC_VENTO_LIM_MAX,
+                  VELC_VENTO_LIM_MIN,
+                  1,
+                  MAX_BAD_VALUES);
+        sens_init(&ha1,
+                  SENS_HUM_ATM,
+                  30,
+                  HUMD_ATM_LIM_MAX,
+                  HUMD_ATM_LIM_MIN,
+                  2,
+                  MAX_BAD_VALUES);
+        sens_init(&hs1,
+                  SENS_HUM_SOL,
+                  40,
+                  HUMD_SOLO_LIM_MAX,
+                  HUMD_SOLO_LIM_MIN,
+                  1,
+                  MAX_BAD_VALUES);
+
+        vec_push(pack+SENS_TEMP, &t1);
+        vec_push(pack+SENS_PLUV, &p1);
+        vec_push(pack+SENS_DIR_VNT, &dv1);
+        vec_push(pack+SENS_VEL_VNT, &vv1);
+        vec_push(pack+SENS_HUM_ATM, &ha1);
+        vec_push(pack+SENS_HUM_SOL, &hs1);
+    }
+
     rnd_init();
     menu(pack);
-
-    /* char data_temp[CYCLES]; */
-    /* unsigned short data_dir_vento[CYCLES]; */
-    /* unsigned char data_velc_vento[CYCLES]; */
-    /* unsigned char data_humd_atm[CYCLES]; */
-    /* unsigned char data_humd_solo[CYCLES]; */
-    /* unsigned char data_pluvio[CYCLES]; */
-
-    /* rnd_init(); */
-    /* gen_sens_values(data_temp,data_dir_vento,data_velc_vento,data_humd_atm,data_humd_solo,data_pluvio); */
 
     /* daily_matrix(data_temp, data_dir_vento, data_velc_vento, data_humd_atm, data_humd_solo, data_pluvio); */
 
