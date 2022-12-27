@@ -12,8 +12,6 @@
 /* FIXME: use the actual functions */
 void foo(sensor_vec *pack);
 void bar(sensor_vec *pack);
-void baz(sensor_vec *pack);
-void idk(sensor_vec *pack);
 
 void foo(sensor_vec *pack)
 {
@@ -23,16 +21,6 @@ void foo(sensor_vec *pack)
 void bar(sensor_vec *pack)
 {
     puts("bar!!");
-}
-
-void baz(sensor_vec *pack)
-{
-    puts("baz!!");
-}
-
-void idk(sensor_vec *pack)
-{
-    puts("idk!!");
 }
 
 /***********************************/
@@ -70,7 +58,7 @@ static const MenuItem items[MENU_LST] = {
     &foo,
     &bar,
     &gen_sens_values,
-    &idk,
+    &daily_matrix,
 };
 
 
