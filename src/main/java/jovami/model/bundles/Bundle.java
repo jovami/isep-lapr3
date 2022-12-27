@@ -14,7 +14,6 @@ public class Bundle {
     // cliente que encomendou o cabaz
     private User client;
     
-    // lista de pedidos(produtor, quantidade e produto)
     // TODO usar um set?(previne pedidos iguais para o mesmo cabaz)
     private ArrayList<Order> orders;
     

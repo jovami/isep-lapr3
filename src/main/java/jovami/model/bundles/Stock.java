@@ -33,23 +33,22 @@ public class Stock {
         
     }
 
-    
     //retorna true se houver stock suficiente contando com os ultimos dias
     public boolean retrieveFromStock(Product product, int day, int qntToRetrieve){
 
         if(qntToRetrieve < 0)
             return false;
         
-        ProductStock psi;
+        ProductStock prodStockForThatDay;
 
         //ver para os ultimos dois dias se há stock
         for (int i = day-DELTA_DAYS; i <= day; i++) {
             if(day>= FIRST_DAY){
-                psi = stock.get(i).get(product);
+                prodStockForThatDay = stock.get(i).get(product);
 
-                if(!psi.retrieveStock(qntToRetrieve)){
-                    psi.retrieveStock(psi.getStash());
-                    qntToRetrieve-=psi.getStash();
+                if(!prodStockForThatDay.retrieveStock(qntToRetrieve)){
+                    prodStockForThatDay.retrieveStock(prodStockForThatDay.getStash());
+                    qntToRetrieve-=prodStockForThatDay.getStash();
                 }
             }
         }

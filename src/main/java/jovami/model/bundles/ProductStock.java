@@ -1,7 +1,5 @@
 package jovami.model.bundles;
 
-import jovami.model.User;
-
 public class ProductStock {
 
     private final int day;
@@ -26,6 +24,10 @@ public class ProductStock {
 
     public int getDay(){
         return this.day;
+    }
+
+    public Product getProduct(){
+        return this.product;        
     }
 
     public boolean retrieveStock(float retrieve){

@@ -1,27 +1,30 @@
 package jovami.model.bundles;
 
 import jovami.model.User;
-import jovami.model.exceptions.InvalidUserTypeException;
 import jovami.model.shared.UserType;
 
 public class Order {
     
-    private Producer producer;
+    private User producer;
     private Product product;
     private float quantity;
     private boolean delivered;
 
     public Order(Product prod, float quantity){
-        this.product = prod;
-        this.quantity = quantity;
-        this.producer = null;
+        if(setProducer(producer)){
+            this.product = prod;
+            this.quantity = quantity;
+            this.producer = null;
+        }
     }
 
-    public void setProducer(Producer producer){
+    public boolean setProducer(User producer){
         //catch users that are not producers
-        if(producer.getUserType()!=UserType.PRODUCER)
-            throw new InvalidUserTypeException();
-        this.producer=producer;
+        if(producer.getUserType()==UserType.PRODUCER){   
+            this.producer=producer;
+            return true;
+        }else
+            return false;
     }
 
     public User getProducer(){
