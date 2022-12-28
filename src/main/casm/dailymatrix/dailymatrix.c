@@ -1,174 +1,150 @@
 #include <stdio.h>
-#include <string.h>
-#include <sensors.h>
-#include <sensors_impl.h>
+
+#include <sensor_impl.h>
+#include <sensor_vec.h>
+
+#include "dailymatrix.h"
 
 #define MAX(X, Y)   ((X) > (Y) ? (X) : (Y))
 #define MIN(X, Y)   ((X) < (Y) ? (X) : (Y))
-
-#define NUM_ROWS    6
-#define NUM_COLS    3
-
-enum {
-    TEMP_ROW,
-    DIR_VENTO_ROW,
-    VELC_VENTO_ROW,
-    HUMD_ATM_ROW,
-    HUMD_SOLO_ROW,
-    PLUVIO_ROW,
-}; /* matrix rows */
 
 enum {
     AVG_COL,
     MAX_COL,
     MIN_COL,
+
+    COL_LAST
 }; /* matrix cols */
 
-union matrix_value{
-    int i;
-    unsigned int ui;
+#define NUM_ROWS    SENS_LAST
+#define NUM_COLS    COL_LAST
 
-};
+__attribute__((__always_inline__))
+static inline unsigned short get_max(enum SensorType t, const union sens_value *old, const union sens_value *new);
+__attribute__((__always_inline__))
+static inline unsigned short get_min(enum SensorType t, const union sens_value *old, const union sens_value *new);
 
+static void fill_matrix(unsigned short matrix[NUM_ROWS][NUM_COLS], const sensor_vec *pack);
+static void print_matrix(unsigned short matrix[NUM_ROWS][NUM_COLS]);
 
-void print_matrix(union matrix_value matrix[6][3]);
-
-    void
-daily_matrix(const char *data_temp, const unsigned short *data_dir_vento, const unsigned char *data_velc_vento,
-        const unsigned char *data_humd_atm, const unsigned char *data_humd_solo, const unsigned char *data_pluvio)
+unsigned short
+get_max(enum SensorType t, const union sens_value *old, const union sens_value *new)
 {
-
-    union matrix_value matrix[NUM_ROWS][NUM_COLS];
-    memset(matrix, 0x00, NUM_ROWS * NUM_COLS * sizeof(**matrix));
-
-
-    char temp_max, temp_min;
-    temp_max = *data_temp;
-    temp_min = *data_temp;
-
-    unsigned short dir_vento_max, dir_vento_min;
-    dir_vento_max = *data_dir_vento;
-    dir_vento_min = *data_dir_vento;
-
-    unsigned char velc_vento_max, velc_vento_min;
-    velc_vento_max = *data_velc_vento;
-    velc_vento_min = *data_velc_vento;
-
-    unsigned char humd_atm_max, humd_atm_min;
-    humd_atm_max = *data_humd_atm;
-    humd_atm_min = *data_humd_atm;
-
-    unsigned char humd_solo_max, humd_solo_min;
-    humd_solo_max = *data_humd_solo;
-    humd_solo_min = *data_humd_solo;
-
-    unsigned char pluvio_max, pluvio_min;
-    pluvio_max = *data_pluvio;
-    pluvio_min = *data_pluvio;
-
-    //TODO: optimize
-    int i;
-    for (i = 0; i < CYCLES; i++) {
-
-        matrix[TEMP_ROW][AVG_COL].i += *(data_temp+i);
-        matrix[DIR_VENTO_ROW][AVG_COL].ui += *(data_dir_vento+i);
-        matrix[VELC_VENTO_ROW][AVG_COL].ui += *(data_velc_vento+i);
-        matrix[HUMD_ATM_ROW][AVG_COL].ui += *(data_humd_atm+i);
-        matrix[HUMD_SOLO_ROW][AVG_COL].ui += *(data_humd_solo+i);
-        matrix[PLUVIO_ROW][AVG_COL].ui += *(data_pluvio+i);
-
-        temp_max = MAX(temp_max, *(data_temp+i));
-        temp_min = MIN(temp_min, *(data_temp+i));
-
-        dir_vento_max = MAX(dir_vento_max, *(data_dir_vento+i));
-        dir_vento_min = MIN(dir_vento_min, *(data_dir_vento+i));
-
-        velc_vento_max = MAX(velc_vento_max, *(data_velc_vento+i));
-        velc_vento_min = MIN(velc_vento_min, *(data_velc_vento+i));
-
-        humd_atm_max = MAX(humd_atm_max, *(data_humd_atm+i));
-        humd_atm_min = MIN(humd_atm_min, *(data_humd_atm+i));
-
-        humd_solo_max = MAX(humd_solo_max, *(data_humd_solo+i));
-        humd_solo_min = MIN(humd_solo_min, *(data_humd_solo+i));
-
-        pluvio_max = MAX(pluvio_max, *(data_pluvio+i));
-        pluvio_min = MIN(pluvio_min, *(data_pluvio+i));
+    switch (t) {
+        case SENS_TEMP:
+            return MAX(old->c, new->c);
+            break;
+        case SENS_DIR_VNT:
+            return MAX(old->us, new->us);
+            break;
+        case SENS_PLUV:     /* FALLTHROUGH */
+        case SENS_VEL_VNT:
+        case SENS_HUM_ATM:
+        case SENS_HUM_SOL:
+            return MAX(old->uc, new->uc);
+            break;
+        default:
+            return 0; /* should not happen */
+            break;
     }
-
-    /* averages */
-    matrix[TEMP_ROW][AVG_COL].i /= i;
-    matrix[DIR_VENTO_ROW][AVG_COL].ui /= i;
-    matrix[VELC_VENTO_ROW][AVG_COL].ui /= i;
-    matrix[HUMD_ATM_ROW][AVG_COL].ui /= i;
-    matrix[HUMD_SOLO_ROW][AVG_COL].ui /= i;
-    matrix[PLUVIO_ROW][AVG_COL].ui /= i;
-
-    matrix[TEMP_ROW][MAX_COL].i = temp_max;
-    matrix[TEMP_ROW][MIN_COL].i = temp_min;
-
-    matrix[DIR_VENTO_ROW][MAX_COL].ui = dir_vento_max;
-    matrix[DIR_VENTO_ROW][MIN_COL].ui = dir_vento_min;
-
-    matrix[VELC_VENTO_ROW][MAX_COL].ui = velc_vento_max;
-    matrix[VELC_VENTO_ROW][MIN_COL].ui = velc_vento_min;
-
-    matrix[HUMD_ATM_ROW][MAX_COL].ui = humd_atm_max;
-    matrix[HUMD_ATM_ROW][MIN_COL].ui = humd_atm_min;
-
-    matrix[HUMD_SOLO_ROW][MAX_COL].ui = humd_solo_max;
-    matrix[HUMD_SOLO_ROW][MIN_COL].ui = humd_solo_min;
-
-    matrix[PLUVIO_ROW][MAX_COL].ui = pluvio_max;
-    matrix[PLUVIO_ROW][MIN_COL].ui = pluvio_min;
-
-    print_matrix(matrix);
 }
 
-    void
-print_matrix(union matrix_value matrix[NUM_ROWS][NUM_COLS])
+unsigned short
+get_min(enum SensorType t, const union sens_value *old, const union sens_value *new)
 {
-    const union matrix_value *p = &matrix[0][0];
+    switch (t) {
+        case SENS_TEMP:
+            return MIN(old->c, new->c);
+            break;
+        case SENS_DIR_VNT:
+            return MIN(old->us, new->us);
+            break;
+        case SENS_PLUV:     /* FALLTHROUGH */
+        case SENS_VEL_VNT:
+        case SENS_HUM_ATM:
+        case SENS_HUM_SOL:
+            return MIN(old->uc, new->uc);
+            break;
+        default:
+            return 0; /* should not happen */
+            break;
+    }
+}
+
+void
+daily_matrix(sensor_vec *pack)
+{
+    unsigned short matrix[NUM_ROWS][NUM_COLS];
+    fill_matrix(matrix, pack);
+    print_matrix(matrix);
+
+    /* US 112 */
+    /* ... */
+
+    putchar('\n');
+}
+
+void
+fill_matrix(unsigned short matrix[NUM_ROWS][NUM_COLS], const sensor_vec *pack)
+{
+
+    for (enum SensorType i = 0; i < SENS_LAST; i++) {
+        const sensor_vec *v = pack+i;
+        const Sensor *data = v->data;
+        const size_t len = v->len;
+
+        unsigned short avg;
+        union sens_value min, max;
+
+        avg = 0;
+        min.us = (data+0)->readings[0];
+        max = min;
+
+        size_t count = 0;
+        for (size_t j = 0; j < len; j++) {
+            unsigned short *readings = (data+j)->readings;
+            size_t rlen = (data+j)->len;
+
+            for (size_t k = 0; k < rlen; k++) {
+                unsigned short val = *(readings + k);
+                union sens_value uval = { .us = val };
+
+                avg += val;
+                min.us = get_min(i, &min, &uval);
+                max.us = get_max(i, &max, &uval);
+
+                count++;
+            }
+        }
+
+        unsigned short *m = *(matrix + i);
+        m[AVG_COL] = avg / count;
+        m[MAX_COL] = max.us;
+        m[MIN_COL] = min.us;
+    }
+}
+
+
+void
+print_matrix(unsigned short matrix[NUM_ROWS][NUM_COLS])
+{
+    const unsigned short *p = &matrix[0][0];
 
     puts("\nDaily Matrix");
     puts("============\n");
 
-    /* TODO: make this prettier */
-    puts("Tipo de sensor       ||  Average ||  Max  ||  Min  ||");
 
-    for (int i = 0; i < NUM_ROWS * NUM_COLS; i++) { 
-        if (!(i % NUM_COLS)){
-            if(i)
+    puts("Sensor type          ||  Average ||  Max  ||  Min  ||");
+    for (size_t i = 0; i < NUM_ROWS * NUM_COLS; i++) {
+        if (!(i % NUM_COLS)) {
+            if (i != 0)
                 putchar('\n');
-            switch(i/NUM_COLS){
-                case TEMP_ROW:
-                    printf("%-22s","Temperatura");
-                    break;
-                case DIR_VENTO_ROW:
-                    printf("%-24s","Direção vento");
-                    break;
-                case VELC_VENTO_ROW:
-                    printf("%-22s","Velocidade vento");
-                    break;
-                case HUMD_ATM_ROW:
-                    printf("%-22s","Humidade de atmosfera");
-                    break;
-                case HUMD_SOLO_ROW:
-                    printf("%-22s","Humidade de solo");
-                    break;
-                case PLUVIO_ROW:
-                    printf("%-22s","Pluviosidade");
-                    break;
-
-            }
-            //printf("%d",i%NUM_COLS);
+            printf("%-22s", strsens(i/NUM_COLS));
         }
 
-
         if (i < NUM_COLS)
-            printf("%9d", (p+i)->i);
+            printf("%9hhd", (signed char) *(p+i));
         else
-            printf("%9u", (p+i)->ui);
+            printf("%9hu", *(p+i));
     }
-    putchar('\n');
 }

@@ -4,6 +4,7 @@
 
 #include "menu.h"
 #include "dailymatrix/dailymatrix.h"
+#include "sensors/gen_sens_values.h"
 
 
 /***********************************/
@@ -11,8 +12,6 @@
 /* FIXME: use the actual functions */
 void foo(sensor_vec *pack);
 void bar(sensor_vec *pack);
-void baz(sensor_vec *pack);
-void idk(sensor_vec *pack);
 
 void foo(sensor_vec *pack)
 {
@@ -22,16 +21,6 @@ void foo(sensor_vec *pack)
 void bar(sensor_vec *pack)
 {
     puts("bar!!");
-}
-
-void baz(sensor_vec *pack)
-{
-    puts("baz!!");
-}
-
-void idk(sensor_vec *pack)
-{
-    puts("idk!!");
 }
 
 /***********************************/
@@ -68,8 +57,8 @@ static inline char getchar_flush(void);
 static const MenuItem items[MENU_LST] = {
     &foo,
     &bar,
-    &baz,
-    &idk,
+    &gen_sens_values,
+    &daily_matrix,
 };
 
 

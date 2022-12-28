@@ -1,8 +1,8 @@
 #include <assert.h>
 #include <stdio.h>
 
+#include <sensor_impl.h>
 #include <sensor_vec.h>
-#include <sensor_new.h>
 
 __attribute__((__always_inline__))
 static inline void assert_sensor(const Sensor *s1, const Sensor *s2);
@@ -40,9 +40,9 @@ sens_vec_run(void)
 
 
     Sensor t1, t2, t3;
-    sens_init(&t1, SENS_TEMP, 25, 0, 3600, 4);
-    sens_init(&t2, SENS_TEMP, 22, 4, 7200, 1);
-    sens_init(&t3, SENS_TEMP, 20, 1, 1400, 10);
+    sens_init(&t1, SENS_TEMP, 30, 25, 0, 3600, 4);
+    sens_init(&t2, SENS_TEMP, 44, 22, 4, 7200, 1);
+    sens_init(&t3, SENS_TEMP, -5, 20, 1, 1400, 10);
 
     sensor_vec *v = pack+SENS_TEMP;
 
