@@ -13,6 +13,7 @@ CC = cc
 
 CSRC = main.c \
 	   menu.c \
+	   bootstrap.c \
 	   util.c \
 	   rnd/rnd.c \
 	   sensors/sensor_impl.c \
