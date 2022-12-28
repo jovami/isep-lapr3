@@ -58,7 +58,9 @@ public class NearestHubToClientsHandler {
 
             if (companyDist.isPresent()) {
                 Distance d = companyDist.get();
-                list.add(new Triplet<>(client, userStore.getUser(d.getLocID2()).get(), d));
+                var nearestHub = userStore.getUser(d.getLocID2()).get();
+                list.add(new Triplet<>(client, nearestHub, d));
+                client.setNearestHub(nearestHub);
             }
         }
 
