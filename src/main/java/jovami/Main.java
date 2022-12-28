@@ -20,6 +20,7 @@ public class Main {
         uis.add(new TopNCompaniesUI());         //US303
         uis.add(new NearestHubToClientsUI());   //US304
         uis.add(new MinimumDistanceUI());       //US305
+        uis.add(new ExpListNProducersUI());
         uis.add(new WateringControllerUI());    //US306
 
         uis.forEach(ui -> {
