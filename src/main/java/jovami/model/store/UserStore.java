@@ -69,6 +69,14 @@ public class UserStore implements Iterable<User> {
         return Optional.ofNullable(this.users.get(key));
     }
 
+    public Optional<User> getUserByID(String id) {
+        for (User user : users.values()){
+            if(user.getUserID().equals(id))
+                return Optional.of(user);
+        }
+        return Optional.empty();
+    }
+
     @Override
     public Iterator<User> iterator() {
         return this.users.values().iterator();
