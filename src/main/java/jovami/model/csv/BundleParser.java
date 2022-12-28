@@ -85,7 +85,7 @@ public class BundleParser implements CSVParser {
                 // O(p); p => number of products
                 case PRODUCER -> parseProducerLine(line, product,len,user,day);
                 // O(p); p => number of products
-                case CLIENT -> parseClientLine(line, product, len, user, day);
+                case CLIENT, COMPANY -> parseClientLine(line, product, len, user, day);
             }
         });
     }
