@@ -15,8 +15,8 @@ char *get_date() {
     // Allocate a buffer large enough to hold the formatted string
     char *date = arqcp_malloc(11, 1);
 
-    // Format the date string and add a null terminator
-    sprintf(date, "%d-%d-%d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+    // Format the date string using strftime and add a null terminator
+    strftime(date, 11, "%Y-%m-%d", &tm);
     date[10] = '\0';
 
     return date;
@@ -26,9 +26,9 @@ void
 export_sensor_data(const Sensor *sensors, int num_sensors) {
     FILE *fp;
 
-    char filename[100] = "sensor_data";
-    strcat(filename, get_date());
-    strcat(filename, ".csv");
+    // Create the filename string in one step using snprintf
+    char filename[100];
+    snprintf(filename, sizeof(filename), "sensor_data_%s.csv", get_date());
 
     fp = fopen(filename, "w"); // Creates an empty file for writing
 
