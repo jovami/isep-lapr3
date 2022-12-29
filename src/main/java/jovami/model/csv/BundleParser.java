@@ -11,6 +11,7 @@ import jovami.model.store.StockStore;
 import jovami.model.store.UserStore;
 
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -27,6 +28,7 @@ public class BundleParser implements CSVParser {
     // Constants for throwing exceptions with pre-initialized messages
     private static final InvalidCSVFileException INVALID_USER_EXCEPTION = new InvalidCSVFileException("The provided CSV File contains an invalid user!!");
     private static final InvalidCSVFileException INVALID_DAY_EXCEPTION = new InvalidCSVFileException("The provided CSV File contains an invalid day!!");
+    private static final InvalidCSVFileException INVALID_QNT_EXCEPTION = new InvalidCSVFileException("The provided CSV File contains an invalid quantity!!");
 
     private enum BundleColumns {
         USER_ID(0),
@@ -55,6 +57,9 @@ public class BundleParser implements CSVParser {
      */
     @Override
     public void parse(List<String[]> data) {
+        if(data.isEmpty())
+            return;
+
         var len = data.get(0).length;
         int numberOfProducts = len-BundleColumns.FIRST_PROD.col;
         String[] product = new String[numberOfProducts];
@@ -74,18 +79,20 @@ public class BundleParser implements CSVParser {
 
             // checks if user is present
             User user = optUser.orElseThrow(() -> INVALID_USER_EXCEPTION);
-            int day;
-            try {
-                day = Integer.parseInt(line[BundleColumns.DAY.col]);
-            } catch (NumberFormatException e) {
-                throw INVALID_DAY_EXCEPTION;
-            }
 
-            switch (user.getUserType()) {
-                // O(p); p => number of products
-                case PRODUCER -> parseProducerLine(line, product,len,user,day);
-                // O(p); p => number of products
-                case CLIENT, COMPANY -> parseClientLine(line, product, len, user, day);
+            Optional<Integer> dayOpt = parseDay(line[BundleColumns.DAY.col]);
+            if (dayOpt.isPresent()) {
+                int day = dayOpt.get();
+                if (day == 0)
+                    throw INVALID_DAY_EXCEPTION;
+                switch (user.getUserType()) {
+                    // O(p); p => number of products
+                    case PRODUCER -> parseProducerLine(line, product, len, user, day);
+                    // O(p); p => number of products
+                    case CLIENT, COMPANY -> parseClientLine(line, product, len, user, day);
+                }
+            }else{
+                throw INVALID_DAY_EXCEPTION;
             }
         });
     }
@@ -96,11 +103,19 @@ public class BundleParser implements CSVParser {
 
         // O(p); p => number of products
         for (int i = BundleParser.BundleColumns.FIRST_PROD.col; i < len; i++) {
-            float quantity = Float.parseFloat(line[i]);
-            int productIndex = i - BundleParser.BundleColumns.FIRST_PROD.col;
-
-            if (quantity != 0)
-                stock.addProductStock(productStore.getProduct(product[productIndex]), quantity, day);
+            Optional<Float> quantityOpt = parseQuantity(line[i]);
+            if (quantityOpt.isPresent()) {
+                float quantity = quantityOpt.get();
+                if (quantity < 0) {
+                    throw INVALID_QNT_EXCEPTION;
+                }
+                int productIndex = i - BundleParser.BundleColumns.FIRST_PROD.col;
+                if (quantity != 0)
+                    stock.addProductStock(productStore.getProduct(product[productIndex]), quantity, day);
+            }else{
+                // Handle the case where the input line does not contain a valid quantity
+                throw INVALID_QNT_EXCEPTION;
+            }
         }
     }
 
@@ -109,12 +124,37 @@ public class BundleParser implements CSVParser {
 
         // O(p); p => number of products
         for (int i = BundleParser.BundleColumns.FIRST_PROD.col; i < len; i++) {
-            float quantity = Float.parseFloat(line[i]);
-            int productIndex = i - BundleParser.BundleColumns.FIRST_PROD.col;
+            Optional<Float> quantityOpt = parseQuantity(line[i]);
+            if (quantityOpt.isPresent()) {
+                float quantity = quantityOpt.get();
+                if (quantity < 0) {
+                    throw INVALID_QNT_EXCEPTION;
+                }
 
-            if (quantity != 0)
-                bundle.addNewOrder(productStore.getProduct(product[productIndex]), quantity);
+                int productIndex = i - BundleParser.BundleColumns.FIRST_PROD.col;
+                if (quantity != 0)
+                    bundle.addNewOrder(productStore.getProduct(product[productIndex]), quantity);
+            }else {
+                // Handle the case where the input line does not contain a valid quantity
+                throw INVALID_QNT_EXCEPTION;
+            }
         }
         bundleStore.addBundle(bundle);
+    }
+
+    private Optional<Float> parseQuantity(String str) {
+        try {
+            return Optional.of(Float.parseFloat(str));
+        } catch (NumberFormatException e) {
+            return Optional.empty();
+        }
+    }
+
+    private Optional<Integer> parseDay(String str) {
+        try {
+            return Optional.of(Integer.parseUnsignedInt(str));
+        } catch (NumberFormatException e) {
+            return Optional.empty();
+        }
     }
 }
