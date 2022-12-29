@@ -1,10 +1,10 @@
-#import <stdio.h>
+#include <stdio.h>
 #include <string.h>
-#import <stdlib.h>
+#include <stdlib.h>
 #include <time.h>
 
-#import "export_csv.h"
-#import "util.h"
+#include "export_csv.h"
+#include "util.h"
 
 #define NUM_ROWS    6
 #define NUM_COLS    3
@@ -44,7 +44,6 @@ void
 export_dailymatrix(union matrix_value matrix[NUM_ROWS][NUM_COLS])
 {
     const union matrix_value *p = &matrix[0][0];
-    int row, column;
     FILE *fp;
 
     char filename[100] = "dailymatrix";
