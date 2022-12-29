@@ -28,7 +28,9 @@ export_sensor_data(const Sensor *sensors, int num_sensors) {
 
     // Create the filename string in one step using snprintf
     char filename[100];
-    snprintf(filename, sizeof(filename), "sensor_data_%s.csv", get_date());
+    char *date = get_date();
+    snprintf(filename, sizeof(filename), "sensor_data_%s.csv", date);
+    free(date);
 
     fp = fopen(filename, "w"); // Creates an empty file for writing
 
