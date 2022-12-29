@@ -36,6 +36,10 @@ public class BundleStore{
         return bundles.get(day).iterator();
     }
 
+    public ArrayList<Bundle> getBundlesArray(int day){
+        return bundles.get(day);
+    }
+
     //TODO needed?
     //returns a iterator with all bundles from the previous 2 days, that were not delivered
     public Iterator<Bundle> getUndelivered(int day){
@@ -53,5 +57,8 @@ public class BundleStore{
         }
         return undelivered.iterator();
     }
-    
+
+    public int size() {
+        return this.bundles.size();
+    }
 }
