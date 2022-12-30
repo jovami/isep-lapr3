@@ -1,6 +1,6 @@
 PROGNAME = main
 
-CXXFLAGS = -Iinclude -D_POSIX_C_SOURCE=200809L -D_DEFAULT_SOURCE
+CXXFLAGS = -Iinclude -D_POSIX_C_SOURCE=200809L -D_DEFAULT_SOURCE -D_GNU_SOURCE -DPROGNAME=\"${PROGNAME}\"
 CFLAGS = -std=gnu17 -Wall -pedantic -pipe -O2 ${CXXFLAGS}
 LDFLAGS =
 
@@ -14,6 +14,7 @@ CC = cc
 CSRC = main.c \
 	   menu.c \
 	   bootstrap.c \
+	   conf/confparser.c \
 	   util.c \
 	   rnd/rnd.c \
 	   sensors/sensor_impl.c \
@@ -30,11 +31,12 @@ SSRC = rnd/rnd_gen.s \
 	   sensors/sens_velc_vento.s \
 	   sensors/verify_value_generated.s \
 
+INIPARSERSH = conf/build.sh
 
-OBJ = ${CSRC:.c=.o} ${SSRC:.s=.o}
+OBJ = ${CSRC:.c=.o} ${SSRC:.s=.o} conf/libiniparser.a
 
 
-all: flags ${PROGNAME}
+all: flags lib ${PROGNAME}
 
 flags:
 	@echo "${PROGNAME} build options:"
@@ -43,6 +45,10 @@ flags:
 	@[ -z "${DEBUG}" ] || echo "DEBUG_CFLAGS =    ${DEBUG_CFLAGS}"
 	@echo "CC          =    ${CC}"
 	@echo
+
+lib: ${INIPARSERSH}
+	chmod +x $<
+	./$<
 
 %.o: %.c
 	$(CC) -c ${CFLAGS} ${DEBUG_CFLAGS} -o $@ $<
@@ -55,5 +61,6 @@ ${PROGNAME}: ${OBJ}
 
 clean:
 	rm -f ${OBJ} ${PROGNAME}
+	rm -f conf/dictionary.h conf/{lib,}iniparser.*
 
 .PHONY: all flags clean

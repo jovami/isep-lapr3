@@ -1,3 +1,4 @@
+#include <errno.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -59,3 +60,21 @@ arqcp_malloc(size_t nmemb, size_t size)
     return p;
 }
 
+ssize_t
+read_int(char **bufp, size_t *n)
+{
+    ssize_t d, len;
+
+    if ((len = getline(bufp, n, stdin)) == -1)
+        die("read_int: getline: failed to read input");
+
+    char *line = *bufp;
+    line[len-1] = '\0';
+
+    if (sscanf(line, "%zd", &d) <= 0 || d <= 0) {
+        errno = EINVAL;
+        return 0;
+    }
+
+    return d;
+}

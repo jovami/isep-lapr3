@@ -1,4 +1,5 @@
 #include <errno.h>
+#include <getopt.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -8,74 +9,78 @@
 #include <util.h>
 
 #include "bootstrap.h"
+#include "conf/confparser.h"
 #include "menu.h"
 
-static ssize_t read_int(char **tmp_buf, size_t *n);
-static void setnumsensors(size_t sizes[SENS_LAST]);
+__attribute__((__always_inline__))
+static inline size_t getwhilebad(char **tmp_buf, size_t *n);
 
-ssize_t
-read_int(char **bufp, size_t *n)
-{
-    ssize_t d, len;
+static void set_sizes_freqs(size_t sizes[SENS_LAST], char loaded_conf, unsigned long freqs[SENS_LAST]);
+static void help(void);
 
-    if ((len = getline(bufp, n, stdin)) == -1)
-        die("read_int: failed to read input: ");
-
-    char *line = *bufp;
-    line[len-1] = '\0';
-
-    if (sscanf(line, "%zd", &d) <= 0 || d <= 0) {
-        errno = EINVAL;
-        return 0;
-    }
-
-    return d;
-}
-
-void
-setnumsensors(size_t sizes[SENS_LAST])
+size_t
+getwhilebad(char **tmp, size_t *n)
 {
     /* NOTE: we use ssize_t instead of size_t
      * to disallow the user to get away with typing '-1'
      * and it being valid due to integer carry
      */
-    ssize_t amt;
+    ssize_t val;
+    while ((val = read_int(tmp, n)) <= 0)
+        fputs("error: invalid number\nTry again: ", stderr);
+    return val;
+}
 
+void
+set_sizes_freqs(size_t sizes[SENS_LAST], char loaded_conf, unsigned long freqs[SENS_LAST])
+{
     char *tmp = NULL;
     size_t n = 0;
 
     size_t i;
     for (i = 0; i < SENS_LAST; i++) {
         fprintf(stdout, "How many sensors of the type \"%s\"? ", strsens(i));
+        sizes[i] = getwhilebad(&tmp, &n);
 
-        while ((amt = read_int(&tmp, &n)) <= 0)
-            fputs("error: invalid number\nTry again: ", stdout);
-        sizes[i] = amt;
+        if (!loaded_conf) {
+            fputs("What should the default frequency be? (seconds) ", stdout);
+            freqs[i] = getwhilebad(&tmp, &n);
+        }
+        putchar('\n');
     }
     free(tmp);
-    putchar('\n');
 }
 
 int
 main(int argc, char **argv)
 {
-    /* TODO parse argv */
+    char loaded_conf = 0;
     unsigned long freqs[SENS_LAST];
-    {
-        /* NOTE: temporary */
-        for (size_t i = 0; i < SENS_LAST; i++)
-            freqs[i] = 1;
+
+    int opt, option_index = 0;
+    const char *optstr = "hc:";
+
+    static struct option opts[] = {
+        { "config", required_argument, 0, 'c' },
+        { "help",   no_argument,       0, 'h' },
+    };
+
+    while ((opt = getopt_long(argc, argv, optstr, opts, &option_index)) != -1) {
+        switch (opt) {
+        case 'c':
+            loaded_conf = parsefreqs(optarg, freqs);
+            break;
+        case 'h':
+            help();
+            exit(EXIT_SUCCESS);
+            break;
+        default:
+            exit(EXIT_FAILURE);
+        }
     }
 
     size_t sizes[SENS_LAST];
-    setnumsensors(sizes);
-
-#if defined (_JOVAMI_DEBUG)
-    puts("====DEBUG====");
-    for (size_t __i = 0; __i < SENS_LAST; __i++)
-        printf("%s: %zu\n", strsens(__i), sizes[__i]);
-    puts("=============\n");
-#endif /* defined (_JOVAMI_DEBUG) */
+    set_sizes_freqs(sizes, loaded_conf, freqs);
 
     sensor_vec pack[SENS_LAST];
 
@@ -92,4 +97,10 @@ main(int argc, char **argv)
     for (i = 0; i < SENS_LAST; i++)
         vec_free(pack+i);
     return 0;
+}
+
+void
+help(void)
+{
+    printf("usage: %s [ -c | --config config_file ]\n", PROGNAME);
 }

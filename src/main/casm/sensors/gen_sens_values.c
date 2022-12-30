@@ -8,7 +8,6 @@
 
 #include "gen_sens_values.h"
 
-static void show_val(enum SensorType t, size_t idx, const union sens_value *val);
 static void stop_handler(int);
 
 static const sens_upd_t wrappers[SENS_LAST] = {
@@ -21,28 +20,6 @@ static const sens_upd_t wrappers[SENS_LAST] = {
 };
 
 static int running = 0;
-
-void
-show_val(enum SensorType t, size_t idx, const union sens_value *val)
-{
-    const char *name = strsens(t);
-    switch (t) {
-        case SENS_TEMP:
-            printf("%s %zu: %hhd\n", name, idx, val->c);
-            break;
-        case SENS_DIR_VNT:
-            printf("%s %zu: %hu\n", name, idx, val->us);
-            break;
-        case SENS_PLUV:     /* FALLTHROUGH */
-        case SENS_VEL_VNT:
-        case SENS_HUM_ATM:
-        case SENS_HUM_SOL:
-            printf("%s %zu: %hhu\n", name, idx, val->uc);
-            break;
-        default:
-            break;
-    }
-}
 
 void
 stop_handler(int unused)
@@ -105,7 +82,11 @@ gen_sens_values(sensor_vec *pack)
                  * time is a multiple of the frequency */
                 if ((time % s->frequency) == 0) {
                     wrapper(s, aux);
-                    show_val(i, j+1, &(union sens_value) { .us = s->readings[s->len-1] });
+                    if (i == SENS_TEMP)
+                        printf("%s %zu: %hhd\n", strsens(i), j+1,
+                               (signed char) s->readings[s->len-1]);
+                    else
+                        printf("%s %zu: %hu\n", strsens(i), j+1, s->readings[s->len-1]);
                 }
             }
         }

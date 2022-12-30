@@ -13,7 +13,7 @@ ifneq ($(strip ${DEBUG}),)
 	DEBUG_CFLAGS = -g ${DEBUG_CXXFLAGS}
 endif
 
-CFILES = $(shell find ${PFX} -type f ! -iname 'main.c' -iname '*.c')
+CFILES = $(shell find ${PFX} -type f ! -iname 'main.c' ! -ipath '*/conf/*' -iname '*.c')
 SFILES = $(shell find ${PFX} -type f -iname '*.s')
 
 CSRC = tests.c rnd_gen_test.c sensor_vec_test.c ${CFILES}

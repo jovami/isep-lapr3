@@ -20,15 +20,15 @@ enum {
 #define NUM_COLS    COL_LAST
 
 __attribute__((__always_inline__))
-static inline unsigned short get_max(enum SensorType t, const union sens_value *old, const union sens_value *new);
+static inline unsigned short get_max(enum SensorType t, const union SensorValue *old, const union SensorValue *new);
 __attribute__((__always_inline__))
-static inline unsigned short get_min(enum SensorType t, const union sens_value *old, const union sens_value *new);
+static inline unsigned short get_min(enum SensorType t, const union SensorValue *old, const union SensorValue *new);
 
 static void fill_matrix(unsigned short matrix[NUM_ROWS][NUM_COLS], const sensor_vec *pack);
 static void print_matrix(unsigned short matrix[NUM_ROWS][NUM_COLS]);
 
 unsigned short
-get_max(enum SensorType t, const union sens_value *old, const union sens_value *new)
+get_max(enum SensorType t, const union SensorValue *old, const union SensorValue *new)
 {
     switch (t) {
         case SENS_TEMP:
@@ -50,7 +50,7 @@ get_max(enum SensorType t, const union sens_value *old, const union sens_value *
 }
 
 unsigned short
-get_min(enum SensorType t, const union sens_value *old, const union sens_value *new)
+get_min(enum SensorType t, const union SensorValue *old, const union SensorValue *new)
 {
     switch (t) {
         case SENS_TEMP:
@@ -94,7 +94,7 @@ fill_matrix(unsigned short matrix[NUM_ROWS][NUM_COLS], const sensor_vec *pack)
         const size_t len = v->len;
 
         unsigned short avg;
-        union sens_value min, max;
+        union SensorValue min, max;
 
         avg = 0;
         min.us = (data+0)->readings[0];
@@ -107,7 +107,7 @@ fill_matrix(unsigned short matrix[NUM_ROWS][NUM_COLS], const sensor_vec *pack)
 
             for (size_t k = 0; k < rlen; k++) {
                 unsigned short val = *(readings + k);
-                union sens_value uval = { .us = val };
+                union SensorValue uval = { .us = val };
 
                 avg += val;
                 min.us = get_min(i, &min, &uval);

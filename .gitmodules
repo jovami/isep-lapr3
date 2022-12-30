@@ -1,0 +1,3 @@
+[submodule "src/main/casm/conf/iniparser"]
+	path = src/main/casm/conf/iniparser
+	url = https://github.com/ndevilla/iniparser.git

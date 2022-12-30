@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stddef.h>
+#include <sys/types.h>
 
 #define LENGTH(X)   (sizeof(X) / sizeof(X[0]))
 
@@ -12,3 +13,5 @@ void *arqcp_calloc(size_t nmemb, size_t size);
 
 __attribute__((__warn_unused_result__))
 void *arqcp_malloc(size_t nmemb, size_t size);
+
+ssize_t read_int(char **tmp, size_t *n);

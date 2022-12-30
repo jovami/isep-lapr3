@@ -11,42 +11,42 @@ bootstrap(sensor_vec pack[SENS_LAST], unsigned long freqs[SENS_LAST])
               30,
               TEMP_LIM_MAX,
               TEMP_LIM_MIN,
-              2,
+              freqs[SENS_TEMP],
               MAX_BAD_VALUES);
     sens_init(&p1,
               SENS_PLUV,
               70,
               PLUVIO_LIM_MAX,
               PLUVIO_LIM_MIN,
-              1,
+              freqs[SENS_PLUV],
               MAX_BAD_VALUES);
     sens_init(&dv1,
               SENS_DIR_VNT,
               70,
               DIR_VENTO_LIM_MAX,
               DIR_VENTO_LIM_MIN,
-              2,
+              freqs[SENS_DIR_VNT],
               MAX_BAD_VALUES);
     sens_init(&vv1,
               SENS_VEL_VNT,
               50,
               VELC_VENTO_LIM_MAX,
               VELC_VENTO_LIM_MIN,
-              1,
+              freqs[SENS_VEL_VNT],
               MAX_BAD_VALUES);
     sens_init(&ha1,
               SENS_HUM_ATM,
               30,
               HUMD_ATM_LIM_MAX,
               HUMD_ATM_LIM_MIN,
-              2,
+              freqs[SENS_HUM_ATM],
               MAX_BAD_VALUES);
     sens_init(&hs1,
               SENS_HUM_SOL,
               40,
               HUMD_SOLO_LIM_MAX,
               HUMD_SOLO_LIM_MIN,
-              1,
+              freqs[SENS_HUM_SOL],
               MAX_BAD_VALUES);
 
     /********************************/

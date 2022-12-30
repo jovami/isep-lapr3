@@ -79,7 +79,6 @@ sens_init(Sensor *s,
 
     s->readings[s->len++] = first_val;
 
-    /* TODO: ensure max_bad is non-zero */
     s->max_bad = max_bad;
     s->cur_bad = 0;
 
