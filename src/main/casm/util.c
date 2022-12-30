@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include <util.h>
 
@@ -77,4 +78,20 @@ read_int(char **bufp, size_t *n)
     }
 
     return d;
+}
+
+char 
+*get_date(void) {
+    // Get the current time
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+
+    // Allocate a buffer large enough to hold the formatted string
+    char *date = arqcp_malloc(11, 1);
+
+    // Format the date string using strftime and add a null terminator
+    strftime(date, 11, "%Y-%m-%d", &tm);
+    date[10] = '\0';
+
+    return date;
 }

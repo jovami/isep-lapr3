@@ -24,22 +24,6 @@ enum {
     MIN_COL,
 }; /* matrix cols */
 
-
-char *get_date() {
-    // Get the current time
-    time_t t = time(NULL);
-    struct tm tm = *localtime(&t);
-
-    // Allocate a buffer large enough to hold the formatted string
-    char *date = arqcp_malloc(11, 1);
-
-    // Format the date string and add a null terminator
-    sprintf(date, "%d-%d-%d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
-    date[10] = '\0';
-
-    return date;
-}
-
 void    
 export_dailymatrix(union matrix_value matrix[NUM_ROWS][NUM_COLS])
 {

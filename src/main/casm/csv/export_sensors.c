@@ -7,21 +7,6 @@
 #include "export_csv.h"
 #include "sensor_impl.h"
 
-char *get_date() {
-    // Get the current time
-    time_t t = time(NULL);
-    struct tm tm = *localtime(&t);
-
-    // Allocate a buffer large enough to hold the formatted string
-    char *date = arqcp_malloc(11, 1);
-
-    // Format the date string using strftime and add a null terminator
-    strftime(date, 11, "%Y-%m-%d", &tm);
-    date[10] = '\0';
-
-    return date;
-}
-
 void 
 export_sensor_data(const Sensor *sensors, int num_sensors) {
     FILE *fp;
