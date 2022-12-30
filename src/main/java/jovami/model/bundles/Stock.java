@@ -33,25 +33,45 @@ public class Stock {
     }
 
     //retorna true se houver stock suficiente contando com os ultimos dias
-    public boolean retrieveFromStock(Product product, int day, int qntToRetrieve){
-
+    public boolean retrieveFromStock(Product product, int day, float qntToRetrieve){
         if(qntToRetrieve < 0)
             return false;
-        
+
         ProductStock prodStockForThatDay;
+        int sum = 0;
 
         //ver para os ultimos dois dias se há stock
         for (int i = day-DELTA_DAYS; i <= day; i++) {
-            if(day >= FIRST_DAY){
+            if(i >= FIRST_DAY){
+                //stock para um produto num determinado dia
                 prodStockForThatDay = stock.get(i).get(product);
 
-                if(!prodStockForThatDay.retrieveStock(qntToRetrieve)){
-                    prodStockForThatDay.retrieveStock(prodStockForThatDay.getStash());
-                    qntToRetrieve-=prodStockForThatDay.getStash();
+                if(prodStockForThatDay!=null){
+                    sum+=prodStockForThatDay.getStash();
+                    //apenas se houver uma quantidade suficiente nos ultimos dois dias e que retiramos do stock
+
+                    if(sum>=qntToRetrieve){
+                        for (int j = day-DELTA_DAYS; j <= i; j++) {
+                            if(j >= FIRST_DAY) {
+                                //stock para um produto num determinado dia
+                                prodStockForThatDay = stock.get(j).get(product);
+
+                                if (prodStockForThatDay != null) {
+                                    if(prodStockForThatDay.retrieveStock(qntToRetrieve)){
+                                        qntToRetrieve=0;
+                                    }else{
+                                        float stash = prodStockForThatDay.getStash();
+                                        prodStockForThatDay.retrieveStock(stash);
+                                        qntToRetrieve -= stash;
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    }
                 }
             }
         }
-        
         return qntToRetrieve == 0;
     }
 }

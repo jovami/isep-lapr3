@@ -14,6 +14,7 @@ public class User {
     private final UserType userType;
     private final Coordinate coords;
     private String locationID;
+    private User nearestHub;
 
     /**
      * Instantiates a new User.
@@ -35,6 +36,8 @@ public class User {
 
         if (this.userType == null)
             throw new IllegalArgumentException("Unknown UserType for ID: " + this.userID);
+
+        this.nearestHub = null;
     }
 
     private void setLocationID(String locID) {
@@ -50,6 +53,10 @@ public class User {
         if (id.isEmpty())
             throw new IllegalArgumentException("User ID cannot be empty!!");
         this.userID = id;
+    }
+
+    public void setNearestHub(User nearestHub){
+        this.nearestHub = nearestHub;
     }
 
     //===================== Getters =====================//
@@ -88,5 +95,9 @@ public class User {
      */
     public String getLocationID() {
         return this.locationID;
+    }
+
+    public User getNearestHub() {
+        return nearestHub;
     }
 }

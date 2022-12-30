@@ -26,6 +26,6 @@ public class ProductStore {
     }
 
     public void addProduct(Product product){
-        products.put(product.getNome(), product);
+        products.put(product.getName(), product);
     }
 }

@@ -55,6 +55,11 @@ public class Bundle {
     public int getDay() {
         return this.day;
     }
+
+    public User getClient() {
+        return this.client;
+    }
+
     public boolean isDelivered(){
         return this.delivered;
     }
