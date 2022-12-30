@@ -1,9 +1,8 @@
-#import <stdio.h>
+#include <stdio.h>
 #include <string.h>
-#import <stdlib.h>
+#include <stdlib.h>
 #include <time.h>
-
-#import "export_csv.h"
+#include "export_csv.h"
 
 #define NUM_ROWS    6
 #define NUM_COLS    3
