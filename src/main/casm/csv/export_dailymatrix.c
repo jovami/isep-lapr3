@@ -2,7 +2,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+
 #include "export_csv.h"
+#include "util.h"
 
 #define NUM_ROWS    6
 #define NUM_COLS    3
@@ -29,11 +31,7 @@ char *get_date() {
     struct tm tm = *localtime(&t);
 
     // Allocate a buffer large enough to hold the formatted string
-    char *date = malloc(11);
-    if (date == NULL) {
-        perror("malloc failed!");
-        EXIT_FAILURE;
-    }
+    char *date = arqcp_malloc(11, 1);
 
     // Format the date string and add a null terminator
     sprintf(date, "%d-%d-%d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
@@ -46,7 +44,6 @@ void
 export_dailymatrix(union matrix_value matrix[NUM_ROWS][NUM_COLS])
 {
     const union matrix_value *p = &matrix[0][0];
-    int row, column;
     FILE *fp;
 
     char filename[100] = "dailymatrix";
