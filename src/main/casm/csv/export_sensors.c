@@ -3,12 +3,15 @@
 #include <string.h>
 #include <time.h>
 
+#include "sensor_vec.h"
 #include "util.h"
 #include "export_csv.h"
 #include "sensor_impl.h"
+#include "sensor_impl.h"
+
 
 void 
-export_sensor_data(const Sensor *sensors, int num_sensors) {
+export_sensor_data(const sensor_vec *sensors) {
     FILE *fp;
 
     // Create the filename string in one step using snprintf
@@ -28,33 +31,16 @@ export_sensor_data(const Sensor *sensors, int num_sensors) {
         exit(1);
     }
 
-    /* Write header row with sensor names */
-    fprintf(fp, "Sensor Type");
-    for (int i = 0; i < num_sensors; i++) {
-        fprintf(fp, ",%s", strsens(sensors[i].sensor_type));
-    }
-    fprintf(fp, "\n");
+    /* Write sensor readings */
+    for (size_t i = 0; i < sensors->len; i++) {
+        const Sensor *sensor = &sensors->data[i];
+        const char *sensor_type = strsens(sensor->sensor_type);
+        fprintf(fp, "%s", sensor_type);
 
-    /* Find maximum number of readings among all sensors */
-    int max_readings = 0;
-    for (int i = 0; i < num_sensors; i++) {
-        if (sensors[i].len > max_readings) {
-            max_readings = sensors[i].len;
-        }
-    }
-
-    /* Write rows with sensor readings */
-    for (int i = 0; i < max_readings; i++) {
-        fprintf(fp, "%d", i);
-        for (int j = 0; j < num_sensors; j++) {
-            if (i < sensors[j].len) {
-                fprintf(fp, ",%hu", sensors[j].readings[i]);
-            } else {
-                fprintf(fp, ",");   /* Empty cell */
-            }
+        for (size_t j = 0; j < sensor->len; j++) {
+            fprintf(fp, "%hu;", sensor->readings[j]);
         }
         fprintf(fp, "\n");
     }
-
     fclose(fp);
 }

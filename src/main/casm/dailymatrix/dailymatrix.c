@@ -4,6 +4,7 @@
 #include <sensor_vec.h>
 
 #include "dailymatrix.h"
+#include "export_csv.h"
 
 #define MAX(X, Y)   ((X) > (Y) ? (X) : (Y))
 #define MIN(X, Y)   ((X) < (Y) ? (X) : (Y))
@@ -78,8 +79,8 @@ daily_matrix(sensor_vec *pack)
     fill_matrix(matrix, pack);
     print_matrix(matrix);
 
-    /* US 112 */
-    /* ... */
+    export_dailymatrix(matrix);
+    export_sensor_data(pack);
 
     putchar('\n');
 }

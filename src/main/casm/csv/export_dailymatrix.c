@@ -6,9 +6,6 @@
 #include "export_csv.h"
 #include "util.h"
 
-#define NUM_ROWS    6
-#define NUM_COLS    3
-
 enum {
     TEMP_ROW,
     DIR_VENTO_ROW,
@@ -24,15 +21,20 @@ enum {
     MIN_COL,
 }; /* matrix cols */
 
+#define NUM_ROWS    6
+#define NUM_COLS    3
+
 void    
-export_dailymatrix(union matrix_value matrix[NUM_ROWS][NUM_COLS])
+export_dailymatrix(unsigned short matrix[NUM_ROWS][NUM_COLS])
 {
-    const union matrix_value *p = &matrix[0][0];
+    const unsigned short *p = &matrix[0][0];
     FILE *fp;
 
-    char filename[100] = "dailymatrix";
-    strcat(filename, get_date());
-    strcat(filename, ".csv");
+    // Create the filename string in one step using snprintf
+    char filename[100];
+    char *date = get_date();
+    snprintf(filename, sizeof(filename), "daily_matrix_%s.csv", date);
+    free(date);
 
     fp = fopen(filename, "w"); // Creates an empty file for writing
 
@@ -74,9 +76,9 @@ export_dailymatrix(union matrix_value matrix[NUM_ROWS][NUM_COLS])
         }
 
         if (i < NUM_COLS)
-            fprintf(fp, "%d", (p+i)->i);
+            fprintf(fp, "%hhd", (signed char) *(p+i));
         else
-            fprintf(fp, "%u", (p+i)->ui);
+            fprintf(fp, "%hu", *(p+i));
     }
     fclose(fp);
 }
