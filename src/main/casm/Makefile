@@ -21,6 +21,8 @@ CSRC = main.c \
 	   sensors/sensor_vec.c \
 	   sensors/gen_sens_values.c \
 	   dailymatrix/dailymatrix.c \
+       csv/export_dailymatrix.c \
+	   csv/export_sensors.c \
 
 SSRC = rnd/rnd_gen.s \
 	   sensors/sens_dir_vento.s \
