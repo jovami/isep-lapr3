@@ -17,7 +17,7 @@ export_sensor_data(const sensor_vec *sensors) {
     // Create the filename string in one step using snprintf
     char filename[100];
     char *date = get_date();
-    snprintf(filename, sizeof(filename), "sensor_data_%s.csv", date);
+    snprintf(filename, sizeof(filename), "sensors_data_%s.csv", date);
     free(date);
 
     fp = fopen(filename, "w"); // Creates an empty file for writing
@@ -32,15 +32,21 @@ export_sensor_data(const sensor_vec *sensors) {
     }
 
     /* Write sensor readings */
-    for (size_t i = 0; i < sensors->len; i++) {
-        const Sensor *sensor = &sensors->data[i];
-        const char *sensor_type = strsens(sensor->sensor_type);
-        fprintf(fp, "%s", sensor_type);
+    for (enum SensorType i = 0; i < SENS_LAST; i++) {
+        const sensor_vec *temp = sensors+i;
+        const size_t length = temp->len;
 
-        for (size_t j = 0; j < sensor->len; j++) {
-            fprintf(fp, "%hu;", sensor->readings[j]);
+        for (size_t j = 0; j < length; j++) {
+            const Sensor *sensor = &sensors->data[j];
+            const char *sensor_type = strsens(sensor->sensor_type);
+            const size_t length1 = sensor->len;
+            fprintf(fp, "%s;", sensor_type);
+
+            for (size_t k = 0; k < length1; k++) {
+                fprintf(fp, "%hu;", sensor->readings[k]);
+            }
+            fprintf(fp, "\n");
         }
-        fprintf(fp, "\n");
     }
     fclose(fp);
 }

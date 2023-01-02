@@ -33,7 +33,7 @@ export_dailymatrix(unsigned short matrix[NUM_ROWS][NUM_COLS])
     // Create the filename string in one step using snprintf
     char filename[100];
     char *date = get_date();
-    snprintf(filename, sizeof(filename), "daily_matrix_%s.csv", date);
+    snprintf(filename, sizeof(filename), "daily_matrix_data_%s.csv", date);
     free(date);
 
     fp = fopen(filename, "w"); // Creates an empty file for writing
@@ -76,9 +76,9 @@ export_dailymatrix(unsigned short matrix[NUM_ROWS][NUM_COLS])
         }
 
         if (i < NUM_COLS)
-            fprintf(fp, "%hhd", (signed char) *(p+i));
+            fprintf(fp, ";%hhd;", (signed char) *(p+i));
         else
-            fprintf(fp, "%hu", *(p+i));
+            fprintf(fp, ";%hu;", *(p+i));
     }
     fclose(fp);
 }
