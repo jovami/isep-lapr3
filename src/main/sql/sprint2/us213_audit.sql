@@ -39,3 +39,33 @@ BEGIN
         values (USER, SYSDATE, v_op_type);
 END;
 /
+
+
+--- Acceptance criteria #3 ---
+CREATE or replace PROCEDURE p_view_audits
+AS
+BEGIN
+    dbms_output.put_line('   USER   ||   DATE   ||   OPERATION TYPE');
+
+    for record in (
+        SELECT a.login_name     as name
+            , a.operation_date  as dt
+            , a.operation_type  as type
+        FROM
+            exploracao_agr_audit a
+        ORDER BY
+            a.operation_date ASC
+    ) loop
+        dbms_output.put_line(
+            '' || record.name
+            || '||' || record.dt
+            || '||' || record.type
+        );
+    end loop;
+END;
+/
+
+-- run:
+BEGIN
+    p_view_audits();
+END;
