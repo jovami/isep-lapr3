@@ -19,9 +19,10 @@ CREATE TABLE exploracao_agr_audit (
 
 
 --- Acceptance criteria #2 ---
-CREATE OR REPLACE TRIGGER t_exploracao_agr_operations
+-- Triggers {{{
+CREATE OR REPLACE TRIGGER t_registo_colheita_audit
 AFTER
-    INSERT OR UPDATE OR DELETE ON parcela_agricola
+    INSERT OR UPDATE OR DELETE ON registo_colheita
 FOR EACH ROW
 DECLARE
     v_op_type   exploracao_agr_audit.operation_type%TYPE;
@@ -39,6 +40,70 @@ BEGIN
         values (USER, SYSDATE, v_op_type);
 END;
 /
+
+CREATE OR REPLACE TRIGGER t_registo_restricao_audit
+AFTER
+    INSERT OR UPDATE OR DELETE ON registo_restricao
+FOR EACH ROW
+DECLARE
+    v_op_type   exploracao_agr_audit.operation_type%TYPE;
+BEGIN
+    if deleting then
+        v_op_type := 'DELETE';
+    elsif inserting then
+        v_op_type := 'INSERT';
+    else
+        v_op_type := 'DELETE';
+    end if;
+
+    INSERT into exploracao_agr_audit
+        (login_name, operation_date, operation_type)
+        values (USER, SYSDATE, v_op_type);
+END;
+/
+
+CREATE OR REPLACE TRIGGER t_registo_dado_met_audit
+AFTER
+    INSERT OR UPDATE OR DELETE ON registo_dado_meteorologico
+FOR EACH ROW
+DECLARE
+    v_op_type   exploracao_agr_audit.operation_type%TYPE;
+BEGIN
+    if deleting then
+        v_op_type := 'DELETE';
+    elsif inserting then
+        v_op_type := 'INSERT';
+    else
+        v_op_type := 'DELETE';
+    end if;
+
+    INSERT into exploracao_agr_audit
+        (login_name, operation_date, operation_type)
+        values (USER, SYSDATE, v_op_type);
+END;
+/
+
+CREATE OR REPLACE TRIGGER t_registo_fertilizacao_audit
+AFTER
+    INSERT OR UPDATE OR DELETE ON registo_fertilizacao
+FOR EACH ROW
+DECLARE
+    v_op_type   exploracao_agr_audit.operation_type%TYPE;
+BEGIN
+    if deleting then
+        v_op_type := 'DELETE';
+    elsif inserting then
+        v_op_type := 'INSERT';
+    else
+        v_op_type := 'DELETE';
+    end if;
+
+    INSERT into exploracao_agr_audit
+        (login_name, operation_date, operation_type)
+        values (USER, SYSDATE, v_op_type);
+END;
+/
+-- }}}
 
 
 --- Acceptance criteria #3 ---
@@ -69,3 +134,11 @@ END;
 BEGIN
     p_view_audits();
 END;
+/
+
+
+
+DROP TRIGGER t_registo_colheita_audit;
+DROP TRIGGER t_registo_restricao_audit;
+DROP TRIGGER t_registo_dado_met_audit;
+DROP TRIGGER t_registo_fertilizacao_audit;
