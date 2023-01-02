@@ -16,3 +16,26 @@ CREATE TABLE exploracao_agr_audit (
             CHECK(operation_type IN ('INSERT', 'UPDATE', 'DELETE')),
     CONSTRAINT pk_audit_id PRIMARY KEY(audit_id)
 );
+
+
+--- Acceptance criteria #2 ---
+CREATE OR REPLACE TRIGGER t_exploracao_agr_operations
+AFTER
+    INSERT OR UPDATE OR DELETE ON parcela_agricola
+FOR EACH ROW
+DECLARE
+    v_op_type   exploracao_agr_audit.operation_type%TYPE;
+BEGIN
+    if deleting then
+        v_op_type := 'DELETE';
+    elsif inserting then
+        v_op_type := 'INSERT';
+    else
+        v_op_type := 'DELETE';
+    end if;
+
+    INSERT into exploracao_agr_audit
+        (login_name, operation_date, operation_type)
+        values (USER, SYSDATE, v_op_type);
+END;
+/
