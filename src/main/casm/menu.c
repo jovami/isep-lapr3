@@ -105,6 +105,7 @@ getchar_flush(void)
 short choose_type_sens()
 {
     int opt;
+
     do
     {
         for (size_t i = 0; i < SENS_LAST; i++)
@@ -114,15 +115,24 @@ short choose_type_sens()
         fputs("\nChoose one: ", stdout);
         opt = getchar_flush() - '1';   
     } while (opt>=7 && opt<=0);
+
     return opt; 
 }
 
 
 short choose_sens(sensor_vec *type_pack)
 {
-    print_vec(type_pack);
-    fputs("\nChoose one: ",stdout);
-    return getchar_flush() - '1';
+    int opt;
+    do{
+
+        print_vec(type_pack);
+        fputs("\n0) Back",stdout);
+        fputs("\nChoose one: ",stdout);
+        opt = getchar_flush() - '0';
+
+    } while (opt >= (type_pack->len) || opt<0);
+
+    return opt;
     
 }
 
@@ -131,7 +141,7 @@ void print_vec(sensor_vec *type_pack)
     Sensor *sens = type_pack->data;
     for (size_t i = 0; i < type_pack->len; i++)
     {
-        fprintf(stdout, "%ld) %s %d\n",i+1, strsens((sens+i)->sensor_type),(sens+i)->id);
+        fprintf(stdout, "%ld) %s %ld\n",i+1, strsens((sens+i)->sensor_type),i+1);
     }
 }
 void print_success_msg()
@@ -250,8 +260,11 @@ void add_remove(sensor_vec *pack, int opt, short n_sens_type)
         print_success_msg();
     }
     else if (opt==1){
-        vec_remove(type_pack, choose_sens(type_pack));
-        print_success_msg();
+        short index=choose_sens(type_pack);
+        if(index!=0){
+            vec_remove(type_pack,index) ;
+            print_success_msg();
+        }
     }
     else{
         print_vec(type_pack);
