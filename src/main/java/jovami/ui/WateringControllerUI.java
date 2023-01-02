@@ -1,5 +1,9 @@
 package jovami.ui;
 
+import java.time.Clock;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
 import jovami.handler.WateringControllerHandler;
 import jovami.util.io.InputReader;
 
@@ -28,7 +32,8 @@ public class WateringControllerUI implements UserStory {
 
         System.out.println("Data loaded with success!!");
 
-        var watering = this.handler.currentlyWatering();
+        Clock clk = Clock.systemDefaultZone();
+        var watering = this.handler.currentlyWatering(clk);
 
         if (!watering.isEmpty()) {
             System.out.println("Plots being watered:");
