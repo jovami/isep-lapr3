@@ -37,13 +37,13 @@ export_sensor_data(const sensor_vec *sensors) {
         const size_t length = temp->len;
 
         for (size_t j = 0; j < length; j++) {
-            const Sensor *sensor = &sensors->data[j];
+            const Sensor *sensor = &temp->data[j];
             const char *sensor_type = strsens(sensor->sensor_type);
             const size_t length1 = sensor->len;
-            fprintf(fp, "%s;", sensor_type);
+            fprintf(fp, "%s (%ld)", sensor_type,j+1);
 
             for (size_t k = 0; k < length1; k++) {
-                fprintf(fp, "%hu;", sensor->readings[k]);
+                fprintf(fp, ";%hu", sensor->readings[k]);
             }
             fprintf(fp, "\n");
         }

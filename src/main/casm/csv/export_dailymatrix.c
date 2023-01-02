@@ -76,9 +76,9 @@ export_dailymatrix(unsigned short matrix[NUM_ROWS][NUM_COLS])
         }
 
         if (i < NUM_COLS)
-            fprintf(fp, ";%hhd;", (signed char) *(p+i));
+            fprintf(fp, ";%hhd", (signed char) *(p+i));
         else
-            fprintf(fp, ";%hu;", *(p+i));
+            fprintf(fp, ";%hu", *(p+i));
     }
     fclose(fp);
 }
