@@ -5,13 +5,20 @@ bootstrap(sensor_vec pack[SENS_LAST], unsigned long freqs[SENS_LAST])
 {
     /* TODO: use frequencies from the freqs array */
 
-    Sensor t1, p1, dv1, vv1, ha1, hs1;
+    Sensor t1,t2, p1, dv1, vv1, ha1, hs1;
     sens_init(&t1,
               SENS_TEMP,
               30,
               TEMP_LIM_MAX,
               TEMP_LIM_MIN,
               freqs[SENS_TEMP],
+              MAX_BAD_VALUES);
+    sens_init(&t2,
+              SENS_TEMP,
+              30,
+              TEMP_LIM_MAX,
+              TEMP_LIM_MIN,
+              2,
               MAX_BAD_VALUES);
     sens_init(&p1,
               SENS_PLUV,
@@ -52,6 +59,7 @@ bootstrap(sensor_vec pack[SENS_LAST], unsigned long freqs[SENS_LAST])
     /********************************/
 
     vec_push(pack+SENS_TEMP,    &t1);
+    vec_push(pack+SENS_TEMP,    &t2);
     vec_push(pack+SENS_PLUV,    &p1);
     vec_push(pack+SENS_DIR_VNT, &dv1);
     vec_push(pack+SENS_VEL_VNT, &vv1);
