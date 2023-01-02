@@ -6,19 +6,21 @@ import java.util.Iterator;
 import jovami.model.User;
 import jovami.model.shared.UserType;
 
+//Cabazes
 public class Bundle {
 
-    // dias sao dados como
+    // dia em que o cabaz foi pedido
     private int day;
     
     // cliente que encomendou o cabaz
     private User client;
     
     // TODO usar um set?(previne pedidos iguais para o mesmo cabaz)
+    //Lista de todos os pedidos
     private ArrayList<Order> orders;
     
     //TODO needed?? uma vez que todas as encomendas sao expedidas no mesmo dia, caso estejam ou nao completas
-    // entregue
+    // para saber se o cabaz foi entregue
     private boolean delivered;
 
     //Constructors
@@ -28,6 +30,25 @@ public class Bundle {
             setDay(day);
             delivered = false;
         }
+    }
+
+    //Constructors for copy
+    public Bundle(User client, int day,ArrayList<Order> orders,boolean delivered){
+        this(client,day);
+
+        //FIXME 
+        this.orders=(ArrayList<Order>)orders.clone();
+        
+        for (Order copyOrder : orders) {
+            this.orders.add(copyOrder);
+        }
+        
+        this.delivered=delivered;
+        
+    }
+        
+    public Bundle getCopy(){
+        return new Bundle(this.client,this.day);
     }
 
     //SETS
@@ -69,7 +90,6 @@ public class Bundle {
 
     //TODO set orders delivered
 
-
     public boolean addNewOrder(Product product,float quantity) {
         return this.orders.add(new Order(product, quantity));
     }
@@ -91,4 +111,5 @@ public class Bundle {
     public String toString(){
         return String.format("Cliente: %s\nDay: %i\nDelivered: %d\n--------------\n%s\n ",this.client,this.day,this.orders.toString(),this.delivered);
     }
+
 }

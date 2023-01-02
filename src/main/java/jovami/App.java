@@ -15,6 +15,7 @@ public final class App {
     private final BundleStore bundleStore;
     private final StockStore stockStore;
     private final WateringControllerStore wcStore;
+    private final ExpListStore expStore;
 
     private final HubNetwork network;
 
@@ -25,6 +26,7 @@ public final class App {
         this.bundleStore = new BundleStore();
         this.stockStore = new StockStore();
         this.wcStore = new WateringControllerStore();
+        this.expStore = new ExpListStore();
 
         this.network = new HubNetwork();
     }
@@ -47,6 +49,18 @@ public final class App {
 
     public StockStore stockStore() {
         return this.stockStore;
+    }
+    public ExpListStore expListStore() {
+        return this.expStore;
+    }
+    
+    //TODO: verificar que a store foi inicializada
+    public BundleStore deepCopyBundleStore() {
+        return this.bundleStore.getCopy();        
+    }
+
+    public StockStore deepCopyStockStore() {
+        return this.stockStore.getCopy();
     }
 
     public WateringControllerStore wateringControllerStore() {

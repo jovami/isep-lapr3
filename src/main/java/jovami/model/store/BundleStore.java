@@ -3,6 +3,8 @@ package jovami.model.store;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map.Entry;
 
 import jovami.model.bundles.Bundle;
 
@@ -12,6 +14,20 @@ public class BundleStore{
 
     public BundleStore(){
         this(2 << 4);
+    }
+
+    public BundleStore(HashMap<Integer,ArrayList<Bundle>> bundles){
+        this(bundles.size());
+        //DEEP copy
+        for (Entry<Integer,ArrayList<Bundle>> it : bundles.entrySet()) {
+            ArrayList<Bundle>copy = new ArrayList<>(it.getValue().size());
+
+            for (Bundle bundle : it.getValue()) {
+                copy.add(bundle);    
+            }
+            this.bundles.put(it.getKey(),copy);
+        }
+        
     }
 
     public BundleStore(int initialCapacity) {
@@ -32,8 +48,16 @@ public class BundleStore{
     }
 
     //all bundles for a given day
-    public Iterator<Bundle> getBundles(int day){
-        return bundles.get(day).iterator();
+    public ArrayList<Bundle> getBundles(int day){
+        try {
+            return bundles.get(day);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public int getSize(){
+        return bundles.size();
     }
 
     public ArrayList<Bundle> getBundlesArray(int day){
@@ -42,6 +66,7 @@ public class BundleStore{
 
     //TODO needed?
     //returns a iterator with all bundles from the previous 2 days, that were not delivered
+    @Deprecated
     public Iterator<Bundle> getUndelivered(int day){
         ArrayList<Bundle> undelivered = new ArrayList<Bundle>();
 
@@ -60,5 +85,10 @@ public class BundleStore{
 
     public int size() {
         return this.bundles.size();
+    }
+
+    public BundleStore getCopy(){
+        //TODO OPTIMIZE
+        return new BundleStore(this.bundles);
     }
 }

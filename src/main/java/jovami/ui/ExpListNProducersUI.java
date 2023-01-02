@@ -22,7 +22,7 @@ public class ExpListNProducersUI implements UserStory {
         int nProd = InputReader.readInteger("Closest N producers to hub:");
 
         try{
-            var expList = handler.expListNProducers(day, nProd);
+            var expList = handler.expListNProducers(day, nProd).get(day);
 
             expList.forEach(a -> {
                 var orders = a.getOrders();
@@ -33,7 +33,7 @@ public class ExpListNProducersUI implements UserStory {
                     var order = orders.next();
                     if (order.getProducer() == null) {
                         System.out.println(" -> Product: " + order.getProduct().getName()
-                                + " | Quantity: " + order.getQuantity()
+                                + "  | Quantity: " + order.getQuantity()
                                 + " | There were no producers to fulfill this order");
                     }else {
                         System.out.println(" -> Product: " + order.getProduct().getName()
