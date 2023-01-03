@@ -31,12 +31,12 @@ BEGIN
     elsif inserting then
         v_op_type := 'INSERT';
     else
-        v_op_type := 'DELETE';
+        v_op_type := 'UPDATE';
     end if;
 
-    INSERT into exploracao_agr_audit
-        (login_name, operation_date, operation_type)
-        values (USER, SYSTIMESTAMP, v_op_type);
+    INSERT into exploracao_agr_audit (
+        login_name, operation_date, operation_type
+    ) values (USER, SYSTIMESTAMP, v_op_type);
 END;
 /
 
@@ -52,12 +52,12 @@ BEGIN
     elsif inserting then
         v_op_type := 'INSERT';
     else
-        v_op_type := 'DELETE';
+        v_op_type := 'UPDATE';
     end if;
 
-    INSERT into exploracao_agr_audit
-        (login_name, operation_date, operation_type)
-        values (USER, SYSTIMESTAMP, v_op_type);
+    INSERT into exploracao_agr_audit (
+        login_name, operation_date, operation_type
+    ) values (USER, SYSTIMESTAMP, v_op_type);
 END;
 /
 
@@ -73,12 +73,12 @@ BEGIN
     elsif inserting then
         v_op_type := 'INSERT';
     else
-        v_op_type := 'DELETE';
+        v_op_type := 'UPDATE';
     end if;
 
-    INSERT into exploracao_agr_audit
-        (login_name, operation_date, operation_type)
-        values (USER, SYSTIMESTAMP, v_op_type);
+    INSERT into exploracao_agr_audit (
+        login_name, operation_date, operation_type
+    ) values (USER, SYSTIMESTAMP, v_op_type);
 END;
 /
 
@@ -94,12 +94,54 @@ BEGIN
     elsif inserting then
         v_op_type := 'INSERT';
     else
-        v_op_type := 'DELETE';
+        v_op_type := 'UPDATE';
     end if;
 
-    INSERT into exploracao_agr_audit
-        (login_name, operation_date, operation_type)
-        values (USER, SYSTIMESTAMP, v_op_type);
+    INSERT into exploracao_agr_audit (
+        login_name, operation_date, operation_type
+    ) values (USER, SYSTIMESTAMP, v_op_type);
+END;
+/
+
+CREATE OR REPLACE TRIGGER t_registo_rega_audit
+AFTER
+    INSERT OR UPDATE OR DELETE ON registo_rega
+FOR EACH ROW
+DECLARE
+    v_op_type   exploracao_agr_audit.operation_type%TYPE;
+BEGIN
+    if deleting then
+        v_op_type := 'DELETE';
+    elsif inserting then
+        v_op_type := 'INSERT';
+    else
+        v_op_type := 'UPDATE';
+    end if;
+
+    INSERT into exploracao_agr_audit (
+        login_name, operation_date, operation_type
+    ) values (USER, SYSTIMESTAMP, v_op_type);
+END;
+/
+
+CREATE OR REPLACE TRIGGER t_plano_rega_audit
+AFTER
+    INSERT OR UPDATE OR DELETE ON plano_rega
+FOR EACH ROW
+DECLARE
+    v_op_type   exploracao_agr_audit.operation_type%TYPE;
+BEGIN
+    if deleting then
+        v_op_type := 'DELETE';
+    elsif inserting then
+        v_op_type := 'INSERT';
+    else
+        v_op_type := 'UPDATE';
+    end if;
+
+    INSERT into exploracao_agr_audit(
+        login_name, operation_date, operation_type
+    ) values (USER, SYSTIMESTAMP, v_op_type);
 END;
 /
 -- }}}
@@ -168,3 +210,5 @@ DROP TRIGGER t_registo_colheita_audit;
 DROP TRIGGER t_registo_restricao_audit;
 DROP TRIGGER t_registo_dado_met_audit;
 DROP TRIGGER t_registo_fertilizacao_audit;
+DROP TRIGGER t_registo_rega_audit;
+DROP TRIGGER t_plano_rega_audit;
