@@ -22,12 +22,11 @@ import java.util.*;
  */
 public class ExpListNProducersHandler {
 
-    private final App app;
     private final HubNetwork network;
     private final UserStore userStore;
 
     //should this always be final?
-    private ExpListStore expStore;
+    private final ExpListStore expStore;
     private BundleStore bundleStore;
     private StockStore stockStore;
     private ExpList expList;
@@ -35,30 +34,11 @@ public class ExpListNProducersHandler {
      * Instantiates a new Expedition List for the N closest producers handler.
      */
     public ExpListNProducersHandler() {
-        this.app = App.getInstance();
+        App app = App.getInstance();
         this.network = app.hubNetwork();
         this.userStore = app.userStore();
+        this.expStore= app.expListStore();
     }
-    
-    //when processing the expedition list for a given day we must pre-process the previous days
-    public HashMap<Integer,LinkedList<Bundle>> expListNProducers(int day, int nProducers){
-        
-        expList=new ExpList();
-        bundleStore = expList.getBundleStore();
-        stockStore = expList.getStockStore();
-
-        int size=bundleStore.getSize();
-        HashMap<Integer,LinkedList<Bundle>> hash=new HashMap<>(size);
-
-        for (int i = 1; i <= size; i++) {
-            hash.put(i,expListNProducersDay(i, nProducers));
-        }
-
-        return hash;
-    }
-
-    //TODO set bundles fully delivered
-
     /**
      * Computes the expedition list for the N closest producers for the given day.
      *
@@ -71,6 +51,7 @@ public class ExpListNProducersHandler {
         var result = new LinkedList<Bundle>();
         var bundles = bundleStore.getBundles(day);
 
+        //TODO: exception for non valid inputs
         if(bundles == null){
             System.out.println();
             bundles = bundleStore.getBundles(2);
@@ -113,9 +94,8 @@ public class ExpListNProducersHandler {
 
     private List<Distance> getNearestProducersToHub(List<User> producers, int nProducers, User hub) {
         PriorityQueue<Distance> distances = new PriorityQueue<>(Distance.cmp);
-        producers.forEach(producer -> {
-            distances.offer(network.shortestPath(producer, hub, new LinkedList<>()));
-        });
+        producers.forEach(producer ->
+                distances.offer(network.shortestPath(producer, hub, new LinkedList<>())));
 
         List<Distance> nearestProducers = new ArrayList<>();
         for (int i = 0; i < nProducers && !distances.isEmpty(); i++) {
@@ -123,10 +103,27 @@ public class ExpListNProducersHandler {
         }
         return nearestProducers;
     }
+    public HashMap<Integer,LinkedList<Bundle>> expListNProducers(int day, int nProducers){
+        expList = new ExpList();
+        bundleStore = expList.getBundleStore();
+        stockStore = expList.getStockStore();
+
+        int size=bundleStore.size();
+        HashMap<Integer,LinkedList<Bundle>> hash=new HashMap<>(size);
+
+        for (int i = 1; i <= size; i++) {
+            hash.put(i,expListNProducersDay(i, nProducers));
+        }
+        expStore.addExpListProdRestrict(expList);
+
+        return hash;
+    }
+
 
     private List<User> findProducers(){
         return network.vertices().stream()
                 .filter(u -> u.getUserType() == UserType.PRODUCER)
                 .toList();
     }
+
 }

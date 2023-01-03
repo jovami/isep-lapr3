@@ -6,26 +6,16 @@ import jovami.model.store.StockStore;
 
 public class ExpList {
 
-    //deep copy from bundles and productStocks
-    private final App app;
-    private int day;
     private final StockStore stockCopy;
     private final BundleStore bundleCopy;
 
     public ExpList(){
-        app=App.getInstance();
-        stockCopy=app.deepCopyStockStore();
-        bundleCopy=app.deepCopyBundleStore();
-        setDay(0);
+        //deep copy from bundles and productStocks
+        App app = App.getInstance();
+        stockCopy= app.deepCopyStockStore();
+        bundleCopy= app.deepCopyBundleStore();
     }
 
-    public void setDay(int day){
-        this.day = day;
-    }
-
-    public int getDay(){
-        return this.day;
-    }
 
     public StockStore getStockStore(){
         return this.stockCopy;

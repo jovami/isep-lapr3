@@ -52,29 +52,29 @@ public class Stock {
 
 
     //retorna null caso não exista o dia
-    public Iterator<ProductStock> getStocks(int day){
-        if(stock.get(day)==null)
+    public Iterator<ProductStock> getStocks(int day) {
+        if (stock.get(day) == null)
             return null;
 
         return stock.get(day).values().iterator();
     }
-    
+
     //TODO how to handle product(string??)
-    public void addProductStock(Product product,float provided,int day){
+    public void addProductStock(Product product, float provided, int day) {
         stock.putIfAbsent(day, new HashMap<>(2 << 4));
-        ProductStock ps = new ProductStock(product,provided,day);
-        stock.get(day).putIfAbsent(product,ps);
-        
+        ProductStock ps = new ProductStock(product, provided, day);
+        stock.get(day).putIfAbsent(product, ps);
+
     }
 
     //retorna true se houver stock suficiente contando com os ultimos dias
-    public boolean retrieveFromStock(Product product, int day, float qntToRetrieve){
-        if(qntToRetrieve < 0)
+    public boolean retrieveFromStock(Product product, int day, float qntToRetrieve) {
+        if (qntToRetrieve < 0)
             return false;
 
         ProductStock prodStockForThatDay;
         HashMap<Product,ProductStock> tmp=new HashMap<>();
-        int sum = 0;
+        float sum = 0;
 
         //ver para os ultimos dois dias se há stock
         //TODO clean thisssssssss

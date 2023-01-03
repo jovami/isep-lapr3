@@ -1,10 +1,6 @@
 package jovami.ui;
 
 import jovami.handler.ExpListNProducersHandler;
-import jovami.model.HubNetwork;
-import jovami.model.store.BundleStore;
-import jovami.model.store.ProductStore;
-import jovami.model.store.UserStore;
 import jovami.util.io.InputReader;
 
 public class ExpListNProducersUI implements UserStory {

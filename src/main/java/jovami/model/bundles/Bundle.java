@@ -73,6 +73,8 @@ public class Bundle {
         return orders.iterator();
     }
 
+    public ArrayList<Order> getOrdersList(){return orders;}
+
     public int getDay() {
         return this.day;
     }
@@ -95,6 +97,7 @@ public class Bundle {
     }
 
 
+
     //Overrides
     @Override
     public boolean equals(Object o){
@@ -109,7 +112,7 @@ public class Bundle {
 
     @Override 
     public String toString(){
-        return String.format("Cliente: %s\nDay: %i\nDelivered: %d\n--------------\n%s\n ",this.client,this.day,this.orders.toString(),this.delivered);
+        return String.format("Client: %s\nDay: %d\nDelivered: %s\n--------------\n%s\n ",this.client,this.day,this.orders.toString(),this.delivered);
     }
 
 }
