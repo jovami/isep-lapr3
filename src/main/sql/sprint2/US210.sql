@@ -9,14 +9,17 @@
 SET SERVEROUTPUT ON;
 
 CREATE OR REPLACE PROCEDURE p_registar_operacao (
-    v_parcela_agricola_id IN parcela_agricola.parcela_agricola_id%TYPE,
-    v_fator_producao_id IN fator_producao.fator_producao_id%TYPE,
-    v_data_fertilizacao IN registo_fertilizacao.data_fertilizacao%TYPE,
-    v_tipo_fertilizacao IN tipo_fertilizacao.tipo_fertilizacao_id%TYPE,
-    v_quantidade IN registo_fertilizacao.quantidade_utilizada_kg%TYPE
+    v_parcela_agricola_id       parcela_agricola.parcela_agricola_id%TYPE,
+    v_fator_producao_id         fator_producao.fator_producao_id%TYPE,
+    v_data_fertilizacao         registo_fertilizacao.data_fertilizacao%TYPE,
+    v_tipo_fertilizacao         tipo_fertilizacao.tipo_fertilizacao_id%TYPE,
+    v_quantidade                registo_fertilizacao.quantidade_utilizada_kg%TYPE
 )
 IS 
-    l_existe_restricao INTEGER;   -- verdadeiro se != 0
+
+    l_existe_restricao          INTEGER;   -- verdadeiro se != 0
+    EX_ERRO_RESTRICAO_REGISTO   EXCEPTION;
+    EX_ERRO_RESTRICOES_REGISTO  EXCEPTION;
 BEGIN
     SELECT count(*) INTO l_existe_restricao
     FROM registo_restricao R
@@ -27,9 +30,9 @@ BEGIN
 
     IF l_existe_restricao > 0 THEN
         IF l_existe_restricao = 1 THEN
-            RAISE_APPLICATION_ERROR(-20001, 'Não foi possível registar a operação porque existe 1 restrição!'); 
+             RAISE EX_ERRO_RESTRICAO_REGISTO;
         ELSE
-            RAISE_APPLICATION_ERROR(-20001, 'Não foi possível registar a operação porque existem ' || l_existe_restricao || ' restrições!'); 
+            RAISE EX_ERRO_RESTRICOES_REGISTO;
         END IF;
     END IF;
     
@@ -41,7 +44,14 @@ BEGIN
                         || ', Data de Fertilização = '|| v_data_fertilizacao 
                         || ', Tipo de Fertilização = '|| v_tipo_fertilizacao 
                         || ', Quantidade = '|| v_quantidade || 'kg');
-END;
+    
+    EXCEPTION
+    WHEN EX_ERRO_RESTRICAO_REGISTO THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Não foi possível registar a operação porque existe 1 restrição!');
+    WHEN EX_ERRO_RESTRICOES_REGISTO THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Não foi possível registar a operação porque existem ' || l_existe_restricao || ' restrições!'); 
+                        
+END p_registar_operacao;
 /
 
 SAVEPOINT us210_registar_operacao;
