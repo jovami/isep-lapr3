@@ -7,10 +7,10 @@ SET serveroutput on;
 --- Acceptance criteria #1 ---
 CREATE TABLE exploracao_agr_audit (
     -- TODO: usar algo diff de gen as identity?
-    audit_id                INTEGER GENERATED AS IDENTITY,
-    login_name              VARCHAR(50),
-    operation_date          TIMESTAMP,
-    operation_type          VARCHAR(6),
+    audit_id                INTEGER GENERATED AS IDENTITY NOT NULL,
+    login_name              VARCHAR(50) NOT NULL,
+    operation_date          TIMESTAMP NOT NULL,
+    operation_type          VARCHAR(6) NOT NULL,
     CONSTRAINT ck_op_type
             CHECK(operation_type IN ('INSERT', 'UPDATE', 'DELETE')),
     CONSTRAINT pk_audit_id PRIMARY KEY(audit_id)
