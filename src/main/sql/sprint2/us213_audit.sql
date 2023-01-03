@@ -173,26 +173,143 @@ END;
 
 
 -- test setup:
-SAVEPOINT us_213;
+SAVEPOINT us_213_audit;
 
-INSERT INTO localizacao (latitude, longitude) values (23.3161,-48.4165);
-INSERT INTO instalacao_agricola (
-    nome,localizacao_id
-) values ('INSTALACAO G31 LAPR3 nova', 1);
-INSERT INTO produto (valor_mercado_por_ha,designacao) VALUES (2000,'uva da boa');
-INSERT INTO parcela_agricola (
-    designacao,area_ha,instalacao_agricola_id
-) values ('Parcela teste', 1100.20, 1);
-INSERT INTO tipo_cultura(designacao) VALUES ('temporaria');
-
-INSERT INTO registo_colheita (
+-- TEST: registo_colheita {{{
+INSERT into registo_colheita (
     parcela_agricola_id, produto_id, tipo_cultura_id, data_plantacao,
     area_plantada_ha, data_colheita, quantidade_colhida_ton_por_ha
-) values (
-    1, 1, 1, TO_DATE('01/01/2022 11:00', 'DD/MM/YYYY HH24:MI'),
-    50, TO_DATE('20/01/2022 12:00', 'DD/MM/YYYY HH24:MI'), 100
+) values (1, 1, 1, to_date('01/01/2022 20:00', 'DD/MM/YYYY HH24:MI'),
+          50, to_date('01/08/2022 20:00', 'DD/MM/YYYY HH24:MI'), 100
 );
 
+UPDATE registo_colheita rc
+    SET
+        rc.quantidade_colhida_ton_por_ha = 200
+WHERE
+    rc.parcela_agricola_id = 1
+    AND rc.produto_id = 1
+    AND rc.tipo_cultura_id = 1
+    AND rc.data_plantacao = to_date('01/01/2022 20:00', 'DD/MM/YYYY HH24:MI');
+
+DELETE FROM registo_colheita rc
+WHERE
+    rc.parcela_agricola_id = 1
+    AND rc.produto_id = 1
+    AND rc.tipo_cultura_id = 1
+    AND rc.data_plantacao = to_date('01/01/2022 20:00', 'DD/MM/YYYY HH24:MI');
+-- }}}
+
+-- TEST: registo_restricao {{{
+INSERT into registo_restricao(
+    parcela_agricola_id, fator_producao_id, data_inicio,data_fim
+) values (1, 2,
+          to_date('02/01/2021 00:00', 'DD/MM/YYYY HH24:MI'),
+          to_date('30/12/2021 00:00', 'DD/MM/YYYY HH24:MI')
+);
+
+UPDATE registo_restricao rr
+    SET rr.data_fim = TO_DATE('30/12/2021 23:00','DD/MM/YYYY HH24:MI')
+WHERE
+    rr.parcela_agricola_id = 1
+    AND rr.fator_producao_id = 2
+    AND rr.data_inicio = TO_DATE('02/01/2021 00:00','DD/MM/YYYY HH24:MI');
+
+DELETE FROM registo_restricao rr
+WHERE
+    rr.parcela_agricola_id = 1
+    AND rr.fator_producao_id = 2
+    AND rr.data_inicio = TO_DATE('02/01/2021 00:00','DD/MM/YYYY HH24:MI');
+-- }}}
+
+-- TEST: registo_dado_meteorologico {{{
+INSERT into registo_dado_meteorologico(
+    parcela_agricola_id, sensor_id, data_instante_leitura, valor_lido
+) values (1, 'SENS1', to_date('10/01/2021 12:00', 'DD/MM/YYYY HH24:MI'), 20
+);
+
+UPDATE registo_dado_meteorologico rdm
+    SET
+        rdm.valor_lido = 10
+WHERE
+    rdm.parcela_agricola_id = 1
+    AND rdm.sensor_id = 'SENS1'
+    AND rdm.data_instante_leitura = TO_DATE('10/01/2021 12:00','DD/MM/YYYY HH24:MI');
+
+DELETE FROM registo_dado_meteorologico rdm
+WHERE
+    rdm.parcela_agricola_id = 1
+    AND rdm.sensor_id = 'SENS1'
+    AND rdm.data_instante_leitura = TO_DATE('10/01/2021 12:00','DD/MM/YYYY HH24:MI');
+-- }}}
+
+-- TEST: registo_fertilizacao {{{
+INSERT into registo_fertilizacao (
+    parcela_agricola_id, fator_producao_id, data_fertilizacao,
+    quantidade_utilizada_kg,tipo_fertilizacao_id
+) values (1, 1, to_date('13/01/2021 12:00','DD/MM/YYYY HH24:MI'),
+          50, 1
+);
+
+UPDATE registo_fertilizacao rf
+    SET
+        rf.quantidade_utilizada_kg = 100
+WHERE
+    rf.parcela_agricola_id = 1
+    AND rf.fator_producao_id = 1
+    AND rf.data_fertilizacao = TO_DATE('13/01/2021 12:00','DD/MM/YYYY HH24:MI');
+
+DELETE FROM registo_fertilizacao rf
+WHERE
+    rf.parcela_agricola_id = 1
+    AND rf.fator_producao_id = 1
+    AND rf.data_fertilizacao = TO_DATE('13/01/2021 12:00','DD/MM/YYYY HH24:MI');
+-- }}}
+
+-- TEST: registo_rega {{{
+INSERT into registo_rega (
+    parcela_agricola_id, produto_id, tipo_cultura_id, data_plantacao,
+    data_realizacao, quantidade_rega, tempo_rega_mm, tipo_rega_id, tipo_sistema_id
+) values (1, 2, 1, to_date('04/01/2021 10:30','DD/MM/YYYY HH24:MI'),
+          to_date('16/01/2021 12:00', 'DD/MM/YYYY HH24:MI'), 1001, 30, 1, 1
+);
+
+UPDATE registo_rega rr
+    SET
+        rr.quantidade_rega = 100
+WHERE
+    rr.parcela_agricola_id = 1
+    AND rr.produto_id = 2
+    AND rr.tipo_cultura_id = 1
+    AND rr.data_plantacao = to_date('04/01/2021 10:30','DD/MM/YYYY HH24:MI')
+    AND rr.data_realizacao = to_date('16/01/2021 12:00','DD/MM/YYYY HH24:MI');
+
+DELETE FROM registo_rega rr
+WHERE rr.parcela_agricola_id = 1
+    AND rr.produto_id = 2
+    AND rr.tipo_cultura_id = 1
+    AND rr.data_plantacao = to_date('04/01/2021 10:30','DD/MM/YYYY HH24:MI')
+    AND rr.data_realizacao = to_date('16/01/2021 12:00','DD/MM/YYYY HH24:MI');
+-- }}}
+
+-- TEST: plano_rega {{{
+INSERT into plano_rega (
+    parcela_agricola_id, produto_id, tipo_cultura_id,
+    data_plantacao, periodicidade_rega_hh, tempo_rega_mm
+) values (2, 2, 1,
+          to_date('04/01/2021 12:00', 'DD/MM/YYYY HH24:MI'), 12, 35
+);
+
+UPDATE plano_rega pr
+    SET
+        pr.periodicidade_rega_hh = 1
+WHERE
+    pr.plano_rega_id = 7;
+
+DELETE FROM plano_rega pr
+WHERE
+    pr.plano_rega_id = 7;
+-- }}}
 
 -- run:
 BEGIN
@@ -200,7 +317,7 @@ BEGIN
 END;
 /
 
-ROLLBACK to us_213;
+ROLLBACK to us_213_audit;
 
 --- Cleanup
 DROP TABLE exploracao_agr_audit CASCADE CONSTRAINTS PURGE;
