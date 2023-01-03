@@ -4,8 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-
+#include <errno.h>
 #include <util.h>
+
 
 __attribute__((__always_inline__))
 static inline int __check_overflow(size_t n, size_t m);
@@ -54,9 +55,29 @@ arqcp_malloc(size_t nmemb, size_t size)
 
     if (__check_overflow(nmemb, size))
         die("arqcp_malloc: overflow detected with params %zu and %zu",
-            nmemb, size);
+                nmemb, size);
     else if (!(p = malloc(nmemb * size)))
         die("arqcp_malloc: ");
+
+    return p;
+}
+
+/* TODO: decide on a better impl? */
+void *
+arqcp_realloc(void *ptr, size_t nmemb, size_t size)
+{
+    void *p;
+
+#if !defined (_DEFAULT_SOURCE)
+    if (__check_overflow(nmemb, size))
+        die("arqcp_realloc: overflow detected with params %zu and %zu",
+                    nmemb, size);
+    else if (!(p = realloc(ptr, nmemb * size)))
+        die("arqcp_realloc: ");
+#else
+    if (!(p = reallocarray(ptr, nmemb, size)))
+        die("arqcp_realloc: ");
+#endif /* defined (_DEFAULT_SOURCE) */
 
     return p;
 }
@@ -67,7 +88,7 @@ read_int(char **bufp, size_t *n)
     ssize_t d, len;
 
     if ((len = getline(bufp, n, stdin)) == -1)
-        die("read_int: getline: failed to read input");
+        die("read_int: failed to read input: ");
 
     char *line = *bufp;
     line[len-1] = '\0';

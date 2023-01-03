@@ -1,8 +1,10 @@
 /* Copyright (c) 2022 Jovami. All Rights Reserved. */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "menu.h"
+#include "util.h"
 #include "dailymatrix/dailymatrix.h"
 #include "sensors/gen_sens_values.h"
 #include "sensor_vec.h"
@@ -15,17 +17,38 @@
 
 /* FIXME: use the actual functions */
 void add_remove_sensors(sensor_vec *pack);
-void bar(sensor_vec *pack);
 void list_sensors(sensor_vec *pack);
 void print_vec(sensor_vec *type_pack);
 void choose_add_remove_opt(sensor_vec *pack, short n_sens_type);
 void add_remove(sensor_vec *pack, int opt, short n_sens_type);
 
+void sens_freqs(sensor_vec *pack);
 
+short choose_sens(sensor_vec *type_pack);
+short choose_type_sens();
 
-void bar(sensor_vec *pack)
+void sens_freqs(sensor_vec *pack)
 {
-    puts("bar!!");
+    puts("Altering sensors frequencies");
+    short offset_type = choose_type_sens();
+    short offset_sens = choose_sens(pack+offset_type);
+    //sens to be altered
+    Sensor *sens= ((pack+offset_type)->data)+offset_sens;
+
+    fputs("New frequency: ",stdout);
+
+    char *c =NULL;
+    size_t i = 0;
+    long freq = read_int(&c, &i);
+    free (c);
+
+    sens->frequency = freq;
+
+    unsigned long sz = freq_to_sz(freq);
+
+    sens->readings_size = sz;
+    sens->readings = arqcp_realloc(sens->readings,sz, sizeof(*sens->readings));
+
 }
 
 
@@ -76,15 +99,9 @@ enum {
 #define MENU_FIRST  ADD_SENSOR
 #define MATCH_ADD_REMOVE(X)  ((X)>=MENU_FIRST && (X)<MENU_LAST)
 
-
-
-__attribute__((__always_inline__))
-static inline char getchar_flush(void);
-
-
 static const MenuItem items[MENU_LST] = {
     &add_remove_sensors,
-    &bar,
+    &sens_freqs,
     &gen_sens_values,
     &daily_matrix,
     &list_sensors,
@@ -114,7 +131,7 @@ short choose_type_sens()
         }
         fputs("\nChoose one: ", stdout);
         opt = getchar_flush() - '1';   
-    } while (opt>=7 && opt<=0);
+    } while (opt>=SENS_LAST && opt<=0);
 
     return opt; 
 }
@@ -128,9 +145,9 @@ short choose_sens(sensor_vec *type_pack)
         print_vec(type_pack);
         fputs("\n0) Back",stdout);
         fputs("\nChoose one: ",stdout);
-        opt = getchar_flush() - '0';
+        opt = getchar_flush() - '1';
 
-    } while (opt >= (type_pack->len) || opt<0);
+    } while (opt > (type_pack->len) || opt<0);
 
     return opt;
     
@@ -179,16 +196,15 @@ void sensor_init(Sensor *sens_add, short n_sens_type)
 void list_sensors(sensor_vec *pack){
     size_t count=1;
 
-for (size_t j = 0; j < SENS_LAST; j++)
-{
-    sensor_vec *type_sens = pack +j;
-
-    for (size_t i = 0; i < type_sens->len; i++)
+    for (size_t j = 0; j < SENS_LAST; j++)
     {
-        fprintf(stdout, "%ld) %s %d\n",count++, strsens(((type_sens->data)+i)->sensor_type),((type_sens->data)+i)->id);
+        sensor_vec *type_sens = pack +j;
+
+        for (size_t i = 0; i < type_sens->len; i++)
+        {
+            fprintf(stdout, "%ld) %s %d\n",count++, strsens(((type_sens->data)+i)->sensor_type),((type_sens->data)+i)->id);
+        }
     }
-}
-sleep(3);
 }
 
 void
@@ -260,15 +276,16 @@ void add_remove(sensor_vec *pack, int opt, short n_sens_type)
         print_success_msg();
     }
     else if (opt==1){
-        short index=choose_sens(type_pack);
-        if(index!=0){
+        if(type_pack->len>1){
+            short index=choose_sens(type_pack);
             vec_remove(type_pack,index) ;
             print_success_msg();
+        }else{
+            fprintf(stdout, "\tWARNING: not possible to remove all sensors\n");
         }
     }
     else{
         print_vec(type_pack);
-        sleep(3); 
         choose_add_remove_opt(pack, n_sens_type);  
     }
 }

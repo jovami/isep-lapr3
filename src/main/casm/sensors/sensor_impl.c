@@ -7,9 +7,6 @@
 #include <sensor_impl.h>
 #include <util.h>
 
-#define DAYS_SECS       (24UL * 3600UL)
-#define freq_to_sz(f)   (DAYS_SECS / (f))
-
 static char check_len(const Sensor *s);
 
 static unsigned short sens_count = 0;

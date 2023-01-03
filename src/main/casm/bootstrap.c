@@ -20,6 +20,7 @@ bootstrap(sensor_vec pack[SENS_LAST], unsigned long freqs[SENS_LAST])
               TEMP_LIM_MIN,
               2,
               MAX_BAD_VALUES);
+
     sens_init(&p1,
               SENS_PLUV,
               70,
@@ -27,6 +28,8 @@ bootstrap(sensor_vec pack[SENS_LAST], unsigned long freqs[SENS_LAST])
               PLUVIO_LIM_MIN,
               freqs[SENS_PLUV],
               MAX_BAD_VALUES);
+
+
     sens_init(&dv1,
               SENS_DIR_VNT,
               70,
@@ -34,6 +37,8 @@ bootstrap(sensor_vec pack[SENS_LAST], unsigned long freqs[SENS_LAST])
               DIR_VENTO_LIM_MIN,
               freqs[SENS_DIR_VNT],
               MAX_BAD_VALUES);
+
+
     sens_init(&vv1,
               SENS_VEL_VNT,
               50,
@@ -41,6 +46,7 @@ bootstrap(sensor_vec pack[SENS_LAST], unsigned long freqs[SENS_LAST])
               VELC_VENTO_LIM_MIN,
               freqs[SENS_VEL_VNT],
               MAX_BAD_VALUES);
+
     sens_init(&ha1,
               SENS_HUM_ATM,
               30,
@@ -48,6 +54,8 @@ bootstrap(sensor_vec pack[SENS_LAST], unsigned long freqs[SENS_LAST])
               HUMD_ATM_LIM_MIN,
               freqs[SENS_HUM_ATM],
               MAX_BAD_VALUES);
+
+
     sens_init(&hs1,
               SENS_HUM_SOL,
               40,
@@ -55,6 +63,7 @@ bootstrap(sensor_vec pack[SENS_LAST], unsigned long freqs[SENS_LAST])
               HUMD_SOLO_LIM_MIN,
               freqs[SENS_HUM_SOL],
               MAX_BAD_VALUES);
+
 
     /********************************/
 

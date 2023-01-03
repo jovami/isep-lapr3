@@ -3,6 +3,9 @@
 #include <stddef.h>
 #include <stdint.h>
 
+#define DAYS_SECS       (24UL * 3600UL)
+#define freq_to_sz(f)   (DAYS_SECS / (f))
+
 /************** Constants **************/
 
 /* ALL */
@@ -87,6 +90,7 @@ Sensor *sens_init(Sensor *s,
                   unsigned short min_val,
                   unsigned long freq,
                   uintmax_t max_bad);
+
 
 void sens_free(Sensor *s);
 
