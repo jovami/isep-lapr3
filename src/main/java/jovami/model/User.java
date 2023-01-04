@@ -98,13 +98,13 @@ public class User {
     }
 
     public User getNearestHub() {
-        return nearestHub;
+        return this.nearestHub;
     }
     //==================== Overrides ====================//
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.userID, this.coords, this.userType, this.locationID);
+        return Objects.hash(this.userID, this.coords, this.userType, this.locationID, this.nearestHub);
     }
 
     @Override

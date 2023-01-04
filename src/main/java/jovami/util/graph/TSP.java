@@ -132,7 +132,7 @@ public class TSP {
 
 
     public static <V,E> Graph<V,E>
-    travellingSalesman(Graph<V,E> g, V vOrig,
+    travelingSalesman(Graph<V,E> g, V vOrig,
                        Comparator<E> ce, BinaryOperator<E> sum,
                        E zero)
     {

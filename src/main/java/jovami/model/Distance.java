@@ -117,7 +117,6 @@ public class Distance {
     public boolean equals(Object o) {
         if (this == o)
             return true;
-
         if (!(o instanceof Distance dist))
             return false;
 
