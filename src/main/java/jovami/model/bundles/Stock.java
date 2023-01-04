@@ -1,5 +1,7 @@
 package jovami.model.bundles;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -19,7 +21,7 @@ public class Stock {
 
     //Interpretação
     //naquele dia(chave1) e para aquele produto(chave 2) temos um Product stock
-    private final HashMap<Integer,HashMap<Product,ProductStock>> stock;
+    private final HashMap<Product,HashMap<Integer,ProductStock>> stock;
 
     public Stock(){
         this(2 << 4);
@@ -28,12 +30,14 @@ public class Stock {
         stock = new HashMap<>( initialCapacity);
     }
     
-    public Stock(HashMap<Integer,HashMap<Product,ProductStock>> originStock){
+    public Stock(HashMap<Product,HashMap<Integer,ProductStock>> originStock){
         this(originStock.size());
 
-        for (Entry<Integer,HashMap<Product,ProductStock>> allStock  : originStock.entrySet()) {
-            this.stock.put(allStock.getKey(),new HashMap<Product,ProductStock>());
-            for (Entry<Product,ProductStock> dayStock : allStock.getValue().entrySet()) {
+        for (Entry<Product,HashMap<Integer,ProductStock>> allStock  : originStock.entrySet()) {
+            this.stock.put(allStock.getKey(),new HashMap<Integer,ProductStock>());
+
+            for (Entry<Integer,ProductStock> dayStock : allStock.getValue().entrySet()) {
+
                 this.stock.get(allStock.getKey()).put(dayStock.getKey(),dayStock.getValue());
             }
         }
@@ -53,17 +57,20 @@ public class Stock {
 
     //retorna null caso não exista o dia
     public Iterator<ProductStock> getStocks(int day) {
-        if (stock.get(day) == null)
-            return null;
+        ArrayList<ProductStock> array=new ArrayList<>();
+        for (Entry<Product,HashMap<Integer,ProductStock>>productStock : this.stock.entrySet()) {
+            array.add(productStock.getValue().get(day));
+            
+        }
 
-        return stock.get(day).values().iterator();
+        return array.iterator();
     }
 
     //TODO how to handle product(string??)
     public void addProductStock(Product product, float provided, int day) {
-        stock.putIfAbsent(day, new HashMap<>(2 << 4));
+        stock.putIfAbsent(product, new HashMap<>(2 << 4));
         ProductStock ps = new ProductStock(product, provided, day);
-        stock.get(day).putIfAbsent(product, ps);
+        stock.get(product).putIfAbsent(day, ps);
 
     }
 
@@ -73,48 +80,47 @@ public class Stock {
             return false;
 
         ProductStock prodStockForThatDay;
-        HashMap<Product,ProductStock> tmp=new HashMap<>();
+        HashMap<Integer,ProductStock> tmp= stock.get(product);
         float sum = 0;
 
         //ver para os ultimos dois dias se há stock
         //TODO clean thisssssssss
-        for (int i = day-DELTA_DAYS; i <= day; i++) {
-            if(i >= FIRST_DAY){
-                //stock para um produto num determinado dia
-                tmp=stock.get(i);
-                if(tmp!=null){
-                    prodStockForThatDay = tmp.get(product);
+        if(tmp!=null){
+            for (int i = day-DELTA_DAYS; i <= day; i++) {
+                if(i >= FIRST_DAY){
+                    //stock para um produto num determinado dia
+                        prodStockForThatDay = tmp.get(i);
 
-                    if(prodStockForThatDay!=null){
-                        sum+=prodStockForThatDay.getStash();
-                        //apenas se houver uma quantidade suficiente nos ultimos dois dias e que retiramos do stock
+                        if(prodStockForThatDay!=null){
+                            sum+=prodStockForThatDay.getStash();
+                            //apenas se houver uma quantidade suficiente nos ultimos dois dias e que retiramos do stock
 
-                        if(sum>=qntToRetrieve){
-                            for (int j = day-DELTA_DAYS; j <= i; j++) {
-                                if(j >= FIRST_DAY) {
-                                    //stock para um produto num determinado dia
-                                    tmp=stock.get(j);
-                                    if(tmp!=null){
-                                        prodStockForThatDay = tmp.get(product);
-                        
-                                        if (prodStockForThatDay != null) {
-                                            if(prodStockForThatDay.retrieveStock(qntToRetrieve)){
-                                                qntToRetrieve=0;
-                                            }else{
-                                                float stash = prodStockForThatDay.getStash();
-                                                prodStockForThatDay.retrieveStock(stash);
-                                                qntToRetrieve -= stash;
+                            if(sum>=qntToRetrieve){
+                                for (int j = day-DELTA_DAYS; j <= i; j++) {
+                                    if(j >= FIRST_DAY) {
+                                        //stock para um produto num determinado dia
+                                            prodStockForThatDay = tmp.get(j);
+                            
+                                            if (prodStockForThatDay != null) {
+                                                if(prodStockForThatDay.retrieveStock(qntToRetrieve)){
+                                                    qntToRetrieve=0;
+                                                }else{
+                                                    float stash = prodStockForThatDay.getStash();
+                                                    prodStockForThatDay.retrieveStock(stash);
+                                                    qntToRetrieve -= stash;
+                                                }
                                             }
                                         }
                                     }
-                                }
+                                break;
                             }
-                            break;
                         }
-                    }
                 }
             }
         }
         return qntToRetrieve == 0;
+    }
+    public HashMap<Product,HashMap<Integer,ProductStock>> getProductStock() {
+        return this.stock;
     }
 }
