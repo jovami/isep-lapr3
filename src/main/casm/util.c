@@ -62,24 +62,24 @@ arqcp_malloc(size_t nmemb, size_t size)
     return p;
 }
 
-/* TODO: decide on a better impl? */
 void *
 arqcp_realloc(void *ptr, size_t nmemb, size_t size)
 {
     void *p;
 
-#if !defined (_DEFAULT_SOURCE)
-    if (__check_overflow(nmemb, size))
-        die("arqcp_realloc: overflow detected with params %zu and %zu",
-                    nmemb, size);
-    else if (!(p = realloc(ptr, nmemb * size)))
-        die("arqcp_realloc: ");
-#else
     if (!(p = reallocarray(ptr, nmemb, size)))
         die("arqcp_realloc: ");
-#endif /* defined (_DEFAULT_SOURCE) */
 
     return p;
+}
+
+ssize_t read_int_wrapper(void){
+    char *c =NULL;
+    size_t i = 0;
+    ssize_t ret = read_int(&c, &i);
+
+    free(c);
+    return ret;
 }
 
 ssize_t
