@@ -10,7 +10,6 @@ import java.util.function.BinaryOperator;
 import jovami.util.Triplet;
 import jovami.util.graph.Algorithms;
 import jovami.util.graph.Edge;
-import jovami.util.graph.Graph;
 import jovami.util.graph.map.MapGraph;
 
 /**
@@ -48,13 +47,29 @@ public class HubNetwork extends MapGraph<User, Distance> {
 		super(directed);
 	}
 
-    /**
-     * Instantiates a new Hub network.
-     *
-     * @param graph the graph
-     */
-    public HubNetwork(Graph<User,Distance> graph) {
-        super(graph);
+    public HubNetwork(boolean directed, Collection<User> users) {
+        this(directed);
+        this.addVertices(users);
+    }
+
+    public HubNetwork subNetwork(User u, Collection<User> users) {
+        var sub = new HubNetwork(this.isDirected, users);
+        sub.addVertex(u);
+
+        var verts = sub.vertices();
+        final int size = verts.size();
+
+        for (int i = 0; i < size; i++) {
+            User u1 = verts.get(i);
+            for (int j = 0; j < size; j++) {
+                User u2 = verts.get(j);
+                var edge = this.edge(u1, u2);
+                if (edge != null)
+                    sub.addEdge(u1, u2, edge.getWeight());
+            }
+        }
+
+        return sub;
     }
 
     /**
@@ -78,7 +93,6 @@ public class HubNetwork extends MapGraph<User, Distance> {
      */
     public boolean addEdges(Collection<Triplet<User, User, Distance>> dists) {
         int oldNum = this.numEdges;
-
         dists.forEach(e -> this.addEdge(e.first(), e.second(), e.third()));
 
         return oldNum != this.numEdges;
@@ -93,7 +107,8 @@ public class HubNetwork extends MapGraph<User, Distance> {
      * @return the distance
      */
     public Distance shortestPath(User origin, User dest, LinkedList<User> path) {
-        return Algorithms.shortestPath(this, origin, dest, distCmp, distSum, generateZero(origin), path);
+        return Algorithms.shortestPath(this, origin, dest,
+                                       distCmp, distSum, getZero(origin), path);
     }
 
     /**
@@ -108,7 +123,8 @@ public class HubNetwork extends MapGraph<User, Distance> {
         if (!dists.isEmpty())
             dists.clear();
 
-        Algorithms.shortestPaths(this, origin, distCmp, distSum, generateZero(origin), paths, dists);
+        Algorithms.shortestPaths(this, origin, distCmp, distSum,
+                                 getZero(origin), paths, dists);
         return paths;
     }
 
@@ -122,12 +138,15 @@ public class HubNetwork extends MapGraph<User, Distance> {
     public LinkedList<Distance>
     shortestPathsForPool(User origin, List<User> pool)
     {
-        return Algorithms.shortestPathsForPool(this, origin, pool, distCmp, distSum, generateZero(origin));
+        return Algorithms.shortestPathsForPool(this, origin, pool,
+                                               distCmp, distSum, getZero(origin));
     }
 
-    private Distance generateZero(User vert){
+    public static Distance getZero(User vert){
         return new Distance(vert.getLocationID(), vert.getLocationID(), 0);
     }
+
+    //==================== Overrides ====================//
 
     // TODO: check if we still need to override this
     @Override
@@ -145,7 +164,6 @@ public class HubNetwork extends MapGraph<User, Distance> {
                 list.add(new Edge<>(e.getVOrig(), e.getVDest(), dist.reverse()));
             else
                 list.add(e);
-
         });
 
         return list;
