@@ -56,6 +56,10 @@ public class BundleStore{
         }
     }
 
+    public HashMap<Integer,ArrayList<Bundle>> getBundles(){ 
+        return bundles;
+        
+    }
     public int getSize(){
         return bundles.size();
     }

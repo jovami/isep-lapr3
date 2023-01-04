@@ -36,9 +36,6 @@ public class Bundle {
     public Bundle(User client, int day,ArrayList<Order> orders,boolean delivered){
         this(client,day);
 
-        //FIXME 
-        this.orders=(ArrayList<Order>)orders.clone();
-        
         for (Order copyOrder : orders) {
             this.orders.add(copyOrder);
         }
@@ -96,6 +93,15 @@ public class Bundle {
         return this.orders.add(new Order(product, quantity));
     }
 
+    public boolean isPartialDelivered() {
+
+        for (Order iter : orders) {
+            if(!iter.isDelivered())
+                return true;
+        }
+        
+        return false;
+    }
 
 
     //Overrides
