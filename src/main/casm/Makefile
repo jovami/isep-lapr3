@@ -13,6 +13,7 @@ CC = cc
 
 CSRC = main.c \
 	   menu.c \
+	   menu_aux.c \
 	   bootstrap.c \
 	   conf/confparser.c \
 	   util.c \
