@@ -2,17 +2,25 @@ package jovami.handler;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
 import jovami.App;
+import jovami.model.Distance;
 import jovami.model.HubNetwork;
 import jovami.model.User;
 import jovami.model.bundles.Bundle;
 import jovami.model.bundles.ExpList;
 import jovami.model.bundles.Order;
 import jovami.model.store.ExpListStore;
+import jovami.model.store.ExpListStore.Restriction;
+import jovami.util.Triplet;
+import jovami.util.graph.Algorithms;
+import jovami.util.graph.Graph;
+import jovami.util.graph.TSP2;
 
 /**
  * ShortestPathHandler
@@ -29,12 +37,33 @@ public class ShortestPathHandler {
     }
 
 
-    public Optional<?> tempname(int day) {
+    public Triplet<List<User>, List<Distance>, Distance>
+    shortestRoute(int day)
+    {
+        var expList = this.exportStore.getExpList(Restriction.NONE);
+        var map = producersPerHub(expList, day);
 
-        return null;
+        var components = new LinkedList<Graph<User, Distance>>();
+        map.forEach((k, v) -> {
+            var subgraph = this.network.subNetwork(k, v);
+            var closure = TSP2.getCompleteGraph(subgraph, HubNetwork.distCmp,
+                                                HubNetwork.distSum);
+            components.add(closure);
+        });
+
+
+        var route = TSP2.tspFromComponents(components, HubNetwork.distCmp, HubNetwork.distSum);
+
+        var dists = new LinkedList<Distance>();
+
+        // TODO: check Distance.zero
+        var dist = TSP2.getDists(this.network, Distance.zero, HubNetwork.distSum,
+                                 route, dists);
+
+        return new Triplet<>(route, dists, dist);
     }
 
-    public Map<User,Set<User>> producersPerHub(ExpList list, int day) {
+    private Map<User,Set<User>> producersPerHub(ExpList list, int day) {
         Map<User, Set<User>> ret = new HashMap<>();
 
         var bundles = list.getBundleStore();
@@ -51,5 +80,4 @@ public class ShortestPathHandler {
 
         return ret;
     }
-
 }
