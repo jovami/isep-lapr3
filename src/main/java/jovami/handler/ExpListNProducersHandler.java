@@ -76,7 +76,7 @@ public class ExpListNProducersHandler {
         }
     }
 
-    private void selectProducerForOrder(int day, Order order, List<Distance> producers){
+    public void selectProducerForOrder(int day, Order order, List<Distance> producers){
         Product orderedProduct = order.getProduct();
         float orderedQuantity = order.getQuantity();
 
@@ -103,6 +103,7 @@ public class ExpListNProducersHandler {
         }
         return nearestProducers;
     }
+
     public HashMap<Integer,LinkedList<Bundle>> expListNProducers(int day, int nProducers){
         expList = new ExpList();
         bundleStore = expList.getBundleStore();
@@ -119,8 +120,7 @@ public class ExpListNProducersHandler {
         return hash;
     }
 
-
-    private List<User> findProducers(){
+    public List<User> findProducers(){
         return network.vertices().stream()
                 .filter(u -> u.getUserType() == UserType.PRODUCER)
                 .toList();
