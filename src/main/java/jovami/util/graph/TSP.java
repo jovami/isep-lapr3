@@ -3,10 +3,8 @@ package jovami.util.graph;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Objects;
-import java.util.Set;
 import java.util.function.BinaryOperator;
 
-import jovami.util.Pair;
 import jovami.util.graph.map.MapGraph;
 import jovami.util.graph.matrix.MatrixGraph;
 
