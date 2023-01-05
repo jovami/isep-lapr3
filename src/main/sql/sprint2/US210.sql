@@ -70,6 +70,9 @@ ORA-20001: Não foi possível registar a operação porque existe 1 restrição!
 */
 CALL p_registar_operacao(1,2, TO_DATE('05/01/2021 00:00','DD/MM/YYYY HH24:MI'), 1, 50);
 
+INSERT INTO registo_restricao(parcela_agricola_id,fator_producao_id,data_inicio,data_fim)
+            VALUES(3,2,TO_DATE('02/01/2021 00:00','DD/MM/YYYY HH24:MI'),TO_DATE('10/12/2021 00:00','DD/MM/YYYY HH24:MI'));
+
 ---------OUTPUT OBTIDO E DE ACORDO AO ESPERADO--------------
 /*
 ERROR at line 63:
@@ -82,6 +85,71 @@ ROLLBACK TO us210_registar_operacao;
 ---------------------------------------------------------------------------------------------
 -----------------------------------CRITERIO DE ACEITACAO 3-----------------------------------
 ---------------------------------------------------------------------------------------------
+
+SET SERVEROUTPUT ON;
+CREATE OR REPLACE PROCEDURE p_verificar_restricao (
+    v_parcela_agricola_id       parcela_agricola.parcela_agricola_id%TYPE,
+    v_fator_producao_id         fator_producao.fator_producao_id%TYPE,
+    v_data_fertilizacao         registo_fertilizacao.data_fertilizacao%TYPE
+)
+IS
+    l_existe_restricao          INTEGER;   -- verdadeiro se != 0
+
+BEGIN
+    IF sysdate >= v_data_fertilizacao - 7 THEN
+        SELECT count(*) INTO l_existe_restricao
+        FROM registo_restricao R
+        WHERE R.parcela_agricola_id = v_parcela_agricola_id
+        AND R.data_inicio <= v_data_fertilizacao
+        AND R.data_fim >= v_data_fertilizacao
+        AND R.fator_producao_id = v_fator_producao_id;
+
+        IF l_existe_restricao > 0 THEN
+            IF l_existe_restricao = 1 THEN
+                DBMS_OUTPUT.PUT_LINE('Existe 1 restrição durante esta operação!');
+            ELSE
+                DBMS_OUTPUT.PUT_LINE('Existem ' || l_existe_restricao || ' restrições durante esta operação!');
+            END IF;
+        ELSE 
+            DBMS_OUTPUT.PUT_LINE('Não existem restrições durante esta operação!');
+        END IF;
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('Não se enconta a pelo menos 7 dias da data de fertilização!');
+    END IF;
+                        
+END p_verificar_restricao;
+/
+
+SAVEPOINT us210_verificar_restricao;
+
+---------OUTPUT OBTIDO E DE ACORDO AO ESPERADO--------------
+/*
+Não existem restrições durante esta operação!
+*/
+CALL p_verificar_restricao(1,1,TO_DATE('03/01/2021 12:00','DD/MM/YYYY HH24:MI'));
+
+INSERT INTO registo_fertilizacao(parcela_agricola_id,fator_producao_id,data_fertilizacao,quantidade_utilizada_kg,tipo_fertilizacao_id)
+            VALUES(2,1,TO_DATE('10/01/2021 12:00','DD/MM/YYYY HH24:MI'),50,1);
+
+INSERT INTO registo_restricao(parcela_agricola_id,fator_producao_id,data_inicio,data_fim)
+            VALUES(2,1,TO_DATE('01/01/2021 00:00','DD/MM/YYYY HH24:MI'),TO_DATE('31/12/2021 00:00','DD/MM/YYYY HH24:MI'));
+
+---------OUTPUT OBTIDO E DE ACORDO AO ESPERADO--------------
+/*
+Existe 1 restrição durante esta operação!
+*/
+CALL p_verificar_restricao(2,1, TO_DATE('10/01/2021 12:00','DD/MM/YYYY HH24:MI'));
+
+INSERT INTO registo_restricao(parcela_agricola_id,fator_producao_id,data_inicio,data_fim)
+            VALUES(2,1,TO_DATE('05/01/2021 00:00','DD/MM/YYYY HH24:MI'),TO_DATE('10/12/2021 00:00','DD/MM/YYYY HH24:MI'));
+
+---------OUTPUT OBTIDO E DE ACORDO AO ESPERADO--------------
+/*
+Existem 2 restrições durante esta operação!
+*/
+CALL p_verificar_restricao(2,1, TO_DATE('10/01/2021 12:00','DD/MM/YYYY HH24:MI'));
+
+ROLLBACK TO us210_verificar_restricao;
 
 ---------------------------------------------------------------------------------------------
 -----------------------------------CRITERIO DE ACEITACAO 4-----------------------------------
