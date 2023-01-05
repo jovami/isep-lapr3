@@ -18,128 +18,128 @@ IS
 
 BEGIN
 
-SELECT rr.data_fim INTO temp_data_fim
-FROM registo_restricao rr
-WHERE rr.parcela_agricola_id = v_parcela_agricola_id
-  AND rr.fator_producao_id = v_fator_producao_id
-  AND rr.data_inicio = v_data_inicio;
-
-IF temp_data_fim <  v_data_a_comparar THEN
-        RAISE EX_ERRO_OPERACAO_JA_REALIZADA;
-END IF;
+    SELECT rr.data_fim INTO temp_data_fim
+    FROM registo_restricao rr
+    WHERE rr.parcela_agricola_id = v_parcela_agricola_id
+      AND rr.fator_producao_id = v_fator_producao_id
+      AND rr.data_inicio = v_data_inicio;
+    
+    IF temp_data_fim <  v_data_a_comparar THEN
+            RAISE EX_ERRO_OPERACAO_JA_REALIZADA;
+    END IF;
 
     IF v_tipo_operacao LIKE 'UPDATE' THEN
         IF v_tipo_parametro_alterar LIKE 'data inicio' THEN
 
             IF v_data_inicio <  v_data_a_comparar THEN
                 RAISE EX_ERRO_OPERACAO_JA_COMECADA;
-END IF;
+            END IF;
 
-UPDATE registo_restricao rr
-SET rr.data_inicio = v_nova_data_inicio
-WHERE rr.parcela_agricola_id = v_parcela_agricola_id
-  AND rr.fator_producao_id = v_fator_producao_id
-  AND rr.data_inicio = v_data_inicio;
+            UPDATE registo_restricao rr
+            SET rr.data_inicio = v_nova_data_inicio
+            WHERE rr.parcela_agricola_id = v_parcela_agricola_id
+              AND rr.fator_producao_id = v_fator_producao_id
+              AND rr.data_inicio = v_data_inicio;
 
-DBMS_OUTPUT.PUT_LINE('UPDATED data inicio');
-        DBMS_OUTPUT.PUT_LINE('');
+            DBMS_OUTPUT.PUT_LINE('UPDATED data inicio');
+            DBMS_OUTPUT.PUT_LINE('');
 
         ELSIF v_tipo_parametro_alterar LIKE 'data fim' THEN
 
             IF v_nova_data_fim < v_data_inicio  THEN
                 RAISE EX_ERRO_DATAS;
-END IF;
+            END IF;
 
-UPDATE registo_restricao rr
-SET rr.data_fim = v_nova_data_fim
-WHERE rr.parcela_agricola_id = v_parcela_agricola_id
-  AND rr.fator_producao_id = v_fator_producao_id
-  AND rr.data_inicio = v_data_inicio;
+            UPDATE registo_restricao rr
+            SET rr.data_fim = v_nova_data_fim
+            WHERE rr.parcela_agricola_id = v_parcela_agricola_id
+              AND rr.fator_producao_id = v_fator_producao_id
+              AND rr.data_inicio = v_data_inicio;
 
-DBMS_OUTPUT.PUT_LINE('UPDATED data fim');
-        DBMS_OUTPUT.PUT_LINE('');
+            DBMS_OUTPUT.PUT_LINE('UPDATED data fim');
+            DBMS_OUTPUT.PUT_LINE('');
 
-END IF;
+        END IF;
 
-END IF;
+    END IF;
 
     IF v_tipo_operacao LIKE 'DELETE' THEN
 
         IF v_data_inicio <  v_data_a_comparar THEN
                 RAISE EX_ERRO_OPERACAO_JA_COMECADA;
-END IF;
+        END IF;
 
-DELETE FROM registo_restricao rr
-WHERE rr.parcela_agricola_id = v_parcela_agricola_id
-  AND rr.fator_producao_id = v_fator_producao_id
-  AND rr.data_inicio = v_data_inicio;
+        DELETE FROM registo_restricao rr
+        WHERE rr.parcela_agricola_id = v_parcela_agricola_id
+          AND rr.fator_producao_id = v_fator_producao_id
+          AND rr.data_inicio = v_data_inicio;
 
-DBMS_OUTPUT.PUT_LINE('DELETED');
+        DBMS_OUTPUT.PUT_LINE('DELETED');
         DBMS_OUTPUT.PUT_LINE('');
 
-END IF;
+    END IF;
 
 
-EXCEPTION
+    EXCEPTION
     WHEN NO_DATA_FOUND THEN
-BEGIN
+        BEGIN
             IF v_tipo_operacao LIKE 'UPDATE' THEN
                 IF v_tipo_parametro_alterar LIKE 'data inicio' THEN
 
                     IF v_data_inicio <  v_data_a_comparar THEN
                         RAISE EX_ERRO_OPERACAO_JA_COMECADA;
-END IF;
+                    END IF;
 
-UPDATE registo_restricao rr
-SET rr.data_inicio = v_nova_data_inicio
-WHERE rr.parcela_agricola_id = v_parcela_agricola_id
-  AND rr.fator_producao_id = v_fator_producao_id
-  AND rr.data_inicio = v_data_inicio;
+                    UPDATE registo_restricao rr
+                    SET rr.data_inicio = v_nova_data_inicio
+                    WHERE rr.parcela_agricola_id = v_parcela_agricola_id
+                      AND rr.fator_producao_id = v_fator_producao_id
+                      AND rr.data_inicio = v_data_inicio;
 
-DBMS_OUTPUT.PUT_LINE('UPDATED data inicio');
-                DBMS_OUTPUT.PUT_LINE('');
+                    DBMS_OUTPUT.PUT_LINE('UPDATED data inicio');
+                    DBMS_OUTPUT.PUT_LINE('');
 
                 ELSIF v_tipo_parametro_alterar LIKE 'data fim' THEN
 
                     IF v_nova_data_fim < v_data_inicio  THEN
                         RAISE EX_ERRO_DATAS;
-END IF;
+                    END IF;
 
-UPDATE registo_restricao rr
-SET rr.data_fim = v_nova_data_fim
-WHERE rr.parcela_agricola_id = v_parcela_agricola_id
-  AND rr.fator_producao_id = v_fator_producao_id
-  AND rr.data_inicio = v_data_inicio;
+                    UPDATE registo_restricao rr
+                    SET rr.data_fim = v_nova_data_fim
+                    WHERE rr.parcela_agricola_id = v_parcela_agricola_id
+                      AND rr.fator_producao_id = v_fator_producao_id
+                      AND rr.data_inicio = v_data_inicio;
 
-DBMS_OUTPUT.PUT_LINE('UPDATED data fim');
-                DBMS_OUTPUT.PUT_LINE('');
+                    DBMS_OUTPUT.PUT_LINE('UPDATED data fim');
+                    DBMS_OUTPUT.PUT_LINE('');
 
-END IF;
+                END IF;
 
-END IF;
+            END IF;
 
             IF v_tipo_operacao LIKE 'DELETE' THEN
 
                 IF v_data_inicio <  v_data_a_comparar THEN
                         RAISE EX_ERRO_OPERACAO_JA_COMECADA;
-END IF;
+                END IF;
 
-DELETE FROM registo_restricao rr
-WHERE rr.parcela_agricola_id = v_parcela_agricola_id
-  AND rr.fator_producao_id = v_fator_producao_id
-  AND rr.data_inicio = v_data_inicio;
+                DELETE FROM registo_restricao rr
+                WHERE rr.parcela_agricola_id = v_parcela_agricola_id
+                  AND rr.fator_producao_id = v_fator_producao_id
+                  AND rr.data_inicio = v_data_inicio;
 
-DBMS_OUTPUT.PUT_LINE('DELETED');
+                DBMS_OUTPUT.PUT_LINE('DELETED');
                 DBMS_OUTPUT.PUT_LINE('');
 
-END IF;
+            END IF;
 
-END;
-WHEN EX_ERRO_OPERACAO_JA_REALIZADA THEN
+        END;
+    WHEN EX_ERRO_OPERACAO_JA_REALIZADA THEN
             RAISE_APPLICATION_ERROR(-20011,'A operacao ja foi realizada nao sendo assim possivel cancelar ou atualizar a mesma');
-WHEN EX_ERRO_OPERACAO_JA_COMECADA THEN
+    WHEN EX_ERRO_OPERACAO_JA_COMECADA THEN
             RAISE_APPLICATION_ERROR(-20011,'A operacao ja esta em processo, sendo apenas possivel mudar a sua data de fim');
-WHEN EX_ERRO_DATAS THEN
+    WHEN EX_ERRO_DATAS THEN
             RAISE_APPLICATION_ERROR(-20011,'Esta a tentar inserir uma nova data fim da operacao em que a sua data e menor que a data de inicio da operacao ');
 
 
@@ -160,56 +160,56 @@ BEGIN
 
     IF v_data_fertilizacao <  v_data_a_comparar THEN
         RAISE EX_ERRO_OPERACAO_JA_REALIZADA;
-END IF;
+    END IF;
 
     IF v_tipo_operacao LIKE 'UPDATE' THEN
         IF v_tipo_parametro_alterar LIKE 'data fertilizacao' THEN
 
-UPDATE registo_fertilizacao rf
-SET rf.data_fertilizacao = v_nova_data_fertilizacao
-WHERE rf.parcela_agricola_id = v_parcela_agricola_id
-  AND rf.fator_producao_id = v_fator_producao_id
-  AND rf.data_fertilizacao = v_data_fertilizacao;
-
-DBMS_OUTPUT.PUT_LINE('UPDATED data fertilizacaoo');
-                DBMS_OUTPUT.PUT_LINE('');
+            UPDATE registo_fertilizacao rf
+            SET rf.data_fertilizacao = v_nova_data_fertilizacao
+            WHERE rf.parcela_agricola_id = v_parcela_agricola_id
+              AND rf.fator_producao_id = v_fator_producao_id
+              AND rf.data_fertilizacao = v_data_fertilizacao;
+    
+            DBMS_OUTPUT.PUT_LINE('UPDATED data fertilizacaoo');
+            DBMS_OUTPUT.PUT_LINE('');
 
         ELSIF v_tipo_parametro_alterar LIKE 'quantidade utilizada' THEN
 
-UPDATE registo_fertilizacao rf
-SET rf.quantidade_utilizada_kg = v_nova_quantidade_utilizada_kg
-WHERE rf.parcela_agricola_id = v_parcela_agricola_id
-  AND rf.fator_producao_id = v_fator_producao_id
-  AND rf.data_fertilizacao = v_data_fertilizacao;
-
-DBMS_OUTPUT.PUT_LINE('UPDATED quantidade utilizada');
-                    DBMS_OUTPUT.PUT_LINE('');
+            UPDATE registo_fertilizacao rf
+            SET rf.quantidade_utilizada_kg = v_nova_quantidade_utilizada_kg
+            WHERE rf.parcela_agricola_id = v_parcela_agricola_id
+              AND rf.fator_producao_id = v_fator_producao_id
+              AND rf.data_fertilizacao = v_data_fertilizacao;
+            
+            DBMS_OUTPUT.PUT_LINE('UPDATED quantidade utilizada');
+            DBMS_OUTPUT.PUT_LINE('');
 
         ELSIF v_tipo_parametro_alterar LIKE 'tipo fertilizacao' THEN
 
-UPDATE registo_fertilizacao rf
-SET rf.tipo_fertilizacao_id = v_nova_tipo_fertilizacao_id
-WHERE rf.parcela_agricola_id = v_parcela_agricola_id
-  AND rf.fator_producao_id = v_fator_producao_id
-  AND rf.data_fertilizacao = v_data_fertilizacao;
+            UPDATE registo_fertilizacao rf
+            SET rf.tipo_fertilizacao_id = v_nova_tipo_fertilizacao_id
+            WHERE rf.parcela_agricola_id = v_parcela_agricola_id
+              AND rf.fator_producao_id = v_fator_producao_id
+              AND rf.data_fertilizacao = v_data_fertilizacao;
+            
+            DBMS_OUTPUT.PUT_LINE('UPDATED tipo fertilizacao');
+            DBMS_OUTPUT.PUT_LINE('');
+        END IF;
 
-DBMS_OUTPUT.PUT_LINE('UPDATED tipo fertilizacao');
-                    DBMS_OUTPUT.PUT_LINE('');
-END IF;
-
-END IF;
+    END IF;
 
     IF v_tipo_operacao LIKE 'DELETE' THEN
 
-DELETE FROM registo_fertilizacao rf
-WHERE rf.parcela_agricola_id = v_parcela_agricola_id
-  AND rf.fator_producao_id = v_fator_producao_id
-  AND rf.data_fertilizacao = v_data_fertilizacao;
+        DELETE FROM registo_fertilizacao rf
+        WHERE rf.parcela_agricola_id = v_parcela_agricola_id
+          AND rf.fator_producao_id = v_fator_producao_id
+          AND rf.data_fertilizacao = v_data_fertilizacao;
+        
+        DBMS_OUTPUT.PUT_LINE('DELETED');
+        DBMS_OUTPUT.PUT_LINE('');
 
-DBMS_OUTPUT.PUT_LINE('DELETED');
-            DBMS_OUTPUT.PUT_LINE('');
-
-END IF;
+    END IF;
 
 
 EXCEPTION
@@ -235,131 +235,131 @@ IS
 
 BEGIN
 
-SELECT rc.data_colheita INTO temp_data_colheita
-FROM registo_colheita rc
-WHERE rc.parcela_agricola_id = v_parcela_agricola_id
-  AND rc.produto_id = v_produto_id
-  AND rc.tipo_cultura_id = v_tipo_cultura_id
-  AND rc.data_plantacao = v_data_plantacao;
+    SELECT rc.data_colheita INTO temp_data_colheita
+    FROM registo_colheita rc
+    WHERE rc.parcela_agricola_id = v_parcela_agricola_id
+      AND rc.produto_id = v_produto_id
+      AND rc.tipo_cultura_id = v_tipo_cultura_id
+      AND rc.data_plantacao = v_data_plantacao;
 
-IF temp_data_colheita <  v_data_a_comparar THEN
-        RAISE EX_ERRO_OPERACAO_JA_REALIZADA;
-END IF;
+    IF temp_data_colheita <  v_data_a_comparar THEN
+            RAISE EX_ERRO_OPERACAO_JA_REALIZADA;
+    END IF;
 
     IF v_tipo_operacao LIKE 'UPDATE' THEN
         IF v_tipo_parametro_alterar LIKE 'data plantacao' THEN
 
             IF v_data_plantacao <  v_data_a_comparar THEN
                 RAISE EX_ERRO_OPERACAO_JA_COMECADA;
-END IF;
+            END IF;
 
-UPDATE registo_colheita rc
-SET rc.data_plantacao = v_nova_data_plantacao
-WHERE rc.parcela_agricola_id = v_parcela_agricola_id
-  AND rc.produto_id = v_produto_id
-  AND rc.tipo_cultura_id = v_tipo_cultura_id
-  AND rc.data_plantacao = v_data_plantacao;
+            UPDATE registo_colheita rc
+            SET rc.data_plantacao = v_nova_data_plantacao
+            WHERE rc.parcela_agricola_id = v_parcela_agricola_id
+              AND rc.produto_id = v_produto_id
+              AND rc.tipo_cultura_id = v_tipo_cultura_id
+              AND rc.data_plantacao = v_data_plantacao;
 
-DBMS_OUTPUT.PUT_LINE('UPDATED data plantacao');
-                DBMS_OUTPUT.PUT_LINE('');
+            DBMS_OUTPUT.PUT_LINE('UPDATED data plantacao');
+            DBMS_OUTPUT.PUT_LINE('');
 
         ELSIF v_tipo_parametro_alterar LIKE 'data colheita' THEN
 
             IF v_nova_data_colheita < v_data_plantacao  THEN
                 RAISE EX_ERRO_DATAS;
-END IF;
+            END IF;
 
-UPDATE registo_colheita rc
-SET rc.data_colheita = v_nova_data_colheita
-WHERE rc.parcela_agricola_id = v_parcela_agricola_id
-  AND rc.produto_id = v_produto_id
-  AND rc.tipo_cultura_id = v_tipo_cultura_id
-  AND rc.data_plantacao = v_data_plantacao;
+            UPDATE registo_colheita rc
+            SET rc.data_colheita = v_nova_data_colheita
+            WHERE rc.parcela_agricola_id = v_parcela_agricola_id
+              AND rc.produto_id = v_produto_id
+              AND rc.tipo_cultura_id = v_tipo_cultura_id
+              AND rc.data_plantacao = v_data_plantacao;
 
-DBMS_OUTPUT.PUT_LINE('UPDATED data colheita');
-                DBMS_OUTPUT.PUT_LINE('');
-END IF;
+            DBMS_OUTPUT.PUT_LINE('UPDATED data colheita');
+            DBMS_OUTPUT.PUT_LINE('');
+        END IF;
 
-END IF;
+    END IF;
 
     IF v_tipo_operacao LIKE 'DELETE' THEN
 
         IF v_data_plantacao <  v_data_a_comparar THEN
                 RAISE EX_ERRO_OPERACAO_JA_COMECADA;
-END IF;
+        END IF;
 
-DELETE FROM registo_colheita rc
-WHERE rc.parcela_agricola_id = v_parcela_agricola_id
-  AND rc.produto_id = v_produto_id
-  AND rc.tipo_cultura_id = v_tipo_cultura_id
-  AND rc.data_plantacao = v_data_plantacao;
-
-DBMS_OUTPUT.PUT_LINE('DELETED');
-                DBMS_OUTPUT.PUT_LINE('');
-END IF;
+        DELETE FROM registo_colheita rc
+        WHERE rc.parcela_agricola_id = v_parcela_agricola_id
+          AND rc.produto_id = v_produto_id
+          AND rc.tipo_cultura_id = v_tipo_cultura_id
+          AND rc.data_plantacao = v_data_plantacao;
+        
+        DBMS_OUTPUT.PUT_LINE('DELETED');
+        DBMS_OUTPUT.PUT_LINE('');
+    END IF;
 
 
 EXCEPTION
     WHEN NO_DATA_FOUND THEN
-BEGIN
+        BEGIN
             IF v_tipo_operacao LIKE 'UPDATE' THEN
                 IF v_tipo_parametro_alterar LIKE 'data plantacao' THEN
 
                     IF v_data_plantacao <  v_data_a_comparar THEN
                         RAISE EX_ERRO_OPERACAO_JA_COMECADA;
-END IF;
+                    END IF;
 
-UPDATE registo_colheita rc
-SET rc.data_plantacao = v_nova_data_plantacao
-WHERE rc.parcela_agricola_id = v_parcela_agricola_id
-  AND rc.produto_id = v_produto_id
-  AND rc.tipo_cultura_id = v_tipo_cultura_id
-  AND rc.data_plantacao = v_data_plantacao;
+                    UPDATE registo_colheita rc
+                    SET rc.data_plantacao = v_nova_data_plantacao
+                    WHERE rc.parcela_agricola_id = v_parcela_agricola_id
+                      AND rc.produto_id = v_produto_id
+                      AND rc.tipo_cultura_id = v_tipo_cultura_id
+                      AND rc.data_plantacao = v_data_plantacao;
 
-DBMS_OUTPUT.PUT_LINE('UPDATED data plantacao');
-                        DBMS_OUTPUT.PUT_LINE('');
+                    DBMS_OUTPUT.PUT_LINE('UPDATED data plantacao');
+                    DBMS_OUTPUT.PUT_LINE('');
 
                 ELSIF v_tipo_parametro_alterar LIKE 'data colheita' THEN
 
                     IF v_nova_data_colheita < v_data_plantacao  THEN
                         RAISE EX_ERRO_DATAS;
-END IF;
+                    END IF;
 
-UPDATE registo_colheita rc
-SET rc.data_colheita = v_nova_data_colheita
-WHERE rc.parcela_agricola_id = v_parcela_agricola_id
-  AND rc.produto_id = v_produto_id
-  AND rc.tipo_cultura_id = v_tipo_cultura_id
-  AND rc.data_plantacao = v_data_plantacao;
+                    UPDATE registo_colheita rc
+                    SET rc.data_colheita = v_nova_data_colheita
+                    WHERE rc.parcela_agricola_id = v_parcela_agricola_id
+                      AND rc.produto_id = v_produto_id
+                      AND rc.tipo_cultura_id = v_tipo_cultura_id
+                      AND rc.data_plantacao = v_data_plantacao;
+                    
+                    DBMS_OUTPUT.PUT_LINE('UPDATED data colheita');
+                    DBMS_OUTPUT.PUT_LINE('');
+                END IF;
 
-DBMS_OUTPUT.PUT_LINE('UPDATED data colheita');
-                        DBMS_OUTPUT.PUT_LINE('');
-END IF;
-
-END IF;
+            END IF;
 
             IF v_tipo_operacao LIKE 'DELETE' THEN
 
                 IF v_data_plantacao <  v_data_a_comparar THEN
                         RAISE EX_ERRO_OPERACAO_JA_COMECADA;
-END IF;
+                END IF;
 
-DELETE FROM registo_colheita rc
-WHERE rc.parcela_agricola_id = v_parcela_agricola_id
-  AND rc.produto_id = v_produto_id
-  AND rc.tipo_cultura_id = v_tipo_cultura_id
-  AND rc.data_plantacao = v_data_plantacao;
+                DELETE FROM registo_colheita rc
+                WHERE rc.parcela_agricola_id = v_parcela_agricola_id
+                  AND rc.produto_id = v_produto_id
+                  AND rc.tipo_cultura_id = v_tipo_cultura_id
+                  AND rc.data_plantacao = v_data_plantacao;
+                
+                DBMS_OUTPUT.PUT_LINE('DELETED');
+                DBMS_OUTPUT.PUT_LINE('');
 
-DBMS_OUTPUT.PUT_LINE('DELETED');
-                        DBMS_OUTPUT.PUT_LINE('');
-
-END IF;
-END;
-WHEN EX_ERRO_OPERACAO_JA_REALIZADA THEN
+            END IF;
+        END;
+    WHEN EX_ERRO_OPERACAO_JA_REALIZADA THEN
             RAISE_APPLICATION_ERROR(-20011,'A operacao ja foi realizada nao sendo assim possivel cancelar ou atualizar a mesma');
-WHEN EX_ERRO_OPERACAO_JA_COMECADA THEN
+    WHEN EX_ERRO_OPERACAO_JA_COMECADA THEN
             RAISE_APPLICATION_ERROR(-20011,'A operacao ja esta em processo, sendo apenas possivel mudar a sua data de colheita');
-WHEN EX_ERRO_DATAS THEN
+    WHEN EX_ERRO_DATAS THEN
             RAISE_APPLICATION_ERROR(-20011,'Esta a tentar inserir uma nova data fim da operacao em que a sua data e menor que a data de inicio da operacao ');
 
 
@@ -384,90 +384,90 @@ BEGIN
 
     IF v_data_realizacao <  v_data_a_comparar THEN
         RAISE EX_ERRO_OPERACAO_JA_REALIZADA;
-END IF;
+    END IF;
 
     IF v_tipo_operacao LIKE 'UPDATE' THEN
         IF v_tipo_parametro_alterar LIKE 'data realizacao' THEN
 
-UPDATE registo_rega rr
-SET rr.data_realizacao = v_nova_data_realizacao
-WHERE rr.parcela_agricola_id = v_parcela_agricola_id
-  AND rr.produto_id = v_produto_id
-  AND rr.tipo_cultura_id = v_tipo_cultura_id
-  AND rr.data_plantacao = v_data_plantacao
-  AND rr.data_realizacao = v_data_realizacao;
-
-DBMS_OUTPUT.PUT_LINE('UPDATED data realizacao');
-                DBMS_OUTPUT.PUT_LINE('');
+            UPDATE registo_rega rr
+            SET rr.data_realizacao = v_nova_data_realizacao
+            WHERE rr.parcela_agricola_id = v_parcela_agricola_id
+              AND rr.produto_id = v_produto_id
+              AND rr.tipo_cultura_id = v_tipo_cultura_id
+              AND rr.data_plantacao = v_data_plantacao
+              AND rr.data_realizacao = v_data_realizacao;
+    
+            DBMS_OUTPUT.PUT_LINE('UPDATED data realizacao');
+            DBMS_OUTPUT.PUT_LINE('');
 
         ELSIF v_tipo_parametro_alterar LIKE 'tipo sistema' THEN
 
-UPDATE registo_rega rr
-SET rr.tipo_sistema_id = v_novo_tipo_sistema_id
-WHERE rr.parcela_agricola_id = v_parcela_agricola_id
-  AND rr.produto_id = v_produto_id
-  AND rr.tipo_cultura_id = v_tipo_cultura_id
-  AND rr.data_plantacao = v_data_plantacao
-  AND rr.data_realizacao = v_data_realizacao;
+            UPDATE registo_rega rr
+            SET rr.tipo_sistema_id = v_novo_tipo_sistema_id
+            WHERE rr.parcela_agricola_id = v_parcela_agricola_id
+              AND rr.produto_id = v_produto_id
+              AND rr.tipo_cultura_id = v_tipo_cultura_id
+              AND rr.data_plantacao = v_data_plantacao
+              AND rr.data_realizacao = v_data_realizacao;
 
-DBMS_OUTPUT.PUT_LINE('UPDATED tipo sistema');
-                DBMS_OUTPUT.PUT_LINE('');
+            DBMS_OUTPUT.PUT_LINE('UPDATED tipo sistema');
+            DBMS_OUTPUT.PUT_LINE('');
 
         ELSIF v_tipo_parametro_alterar LIKE 'tipo rega' THEN
 
-UPDATE registo_rega rr
-SET rr.tipo_rega_id = v_novo_tipo_rega_id
-WHERE rr.parcela_agricola_id = v_parcela_agricola_id
-  AND rr.produto_id = v_produto_id
-  AND rr.tipo_cultura_id = v_tipo_cultura_id
-  AND rr.data_plantacao = v_data_plantacao
-  AND rr.data_realizacao = v_data_realizacao;
-
-DBMS_OUTPUT.PUT_LINE('UPDATED tipo rega');
-                DBMS_OUTPUT.PUT_LINE('');
+            UPDATE registo_rega rr
+            SET rr.tipo_rega_id = v_novo_tipo_rega_id
+            WHERE rr.parcela_agricola_id = v_parcela_agricola_id
+              AND rr.produto_id = v_produto_id
+              AND rr.tipo_cultura_id = v_tipo_cultura_id
+              AND rr.data_plantacao = v_data_plantacao
+              AND rr.data_realizacao = v_data_realizacao;
+            
+            DBMS_OUTPUT.PUT_LINE('UPDATED tipo rega');
+            DBMS_OUTPUT.PUT_LINE('');
 
         ELSIF v_tipo_parametro_alterar LIKE 'quantidade rega' THEN
 
-UPDATE registo_rega rr
-SET rr.quantidade_rega = v_nova_quantidade_rega
-WHERE rr.parcela_agricola_id = v_parcela_agricola_id
-  AND rr.produto_id = v_produto_id
-  AND rr.tipo_cultura_id = v_tipo_cultura_id
-  AND rr.data_plantacao = v_data_plantacao
-  AND rr.data_realizacao = v_data_realizacao;
+            UPDATE registo_rega rr
+            SET rr.quantidade_rega = v_nova_quantidade_rega
+            WHERE rr.parcela_agricola_id = v_parcela_agricola_id
+              AND rr.produto_id = v_produto_id
+              AND rr.tipo_cultura_id = v_tipo_cultura_id
+              AND rr.data_plantacao = v_data_plantacao
+              AND rr.data_realizacao = v_data_realizacao;
 
-DBMS_OUTPUT.PUT_LINE('UPDATED quantidade rega');
-                DBMS_OUTPUT.PUT_LINE('');
+            DBMS_OUTPUT.PUT_LINE('UPDATED quantidade rega');
+            DBMS_OUTPUT.PUT_LINE('');
 
         ELSIF v_tipo_parametro_alterar LIKE 'tempo rega' THEN
 
-UPDATE registo_rega rr
-SET rr.tempo_rega_mm = v_novo_tempo_rega_mm
-WHERE rr.parcela_agricola_id = v_parcela_agricola_id
-  AND rr.produto_id = v_produto_id
-  AND rr.tipo_cultura_id = v_tipo_cultura_id
-  AND rr.data_plantacao = v_data_plantacao
-  AND rr.data_realizacao = v_data_realizacao;
+            UPDATE registo_rega rr
+            SET rr.tempo_rega_mm = v_novo_tempo_rega_mm
+            WHERE rr.parcela_agricola_id = v_parcela_agricola_id
+              AND rr.produto_id = v_produto_id
+              AND rr.tipo_cultura_id = v_tipo_cultura_id
+              AND rr.data_plantacao = v_data_plantacao
+              AND rr.data_realizacao = v_data_realizacao;
 
-DBMS_OUTPUT.PUT_LINE('UPDATED tempo rega');
-                DBMS_OUTPUT.PUT_LINE('');
+            DBMS_OUTPUT.PUT_LINE('UPDATED tempo rega');
+            DBMS_OUTPUT.PUT_LINE('');
 
-END IF;
+        END IF;
 
-END IF;
+    END IF;
 
     IF v_tipo_operacao LIKE 'DELETE' THEN
 
-DELETE FROM registo_rega rr
-WHERE rr.parcela_agricola_id = v_parcela_agricola_id
-  AND rr.produto_id = v_produto_id
-  AND rr.tipo_cultura_id = v_tipo_cultura_id
-  AND rr.data_plantacao = v_data_plantacao
-  AND rr.data_realizacao = v_data_realizacao;
-
-DBMS_OUTPUT.PUT_LINE('DELETED');
-                DBMS_OUTPUT.PUT_LINE('');
-END IF;
+        DELETE FROM registo_rega rr
+        WHERE rr.parcela_agricola_id = v_parcela_agricola_id
+          AND rr.produto_id = v_produto_id
+          AND rr.tipo_cultura_id = v_tipo_cultura_id
+          AND rr.data_plantacao = v_data_plantacao
+          AND rr.data_realizacao = v_data_realizacao;
+        
+        DBMS_OUTPUT.PUT_LINE('DELETED');
+        DBMS_OUTPUT.PUT_LINE('');
+    END IF;
 
 
 EXCEPTION
@@ -484,7 +484,7 @@ SAVEPOINT us_211_adaptar_remarcar;
 -------------------------------------------------------------
 
 INSERT INTO registo_restricao(parcela_agricola_id,fator_producao_id,data_inicio,data_fim)
-VALUES(4,3,TO_DATE('01/12/2023 00:00','DD/MM/YYYY HH24:MI'),TO_DATE('31/12/2023 00:00','DD/MM/YYYY HH24:MI'));
+                            VALUES(4,3,TO_DATE('01/12/2023 00:00','DD/MM/YYYY HH24:MI'),TO_DATE('31/12/2023 00:00','DD/MM/YYYY HH24:MI'));
 
 SELECT * FROM registo_restricao;
 
@@ -514,7 +514,8 @@ SELECT * FROM registo_restricao;
 -------------------------------------------------------------
 
 INSERT INTO registo_fertilizacao(parcela_agricola_id,fator_producao_id,data_fertilizacao,quantidade_utilizada_kg,tipo_fertilizacao_id)
-VALUES(4,3,TO_DATE('12/12/2023 18:00','DD/MM/YYYY HH24:MI'),50,1);
+                                VALUES
+                                (4,3,TO_DATE('12/12/2023 18:00','DD/MM/YYYY HH24:MI'),50,1);
 
 SELECT * FROM registo_fertilizacao;
 
@@ -560,7 +561,8 @@ SELECT * FROM registo_fertilizacao;
 
 INSERT INTO registo_colheita(parcela_agricola_id,produto_id,tipo_cultura_id,data_plantacao,
                              area_plantada_ha,data_colheita,quantidade_colhida_ton_por_ha)
-VALUES (2,2,1,TO_DATE('04/12/2023 12:00','DD/MM/YYYY HH24:MI'),30,TO_DATE('21/12/2023 12:00','DD/MM/YYYY HH24:MI'),100);
+                            VALUES 
+                            (2,2,1,TO_DATE('04/12/2023 12:00','DD/MM/YYYY HH24:MI'),30,TO_DATE('21/12/2023 12:00','DD/MM/YYYY HH24:MI'),100);
 
 SELECT * FROM registo_colheita;
 
@@ -593,12 +595,13 @@ SELECT * FROM registo_colheita;
 -------------------------------------------------------------
 INSERT INTO registo_colheita(parcela_agricola_id,produto_id,tipo_cultura_id,data_plantacao,
                              area_plantada_ha,data_colheita,quantidade_colhida_ton_por_ha)
-VALUES (1,1,1,TO_DATE('04/01/2024 10:00','DD/MM/YYYY HH24:MI'),30,TO_DATE('04/12/2024 10:00','DD/MM/YYYY HH24:MI'),100);
+                            VALUES 
+                            (1,1,1,TO_DATE('04/01/2024 10:00','DD/MM/YYYY HH24:MI'),30,TO_DATE('04/12/2024 10:00','DD/MM/YYYY HH24:MI'),100);
 INSERT INTO registo_rega(parcela_agricola_id,produto_id,tipo_cultura_id,data_plantacao,
                          data_realizacao,quantidade_rega,tempo_rega_mm,tipo_rega_id,tipo_sistema_id)
-VALUES
-    (1,1,1,TO_DATE('04/01/2024 10:00','DD/MM/YYYY HH24:MI'),
-     TO_DATE('08/01/2024 12:00','DD/MM/YYYY HH24:MI'),100,30,3,2);
+                         VALUES
+                         (1,1,1,TO_DATE('04/01/2024 10:00','DD/MM/YYYY HH24:MI'),
+                          TO_DATE('08/01/2024 12:00','DD/MM/YYYY HH24:MI'),100,30,3,2);
 
 SELECT * FROM registo_rega;
 

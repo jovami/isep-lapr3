@@ -6,7 +6,6 @@ SET serveroutput on;
 
 --- Acceptance criteria #1 ---
 CREATE TABLE exploracao_agr_audit (
-    -- TODO: usar algo diff de gen as identity?
     audit_id                INTEGER GENERATED AS IDENTITY NOT NULL,
     login_name              VARCHAR(50) NOT NULL,
     operation_date          TIMESTAMP NOT NULL,
