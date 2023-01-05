@@ -10,65 +10,67 @@
 SET SERVEROUTPUT ON;
 
 
-create or replace PROCEDURE p_evolucao_producao(v_designacao_p produto.designacao_p%TYPE, v_parcela_agricola_id parcela_agricola.parcela_agricola_id%TYPE) 
+create or replace PROCEDURE p_evolucao_producao(v_designacao_p produto.designacao_p%TYPE, v_parcela_agricola_id parcela_agricola.parcela_agricola_id%TYPE)
 IS
-    
+
     l_designacao_p_ou_v                producao_venda.designacao_p_ou_v%TYPE;
     l_designacao_p                     produto.designacao_p%TYPE;
     l_valor_mercado_por_ha             produto.valor_mercado_por_ha%TYPE;
     l_parcela_agricola_id              parcela_agricola.parcela_agricola_id%TYPE;
-    l_ano                              tempo.ano%TYPE;
+    l_ano                              ano.ano%TYPE;
     l_producao_toneladas               producao_venda.producao_toneladas%TYPE;
-    
+
     temp_designacao_p                  produto.designacao_p%TYPE;
     temp_parcela_agricola              parcela_agricola.parcela_agricola_id%TYPE;
-   
-    
-    
-   CURSOR c_evolucao_producao IS
-        SELECT pv.designacao_p_ou_v , p.designacao_p, p.valor_mercado_por_ha, pa.parcela_agricola_id, t.ano , pv.producao_toneladas
-            FROM producao_venda pv
-                INNER JOIN tempo t ON pv.tempo_id = t.tempo_id
-                INNER JOIN produto p ON pv.produto_id = p.produto_id
-                INNER JOIN parcela_agricola pa ON pv.parcela_agricola_id = pa.parcela_agricola_id
-                WHERE pv.designacao_p_ou_v = 'producao' 
-                    AND p.designacao_p = v_designacao_p 
-                    AND pa.parcela_agricola_id = v_parcela_agricola_id 
-                    AND t.ano >= EXTRACT(YEAR FROM sysdate) - 5 ;
-    
+
+
+
+CURSOR c_evolucao_producao IS
+SELECT pv.designacao_p_ou_v , p.designacao_p, p.valor_mercado_por_ha, pa.parcela_agricola_id, a.ano , pv.producao_toneladas
+FROM producao_venda pv
+         INNER JOIN tempo t ON pv.tempo_id = t.tempo_id
+         INNER JOIN ano a ON t.ano = a.ano
+         INNER JOIN produto p ON pv.produto_id = p.produto_id
+         INNER JOIN parcela_agricola pa ON pv.parcela_agricola_id = pa.parcela_agricola_id
+WHERE pv.designacao_p_ou_v = 'producao'
+  AND p.designacao_p = v_designacao_p
+  AND pa.parcela_agricola_id = v_parcela_agricola_id
+  AND a.ano >= EXTRACT(YEAR FROM sysdate) - 5 ;
+
 BEGIN
 
-    SELECT p.designacao_p INTO temp_designacao_p
-    FROM produto p
-        WHERE p.designacao_p = v_designacao_p AND ROWNUM <=1;
-        
-    SELECT pa.parcela_agricola_id INTO temp_parcela_agricola
-    FROM parcela_agricola pa
-        WHERE pa.parcela_agricola_id = v_parcela_agricola_id;        
-    
-               
-   OPEN c_evolucao_producao;
-        LOOP
-          FETCH c_evolucao_producao INTO l_designacao_p_ou_v, l_designacao_p, l_valor_mercado_por_ha, l_parcela_agricola_id, l_ano, l_producao_toneladas; 
-          EXIT WHEN c_evolucao_producao%NOTFOUND;
-          dbms_output.put_line('designacao_p_ou_v= '|| l_designacao_p_ou_v || ' designacao_p= '|| l_designacao_p || ' valor_mercado_por_ha= '|| l_valor_mercado_por_ha  
-                               || ' parcela_agricola_id= '|| l_parcela_agricola_id || ' ano= '|| l_ano
-                               || ' producao_toneladas= '|| l_producao_toneladas );
-        END LOOP;
-  CLOSE c_evolucao_producao;
+SELECT p.designacao_p INTO temp_designacao_p
+FROM produto p
+WHERE p.designacao_p = v_designacao_p AND ROWNUM <=1;
+
+SELECT pa.parcela_agricola_id INTO temp_parcela_agricola
+FROM parcela_agricola pa
+WHERE pa.parcela_agricola_id = v_parcela_agricola_id;
 
 
-    EXCEPTION
+OPEN c_evolucao_producao;
+LOOP
+FETCH c_evolucao_producao INTO l_designacao_p_ou_v, l_designacao_p, l_valor_mercado_por_ha, l_parcela_agricola_id, l_ano, l_producao_toneladas;
+                    EXIT WHEN c_evolucao_producao%NOTFOUND;
+                    dbms_output.put_line('designacao_p_ou_v= '|| l_designacao_p_ou_v || ' designacao_p= '|| l_designacao_p || ' valor_mercado_por_ha= '|| l_valor_mercado_por_ha
+                                        || ' parcela_agricola_id= '|| l_parcela_agricola_id || ' ano= '|| l_ano
+                                        || ' producao_toneladas= '|| l_producao_toneladas );
+
+END LOOP;
+CLOSE c_evolucao_producao;
+
+
+EXCEPTION
         WHEN NO_DATA_FOUND THEN
-        BEGIN
+BEGIN
             IF temp_designacao_p IS NULL THEN
                 RAISE_APPLICATION_ERROR(-20011,'Nao existe o produto especificado');
-            END IF;
+END IF;
             IF temp_parcela_agricola IS NULL THEN
                 RAISE_APPLICATION_ERROR(-20011,'Nao existe a parcela agricola especificada');
-            END IF;
-        END;
-    
+END IF;
+END;
+
 END p_evolucao_producao;
 /
 
@@ -105,62 +107,63 @@ CALL  p_evolucao_producao('rosas',5);
 -------------------------Comparar as vendas de um ano com outro?-------------------------------
 
 
-create or replace PROCEDURE p_comparar_vendas(v_ano_x tempo.ano%TYPE, v_ano_y tempo.ano%TYPE) 
+create or replace PROCEDURE p_comparar_vendas(v_ano_x ano.ano%TYPE, v_ano_y ano.ano%TYPE)
 IS
-    
+
     l_designacao_p_ou_v                producao_venda.designacao_p_ou_v%TYPE;
-    l_ano                              tempo.ano%TYPE;
+    l_ano                              ano.ano%TYPE;
     l_sum_venda_milhares_euros         producao_venda.venda_milhares_euros%TYPE;
-    
-    temp_ano_x                        tempo.ano%TYPE;
-    temp_ano_y                        tempo.ano%TYPE;
-    
-    
-   CURSOR c_comparar_vendas IS
-        SELECT pv.designacao_p_ou_v , t.ano, SUM(pv.venda_milhares_euros)
-        FROM producao_venda pv
-            INNER JOIN tempo t ON pv.tempo_id = t.tempo_id
-            INNER JOIN produto p ON pv.produto_id = p.produto_id
-            WHERE pv.designacao_p_ou_v = 'venda'
-            GROUP BY pv.designacao_p_ou_v , t.ano
-            ORDER BY t.ano;
-    
+
+    temp_ano_x                        ano.ano%TYPE;
+    temp_ano_y                        ano.ano%TYPE;
+
+
+CURSOR c_comparar_vendas IS
+SELECT pv.designacao_p_ou_v , a.ano, SUM(pv.venda_milhares_euros)
+FROM producao_venda pv
+         INNER JOIN tempo t ON pv.tempo_id = t.tempo_id
+         INNER JOIN ano a   ON t.ano = a.ano
+         INNER JOIN produto p ON pv.produto_id = p.produto_id
+WHERE pv.designacao_p_ou_v = 'venda'
+GROUP BY pv.designacao_p_ou_v , a.ano
+ORDER BY a.ano;
+
 BEGIN
 
-    SELECT t.ano INTO temp_ano_x
-    FROM tempo t
-        WHERE t.ano = v_ano_x AND ROWNUM <=1;
-        
-    SELECT t.ano INTO temp_ano_y
-    FROM tempo t
-        WHERE t.ano = v_ano_y AND ROWNUM <=1;
-       
-                   
-    OPEN c_comparar_vendas;
-        LOOP
-           FETCH c_comparar_vendas INTO l_designacao_p_ou_v, l_ano, l_sum_venda_milhares_euros; 
+SELECT a.ano INTO temp_ano_x
+FROM ano a
+WHERE a.ano = v_ano_x;
+
+SELECT a.ano INTO temp_ano_y
+FROM ano a
+WHERE a.ano = v_ano_y;
+
+
+OPEN c_comparar_vendas;
+LOOP
+FETCH c_comparar_vendas INTO l_designacao_p_ou_v, l_ano, l_sum_venda_milhares_euros;
            EXIT WHEN c_comparar_vendas%NOTFOUND;
-           
+
            IF l_ano = temp_ano_x OR l_ano = temp_ano_y THEN
-                dbms_output.put_line('designacao_p_ou_v= '|| l_designacao_p_ou_v || ' ano= '|| l_ano 
+                dbms_output.put_line('designacao_p_ou_v= '|| l_designacao_p_ou_v || ' ano= '|| l_ano
                                     || ' sum_venda_milhares_euros= '|| l_sum_venda_milhares_euros);
-            END IF;
-                   
-       END LOOP;
-    CLOSE c_comparar_vendas;
+END IF;
+
+END LOOP;
+CLOSE c_comparar_vendas;
 
 
-    EXCEPTION
+EXCEPTION
         WHEN NO_DATA_FOUND THEN
-        BEGIN
+BEGIN
             IF temp_ano_x IS NULL THEN
                 RAISE_APPLICATION_ERROR(-20011,'Nao existe registo de vendas neste ano ' ||v_ano_x);
-            END IF;
+END IF;
             IF temp_ano_y IS NULL THEN
                 RAISE_APPLICATION_ERROR(-20011,'Nao existe registo de vendas neste ano ' ||v_ano_y);
-            END IF;
-        END;
-    
+END IF;
+END;
+
 END p_comparar_vendas;
 /
 
@@ -188,48 +191,51 @@ CALL  p_comparar_vendas(2017,2022);
 -----------------------------------------ALINEA c----------------------------------------------
 -------------------Analisar a evolução das vendas mensais por tipo de cultura?-----------------
 
-create or replace PROCEDURE p_analisar_vendas_mensais_por_tipo_cultura(v_designacao_tc  produto.designacao_tc%TYPE) 
+create or replace PROCEDURE p_analisar_vendas_mensais_por_tipo_cultura(v_designacao_tc  tipo_cultura.designacao%TYPE)
 IS
-    
-    l_ano                              tempo.ano%TYPE;
-    l_mes_nome                         tempo.mes_nome%TYPE; 
+
+    l_ano                              ano.ano%TYPE;
+    l_mes_nome                         mes.nome%TYPE;
     l_sum_venda_milhares_euros         producao_venda.venda_milhares_euros%TYPE;
-    
-    temp_v_designacao_tc               produto.designacao_tc%TYPE;
-    
-    
-   CURSOR c_analisar_vendas_mensais_por_tipo_cultura IS
-        SELECT  t.ano, t.mes_nome, SUM(pv.venda_milhares_euros)
-        FROM producao_venda pv
-            INNER JOIN tempo t ON pv.tempo_id = t.tempo_id
-            INNER JOIN produto p ON pv.produto_id = p.produto_id
-            WHERE pv.designacao_p_ou_v = 'venda'
-                AND p.designacao_tc = v_designacao_tc
-            GROUP BY t.ano, t.mes, t.mes_nome
-            ORDER BY t.ano, t.mes;
-    
+
+    temp_v_designacao_tc               tipo_cultura.designacao%TYPE;
+
+
+CURSOR c_analisar_vendas_mensais_por_tipo_cultura IS
+SELECT  a.ano, m.nome, SUM(pv.venda_milhares_euros)
+FROM producao_venda pv
+         INNER JOIN tempo t ON pv.tempo_id = t.tempo_id
+         INNER JOIN ano a ON t.ano = a.ano
+         INNER JOIN mes m ON t.mes = m.mes
+         INNER JOIN produto p ON pv.produto_id = p.produto_id
+         INNER JOIN tipo_cultura tc ON p.tipo_cultura_id = tc.tipo_cultura_id
+WHERE pv.designacao_p_ou_v = 'venda'
+  AND tc.designacao = v_designacao_tc
+GROUP BY a.ano, m.mes, m.nome
+ORDER BY a.ano, m.mes;
+
 BEGIN
 
-    SELECT p.designacao_tc INTO temp_v_designacao_tc
-    FROM produto p
-        WHERE p.designacao_tc = v_designacao_tc AND ROWNUM <=1;
-                
-    OPEN c_analisar_vendas_mensais_por_tipo_cultura;
-        dbms_output.put_line('TIPO DE CULTURA= ' || v_designacao_tc);
+SELECT tc.designacao INTO temp_v_designacao_tc
+FROM tipo_cultura tc
+WHERE tc.designacao = v_designacao_tc;
+
+OPEN c_analisar_vendas_mensais_por_tipo_cultura;
+dbms_output.put_line('TIPO DE CULTURA= ' || v_designacao_tc);
         LOOP
-           FETCH c_analisar_vendas_mensais_por_tipo_cultura INTO l_ano, l_mes_nome, l_sum_venda_milhares_euros; 
+FETCH c_analisar_vendas_mensais_por_tipo_cultura INTO l_ano, l_mes_nome, l_sum_venda_milhares_euros;
            EXIT WHEN c_analisar_vendas_mensais_por_tipo_cultura%NOTFOUND;
-           
-                dbms_output.put_line('ano= '|| l_ano || ' mes_nome= '|| l_mes_nome 
-                                    || '   sum_venda_milhares_euros= '|| l_sum_venda_milhares_euros);                   
-       END LOOP;
-    CLOSE c_analisar_vendas_mensais_por_tipo_cultura;
+
+                dbms_output.put_line('ano= '|| l_ano || ' mes_nome= '|| l_mes_nome
+                                    || '   sum_venda_milhares_euros= '|| l_sum_venda_milhares_euros);
+END LOOP;
+CLOSE c_analisar_vendas_mensais_por_tipo_cultura;
 
 
-    EXCEPTION
+EXCEPTION
         WHEN NO_DATA_FOUND THEN
             RAISE_APPLICATION_ERROR(-20011,'Nao existe o tipo cultura especificado ');
-    
+
 END p_analisar_vendas_mensais_por_tipo_cultura;
 /
 
