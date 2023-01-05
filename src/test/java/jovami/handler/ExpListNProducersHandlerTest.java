@@ -15,7 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class ExpListNProducersHandlerTest {
 
     private ExpListNProducersHandler handler;
-    private NearestHubToClientsHandler nearestHubToClientsHandler;
     private App app;
 
     @BeforeEach
