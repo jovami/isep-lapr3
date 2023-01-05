@@ -18,7 +18,7 @@ import jovami.model.store.ExpListStore;
 import jovami.model.store.ExpListStore.Restriction;
 import jovami.util.Triplet;
 import jovami.util.graph.Graph;
-import jovami.util.graph.TSP2;
+import jovami.util.graph.TSP;
 
 /**
  * ShortestPathHandler
@@ -57,11 +57,11 @@ public class ShortestPathHandler {
             components.add(subgraph);
         });
 
-        var route = TSP2.tspFromComponents(components, HubNetwork.distCmp, HubNetwork.distSum);
+        var route = TSP.tspFromComponents(components, HubNetwork.distCmp, HubNetwork.distSum);
 
         var dists = new LinkedList<Distance>();
         // TODO: check if Distance.zero is correct here
-        var dist = TSP2.getDists(closure, Distance.zero, HubNetwork.distSum,
+        var dist = TSP.getDists(closure, Distance.zero, HubNetwork.distSum,
                                  route, dists);
 
         return new Triplet<>(route, dists, dist);

@@ -12,7 +12,7 @@ import java.util.function.BinaryOperator;
 /**
  * TSP2
  */
-public class TSP2 {
+public class TSP {
 
     private static void ensureNonNull(Object... objs) {
         for (var obj : objs)
