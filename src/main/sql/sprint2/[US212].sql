@@ -208,7 +208,7 @@ INSERT INTO input_sensor(input_string) VALUES ('62940HS178A83010120211035');---2
 Sensor_id = 62941 Numero de erros originados por este sensor = 1
 Sensor_id = 62942 Numero de erros originados por este sensor = 1
 
-Data e hora de execucao do processo = 05/01/2023 14
+Data e hora de execucao do processo = 05/01/2023 20
 Numero total de registos lidos = 4
 Numero total de registos transferidos = 1
 Numero total de registos nao transferidos = 3*/
@@ -216,6 +216,25 @@ CALL p_adiciona_valores(1);
 
 SELECT * FROM sensor WHERE sensor_id = '62943';
 SELECT * FROM registo_dado_meteorologico WHERE sensor_id = '62943';
+
+
+
+---------OUTPUT OBTIDO E DE ACORDO AO ESPERADO--------------
+
+---Registos nao inseridos devido a erros de formatacao---
+/*---Registos nao inseridos devido a erros de formatacao---
+Sensor_id = 62940 Numero de erros originados por este sensor = 2
+Sensor_id = 62941 Numero de erros originados por este sensor = 1
+Sensor_id = 62942 Numero de erros originados por este sensor = 1
+
+Data e hora de execucao do processo = 05/01/2023 20
+Numero total de registos lidos = 3
+Numero total de registos transferidos = 0
+Numero total de registos nao transferidos = 3*/
+CALL p_adiciona_valores(1);
+
+SELECT * FROM guarda_processo_leitura_dados;
+
 
 ROLLBACK TO us_212_input_sensor;
 
