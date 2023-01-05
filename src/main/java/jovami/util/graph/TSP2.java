@@ -5,30 +5,32 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.BinaryOperator;
-
-import jovami.model.Distance;
-import jovami.model.HubNetwork;
-import jovami.model.User;
-import jovami.util.Triplet;
 
 /**
  * TSP2
  */
 public class TSP2 {
-    // TODO: make things generic whenever possible
+
+    private static void ensureNonNull(Object... objs) {
+        for (var obj : objs)
+            Objects.requireNonNull(obj);
+    }
+
     private static <E> void maybeClear(Collection<E> col) {
         if (!col.isEmpty())
             col.clear();
     }
 
-    private static <V,E> Graph<V,E>
+    public static <V,E> Graph<V,E>
     getCompleteGraph(Graph<V,E> g, Comparator<E> ce, BinaryOperator<E> sum)
     {
-        int v, e;
-        v = g.numVertices();
-        e = g.numEdges();
+        ensureNonNull(g, ce, sum);
+
+        int v = g.numVertices();
+        int e = g.numEdges();
 
         /* NOTE: we dont need to divide v*(v-1) by 2
          * since numEdges() returns double of the 'actual' edges */
@@ -37,58 +39,61 @@ public class TSP2 {
         return g;
     }
 
+    private static <V,E> List<V> mergeRoutes(List<List<V>> routes) {
+        var result = new LinkedList<V>();
 
-    public Triplet<List<User>, List<Distance>, Distance>
-    travelingSalesman(HubNetwork g, Set<User> s, User u)
-    {
-        // TODO: temporary
-        var tours = new LinkedList<LinkedList<User>>();
+        // Lookup set
+        Set<V> aux = new HashSet<>();
 
+        for (var route : routes) {
+            for (var vert : route) {
+                if (!aux.contains(vert)) {
+                    aux.add(vert);
+                    route.add(vert);
+                }
+            }
+        }
 
-
-
-        var tour = mergePaths(tours);
-
-        var dists = new LinkedList<Distance>();
-        // TODO: check Distance.zero
-        var dist = getDists(g, Distance.zero, HubNetwork.distSum, tour, dists);
-
-        return new Triplet<>(tour, dists, dist);
+        return result;
     }
 
-    private <V,E> E getDists(Graph<V,E> g, E zero, BinaryOperator<E> sum,
-                             List<V> tour, List<E> dists) {
+
+    private static <V,E> List<V>
+    bruteforceComponent(Graph<V,E> g, Comparator<E> ce, BinaryOperator<E> sum)
+    {
+        // TODO: implementation
+        return null;
+    }
+
+    public static <V,E> List<V>
+    tspFromComponents(List<Graph<V,E>> components, Comparator<E> ce, BinaryOperator<E> sum)
+    {
+        ensureNonNull(components, ce, sum);
+
+        var routes = new LinkedList<List<V>>();
+        for (var comp : components) {
+            routes.offer(bruteforceComponent(comp, ce, sum));
+        }
+
+        return mergeRoutes(routes);
+    }
+
+    public static <V,E> E
+    getDists(Graph<V,E> g, E zero, BinaryOperator<E> sum, List<V> route, List<E> dists)
+    {
+        ensureNonNull(g, zero, sum, route, dists);
         maybeClear(dists);
 
         E dist = zero;
-        final int size = tour.size();
+        final int size = route.size();
         for (int i = 1; i < size; i++) {
             // We don't need to check if edge exists due to floyd-warshall
-            E weight = g.edge(tour.get(i-1), tour.get(i))
+            E weight = g.edge(route.get(i-1), route.get(i))
                         .getWeight();
             dists.add(weight);
             dist = sum.apply(dist, weight);
         }
 
         return dist;
-    }
-
-    private <V,E> List<V> mergePaths(List<LinkedList<V>> tours) {
-
-        var result = new LinkedList<V>();
-
-        // Lookup set
-        Set<V> aux = new HashSet<>();
-
-        for (var tour : tours) {
-            for (var vert : tour) {
-                if (!aux.contains(vert)) {
-                    aux.add(vert);
-                    tour.add(vert);
-                }
-            }
-        }
-
-        return result;
     }
 }
