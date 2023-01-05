@@ -1,6 +1,7 @@
 /* Copyright (c) 2022 Jovami. All Rights Reserved. */
 
 #include "menu_aux.h"
+#include <stdint.h>
 
 static const unsigned short sensor_names[SENS_LAST] = {
     [SENS_TEMP] = 10,
@@ -53,7 +54,7 @@ short choose_type_sens()
         fputs("\nChoose one: ", stdout);
         opt = read_int_wrapper() - 1;   
 
-    } while (opt>=SENS_LAST && opt<=0);
+    } while (opt>=SENS_LAST || opt<0);
 
     return opt; 
 }
@@ -92,12 +93,34 @@ void print_vec(sensor_vec *type_pack)
 
 void sensor_init(Sensor *sens_add, short n_sens_type)
 {
-    puts("Number of Bad Values: ");
-        int max_bad_values = read_int_wrapper();
-    puts("Max Reading Value: ");
-        int limit_max = read_int_wrapper();
-    puts("Min Reading Value: ");
-        int limit_min = read_int_wrapper();
+    char *c=NULL;
+    size_t t=0;
+
+    intmax_t max_bad_values;
+
+    fputs("\nNumber of Bad Values: ",stdout);
+    max_bad_values = read_int(&c,&t);
+
+    while(max_bad_values < 0){
+        fputs("\nTry again",stdout);
+        max_bad_values = read_int(&c,&t);
+    }
+
+    fputs("\nMax Reading Value: ",stdout);
+    short limit_max = read_int(&c,&t);
+
+    fputs("\nMin Reading Value: ",stdout);
+    short limit_min = read_int(&c,&t);
+
+    fputs("\nFrequency: ",stdout);
+    long frequency = read_int(&c,&t);
+
+    while(frequency < 0){
+        fputs("\nTry again",stdout);
+        max_bad_values = read_int(&c,&t);
+    }
+
+    free(c);
 
     sens_init(
         sens_add,
@@ -105,7 +128,7 @@ void sensor_init(Sensor *sens_add, short n_sens_type)
         sensor_names[n_sens_type], 
         limit_max,
         limit_min,
-        2,
+        frequency,
         max_bad_values
     );
 }
