@@ -3,6 +3,7 @@ package jovami;
 import java.lang.reflect.Field;
 import java.util.List;
 
+import jovami.model.csv.BundleParser;
 import org.junit.jupiter.api.BeforeEach;
 
 import jovami.model.csv.DistanceParser;
@@ -23,6 +24,9 @@ public class MainTest {
         new DistanceParser().parse(distance);
     }
 
+    public static void readBundles(List<String[]> bundles){
+        new BundleParser().parse(bundles);
+    }
 
     public static void resetSingleton() {
         try {
