@@ -23,7 +23,8 @@ public class Main {
         uis.add(new ExpBasketListUI());       //US308
         uis.add(new ExpListNProducersUI());
         uis.add(new WateringControllerUI());    //US306
-        uis.add(new ExpListStatsUi());
+        uis.add(new ShortestPathUI());          // US310
+        uis.add(new ExpListStatsUi());          // US311
 
         uis.forEach(ui -> {
             var name = ui.getClass().getSimpleName();
