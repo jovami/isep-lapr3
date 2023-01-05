@@ -10,6 +10,7 @@ import java.util.function.BinaryOperator;
 import jovami.util.Triplet;
 import jovami.util.graph.Algorithms;
 import jovami.util.graph.Edge;
+import jovami.util.graph.Graph;
 import jovami.util.graph.map.MapGraph;
 
 /**
@@ -52,24 +53,17 @@ public class HubNetwork extends MapGraph<User, Distance> {
         this.addVertices(users);
     }
 
-    public HubNetwork subNetwork(User u, Collection<User> users) {
-        var sub = new HubNetwork(this.isDirected, users);
-        sub.addVertex(u);
+    public HubNetwork(Graph<User,Distance> g) {
+        this(g.isDirected(), g.vertices());
+        this.addEdges(g.edges()
+                       .stream()
+                       .map(e -> new Triplet<>(e.getVOrig(), e.getVDest(), e.getWeight()))
+                       .toList()
+        );
+    }
 
-        var verts = sub.vertices();
-        final int size = verts.size();
-
-        for (int i = 0; i < size; i++) {
-            User u1 = verts.get(i);
-            for (int j = 0; j < size; j++) {
-                User u2 = verts.get(j);
-                var edge = this.edge(u1, u2);
-                if (edge != null)
-                    sub.addEdge(u1, u2, edge.getWeight());
-            }
-        }
-
-        return sub;
+    public static Distance getZero(User vert){
+        return new Distance(vert.getLocationID(), vert.getLocationID(), 0);
     }
 
     /**
@@ -96,6 +90,30 @@ public class HubNetwork extends MapGraph<User, Distance> {
         dists.forEach(e -> this.addEdge(e.first(), e.second(), e.third()));
 
         return oldNum != this.numEdges;
+    }
+
+    public HubNetwork subNetwork(User u, Collection<User> users) {
+        var sub = new HubNetwork(this.isDirected, users);
+        sub.addVertex(u);
+
+        var verts = sub.vertices();
+        final int size = verts.size();
+
+        for (int i = 0; i < size; i++) {
+            User u1 = verts.get(i);
+            for (int j = 0; j < size; j++) {
+                User u2 = verts.get(j);
+                var edge = this.edge(u1, u2);
+                if (edge != null)
+                    sub.addEdge(u1, u2, edge.getWeight());
+            }
+        }
+
+        return sub;
+    }
+
+    public HubNetwork transitiveClosure() {
+        return new HubNetwork(Algorithms.minDistGraph(this, distCmp, distSum));
     }
 
     /**
@@ -135,15 +153,9 @@ public class HubNetwork extends MapGraph<User, Distance> {
      * @param pool   the pool
      * @return the linked list
      */
-    public LinkedList<Distance>
-    shortestPathsForPool(User origin, List<User> pool)
-    {
+    public LinkedList<Distance> shortestPathsForPool(User origin, List<User> pool) {
         return Algorithms.shortestPathsForPool(this, origin, pool,
                                                distCmp, distSum, getZero(origin));
-    }
-
-    public static Distance getZero(User vert){
-        return new Distance(vert.getLocationID(), vert.getLocationID(), 0);
     }
 
     //==================== Overrides ====================//

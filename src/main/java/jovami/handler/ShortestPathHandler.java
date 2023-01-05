@@ -25,7 +25,6 @@ import jovami.util.graph.TSP2;
  */
 public class ShortestPathHandler {
     private final App app;
-    private final HubNetwork network;
     private final ExpListStore exportStore;
 
     // TODO: make this not scuffed
@@ -34,10 +33,10 @@ public class ShortestPathHandler {
 
     public ShortestPathHandler() {
         this.app = App.getInstance();
-        this.network = this.app.hubNetwork();
         this.exportStore = this.app.expListStore();
     }
 
+    // FIXME: finish this
     public boolean aaaa(int day) {
         this.day = day;
         this.expList = this.exportStore.getExpList(Restriction.NONE);
@@ -45,25 +44,24 @@ public class ShortestPathHandler {
         return expList != null;
     }
 
-    public Triplet<List<User>, List<Distance>, Distance>
-    shortestRoute()
-    {
+    public Triplet<List<User>, List<Distance>, Distance> shortestRoute() {
         var map = producersPerHub(this.expList, this.day);
 
+        var closure = this.app.hubNetwork().transitiveClosure();
         var components = new LinkedList<Graph<User, Distance>>();
         map.forEach((k, v) -> {
-            var subgraph = this.network.subNetwork(k, v);
-            var closure = TSP2.getCompleteGraph(subgraph, HubNetwork.distCmp,
-                                                HubNetwork.distSum);
-            components.add(closure);
+            var subgraph = closure.subNetwork(k, v);
+            // TODO: make sure this is really not needed
+            // var closure = TSP2.getCompleteGraph(subgraph, HubNetwork.distCmp,
+            //                                     HubNetwork.distSum);
+            components.add(subgraph);
         });
-
 
         var route = TSP2.tspFromComponents(components, HubNetwork.distCmp, HubNetwork.distSum);
 
         var dists = new LinkedList<Distance>();
         // TODO: check if Distance.zero is correct here
-        var dist = TSP2.getDists(this.network, Distance.zero, HubNetwork.distSum,
+        var dist = TSP2.getDists(closure, Distance.zero, HubNetwork.distSum,
                                  route, dists);
 
         return new Triplet<>(route, dists, dist);
