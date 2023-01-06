@@ -4,7 +4,7 @@ import jovami.App;
 import jovami.model.HubNetwork;
 import jovami.model.User;
 import jovami.model.bundles.*;
-import jovami.model.shared.DeliverieState;
+import jovami.model.shared.DeliveryState;
 import jovami.model.shared.UserType;
 import jovami.model.store.BundleStore;
 import jovami.model.store.ExpListStore;
@@ -79,7 +79,7 @@ public class ExpBasketListHandler {
         }
 
         if(max.second()==0.0f){
-            order.setState(DeliverieState.NOT_SATISFIED);
+            order.setState(DeliveryState.NOT_SATISFIED);
             return;
         }
 

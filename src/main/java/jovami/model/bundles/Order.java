@@ -1,7 +1,7 @@
 package jovami.model.bundles;
 
 import jovami.model.User;
-import jovami.model.shared.DeliverieState;
+import jovami.model.shared.DeliveryState;
 import jovami.model.shared.UserType;
 
 //pedido individual de um unico produto, presente nos cabazes
@@ -20,16 +20,16 @@ public class Order {
     private float qntDelivered;
 
     //para saber se foi entregue(necessário para a us 311)
-    private DeliverieState state;
+    private DeliveryState state;
 
     public Order(Product prod, float quantity){
         this.product = prod;
         this.qntOrder = quantity;
         this.producer = null;
-        this.state = DeliverieState.NOT_SATISFIED;
+        this.state = DeliveryState.NOT_SATISFIED;
     }
 
-    private Order(Product prod, float quantity,User producer, DeliverieState state){
+    private Order(Product prod, float quantity,User producer, DeliveryState state){
         this.product = prod;
         this.qntOrder = quantity;
         this.producer = producer;
@@ -74,9 +74,9 @@ public class Order {
 
         if(qntDelivered>=qntOrder){
             this.qntDelivered = qntOrder;
-            setState(DeliverieState.TOTALLY_SATISTFIED);
+            setState(DeliveryState.TOTALLY_SATISTFIED);
         }else{
-            setState(DeliverieState.PARTIALLY_SATISFIED);
+            setState(DeliveryState.PARTIALLY_SATISFIED);
             this.qntDelivered=qntDelivered;
 
         }
@@ -91,11 +91,11 @@ public class Order {
         return this.product;
     }
 
-    public void setState(DeliverieState state){
+    public void setState(DeliveryState state){
         this.state=state;
     }
 
-    public DeliverieState getState(){
+    public DeliveryState getState(){
         return this.state;
     }
 

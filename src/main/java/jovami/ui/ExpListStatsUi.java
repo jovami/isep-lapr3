@@ -24,6 +24,9 @@ public class ExpListStatsUi implements UserStory{
         //showing statistics to the 4 types
 
         //for which type expedition list
+
+
+
         ExpList expList ;
         do{
             System.out.println("Types of expedition lists");

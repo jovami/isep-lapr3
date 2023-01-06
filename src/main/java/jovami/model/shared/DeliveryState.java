@@ -4,16 +4,16 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum DeliverieState {
+public enum DeliveryState {
  
     TOTALLY_SATISTFIED(0),
     PARTIALLY_SATISFIED(1),
     NOT_SATISFIED(2);
 
-    private static Map<Integer, DeliverieState> lookup;
+    private static Map<Integer, DeliveryState> lookup;
 
     static {
-        var values = DeliverieState.values();
+        var values = DeliveryState.values();
         lookup = new HashMap<>(values.length);
         for (var type : values)
             lookup.put(type.prefix, type);
@@ -22,11 +22,11 @@ public enum DeliverieState {
 
     public final int prefix;
 
-    public static DeliverieState getType(int prefix) {
+    public static DeliveryState getType(int prefix) {
         return lookup.get(prefix);
     }
 
-    DeliverieState(int i) {
+    DeliveryState(int i) {
         this.prefix = i;
     }
 }

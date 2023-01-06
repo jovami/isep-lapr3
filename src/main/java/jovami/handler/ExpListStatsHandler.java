@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 import jovami.App;
 import jovami.model.User;
 import jovami.model.bundles.*;
-import jovami.model.shared.DeliverieState;
+import jovami.model.shared.DeliveryState;
 import jovami.model.shared.UserType;
 import jovami.model.store.BundleStore;
 import jovami.model.store.ExpListStore;
@@ -55,7 +55,7 @@ public class ExpListStatsHandler {
         ArrayList<User> producers = new ArrayList<>();
 
         for (Order order : bundle.getOrdersList()) {
-            if(order.getState()==DeliverieState.TOTALLY_SATISTFIED){
+            if(order.getState()==DeliveryState.TOTALLY_SATISTFIED){
                 numFullyDelivered++;
 
                 if(!producers.contains(order.getProducer()))
@@ -102,8 +102,8 @@ public class ExpListStatsHandler {
             for (Bundle bundle : entry.getValue()) {
 
                 if(bundle.getClient()==client){
-                    if(bundle.getState()==DeliverieState.TOTALLY_SATISTFIED)        totalSatisfied++;
-                    if(bundle.getState()== DeliverieState.PARTIALLY_SATISFIED) partialyStatisfied++;
+                    if(bundle.getState()==DeliveryState.TOTALLY_SATISTFIED)        totalSatisfied++;
+                    if(bundle.getState()== DeliveryState.PARTIALLY_SATISFIED) partialyStatisfied++;
                     
                     for (Order order : bundle.getOrdersList()) {
                         if(!deliv.contains(order.getProducer()))
@@ -152,7 +152,7 @@ public class ExpListStatsHandler {
                 fullFilledBundle=true;
                 
                 for (Order order : bundle.getOrdersList()) {
-                    if(order.getState()==DeliverieState.TOTALLY_SATISTFIED){
+                    if(order.getState()==DeliveryState.TOTALLY_SATISTFIED){
 
                         if(order.getProducer().equals(producer)){
                             partialFilledBundle=true;

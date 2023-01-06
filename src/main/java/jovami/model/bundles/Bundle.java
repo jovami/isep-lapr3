@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import jovami.model.User;
-import jovami.model.shared.DeliverieState;
+import jovami.model.shared.DeliveryState;
 import jovami.model.shared.UserType;
 
 //Cabazes
@@ -22,7 +22,7 @@ public class Bundle {
     
     //TODO needed?? uma vez que todas as encomendas sao expedidas no mesmo dia, caso estejam ou nao completas
     // para saber se o cabaz foi entregue
-    private DeliverieState state;
+    private DeliveryState state;
 
 
     //Constructors
@@ -30,12 +30,12 @@ public class Bundle {
         this.orders = new ArrayList<>(2 << 4);
         if(setClient(client)){
             setDay(day);
-            state=DeliverieState.NOT_SATISFIED;
+            state=DeliveryState.NOT_SATISFIED;
         }
     }
 
     //Constructors for copy
-    public Bundle(User client, int day,ArrayList<Order> orders,DeliverieState state){
+    public Bundle(User client, int day,ArrayList<Order> orders,DeliveryState state){
         this(client,day);
 
         for (Order copyOrder : orders) {
@@ -59,7 +59,7 @@ public class Bundle {
         return false;
     }
 
-    public void setState(DeliverieState state){
+    public void setState(DeliveryState state){
         this.state = state;
     }
 
@@ -82,26 +82,26 @@ public class Bundle {
         return this.client;
     }
 
-    public DeliverieState getState(){
+    public DeliveryState getState(){
 
         int fully = 0;
         int notSatisfied = 0;
         
         for (Order iter : orders) {
-            if(iter.getState()==DeliverieState.NOT_SATISFIED)
+            if(iter.getState()==DeliveryState.NOT_SATISFIED)
                 notSatisfied++;
 
-            if(iter.getState()==DeliverieState.TOTALLY_SATISTFIED)
+            if(iter.getState()==DeliveryState.TOTALLY_SATISTFIED)
                 fully++;
         }
 
         if(fully==orders.size()){
-            return DeliverieState.TOTALLY_SATISTFIED;
+            return DeliveryState.TOTALLY_SATISTFIED;
         }else if(notSatisfied == orders.size()){
-            return DeliverieState.NOT_SATISFIED;
+            return DeliveryState.NOT_SATISFIED;
         }
 
-        return DeliverieState.PARTIALLY_SATISFIED;
+        return DeliveryState.PARTIALLY_SATISFIED;
     }
 
 

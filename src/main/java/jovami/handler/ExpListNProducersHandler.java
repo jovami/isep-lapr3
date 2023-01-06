@@ -8,7 +8,7 @@ import jovami.model.bundles.Bundle;
 import jovami.model.bundles.ExpList;
 import jovami.model.bundles.Order;
 import jovami.model.bundles.Product;
-import jovami.model.shared.DeliverieState;
+import jovami.model.shared.DeliveryState;
 import jovami.model.shared.UserType;
 import jovami.model.store.BundleStore;
 import jovami.model.store.ExpListStore;
@@ -107,7 +107,7 @@ public class ExpListNProducersHandler {
         }
 
         if(max.second()==0.0f){
-            order.setState(DeliverieState.NOT_SATISFIED);
+            order.setState(DeliveryState.NOT_SATISFIED);
             return;
         }
 
