@@ -1,31 +1,40 @@
 package jovami.model.store;
 
-import java.util.HashMap;
+import java.util.EnumMap;
+import java.util.Map;
 
 import jovami.model.bundles.ExpList;
 
 public class ExpListStore {
 
-    private final int EXP_NO_RESTRICTIONS = 0;
-    private final int EXP_PROD_RESTRICTIONS = 1;
+    public static enum Restriction {
+        NONE,
+        PRODUCERS;
 
-    private final HashMap<Integer, ExpList> listExp;
-
-    public ExpListStore(){
-        listExp=new HashMap<Integer,ExpList>(2<<4);
+        Restriction() {
+        }
     }
 
-    //TODO MELHORAR ISTO
-    public ExpList getExp(int i){
-        return listExp.get(i);
+    private final Map<Restriction, ExpList> listExp;
+
+    public ExpListStore() {
+        this.listExp = new EnumMap<>(Restriction.class);
     }
-    
-    public void addExpListNoRestrict(ExpList expList){
-        listExp.put(EXP_NO_RESTRICTIONS,expList);
-    }    
- 
-    public void addExpListProdRestrict(ExpList expList){
-        listExp.put(EXP_PROD_RESTRICTIONS,expList);
-    }    
- 
+
+    public ExpList getExpList(Restriction r) {
+        return this.listExp.get(r);
+    }
+
+    public ExpList getExpList() {
+        return this.getExpList(Restriction.NONE);
+    }
+
+
+    public void addExpListNoRestrict(ExpList expList) {
+        listExp.put(Restriction.NONE, expList);
+    }
+
+    public void addExpListProdRestrict(ExpList expList) {
+        listExp.put(Restriction.PRODUCERS, expList);
+    }
 }
