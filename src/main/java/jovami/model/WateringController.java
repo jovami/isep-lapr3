@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.SortedSet;
@@ -120,7 +121,7 @@ public class WateringController {
     private Optional<LocalTime> previousWateringHour(LocalTime time) {
         try {
             return Optional.of(this.wateringHours.headSet(time).last());
-        } catch (NullPointerException e) {
+        } catch (NullPointerException | NoSuchElementException e) {
             return Optional.empty();
         }
     }
