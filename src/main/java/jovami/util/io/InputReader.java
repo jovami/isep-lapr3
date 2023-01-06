@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -97,5 +98,30 @@ public class InputReader {
             throw new RuntimeException("File does not exist!! " + (f != null ? f.getPath() : ""));
 
         return f;
+    }
+
+    public static <E> int showAndSelectIndex(List<E> list, String header) {
+        showList(list, header);
+        return selectIndex(list);
+    }
+
+    public static <E> void showList(List<E> list, String header) {
+        System.out.printf("%s\n\n", header);
+
+        int index = 0;
+        for (E e : list)
+            System.out.printf("%d) %s\n", ++index, e);
+        System.out.println();
+    }
+
+    private static <E> int selectIndex(List<E> list) {
+        int value;
+        final int len = list.size();
+
+        do {
+            value = readInteger("Type your option:");
+        } while (value < 1 || value > len);
+
+        return value - 1;
     }
 }
