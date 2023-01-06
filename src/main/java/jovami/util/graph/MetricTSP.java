@@ -83,6 +83,7 @@ public class MetricTSP {
      *
      * @return the resulting TSP tour
      *
+     * @see https://ocw.mit.edu/courses/6-046j-design-and-analysis-of-algorithms-spring-2015/
      * @apiNote g must be a complete graph
      */
     public static <V,E> LinkedList<V>

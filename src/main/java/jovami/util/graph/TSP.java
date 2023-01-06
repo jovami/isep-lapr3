@@ -1,6 +1,7 @@
 package jovami.util.graph;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -8,22 +9,26 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.BinaryOperator;
+import java.util.function.Function;
 
 /**
  * TSP2
  */
 public class TSP {
 
+    // TODO: move this to a separate place
     private static void ensureNonNull(Object... objs) {
         for (var obj : objs)
             Objects.requireNonNull(obj);
     }
 
+    // TODO: move this to a separate place
     private static <E> void maybeClear(Collection<E> col) {
         if (!col.isEmpty())
             col.clear();
     }
 
+    // TODO: move this to a separate place
     public static <V,E> Graph<V,E>
     getCompleteGraph(Graph<V,E> g, Comparator<E> ce, BinaryOperator<E> sum)
     {
@@ -38,6 +43,7 @@ public class TSP {
             return Algorithms.minDistGraph(g, ce, sum);
         return g;
     }
+
 
     private static <V,E> List<V> mergeRoutes(List<List<V>> routes) {
         var result = new LinkedList<V>();
@@ -57,22 +63,32 @@ public class TSP {
         return result;
     }
 
-
+    // TODO: rename this method?
     private static <V,E> List<V>
-    bruteforceComponent(Graph<V,E> g, Comparator<E> ce, BinaryOperator<E> sum)
+    componentTSP(Graph<V,E> g, V vOrig, Comparator<E> ce, E zero)
     {
-        // TODO: implementation
-        return null;
+        var tour = MetricTSP.twosApproximation(g, vOrig, ce, zero);
+        tour.poll();
+        return tour;
     }
 
     public static <V,E> List<V>
-    tspFromComponents(List<Graph<V,E>> components, Comparator<E> ce, BinaryOperator<E> sum)
+    fromComponents(List<Graph<V,E>> components, List<V> starting,
+                   Comparator<E> ce, Function<V,E> zeroSupplier)
     {
-        ensureNonNull(components, ce, sum);
+        ensureNonNull(components, starting, ce, zeroSupplier);
+
+        final int compSize = components.size();
+        if (compSize != starting.size())
+            return Collections.emptyList();
 
         var routes = new LinkedList<List<V>>();
-        for (var comp : components) {
-            routes.offer(bruteforceComponent(comp, ce, sum));
+        for (int i = 0; i < compSize; i++) {
+            var comp = components.get(i);
+            var vert = starting.get(i);
+            var zero = zeroSupplier.apply(vert);
+
+            routes.offer(componentTSP(comp, vert, ce, zero));
         }
 
         return mergeRoutes(routes);
