@@ -249,9 +249,9 @@ class BundleParserTest {
          * Assert number of bundles
          */
         var expected2 = 6;
-        var actual2 = this.app.bundleStore().getBundlesArray(1).size()
-                + this.app.bundleStore().getBundlesArray(2).size()
-                + this.app.bundleStore().getBundlesArray(3).size();
+        var actual2 = this.app.bundleStore().getBundles(1).size()
+                + this.app.bundleStore().getBundles(2).size()
+                + this.app.bundleStore().getBundles(3).size();
         assertEquals(expected2, actual2);
 
         var freshData = Arrays.asList(
@@ -272,11 +272,11 @@ class BundleParserTest {
          * Assert number of bundles (Values should change)
          */
         var expected4 = 8;
-        var actual4 = this.app.bundleStore().getBundlesArray(1).size()
-                + this.app.bundleStore().getBundlesArray(2).size()
-                + this.app.bundleStore().getBundlesArray(3).size()
-                + this.app.bundleStore().getBundlesArray(4).size()
-                + this.app.bundleStore().getBundlesArray(5).size();
+        var actual4 = this.app.bundleStore().getBundles(1).size()
+                + this.app.bundleStore().getBundles(2).size()
+                + this.app.bundleStore().getBundles(3).size()
+                + this.app.bundleStore().getBundles(4).size()
+                + this.app.bundleStore().getBundles(5).size();
         assertEquals(expected4, actual4);
     }
 }
