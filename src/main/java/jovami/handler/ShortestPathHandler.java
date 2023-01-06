@@ -21,7 +21,6 @@ import jovami.util.graph.TSP;
  */
 public class ShortestPathHandler {
     private final App app;
-    private final ExpListStore exportStore;
 
     // TODO: make this not scuffed
     private int day;
@@ -30,20 +29,22 @@ public class ShortestPathHandler {
 
     public ShortestPathHandler() {
         this.app = App.getInstance();
-        this.exportStore = this.app.expListStore();
     }
 
     // FIXME: finish this
-    public boolean setDay(int day) {
+    public boolean setDayRestriction(int day, Restriction r) {
         this.day = day;
-        var expList = this.exportStore.getExpList(Restriction.NONE);
+
+        var expList = this.app.expListStore().getExpList(r);
+        if (expList == null)
+            return false;
         this.bStore = expList.getBundleStore();
 
         return this.bStore != null;
     }
 
     public Triplet<List<User>, List<Distance>, Distance> shortestRoute() {
-        var map = bStore.producersPerHub(this.day);
+        var map = this.bStore.producersPerHub(this.day);
 
         var closure = this.app.hubNetwork().transitiveClosure();
         var components = new LinkedList<Graph<User, Distance>>();

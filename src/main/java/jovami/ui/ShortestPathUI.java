@@ -1,5 +1,6 @@
 package jovami.ui;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import jovami.handler.ShortestPathHandler;
 import jovami.model.Distance;
 import jovami.model.User;
 import jovami.model.bundles.Order;
+import jovami.model.store.ExpListStore.Restriction;
 import jovami.util.io.InputReader;
 
 /**
@@ -14,16 +16,20 @@ import jovami.util.io.InputReader;
  */
 public class ShortestPathUI implements UserStory {
     private final ShortestPathHandler handler;
+    private final List<Restriction> restrictions;
 
     public ShortestPathUI() {
         this.handler = new ShortestPathHandler();
+        this.restrictions = Arrays.asList(Restriction.values());
     }
 
 	@Override
 	public void run() {
         int day = InputReader.readInteger("Day of the expedition list: ");
+        int rIdx = InputReader.showAndSelectIndex(this.restrictions,
+                                                  "Types of expedition lists:");
 
-        if (!this.handler.setDay(day)) {
+        if (!this.handler.setDayRestriction(day, this.restrictions.get(rIdx))) {
             System.err.println("error: no valid export list for that day");
             return;
         }
@@ -54,7 +60,7 @@ public class ShortestPathUI implements UserStory {
             System.out.printf("Hub %s bundles:\n", hub);
 
             for (var bundle : bundles)
-                System.out.printf("\t%s\n", bundle);
+                System.out.printf("\t-> %s\n", bundle);
             System.out.println();
         });
     }
