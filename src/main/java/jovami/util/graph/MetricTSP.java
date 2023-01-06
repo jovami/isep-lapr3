@@ -1,7 +1,7 @@
 package jovami.util.graph;
 
 import java.util.Comparator;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Objects;
 
 import jovami.util.graph.map.MapGraph;
@@ -80,11 +80,13 @@ public class MetricTSP {
      * @param vOrig the vertex to start/end ato
      * @param ce    edge Comparator
      * @param zero  the E class equivalent of the arithmetic zero
+     *
      * @return the resulting TSP tour
+     *
      * @apiNote g must be a complete graph
      */
-    public static <V,E> List<V> metricTSP(Graph<V,E> g, V vOrig,
-                                          Comparator<E> ce, E zero)
+    public static <V,E> LinkedList<V>
+    twosApproximation(Graph<V,E> g, V vOrig, Comparator<E> ce, E zero)
     {
         ensureNonNull(g, vOrig, ce, zero);
 
@@ -92,12 +94,13 @@ public class MetricTSP {
 
         var tour = Algorithms.DepthFirstSearch(mst, vOrig);
 
-        // We don't need to shortcut over any vertices
-        // because our DFS implementation does that for us
+        /* NOTE:
+         * We don't need to shortcut over any vertices
+         * because our DFS implementation does that for us
+         */
 
         // finish the cycle
         tour.offer(vOrig);
-
         return tour;
     }
 
