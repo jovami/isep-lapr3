@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import jovami.model.User;
+import jovami.model.shared.DeliveryState;
 import jovami.model.shared.UserType;
 
 //Cabazes
@@ -21,34 +22,32 @@ public class Bundle {
     
     //TODO needed?? uma vez que todas as encomendas sao expedidas no mesmo dia, caso estejam ou nao completas
     // para saber se o cabaz foi entregue
-    private boolean delivered;
+    private DeliveryState state;
+
 
     //Constructors
     public Bundle(User client, int day){
         this.orders = new ArrayList<>(2 << 4);
         if(setClient(client)){
             setDay(day);
-            delivered = false;
+            state=DeliveryState.NOT_SATISFIED;
         }
     }
 
     //Constructors for copy
-    public Bundle(User client, int day,ArrayList<Order> orders,boolean delivered){
+    public Bundle(User client, int day,ArrayList<Order> orders,DeliveryState state){
         this(client,day);
 
-        //FIXME 
-        this.orders=(ArrayList<Order>)orders.clone();
-        
         for (Order copyOrder : orders) {
-            this.orders.add(copyOrder);
+            this.orders.add(copyOrder.getCopy());
         }
         
-        this.delivered=delivered;
+        this.state=state;
         
     }
         
     public Bundle getCopy(){
-        return new Bundle(this.client,this.day);
+        return new Bundle(this.client,this.day,this.orders,this.state);
     }
 
     //SETS
@@ -60,8 +59,8 @@ public class Bundle {
         return false;
     }
 
-    public void setDelivered(){
-        this.delivered=true;
+    public void setState(DeliveryState state){
+        this.state = state;
     }
 
     private void setDay(int day){
@@ -83,8 +82,26 @@ public class Bundle {
         return this.client;
     }
 
-    public boolean isDelivered(){
-        return this.delivered;
+    public DeliveryState getState(){
+
+        int fully = 0;
+        int notSatisfied = 0;
+        
+        for (Order iter : orders) {
+            if(iter.getState()==DeliveryState.NOT_SATISFIED)
+                notSatisfied++;
+
+            if(iter.getState()==DeliveryState.TOTALLY_SATISTFIED)
+                fully++;
+        }
+
+        if(fully==orders.size()){
+            return DeliveryState.TOTALLY_SATISTFIED;
+        }else if(notSatisfied == orders.size()){
+            return DeliveryState.NOT_SATISFIED;
+        }
+
+        return DeliveryState.PARTIALLY_SATISFIED;
     }
 
 
@@ -112,7 +129,7 @@ public class Bundle {
 
     @Override 
     public String toString(){
-        return String.format("Client: %s\nDay: %d\nDelivered: %s\n--------------\n%s\n ",this.client,this.day,this.orders.toString(),this.delivered);
+        return String.format("Client: %s\nDay: %d\nDelivered: %s\n--------------\n%s\n ",this.client,this.day,this.state,this.orders.toString());
     }
 
 }
