@@ -55,7 +55,7 @@ public class TSP {
             for (var vert : route) {
                 if (!aux.contains(vert)) {
                     aux.add(vert);
-                    route.add(vert);
+                    result.add(vert);
                 }
             }
         }
