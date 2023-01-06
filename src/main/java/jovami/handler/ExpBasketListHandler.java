@@ -3,14 +3,13 @@ package jovami.handler;
 import jovami.App;
 import jovami.model.HubNetwork;
 import jovami.model.User;
-import jovami.model.bundles.Bundle;
-import jovami.model.bundles.ExpList;
-import jovami.model.bundles.Order;
-import jovami.model.bundles.Product;
+import jovami.model.bundles.*;
+import jovami.model.shared.DeliverieState;
 import jovami.model.shared.UserType;
 import jovami.model.store.BundleStore;
 import jovami.model.store.ExpListStore;
 import jovami.model.store.StockStore;
+import jovami.util.Pair;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -28,8 +27,6 @@ public class ExpBasketListHandler {
     public ExpBasketListHandler() {
         App app = App.getInstance();
         this.hubNetwork = app.hubNetwork();
-        this.bundleStore = app.bundleStore();
-        this.stockStore = app.stockStore();
         this.expStore= app.expListStore();
     }
 
@@ -56,18 +53,46 @@ public class ExpBasketListHandler {
 
     private void selectProducer(int day, Order order, List<User> producers) {
         Product product = order.getProduct();
-        float quantity = order.getQuantity();
+        boolean flag=false;
+        float quantityToRetrieve = order.getQuantity();
+        Pair<User,Float> max = new Pair<>(null, 0.f);
 
         for (User producer : producers) {
             var producerStock = stockStore.getStock(producer);
             if (producerStock != null) {
-                if (producerStock.retrieveFromStock(product, day, quantity)) {
+
+                //caso nao consiga retirar completamente de um stock, retorna -1
+                float stockProducer = producerStock.getStashAvailable(product, day, quantityToRetrieve);
+
+                if (stockProducer>=quantityToRetrieve) {
+                    producerStock.retrieveFromStock(day, product, quantityToRetrieve);
                     order.setProducer(producer);
-                    order.setDelivered();
+
+                    //TODO MUDAR PRODUCERSTASH PARA AQUILO QUE ELE VAI RETIRAR?
+                    order.setQntDelivered(quantityToRetrieve);
+                    flag = true;
                     return;
+                }else if(max.second() < stockProducer){
+                        max=new Pair<>(producer,stockProducer);
                 }
             }
         }
+
+        if(max.second()==0.0f){
+            order.setState(DeliverieState.NOT_SATISFIED);
+            return;
+        }
+
+        if(stockStore.getStock(max.first())==null){
+            System.out.println("");
+        }
+
+        if(!flag){
+            stockStore.getStock(max.first()).retrieveFromStock( day,product, max.second().floatValue());
+            order.setProducer(max.first());
+            order.setQntDelivered(max.second());
+        }       
+
     }
 
     public HashMap<Integer, LinkedList<Bundle>> expBasketsList() {
