@@ -8,8 +8,18 @@ import jovami.model.bundles.ExpList;
 public class ExpListStore {
 
     public static enum Restriction {
-        NONE,
-        PRODUCERS;
+        NONE {
+            @Override
+            public String toString() {
+                return "None";
+            }
+        },
+        PRODUCERS {
+            @Override
+            public String toString() {
+                return "N closest producers to hub";
+            }
+        };
 
         Restriction() {
         }
