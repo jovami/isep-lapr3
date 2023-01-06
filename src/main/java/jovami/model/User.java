@@ -104,7 +104,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.userID, this.coords, this.userType, this.locationID, this.nearestHub);
+        return Objects.hash(this.userID, this.coords, this.userType, this.locationID);
     }
 
     @Override
