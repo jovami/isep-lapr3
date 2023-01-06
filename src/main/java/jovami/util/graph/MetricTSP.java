@@ -97,11 +97,12 @@ public class MetricTSP {
 
         /* NOTE:
          * We don't need to shortcut over any vertices
-         * because our DFS implementation does that for us
+         * because our DFS implementation does that for us.
+         * We use push() rather than offer() to finish the cycle
+         * since our DFS impl returns the list in reverse
+         * order of traversal.
          */
-
-        // finish the cycle
-        tour.offer(vOrig);
+        tour.push(vOrig);
         return tour;
     }
 
