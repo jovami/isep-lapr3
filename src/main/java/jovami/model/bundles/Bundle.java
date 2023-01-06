@@ -86,26 +86,26 @@ public class Bundle {
 
         int fully = 0;
         int notSatisfied = 0;
-        
-        for (Order iter : orders) {
-            if(iter.getState()==DeliveryState.NOT_SATISFIED)
+        if(orders.size()!=0){
+
+            for (Order iter : orders) {
+                if(iter.getState()==DeliveryState.NOT_SATISFIED)
                 notSatisfied++;
 
             if(iter.getState()==DeliveryState.TOTALLY_SATISTFIED)
-                fully++;
-        }
+            fully++;
+            }
 
-        if(fully==orders.size()){
-            return DeliveryState.TOTALLY_SATISTFIED;
-        }else if(notSatisfied == orders.size()){
-            return DeliveryState.NOT_SATISFIED;
+            if(fully==orders.size()){
+                return DeliveryState.TOTALLY_SATISTFIED;
+            }else if(notSatisfied == orders.size()){
+                return DeliveryState.NOT_SATISFIED;
+            }
         }
 
         return DeliveryState.PARTIALLY_SATISFIED;
     }
-
-
-    //Orders handlers
+//Orders handlers
 
     //TODO set orders delivered
 

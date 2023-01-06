@@ -1,6 +1,5 @@
 package jovami.handler;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -18,7 +17,6 @@ import jovami.model.shared.ClientIndex;
 import jovami.model.shared.DeliveryState;
 import jovami.model.shared.HubIndex;
 import jovami.model.shared.ProducerIndex;
-import jovami.model.shared.UserType;
 import jovami.model.store.BundleStore;
 import jovami.model.store.ExpListStore;
 import jovami.model.store.ExpListStore.Restriction;
@@ -113,7 +111,7 @@ public class ExpListStatsHandler {
             if(res.get(iterBundle.getClient())==null){
                 res.put(iterBundle.getClient(), new int[NUMSTATSCLIENT]);
             }
-            clientStats(null, iterBundle,res.get(iterBundle.getClient()));
+            clientStats(iterBundle.getClient(), iterBundle,res.get(iterBundle.getClient()));
         }
 
         return res;
@@ -127,14 +125,14 @@ public class ExpListStatsHandler {
         //nº de cabazes parcialmente satisfeitos
         int partialyStatisfied=arr[ClientIndex.PARTIALLY_SATISFIED.getPrefix()];
 
-        ArrayList<User> deliv=new ArrayList<>();
+        HashSet<User> deliv=new HashSet<>();
 
         if(bundle.getClient()==client){
             if(bundle.getState()==DeliveryState.TOTALLY_SATISTFIED)        totalSatisfied++;
             if(bundle.getState()== DeliveryState.PARTIALLY_SATISFIED) partialyStatisfied++;
 
             for (Order order : bundle.getOrdersList()) {
-                if(!deliv.contains(order.getProducer()))
+                if(order.getProducer()!=null)
                     deliv.add(order.getProducer());
             }
 
@@ -190,71 +188,76 @@ public class ExpListStatsHandler {
         BundleStore bundles = expList.getBundleStore();
 
         // nº de cabazes fornecidos totalmente
-        int totalFullFilled=0;
+        int totalFullFilled = 0;
         boolean doesPartialFill;
 
-        //nº de cabazes fornecidos parcialmente
-        int partialFilled=0;
+        // nº de cabazes fornecidos parcialmente
+        int partialFilled = 0;
         boolean doesFullfil;
 
-
         // nº de clientes distintos fornecidos
-        int numDifClients=0;
+        int numDifClients = 0;
 
         // nº de hubs fornecidos.
-        int numDifHubs=0;
+        int numDifHubs = 0;
 
-        //estrutura auxiliar para controlar clientes repetidos
-        HashSet<User> difClients= new HashSet<>();
+        // estrutura auxiliar para controlar clientes repetidos
+        HashSet<User> difClients = new HashSet<>();
 
         for (Bundle bundle : bundles.getBundles(day)) {
-            //assumindo que cada bundle e sempre fullfilled por um
+            // assumindo que cada bundle e sempre fullfilled por um
             doesFullfil = true;
             doesPartialFill = false;
 
-            for (Order order : bundle.getOrdersList()) {
+            if(!bundle.getOrdersList().isEmpty()){
+                for (Order order : bundle.getOrdersList()){
 
-                //nao entregue
-                if(order.getProducer()!=null){
+                    // nao entregue
+                    if (order.getProducer() != null) {
 
-                    //caso o pedido não seja fornecido pelo produtor
-                    //o cabaz já não é fornecido na totalidade pelo produtor
-                    if (order.getProducer().equals(producer)) {
-                        doesPartialFill=true;
+                        // caso o pedido não seja fornecido pelo produtor
+                        // o cabaz já não é fornecido na totalidade pelo produtor
+                        if (order.getProducer().equals(producer)) {
+                            doesPartialFill = true;
 
-                        //caso um dos pedidos do cabaz esteja fornecido parcialmente
-                        //o cabaz já não é fornecido na totalidad pelo produtor
-                        if (order.getState() == DeliveryState.PARTIALLY_SATISFIED) {
-                            doesFullfil=false;
-                        }
-
-                        //caso o cliente ainda n tenha sido encontrado
-                        if (difClients.add(bundle.getClient())) {
-                            if (bundle.getClient().getUserType() == UserType.COMPANY) {
-                                numDifHubs++;
+                            // caso um dos pedidos do cabaz esteja fornecido parcialmente
+                            // o cabaz já não é fornecido na totalidad pelo produtor
+                            if (order.getState() == DeliveryState.PARTIALLY_SATISFIED) {
+                                doesFullfil = false;
                             }
-                            if (bundle.getClient().getUserType() == UserType.CLIENT) {
-                                numDifClients++;
+
+                            // caso o cliente ainda n tenha sido encontrado
+                            if (difClients.add(bundle.getClient())) {
+                                switch (bundle.getClient().getUserType()) {
+                                    case COMPANY:
+                                        numDifHubs++;
+                                    case CLIENT: /* FALLTHROUGH */
+                                        numDifClients++;
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
+                        }else {
+                            doesFullfil = false;
                         }
                     } else {
                         doesFullfil = false;
                     }
                 }
-            }
 
-            if (doesFullfil == true)
-                totalFullFilled++;
-            else if (doesPartialFill == true)
-                partialFilled++;
+                if (doesFullfil == true)
+                    totalFullFilled++;
+                else if (doesPartialFill == true)
+                    partialFilled++;
+            }
         }
 
-        res[ProducerIndex.BUNDLES_TOTALLY_PROVIDED.getPrefix()]=totalFullFilled;
-        res[ProducerIndex.BUNDLES_PARTIALLY_PROVIDED.getPrefix()]=partialFilled;
-        res[ProducerIndex.DIF_CLIENTS.getPrefix()]=numDifClients;
-        res[ProducerIndex.DIF_HUBS.getPrefix()]=numDifHubs;
+        res[ProducerIndex.BUNDLES_TOTALLY_PROVIDED.getPrefix()] = totalFullFilled;
+        res[ProducerIndex.BUNDLES_PARTIALLY_PROVIDED.getPrefix()] = partialFilled;
+        res[ProducerIndex.DIF_CLIENTS.getPrefix()] = numDifClients;
+        res[ProducerIndex.DIF_HUBS.getPrefix()] = numDifHubs;
     }
-
 
     /*
      * HUB
@@ -281,10 +284,10 @@ public class ExpListStatsHandler {
             //adicionar o cliente
             pair.first().add(iterBundle.getClient());
 
-
             for (Order iterOrder : iterBundle.getOrdersList()) {
                 //adicionar o produtor
-                pair.second().add(iterOrder.getProducer());
+                if(iterOrder.getProducer()!=null)
+                    pair.second().add(iterOrder.getProducer());
             }
         }
 
