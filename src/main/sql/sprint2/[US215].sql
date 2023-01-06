@@ -127,6 +127,15 @@ INSERT INTO input_hub(input_string) VALUES('CT14;38.5243;-8.8926;E1');
 INSERT INTO input_hub(input_string) VALUES('CT11;39.3167;-7.4167;E2');
 INSERT INTO input_hub(input_string) VALUES('CT10;39.7444;-8.8072;P3');
 
+
+---------OUTPUT OBTIDO E DE ACORDO AO ESPERADO--------------
+/*O HUB com os seguintes dados foi adicionado:
+hub_id= CT14 latitude= 38.5243 longitude= -8.8926 tipo_hub= E
+O HUB com os seguintes dados foi adicionado:
+hub_id= CT11 latitude= 39.3167 longitude= -7.4167 tipo_hub= E
+O HUB com os seguintes dados foi adicionado:
+hub_id= CT10 latitude= 39.7444 longitude= -8.8072 tipo_hub= P*/
+
 SELECT * FROM localizacao;
 SELECT * FROM hub;
 SELECT * FROM input_hub;
@@ -147,6 +156,9 @@ O hub com o seguinte id ja existe na base de dados CT14
 */
 
 ---------------DELITING---------------
+
+SELECT * FROM input_hub;
+
 DELETE FROM input_hub ih WHERE ih.input_string = 'CT14;38.5243;-8.8926;E1';
 DELETE FROM input_hub ih WHERE ih.input_string = 'CT11;39.3167;-7.4167;E2';
 DELETE FROM input_hub ih WHERE ih.input_string = 'CT10;39.7444;-8.8072;P3';
@@ -198,7 +210,7 @@ BEGIN
                 RAISE_APPLICATION_ERROR(-20011,'Nao existe o cliente com o codigo interno especificado');
             END IF;
             IF temp_hub_id IS NULL THEN
-                RAISE_APPLICATION_ERROR(-20011,'Nao existe o hub com o id especificado especificado');
+                RAISE_APPLICATION_ERROR(-20011,'Nao existe o hub com o id especificado');
             END IF;
         END;
         
@@ -228,7 +240,7 @@ CALL  p_atribui_ou_altera_hub_cliente(121097,'CT501');
 ---------OUTPUT OBTIDO E DE ACORDO AO ESPERADO--------------
 /*
 Error report -
-ORA-20011: Nao existe o hub com o id especificado especificado
+ORA-20011: Nao existe o hub com o id especificado
 */
 CALL  p_atribui_ou_altera_hub_cliente(1210957,'CT30000');
 
@@ -275,10 +287,6 @@ BEGIN
         RAISE EX_ERRO_INSERCAO_DATA_LIMITE_PAGAMENTO;
     END IF;
            
-    SELECT h.hub_id INTO temp_hub_id
-    FROM hub h
-        WHERE h.hub_id = v_hub_id;
-        
         
     IF v_endereco_entrega IS NULL THEN
         IF v_hub_id IS NULL THEN
@@ -288,6 +296,11 @@ BEGIN
             (v_cliente_codigo_interno,v_gestor_agricola_id,v_data_estimada_entrega,v_valor_encomenda,v_data_limite_pagamento,NULL,
             CURRENT_TIMESTAMP,NULL,NULL,temp_cliente_hub_por_defeito_id,1);          
         ELSE
+        
+            SELECT h.hub_id INTO temp_hub_id
+            FROM hub h
+                WHERE h.hub_id = v_hub_id;
+        
             INSERT INTO encomenda(cliente_codigo_interno,gestor_agricola_id,data_estimada_entrega,valor_encomenda,data_limite_pagamento,endereco_entrega,
             data_registo,data_entrega,data_pagamento,hub_id,tipo_estado_encomenda)
             VALUES
