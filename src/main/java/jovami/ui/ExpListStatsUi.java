@@ -1,22 +1,26 @@
 package jovami.ui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import jovami.handler.ExpListStatsHandler;
 import jovami.model.User;
 import jovami.model.bundles.Bundle;
 import jovami.model.bundles.ExpList;
 import jovami.model.shared.UserType;
+import jovami.model.store.ExpListStore.Restriction;
 import jovami.util.io.InputReader;
 
 public class ExpListStatsUi implements UserStory{
     ExpListStatsHandler handler;
+    private final List<Restriction> restrictions;
+    // Restriction[] restrictions = Restriction.values();
 
 
     public ExpListStatsUi(){
-
         handler = new ExpListStatsHandler();
-
+        this.restrictions = Arrays.asList(Restriction.values());
     }
 
     @Override
@@ -27,14 +31,12 @@ public class ExpListStatsUi implements UserStory{
 
 
 
-        ExpList expList ;
-        do{
-            System.out.println("Types of expedition lists");
-            System.out.println("0)Expedition list with no restrictions");
-            System.out.println("1)Expedition list with restrictions related to producers");
-            
-            expList=handler.getExpList(InputReader.readInteger("Choose one:"));
-        }while( expList == null);
+        ExpList expList;
+        do {
+            int i = InputReader.showAndSelectIndex(this.restrictions,
+                                                   "Types of expedition lists:");
+            expList = this.handler.getExpList(this.restrictions.get(i));
+        } while (expList == null);
 
 
 
@@ -62,7 +64,7 @@ public class ExpListStatsUi implements UserStory{
             hub=handler.getUser(InputReader.readLine("Hub id: "));
         }while(hub==null || hub.getUserType()!=UserType.COMPANY);
         handler.hubStats(hub, expList);
-      
+
 
         //bundle
         Bundle bun=null;
@@ -86,10 +88,10 @@ public class ExpListStatsUi implements UserStory{
                 clientBun=handler.getUser(InputReader.readLine("Cient id"));
             }while(clientBun==null||clientBun.getUserType()!=UserType.CLIENT);
 
-            
+
         }while(bun==null);
     }
 
 
-    
+
 }
