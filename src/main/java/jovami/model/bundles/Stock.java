@@ -55,14 +55,14 @@ public class Stock {
 
 
     //retorna null caso não exista o dia
-    public Iterator<ProductStock> getStocks(int day) {
+    public ArrayList<ProductStock> getStocks(int day) {
         ArrayList<ProductStock> array=new ArrayList<>();
         for (Entry<Product,HashMap<Integer,ProductStock>>productStock : this.stock.entrySet()) {
             array.add(productStock.getValue().get(day));
             
         }
 
-        return array.iterator();
+        return array;
     }
 
     //TODO how to handle product(string??)
@@ -74,9 +74,7 @@ public class Stock {
     }
 
     //retorna true se houver stock suficiente contando com os ultimos dias
-    public float getStashAvailable(Product product, int day, float qntToRetrieve) {
-        if (qntToRetrieve < 0)
-             return -2;
+    public float getStashAvailable(Product product, int day) {
 
         HashMap<Integer,ProductStock> tmp= stock.get(product);
 

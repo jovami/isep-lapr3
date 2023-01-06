@@ -25,6 +25,11 @@ public enum HubIndex {
     }
 
     public final int prefix;
+    
+    public int getPrefix(){
+        return prefix;
+    }
+
 
     public static HubIndex getType(int prefix) {
         return lookup.get(prefix);

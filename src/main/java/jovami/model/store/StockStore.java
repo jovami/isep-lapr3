@@ -44,6 +44,10 @@ public class StockStore {
 
     }
 
+    public ArrayList<Pair<User,Stock>> getStocks(){
+        return this.stocks;
+    }
+
     public Stock getStock(User producer){
         for (Pair<User,Stock> pair : stocks) {
             if (pair.first().equals(producer)){

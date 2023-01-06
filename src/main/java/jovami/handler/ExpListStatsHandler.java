@@ -3,22 +3,37 @@ package jovami.handler;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Optional;
+import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
 import jovami.App;
 import jovami.model.User;
-import jovami.model.bundles.*;
+import jovami.model.bundles.Bundle;
+import jovami.model.bundles.ExpList;
+import jovami.model.bundles.Order;
+import jovami.model.bundles.ProductStock;
+import jovami.model.bundles.Stock;
+import jovami.model.shared.BundleIndex;
+import jovami.model.shared.ClientIndex;
 import jovami.model.shared.DeliveryState;
+import jovami.model.shared.HubIndex;
+import jovami.model.shared.ProducerIndex;
 import jovami.model.shared.UserType;
 import jovami.model.store.BundleStore;
 import jovami.model.store.ExpListStore;
 import jovami.model.store.ExpListStore.Restriction;
+import jovami.util.Pair;
 
 public class ExpListStatsHandler {
 
     private App app;
     private ExpListStore expStore;
+
+    private final int NUMSTATSHUB = 2;
+    private final int NUMSTATSCLIENT = 3;
+    private final int NUMSTATSPRODUTOR = 5;
+    private final int NUMSTATSBUNDLE = 5;
+
 
     public ExpListStatsHandler(){
         app = App.getInstance();
@@ -30,19 +45,23 @@ public class ExpListStatsHandler {
         return expStore.getExpList(r);
     }
 
-
-    public User getUser(String userId){
-        Optional<User> opt = app.userStore().getUserByID(userId);
-        if(opt.isPresent())
-            return opt.get();
-
-        return null;
-    }
-
     /*CABAZ
     */
-    public ArrayList<Float> bundleStats (Bundle bundle,ExpList expList){
-        //nº de produtos totalmente satisfeitos
+    public HashMap<Bundle,float[]> getAllbundlesStats (int day,ExpList expList){
+        HashMap<Bundle,float []> res = new LinkedHashMap<>();
+
+        for (Bundle iterBundle : expList.getBundleStore().getBundles(day)) {
+            if(res.get(iterBundle)==null)
+                res.put(iterBundle, new float[NUMSTATSBUNDLE]);
+
+            statsEachBundle(iterBundle, res.get(iterBundle));
+        }
+        return res;
+    }
+
+
+    protected void statsEachBundle(Bundle bundle, float[] res){
+
         float numFullyDelivered = 0;
 
         //TODO
@@ -53,211 +72,230 @@ public class ExpListStatsHandler {
         float numNotDelivered = 0;
 
 
-        ArrayList<User> producers = new ArrayList<>();
+        HashSet<User> producers = new HashSet<>();
 
         for (Order order : bundle.getOrdersList()) {
             if(order.getState()==DeliveryState.TOTALLY_SATISTFIED){
                 numFullyDelivered++;
+                producers.add(order.getProducer());
 
-                if(!producers.contains(order.getProducer()))
+            }else if(order.getState() == DeliveryState.PARTIALLY_SATISFIED){
+                    numPartialyDelivered++;
                     producers.add(order.getProducer());
 
             }else{
-                //partialyDelivered = true;
                 numNotDelivered++;
             }
         }
-
         //nº de produtores que forneceram o cabaz.
         float numProducers = producers.size();
 
         //percentagem total do cabaz satisfeito
         float perc = (numFullyDelivered*100)/(bundle.getOrdersList().size());
 
-        ArrayList<Float> res = new ArrayList<>();
-        res.add(numFullyDelivered);
-
-        //TODO: partial will be used?
-        res.add(numPartialyDelivered);
-
-        res.add(numNotDelivered);
-        res.add(perc);
-        res.add(numProducers);
-
-        return res;
+        res[BundleIndex.FULLY_DELIVERED.getPrefix()]=numFullyDelivered;
+        res[BundleIndex.PARTIALY_DELIVERED.getPrefix()]=numPartialyDelivered;
+        res[BundleIndex.NOT_DELIVERED.getPrefix()]=numNotDelivered;
+        res[BundleIndex.PERC_TOTAL_SATISFIED.getPrefix()]=perc;
+        res[BundleIndex.NUM_PRODUCERS.getPrefix()]=numProducers;
     }
-
     /*CLIENT
     */
 
-    public ArrayList<Integer> clientStats (User client,ExpList expList){
-        //nº de cabazes totalmente satisfeitos
-        int totalSatisfied=0;
-        //nº de cabazes parcialmente satisfeitos
-        int partialyStatisfied=0;
 
-        ArrayList<User> deliv = new ArrayList<>();
+    //TODO change arraylist ot linked hashMap
+    public HashMap<User,int[]> getAllClientsStats(int day,ExpList expList){
 
-        for (Entry<Integer, ArrayList<Bundle>> entry : expList.getBundleStore().getBundles().entrySet()){
+        HashMap<User,int []> res = new LinkedHashMap<>();
 
-            for (Bundle bundle : entry.getValue()) {
-
-                if(bundle.getClient()==client){
-                    if(bundle.getState()==DeliveryState.TOTALLY_SATISTFIED)        totalSatisfied++;
-                    if(bundle.getState()== DeliveryState.PARTIALLY_SATISFIED) partialyStatisfied++;
-
-                    for (Order order : bundle.getOrdersList()) {
-                        if(!deliv.contains(order.getProducer()))
-                        deliv.add(order.getProducer());
-                    }
-                }
+        for (Bundle iterBundle : expList.getBundleStore().getBundles(day)) {
+            //uma empresa é um cliente, e é também um hub
+            if(res.get(iterBundle.getClient())==null){
+                res.put(iterBundle.getClient(), new int[NUMSTATSCLIENT]);
             }
+            clientStats(null, iterBundle,res.get(iterBundle.getClient()));
+        }
+
+        return res;
+
+    }
+
+    protected void clientStats (User client,Bundle bundle, int[] arr){
+        //nº de cabazes totalmente satisfeitos
+        int totalSatisfied=arr[ClientIndex.TOTALLY_SATISTFIED.getPrefix()];
+
+        //nº de cabazes parcialmente satisfeitos
+        int partialyStatisfied=arr[ClientIndex.PARTIALLY_SATISFIED.getPrefix()];
+
+        ArrayList<User> deliv=new ArrayList<>();
+
+        if(bundle.getClient()==client){
+            if(bundle.getState()==DeliveryState.TOTALLY_SATISTFIED)        totalSatisfied++;
+            if(bundle.getState()== DeliveryState.PARTIALLY_SATISFIED) partialyStatisfied++;
+
+            for (Order order : bundle.getOrdersList()) {
+                if(!deliv.contains(order.getProducer()))
+                    deliv.add(order.getProducer());
+            }
+
         }
 
         //nºde fornecedores distintos que forneceram todos os seus cabazes
         int numProducers = deliv.size();
-        ArrayList<Integer> res = new ArrayList<>(3);
-        res.add(totalSatisfied);
-        res.add(partialyStatisfied);
-        res.add(numProducers);
-        return res;
+
+        arr[ClientIndex.TOTALLY_SATISTFIED.getPrefix()]=totalSatisfied;
+        arr[ClientIndex.PARTIALLY_SATISFIED.getPrefix()]=partialyStatisfied;
+        arr[ClientIndex.NUM_PRODUCERS.getPrefix()]=numProducers;
+
     }
 
     /*PRODUTOR
     */
 
-    public ArrayList<Integer> producerStats (User producer,ExpList expList){
+    public HashMap<User,int[]> getAllProducersStats(int day, ExpList expList){
+
+        HashMap<User,int []> res = new LinkedHashMap<>();
+
+        for(Pair<User,Stock> producerStock: expList.getStockStore().getStocks()){//n*inside
+            if(res.get(producerStock.first())==null){
+                res.put(producerStock.first(), new int[NUMSTATSPRODUTOR]);
+            }
+            producerStockStats(day, res.get(producerStock.first()), producerStock.second());//n
+            producerBundleStats(producerStock.first(),day, expList,res.get(producerStock.first()));//n2
+        }
+
+        //O(n3)
+        return res;
+
+    }
+
+
+    protected void producerStockStats(int day, int[] res, Stock producerStock) {
+
+        int outOfStock=res[ProducerIndex.PROD_OUT_OF_STOCK.getPrefix()];
+
+        for(ProductStock product : producerStock.getStocks(day)){
+            if(product!=null){
+                if(producerStock.getStashAvailable(product.getProduct(), day)==0){
+                    outOfStock++;
+                }
+            }
+        }
+
+        res[ProducerIndex.PROD_OUT_OF_STOCK.getPrefix()]=outOfStock;
+    }
+
+
+    protected void producerBundleStats (User producer,int day,ExpList expList,int[] res){
         BundleStore bundles = expList.getBundleStore();
 
         // nº de cabazes fornecidos totalmente
         int totalFullFilled=0;
-        boolean fullFilledBundle;
+        boolean doesPartialFill;
 
         //nº de cabazes fornecidos parcialmente
-        int partialFullFilled=0;
-        boolean partialFilledBundle;
+        int partialFilled=0;
+        boolean doesFullfil;
 
-        ArrayList<User> difClients= new ArrayList<>();
 
         // nº de clientes distintos fornecidos
-        int numDifClients;
+        int numDifClients=0;
 
         // nº de hubs fornecidos.
         int numDifHubs=0;
 
+        //estrutura auxiliar para controlar clientes repetidos
+        HashSet<User> difClients= new HashSet<>();
 
-        for (Entry<Integer, ArrayList<Bundle>> entry : bundles.getBundles().entrySet()){
+        for (Bundle bundle : bundles.getBundles(day)) {
+            //assumindo que cada bundle e sempre fullfilled por um
+            doesFullfil = true;
+            doesPartialFill = false;
 
-            for (Bundle bundle : entry.getValue()) {
-                partialFilledBundle=false;
-                fullFilledBundle=true;
+            for (Order order : bundle.getOrdersList()) {
 
-                for (Order order : bundle.getOrdersList()) {
-                    if(order.getState()==DeliveryState.TOTALLY_SATISTFIED){
+                //nao entregue
+                if(order.getProducer()!=null){
 
-                        if(order.getProducer().equals(producer)){
-                            partialFilledBundle=true;
+                    //caso o pedido não seja fornecido pelo produtor
+                    //o cabaz já não é fornecido na totalidade pelo produtor
+                    if (order.getProducer().equals(producer)) {
+                        doesPartialFill=true;
 
-                        if(!difClients.contains(bundle.getClient())){
-                            difClients.add(bundle.getClient());
-
-                                if(bundle.getClient().getUserType()==UserType.COMPANY){
-                                    if(!difClients.contains(bundle.getClient())){
-                                        numDifHubs++;
-                                    }
-                                }
-                            }
-
-                        }else{
-                            fullFilledBundle=false;
+                        //caso um dos pedidos do cabaz esteja fornecido parcialmente
+                        //o cabaz já não é fornecido na totalidad pelo produtor
+                        if (order.getState() == DeliveryState.PARTIALLY_SATISFIED) {
+                            doesFullfil=false;
                         }
+
+                        //caso o cliente ainda n tenha sido encontrado
+                        if (difClients.add(bundle.getClient())) {
+                            if (bundle.getClient().getUserType() == UserType.COMPANY) {
+                                numDifHubs++;
+                            }
+                            if (bundle.getClient().getUserType() == UserType.CLIENT) {
+                                numDifClients++;
+                            }
+                        }
+                    } else {
+                        doesFullfil = false;
                     }
                 }
-                if(partialFilledBundle == true) partialFullFilled++;
-                if(fullFilledBundle == true) totalFullFilled++;
-            }
-        }
-
-        numDifClients=difClients.size();
-
-        // nº de produtos totalmente esgotados
-        int numOutOfStock = outOfStock(producer, expList);
-
-        ArrayList<Integer> res = new ArrayList<>();
-        res.add(totalFullFilled);
-        res.add(partialFullFilled);
-        res.add(numOutOfStock);
-        res.add(numDifClients);
-        res.add(numDifHubs);
-        return res;
-    }
-
-    private int outOfStock(User producer, ExpList expList) {
-        Stock stock= expList.getStockStore().getStock(producer);
-
-        int totalOutOfStock=0;
-        boolean outOfStock;
-
-        for (Entry<Product,HashMap<Integer,ProductStock>> entrys: stock.getProductStock().entrySet()) {
-            outOfStock=true;
-
-            for (ProductStock dayProductStock : entrys.getValue().values()) {
-                if((dayProductStock.getStash()) > 0.0f){
-                    outOfStock=false;
-                    break;
-                }
             }
 
-            if(outOfStock) totalOutOfStock++;
+            if (doesFullfil == true)
+                totalFullFilled++;
+            else if (doesPartialFill == true)
+                partialFilled++;
         }
-        return totalOutOfStock;
+
+        res[ProducerIndex.BUNDLES_TOTALLY_PROVIDED.getPrefix()]=totalFullFilled;
+        res[ProducerIndex.BUNDLES_PARTIALLY_PROVIDED.getPrefix()]=partialFilled;
+        res[ProducerIndex.DIF_CLIENTS.getPrefix()]=numDifClients;
+        res[ProducerIndex.DIF_HUBS.getPrefix()]=numDifHubs;
     }
+
 
     /*
      * HUB
      */
-    public ArrayList<Integer> hubStats (User hub,ExpList expList){
 
-        ArrayList<User> clientsAssociatedHub= new ArrayList<>();
-        // nº de clientes distintos que recolhem cabazes em cada hub
-        int numDifClientsForHub;
+    public HashMap<User,int[]> getAllHubsStats(int day, ExpList expList){
 
-        for (ArrayList<Bundle> bundlesList :  expList.getBundleStore().getBundles().values()) {
-            for (Bundle bundle : bundlesList) {
-                if(bundle.getClient().getNearestHub().equals(hub) && !clientsAssociatedHub.contains(bundle.getClient())){
-                    clientsAssociatedHub.add(bundle.getClient());
-                }
+        HashMap<User,int []> res = new LinkedHashMap<>();
+
+        //keep track de clientes e produtores já existentes
+        HashMap<User,Pair<HashSet<User>,HashSet<User>>> difClientsProducerPerHub=new LinkedHashMap<>();
+
+        for (Bundle iterBundle : expList.getBundleStore().getBundles(day)) {
+
+            User hub=iterBundle.getClient().getNearestHub();
+
+            Pair<HashSet<User>,HashSet<User>>pair=difClientsProducerPerHub.get(hub);
+
+            if(pair==null){
+                difClientsProducerPerHub.put(hub,new Pair<>(new HashSet<>(), new HashSet<>()));
+                pair=difClientsProducerPerHub.get(hub);
+            }
+
+            //adicionar o cliente
+            pair.first().add(iterBundle.getClient());
+
+
+            for (Order iterOrder : iterBundle.getOrdersList()) {
+                //adicionar o produtor
+                pair.second().add(iterOrder.getProducer());
             }
         }
-        numDifClientsForHub = clientsAssociatedHub.size();
 
-        //nº de produtores distintos que fornecem cabazes para o hub.
-        int numProducers=getProducerPerHub(expList, hub);
 
-        ArrayList<Integer> res = new ArrayList<>();
-        res.add(numDifClientsForHub);
-        res.add(numProducers);
+        for (Entry<User,Pair<HashSet<User>,HashSet<User>>> iterPair : difClientsProducerPerHub.entrySet()) {
+            int[] arr = new int[NUMSTATSHUB];
+            arr[HubIndex.DIF_CLIENTS.getPrefix()]=iterPair.getValue().first().size();
+            arr[HubIndex.DIF_PRODUCERS.getPrefix()]=iterPair.getValue().second().size();
+            res.put(iterPair.getKey(),arr);
+        }
 
         return res;
     }
-
-    private int getProducerPerHub(ExpList expList,User hub){
-
-        HashSet<User> difProducers=new HashSet<>();
-
-        for (ArrayList<Bundle> iter : expList.getBundleStore().getBundles().values()) {
-            for (Bundle iterBundle : iter) {
-                if(iterBundle.getClient().getNearestHub().equals(hub)){
-                    for (Order iterOrder : iterBundle.getOrdersList()) {
-
-                        if(!difProducers.contains(iterOrder.getProducer())){
-                            difProducers.add(iterOrder.getProducer());
-                        }
-                    }
-                }
-            }
-        }
-        return difProducers.size();
-    }
-
 }

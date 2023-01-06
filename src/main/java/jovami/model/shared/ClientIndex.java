@@ -14,7 +14,7 @@ public enum ClientIndex {
     
     TOTALLY_SATISTFIED(0),
     PARTIALLY_SATISFIED(1),
-    NUM_PRODUCERS(4);
+    NUM_PRODUCERS(2);
 
     private static Map<Integer, ClientIndex> lookup;
 
@@ -27,6 +27,11 @@ public enum ClientIndex {
     }
 
     public final int prefix;
+    
+    public int getPrefix(){
+        return prefix;
+    }
+
 
     public static ClientIndex getType(int prefix) {
         return lookup.get(prefix);
