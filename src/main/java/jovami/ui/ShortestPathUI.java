@@ -31,7 +31,7 @@ public class ShortestPathUI implements UserStory {
         // TODO: change variable name
         var stuff = this.handler.shortestRoute();
         printPath(stuff.first(), stuff.second());
-        System.out.printf("\nTotal distance: %dm\n", stuff.third());
+        System.out.printf("\nTotal distance: %dm\n\n", stuff.third().getDistance());
 
         var orders = this.handler.ordersByHub();
         printOrders(orders);
@@ -42,17 +42,16 @@ public class ShortestPathUI implements UserStory {
 
         System.out.println("Path to take:");
         for (int i = 1; i < size; i++) {
-            System.out.printf("%-5s -> %-5s (%dm)\n", users.get(i-1),
-                              users.get(i), dists.get(i-1));
+            System.out.printf("%5s -> %-5s (%dm)\n", users.get(i-1),
+                              users.get(i), dists.get(i-1).getDistance());
         }
     }
 
     private void printOrders(Map<User, List<List<Order>>> map) {
-        System.out.println("Bundles delivered in each hub");
+        System.out.println("Bundles delivered in each hub:");
 
         map.forEach((hub, bundles) -> {
-            System.out.printf("Hub: %s", hub);
-            System.out.println("Bundles:");
+            System.out.printf("Hub %s bundles:\n", hub);
 
             for (var bundle : bundles)
                 System.out.printf("\t%s\n", bundle);
