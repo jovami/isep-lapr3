@@ -27,14 +27,15 @@ public class ExpBasketListUI implements UserStory {
                 while(orders.hasNext()){
                     var order = orders.next();
                     if (order.getProducer() == null) {
-                        System.out.printf(" -> Product: %-6s | Quantity: %-4.1f | " +
+                        System.out.printf(" -> Product: %-6s | Delivered: %-4.1f | " +
                                         "There were no producers to fulfill this order\n",
                                 order.getProduct().getName(),
-                                order.getQuantity());
+                                order.getQuantityDelivered());
                     }else {
-                        System.out.printf(" -> Product: %-6s | Quantity: %-4.1f | Supplied by: %s\n",
+                        System.out.printf(" -> Product: %-6s | Ordered: %-4.1f | Delivered: %-4.1f |  Supplied by: %s\n",
                                 order.getProduct().getName(),
                                 order.getQuantity(),
+                                order.getQuantityDelivered(),
                                 order.getProducer().getUserID());
                     }
                 }

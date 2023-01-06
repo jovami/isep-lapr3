@@ -29,11 +29,12 @@ public class ExpListNProducersUI implements UserStory {
                     var order = orders.next();
                     if (order.getProducer() == null) {
                         System.out.println(" -> Product: " + order.getProduct().getName()
-                                + "  | Quantity: " + order.getQuantity()
+                                + "  | Ordered: " + order.getQuantity()
                                 + " | There were no producers to fulfill this order");
                     }else {
                         System.out.println(" -> Product: " + order.getProduct().getName()
-                                + " | Quantity: " + order.getQuantity()
+                                + " | Ordered: " + order.getQuantity()
+                                + "  | Delivered: " + order.getQuantityDelivered()
                                 + " | Supplied by: " + order.getProducer().getUserID());
                     }
                 }

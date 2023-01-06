@@ -60,5 +60,9 @@ public class ProductStock {
         }
         return false;
     }
+
+    public ProductStock getCopy() {
+        return new ProductStock(product, provided, day);
+    }
     
 }

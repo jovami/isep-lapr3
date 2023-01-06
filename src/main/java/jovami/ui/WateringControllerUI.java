@@ -1,9 +1,6 @@
 package jovami.ui;
 
 import java.time.Clock;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-
 import jovami.handler.WateringControllerHandler;
 import jovami.util.io.InputReader;
 

@@ -8,11 +8,13 @@ import jovami.model.bundles.Bundle;
 import jovami.model.bundles.ExpList;
 import jovami.model.bundles.Order;
 import jovami.model.bundles.Product;
+import jovami.model.shared.DeliveryState;
 import jovami.model.shared.UserType;
 import jovami.model.store.BundleStore;
 import jovami.model.store.ExpListStore;
 import jovami.model.store.StockStore;
 import jovami.model.store.UserStore;
+import jovami.util.Pair;
 
 import java.util.*;
 
@@ -80,16 +82,41 @@ public class ExpListNProducersHandler {
         Product orderedProduct = order.getProduct();
         float orderedQuantity = order.getQuantity();
 
+        boolean flag=false;
+        Pair<User,Float> max = new Pair<>(null, 0.f);
+
         for (Distance p : producers){
             var producer = userStore.getUser(p.getLocID1()).orElseThrow();
             var producerStock = stockStore.getStock(producer);
-            if(producerStock!=null)
-                if(producerStock.retrieveFromStock(orderedProduct, day, orderedQuantity)) {
+            if(producerStock!=null){
+
+                float producerStash = producerStock.getStashAvailable(orderedProduct, day, orderedQuantity);
+
+                if (producerStash>=orderedQuantity) {
+                    producerStock.retrieveFromStock(day, orderedProduct, orderedQuantity);
                     order.setProducer(producer);
-                    order.setDelivered();
+                    //TODO MUDAR PRODUCERSTASH PARA AQUILO QUE ELE VAI RETIRAR?
+                    order.setQntDelivered(orderedQuantity);
+
+                    flag = true;
                     return;
+                }else if(max.second() < producerStash){
+                        max=new Pair<>(producer,producerStash);
                 }
+            }
         }
+
+        if(max.second()==0.0f){
+            order.setState(DeliveryState.NOT_SATISFIED);
+            return;
+        }
+
+        if(!flag){
+            stockStore.getStock(max.first()).retrieveFromStock( day,orderedProduct, max.second().floatValue());
+            order.setProducer(max.first());
+            order.setQntDelivered(max.second());
+        }       
+
     }
 
     private List<Distance> getNearestProducersToHub(List<User> producers, int nProducers, User hub) {
@@ -98,7 +125,7 @@ public class ExpListNProducersHandler {
                 distances.offer(network.shortestPath(producer, hub, new LinkedList<>())));
 
         List<Distance> nearestProducers = new ArrayList<>();
-        for (int i = 0; i < nProducers && !distances.isEmpty(); i++) {
+        for (int i = 0; i < nProducers; i++) {
             nearestProducers.add(distances.poll());
         }
         return nearestProducers;
