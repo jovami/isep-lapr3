@@ -2,9 +2,16 @@ package jovami.model.store;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
+import jovami.model.User;
 import jovami.model.bundles.Bundle;
+import jovami.model.bundles.Order;
 
 public class BundleStore{
 
@@ -21,11 +28,11 @@ public class BundleStore{
             ArrayList<Bundle>copy = new ArrayList<>(it.getValue().size());
 
             for (Bundle bundle : it.getValue()) {
-                copy.add(bundle.getCopy());    
+                copy.add(bundle.getCopy());
             }
             this.bundles.put(it.getKey(),copy);
         }
-        
+
     }
 
     public BundleStore(int initialCapacity) {
@@ -44,15 +51,15 @@ public class BundleStore{
 
         return bundles.get(day).add(newBundle);
     }
-    
+
 
     public ArrayList<Bundle> getBundles(int day){
         return bundles.get(day);
     }
 
-    public HashMap<Integer,ArrayList<Bundle>> getBundles(){ 
+    public HashMap<Integer,ArrayList<Bundle>> getBundles(){
         return bundles;
-        
+
     }
     public int getSize(){
         return bundles.size();
@@ -61,8 +68,41 @@ public class BundleStore{
     public int size() {
         return this.bundles.size();
     }
-    
+
     public BundleStore getCopy(){
         return new BundleStore(this.bundles);
+    }
+
+    // TODO: better way of doing this?
+    public Map<User,Set<User>> producersPerHub(int day) {
+        Map<User, Set<User>> ret = new HashMap<>();
+
+        for (Bundle b : this.bundles.get(day)) {
+            User hub = b.getClient().getNearestHub();
+
+            if(ret.get(hub) == null)
+                ret.put(hub, new HashSet<>());
+            var producers = ret.get(hub);
+
+            for (Order o : b.getOrdersList())
+                producers.add(o.getProducer());
+        }
+
+        return ret;
+    }
+
+    // TODO: better way of doing this?
+    public Map<User, List<List<Order>>> ordersByHub(int day) {
+        Map<User, List<List<Order>>> ret = new HashMap<>();
+
+        for (Bundle b : this.bundles.get(day)) {
+            User hub = b.getClient().getNearestHub();
+
+            if(ret.get(hub) == null)
+                ret.put(hub, new LinkedList<>());
+            ret.get(hub).add(b.getOrdersList());
+        }
+
+        return ret;
     }
 }

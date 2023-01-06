@@ -1,19 +1,15 @@
 package jovami.handler;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import jovami.App;
 import jovami.model.Distance;
 import jovami.model.HubNetwork;
 import jovami.model.User;
-import jovami.model.bundles.Bundle;
-import jovami.model.bundles.ExpList;
 import jovami.model.bundles.Order;
+import jovami.model.store.BundleStore;
 import jovami.model.store.ExpListStore;
 import jovami.model.store.ExpListStore.Restriction;
 import jovami.util.Triplet;
@@ -29,7 +25,8 @@ public class ShortestPathHandler {
 
     // TODO: make this not scuffed
     private int day;
-    private ExpList expList;
+    private BundleStore bStore;
+    // private ExpList expList;
 
     public ShortestPathHandler() {
         this.app = App.getInstance();
@@ -37,15 +34,16 @@ public class ShortestPathHandler {
     }
 
     // FIXME: finish this
-    public boolean aaaa(int day) {
+    public boolean setDay(int day) {
         this.day = day;
-        this.expList = this.exportStore.getExpList(Restriction.NONE);
+        var expList = this.exportStore.getExpList(Restriction.NONE);
+        this.bStore = expList.getBundleStore();
 
-        return expList != null;
+        return this.bStore != null;
     }
 
     public Triplet<List<User>, List<Distance>, Distance> shortestRoute() {
-        var map = producersPerHub(this.expList, this.day);
+        var map = bStore.producersPerHub(this.day);
 
         var closure = this.app.hubNetwork().transitiveClosure();
         var components = new LinkedList<Graph<User, Distance>>();
@@ -70,22 +68,7 @@ public class ShortestPathHandler {
         return new Triplet<>(route, dists, dist);
     }
 
-    // TODO: move this to somewhere like BundleStore?
-    private Map<User,Set<User>> producersPerHub(ExpList list, int day) {
-        Map<User, Set<User>> ret = new HashMap<>();
-
-        var bundles = list.getBundleStore();
-        for (Bundle bundle : bundles.getBundles(day)) {
-            User hub = bundle.getClient().getNearestHub();
-
-            if(ret.get(hub) == null)
-                ret.put(hub, new HashSet<>());
-            var producersList = ret.get(hub);
-
-            for (Order order : bundle.getOrdersList())
-                producersList.add(order.getProducer());
-        }
-
-        return ret;
+    public Map<User, List<List<Order>>> ordersByHub() {
+        return this.bStore.ordersByHub(this.day);
     }
 }
