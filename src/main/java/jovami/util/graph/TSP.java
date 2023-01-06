@@ -68,7 +68,36 @@ public class TSP {
     componentTSP(Graph<V,E> g, V vOrig, Comparator<E> ce, E zero)
     {
         var tour = MetricTSP.twosApproximation(g, vOrig, ce, zero);
-        tour.poll();
+
+        final int len = tour.size();
+
+        // singleton case (should not happen)
+        if (len == 1)
+            return tour;
+
+        final int res = ce.compare(g.edge(tour.get(0), tour.get(1))
+                                    .getWeight(),
+                                   g.edge(tour.get(len-2), tour.get(len-1))
+                                    .getWeight());
+        /* NOTE:
+         * For each component, we're not really really interested in
+         * the full cycle; rather, we only want one path to vOrig
+         * that spans the entire graph.
+         * =======
+         * Since the first and last elements of the tour are vOrig,
+         * we simply pick whichever edge is cheaper.
+         * =======
+         * In the case where the first edge is the cheapest,
+         * vOrig will no longer be the end vertex of our route,
+         * and thus we need to reverse the list .
+         */
+        if (res < 0) {
+            tour.removeLast();
+            Collections.reverse(tour);
+        } else {
+            tour.pop();
+        }
+
         return tour;
     }
 
