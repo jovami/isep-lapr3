@@ -85,7 +85,7 @@ public class ExpListNProducersHandler {
             var producerStock = stockStore.getStock(producer);
             if(producerStock!=null){
 
-                float producerStash = producerStock.getStashAvailable(orderedProduct, day, orderedQuantity);
+                float producerStash = producerStock.getStashAvailable(orderedProduct, day);
 
                 if (producerStash>=orderedQuantity) {
                     producerStock.retrieveFromStock(day, orderedProduct, orderedQuantity);

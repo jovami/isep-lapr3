@@ -35,6 +35,11 @@ public enum BundleIndex {
     }
 
     public final int prefix;
+    
+    public int getPrefix(){
+        return prefix;
+    }
+
 
     public static BundleIndex getType(int prefix) {
         return lookup.get(prefix);

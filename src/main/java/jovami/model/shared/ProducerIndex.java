@@ -33,6 +33,10 @@ public enum ProducerIndex {
 
     public final int prefix;
 
+    public int getPrefix(){
+        return prefix;
+    }
+
     public static ProducerIndex getType(int prefix) {
         return lookup.get(prefix);
     }

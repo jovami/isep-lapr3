@@ -61,7 +61,7 @@ public class ExpBasketListHandler {
             if (producerStock != null) {
 
                 //caso nao consiga retirar completamente de um stock, retorna -1
-                float stockProducer = producerStock.getStashAvailable(product, day, quantityToRetrieve);
+                float stockProducer = producerStock.getStashAvailable(product, day);
 
                 if (stockProducer>=quantityToRetrieve) {
                     producerStock.retrieveFromStock(day, product, quantityToRetrieve);
