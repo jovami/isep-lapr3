@@ -1,9 +1,7 @@
 package jovami.model.store;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import jovami.App;
 import jovami.model.bundles.ExpList;
 
 public class ExpListStore {
@@ -16,15 +14,12 @@ public class ExpListStore {
     public ExpListStore(){
         listExp=new HashMap<Integer,ExpList>(2<<4);
     }
+
+    //TODO MELHORAR ISTO
+    public ExpList getExp(int i){
+        return listExp.get(i);
+    }
     
-    
-    // public void ExpListStorae(){
-    //     this(originStocks.size());
-    //     //DEEP copy
-    //     for (Pair<User,Stock>iterator : originStocks) {
-    //         this.stocks.add(new Pair<User,Stock>(iterator.first(), iterator.second().getCopy()));
-    //     }
-    // }
     public void addExpListNoRestrict(ExpList expList){
         listExp.put(EXP_NO_RESTRICTIONS,expList);
     }    

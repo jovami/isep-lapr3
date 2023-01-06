@@ -26,13 +26,9 @@ public class StockStore {
     public StockStore(int initialCapacity) {
         this.stocks = new ArrayList<>(initialCapacity);
     }
-    private ArrayList<Pair<User,Stock>> getStocks(){
-        return this.stocks;
-    }
-    
     public boolean addProducer(User producer){
         if(existUser(producer))   
-            return false;
+            return false;   
         else{
             stocks.add(new Pair<User,Stock>(producer,new Stock()));
             return true;
