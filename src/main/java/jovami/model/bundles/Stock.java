@@ -1,6 +1,5 @@
 package jovami.model.bundles;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -38,7 +37,7 @@ public class Stock {
 
             for (Entry<Integer,ProductStock> dayStock : allStock.getValue().entrySet()) {
 
-                this.stock.get(allStock.getKey()).put(dayStock.getKey(),dayStock.getValue());
+                this.stock.get(allStock.getKey()).put(dayStock.getKey(),dayStock.getValue().getCopy());
             }
         }
         // //TODO: optimize using streams??
@@ -75,51 +74,60 @@ public class Stock {
     }
 
     //retorna true se houver stock suficiente contando com os ultimos dias
-    public boolean retrieveFromStock(Product product, int day, float qntToRetrieve) {
+    public float getStashAvailable(Product product, int day, float qntToRetrieve) {
         if (qntToRetrieve < 0)
-            return false;
+             return -2;
+
+        HashMap<Integer,ProductStock> tmp= stock.get(product);
 
         ProductStock prodStockForThatDay;
-        HashMap<Integer,ProductStock> tmp= stock.get(product);
-        float sum = 0;
+        float sumStash = 0;
 
         //ver para os ultimos dois dias se há stock
-        //TODO clean thisssssssss
         if(tmp!=null){
             for (int i = day-DELTA_DAYS; i <= day; i++) {
                 if(i >= FIRST_DAY){
                     //stock para um produto num determinado dia
-                        prodStockForThatDay = tmp.get(i);
+                    prodStockForThatDay = tmp.get(i);
 
-                        if(prodStockForThatDay!=null){
-                            sum+=prodStockForThatDay.getStash();
-                            //apenas se houver uma quantidade suficiente nos ultimos dois dias e que retiramos do stock
-
-                            if(sum>=qntToRetrieve){
-                                for (int j = day-DELTA_DAYS; j <= i; j++) {
-                                    if(j >= FIRST_DAY) {
-                                        //stock para um produto num determinado dia
-                                            prodStockForThatDay = tmp.get(j);
-                            
-                                            if (prodStockForThatDay != null) {
-                                                if(prodStockForThatDay.retrieveStock(qntToRetrieve)){
-                                                    qntToRetrieve=0;
-                                                }else{
-                                                    float stash = prodStockForThatDay.getStash();
-                                                    prodStockForThatDay.retrieveStock(stash);
-                                                    qntToRetrieve -= stash;
-                                                }
-                                            }
-                                        }
-                                    }
-                                break;
-                            }
-                        }
+                    if(prodStockForThatDay!=null){
+                        sumStash+=prodStockForThatDay.getStash();
+                        //apenas se houver uma quantidade suficiente nos ultimos dois dias e que retiramos do stock
+                    }
                 }
             }
         }
-        return qntToRetrieve == 0;
+        return  sumStash;
     }
+
+
+    public float retrieveFromStock(int day, Product product, float qntToRetrieve) {
+        
+        HashMap<Integer,ProductStock> tmp = stock.get(product);
+        ProductStock prodStockForThatDay;
+
+        float missingToRetrieve=qntToRetrieve;
+
+        for (int j = day - DELTA_DAYS; j <= day; j++) {
+            if (j >= FIRST_DAY) {
+                // stock para um produto num determinado dia
+                prodStockForThatDay = tmp.get(j);
+
+                if (prodStockForThatDay != null) {
+                    if (prodStockForThatDay.retrieveStock(missingToRetrieve)) {
+                        missingToRetrieve = 0;
+                    } else {
+                        float stash = prodStockForThatDay.getStash();
+                        prodStockForThatDay.retrieveStock(stash);
+                        missingToRetrieve -= stash;
+                    }
+                }
+            }
+        }
+
+        return missingToRetrieve;
+    }
+
     public HashMap<Product,HashMap<Integer,ProductStock>> getProductStock() {
         return this.stock;
     }
