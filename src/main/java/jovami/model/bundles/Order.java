@@ -6,7 +6,7 @@ import jovami.model.shared.UserType;
 
 //pedido individual de um unico produto, presente nos cabazes
 public class Order {
-    
+
     //Produtor que vai fornecer aquele produto
     private User producer;
 
@@ -49,13 +49,18 @@ public class Order {
             && this.state == otherOrder.state;
     }
 
+    @Override
+    public String toString() {
+        return String.format("%s (%.2fkg)", this.product, this.qntDelivered);
+    }
+
     public Order getCopy(){
         return new Order(this.product, this.qntOrder, this.producer, this.state);
     }
 
     public boolean setProducer(User producer){
         //catch users that are not producers
-        if(producer.getUserType()==UserType.PRODUCER){   
+        if(producer.getUserType()==UserType.PRODUCER){
             this.producer=producer;
             return true;
         }else
@@ -80,7 +85,7 @@ public class Order {
             this.qntDelivered=qntDelivered;
 
         }
-        
+
     }
 
     public float getQuantityDelivered(){
