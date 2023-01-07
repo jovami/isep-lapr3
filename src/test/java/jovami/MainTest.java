@@ -3,6 +3,7 @@ package jovami;
 import java.lang.reflect.Field;
 import java.util.List;
 
+import jovami.handler.CSVLoaderHandler;
 import jovami.model.csv.BundleParser;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -26,6 +27,15 @@ public class MainTest {
 
     public static void readBundles(List<String[]> bundles){
         new BundleParser().parse(bundles);
+    }
+
+    /**
+     * Boolean big should be true if it's intended to read the big files, or false otherwise
+     */
+    public static void readData(boolean big){
+        var csvLoaderHandler = new CSVLoaderHandler();
+        csvLoaderHandler.loadResources(big);
+        csvLoaderHandler.populateNetwork();
     }
 
     public static void resetSingleton() {
