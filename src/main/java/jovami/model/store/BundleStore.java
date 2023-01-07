@@ -1,6 +1,7 @@
 package jovami.model.store;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -85,6 +86,9 @@ public class BundleStore{
     public static Map<User, Set<User>> producersPerHub(List<Bundle> bList) {
         Map<User, Set<User>> ret = new HashMap<>();
 
+        if (bList == null)
+            return Collections.emptyMap();
+
         for (Bundle b : bList) {
             User hub = b.getClient().getNearestHub();
 
@@ -106,7 +110,11 @@ public class BundleStore{
     public Map<User, List<List<Order>>> ordersByHub(int day) {
         Map<User, List<List<Order>>> ret = new HashMap<>();
 
-        for (Bundle b : this.bundles.get(day)) {
+        var bList = this.bundles.get(day);
+        if (bList == null)
+            return Collections.emptyMap();
+
+        for (Bundle b : bList) {
             User hub = b.getClient().getNearestHub();
 
             if(ret.get(hub) == null)
