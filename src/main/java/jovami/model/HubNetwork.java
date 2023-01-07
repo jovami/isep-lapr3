@@ -185,11 +185,9 @@ public class HubNetwork extends MapGraph<User, Distance> {
     public boolean addEdge(User vOrig, User vDest, Distance weight) {
         boolean ok = super.addEdge(vOrig, vDest, weight);
 
-        if (ok && !this.isDirected
-            && this.key(vOrig) != this.key(vDest))
-        {
+        if (ok && !this.isDirected) {
             var edge = this.edge(vDest, vOrig);
-            Distance w = edge.getWeight();
+            var w = edge.getWeight();
             edge.setWeight(w.reverse());
         }
 
@@ -198,11 +196,8 @@ public class HubNetwork extends MapGraph<User, Distance> {
 
     @Override
     public boolean addVertex(User vert) {
-        if (vert != null && super.addVertex(vert)) {
-            this.addEdge(vert, vert, getZero(vert));
-            return true;
-        }
-
-        return false;
+        boolean flag = super.addVertex(vert);
+        this.addEdge(vert, vert, getZero(vert));
+        return flag;
     }
 }
