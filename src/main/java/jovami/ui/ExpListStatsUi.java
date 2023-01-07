@@ -50,7 +50,7 @@ public class ExpListStatsUi implements UserStory{
 
 
         //client
-        System.out.println("Calculating stats related to clients:");
+        System.out.println("\tCalculating stats related to clients:\n");
 
         HashMap<User,int[]> clientStats = handler.getAllClientsStats(day, expList);
 
@@ -67,7 +67,7 @@ public class ExpListStatsUi implements UserStory{
         //printing stats
 
         //producer
-        System.out.println("Calculating stats related to producer:");
+        System.out.println("\tCalculating stats related to producer\n");
 
         HashMap<User,int[]> producerStats=handler.getAllProducersStats(day, expList);
 
@@ -84,7 +84,7 @@ public class ExpListStatsUi implements UserStory{
 
 
 
-        System.out.println("Calculating stats related to hub:");
+        System.out.println("\tCalculating stats related to hub\n");
         //hub
         HashMap<User,int[]> hubStats=handler.getAllHubsStats(day, expList);
 
@@ -99,7 +99,7 @@ public class ExpListStatsUi implements UserStory{
 
 
         //bundle
-        System.out.println("Calculating stats related to bundle:");
+        System.out.println("\tCalculating stats related to bundle\n");
 
         HashMap<Bundle,float[]> bundleStats=handler.getAllbundlesStats(day,expList);
 
