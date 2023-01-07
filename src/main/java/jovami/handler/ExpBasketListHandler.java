@@ -110,7 +110,7 @@ public class ExpBasketListHandler {
         return hash;
     }
 
-    private List<User> findProducers() {
+    public List<User> findProducers(){
         return hubNetwork.vertices().stream()
                 .filter(u -> u.getUserType() == UserType.PRODUCER)
                 .toList();
