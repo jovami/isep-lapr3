@@ -1,0 +1,80 @@
+        Bundle for client: C1  Hub for pickup: E4
+ new String[]{ Prod1   " 8.0   "," 7.5    "," P3
+ new String[]{ Prod3   " 9.5   "," 6.0    "," P1
+ new String[]{ Prod4   " 2.0   "," 2.0    "," P2
+ new String[]{ Prod7   " 9.5   "," 6.0    "," P2
+ new String[]{ Prod9   "," 0.0   null
+ new String[]{ Prod10  " 9.5   "," 3.0    "," P2
+ new String[]{ Prod12  " 6.0   "," 2.5    "," P1
+
+Bundle for client: C2  Hub for pickup: E1
+ new String[]{ Prod5   " 5.0   "," 4.0    "," P2
+ new String[]{ Prod7   " 3.0   "," 3.0    "," P3
+ new String[]{ Prod10  " 8.0   "," 1.0    "," P3
+
+Bundle for client: C4  Hub for pickup: E5
+ new String[]{ Prod2   " 10.0  "," 1.5    "," P1
+ new String[]{ Prod4   " 8.0   "," 8.0    "," P3
+ new String[]{ Prod5   " 5.0   "," 2.5    "," P3
+ new String[]{ Prod6   " 2.5   "," 2.5    "," P1
+ new String[]{ Prod8   " 4.0   "," 4.0    "," P1
+ new String[]{ Prod11  " 5.5   "," 5.5    "," P3
+
+Bundle for client: C5  Hub for pickup: E4
+ new String[]{ Prod1   " 8.0   "," 6.0    "," P2
+ new String[]{ Prod3   " 4.5   "," 4.5    "," P2
+ new String[]{ Prod11  " 5.5   "," 1.5    "," P2
+
+Bundle for client: C6  Hub for pickup: E4
+ new String[]{ Prod1   "," 0.0   null
+ new String[]{ Prod3   " 8.5   "," 1.5    "," P2
+ new String[]{ Prod8   " 4.5   "," 4.5    "," P2
+ new String[]{ Prod10  "," 0.0   null
+
+Bundle for client: C7  Hub for pickup: E1
+ new String[]{ Prod4   " 5.5   "," 2.0    "," P2
+ new String[]{ Prod7   " 3.5   "," 2.0    "," P3
+ new String[]{ Prod8   " 3.0   "," 3.0    "," P2
+ new String[]{ Prod12  "," 0.0   null
+
+Bundle for client: C8  Hub for pickup: E1
+ new String[]{ Prod1   "," 0.0   null
+ new String[]{ Prod4   " 8.5   "," 1.5    "," P3
+ new String[]{ Prod6   " 8.5   "," 7.0    "," P3
+ new String[]{ Prod8   " 10.0  "," 1.0    "," P2
+ new String[]{ Prod9   "," 0.0   null
+ new String[]{ Prod12  "," 0.0   null
+
+Bundle for client: C9  Hub for pickup: E1
+ new String[]{ Prod4   " 7.5   "," 0.5    "," P1
+ new String[]{ Prod5   "," 0.0   null
+ new String[]{ Prod8   "," 0.0   null
+
+Bundle for client: E1  Hub for pickup: E1
+ new String[]{ Prod2   "," 0.0   null
+ new String[]{ Prod3   "," 0.0   null
+ new String[]{ Prod4   "," 0.0   null
+ new String[]{ Prod6   " 9.5   "," 2.0    "," P1
+ new String[]{ Prod8   "," 0.0   null
+ new String[]{ Prod9   "," 0.0   null
+ new String[]{ Prod10  "," 0.0   null
+ new String[]{ Prod12  "," 0.0   null
+
+Bundle for client: E2  Hub for pickup: E2
+ new String[]{ Prod1   "," 0.0   null
+ new String[]{ Prod9   "," 0.0   null
+ new String[]{ Prod11  " 5.5   "," 0.5    "," P3
+ new String[]{ Prod12  "," 0.0   null
+
+Bundle for client: E4  Hub for pickup: E4
+ new String[]{ Prod2   "," 0.0   null
+ new String[]{ Prod6   "," 0.0   null
+ new String[]{ Prod7   " 6.5   "," 1.0    "," P1
+ new String[]{ Prod8   "," 0.0   null
+
+Bundle for client: E5  Hub for pickup: E5
+ new String[]{ Prod1   "," 0.0   null
+ new String[]{ Prod4   "," 0.0   null
+ new String[]{ Prod5   "," 0.0   null
+ new String[]{ Prod11  "," 0.0   null
+ new String[]{ Prod12  "," 0.0   null
