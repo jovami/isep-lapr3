@@ -128,14 +128,18 @@ public class ExpListStatsHandler {
         HashSet<User> deliv=new HashSet<>();
 
         if(bundle.getClient()==client){
-            if(bundle.getState()==DeliveryState.TOTALLY_SATISTFIED)        totalSatisfied++;
-            if(bundle.getState()== DeliveryState.PARTIALLY_SATISFIED) partialyStatisfied++;
-
-            for (Order order : bundle.getOrdersList()) {
-                if(order.getProducer()!=null)
-                    deliv.add(order.getProducer());
+            switch (bundle.getState()) {
+                case TOTALLY_SATISTFIED -> totalSatisfied++;
+                case PARTIALLY_SATISFIED -> partialyStatisfied++;
+                default -> {}
             }
 
+            if(bundle.getOrdersList().size()!=0) {
+                for (Order order : bundle.getOrdersList()) {
+                    if(order.getProducer()!=null)
+                        deliv.add(order.getProducer());
+                }
+            }
         }
 
         //nºde fornecedores distintos que forneceram todos os seus cabazes

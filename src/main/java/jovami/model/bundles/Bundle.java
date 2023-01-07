@@ -92,8 +92,8 @@ public class Bundle {
                 if(iter.getState()==DeliveryState.NOT_SATISFIED)
                 notSatisfied++;
 
-            if(iter.getState()==DeliveryState.TOTALLY_SATISTFIED)
-            fully++;
+                if(iter.getState()==DeliveryState.TOTALLY_SATISTFIED)
+                    fully++;
             }
 
             if(fully==orders.size()){
@@ -101,9 +101,10 @@ public class Bundle {
             }else if(notSatisfied == orders.size()){
                 return DeliveryState.NOT_SATISFIED;
             }
+            return DeliveryState.PARTIALLY_SATISFIED;
         }
+        return DeliveryState.NOT_SATISFIED;
 
-        return DeliveryState.PARTIALLY_SATISFIED;
     }
 //Orders handlers
 
