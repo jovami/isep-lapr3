@@ -19,6 +19,7 @@ import jovami.model.shared.ClientIndex;
 import jovami.model.shared.HubIndex;
 import jovami.model.shared.ProducerIndex;
 import jovami.model.store.ExpListStore;
+import jovami.model.store.ExpListStore.Restriction;
 
 public class ExpListStatsHandlerTest {
 
@@ -53,7 +54,7 @@ public class ExpListStatsHandlerTest {
         for (int day = 1; day <= expecetedHubStats.size(); day++) {
             List<String[]> list = expecetedHubStats.get(day - 1);
 
-            hubStats = handler.getAllHubsStats(day, store.getExp(0));
+            hubStats = handler.getAllHubsStats(day, store.getExpList(Restriction.NONE));
             int i = 0;
             for (Entry<User, int[]> real : hubStats.entrySet()) {
 
@@ -83,7 +84,7 @@ public class ExpListStatsHandlerTest {
 
         for (int day = 1; day < expectedProducerStats.size(); day++) {
             List<String[]> list = expectedProducerStats.get(day - 1);
-            producerStats = handler.getAllProducersStats(day, store.getExp(0));
+            producerStats = handler.getAllProducersStats(day, store.getExpList(Restriction.NONE));
 
             int i = 0;
             for (Entry<User, int[]> real : producerStats.entrySet()) {
@@ -122,7 +123,7 @@ public class ExpListStatsHandlerTest {
             List<String[]> list = expectedBundleStats.get(day - 1);
 
             int i = 0;
-            bundleStats = handler.getAllbundlesStats(day, store.getExp(0));
+            bundleStats = handler.getAllbundlesStats(day, store.getExpList(Restriction.NONE));
             for (Entry<Bundle, float[]> real : bundleStats.entrySet()) {
 
                 assertEquals(real.getKey().getClient().getUserID(), list.get(i)[0]);
@@ -161,7 +162,7 @@ public class ExpListStatsHandlerTest {
 
         for (int day = 1; day < expectedClienteStats.size(); day++) {
             List<String[]> list = expectedClienteStats.get(day - 1);
-            clientStats = handler.getAllClientsStats(day, store.getExp(0));
+            clientStats = handler.getAllClientsStats(day, store.getExpList(Restriction.NONE));
 
 
             int i = 0;
