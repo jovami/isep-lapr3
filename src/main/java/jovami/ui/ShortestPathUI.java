@@ -56,11 +56,12 @@ public class ShortestPathUI implements UserStory {
         System.out.println("Bundles delivered in each hub:");
 
         map.forEach((hub, bundles) -> {
+            int i = 0;
             System.out.printf("Hub %s bundles:\n", hub);
 
             for (final var b : bundles) {
                 if (!b.isEmpty())
-                    System.out.printf("\t-> %s\n", b);
+                    System.out.printf("\t%d. %s\n", ++i, b);
             }
             System.out.println();
         });
