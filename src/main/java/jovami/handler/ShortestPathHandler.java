@@ -51,20 +51,17 @@ public class ShortestPathHandler {
         var hubs = new LinkedList<User>();
         map.forEach((k, v) -> {
             var subgraph = closure.subNetwork(k, v);
-            // TODO: make sure this is really not needed
-            // var closure = TSP2.getCompleteGraph(subgraph, HubNetwork.distCmp,
-            //                                     HubNetwork.distSum);
             components.add(subgraph);
             hubs.add(k);
         });
 
         var route = TSP.fromComponents(components, hubs,
-                                          HubNetwork.distCmp, HubNetwork::getZero);
+                                       HubNetwork.distCmp, HubNetwork::getZero);
 
         var dists = new LinkedList<Distance>();
         // TODO: check if Distance.zero is correct here
         var dist = TSP.getDists(closure, Distance.zero, HubNetwork.distSum,
-                                 route, dists);
+                                route, dists);
 
         return new Triplet<>(route, dists, dist);
     }

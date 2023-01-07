@@ -15,14 +15,14 @@ public class Main {
         App.getInstance();
 
         List<UserStory> uis = new LinkedList<>();
-        uis.add(new CSVLoaderUI());             //US301
-        uis.add(new IsConnectedUI());           //US302
-        uis.add(new TopNCompaniesUI());         //US303
-        uis.add(new NearestHubToClientsUI());   //US304
-        uis.add(new MinimumDistanceUI());       //US305
-        uis.add(new ExpBasketListUI());       //US308
-        uis.add(new ExpListNProducersUI());
-        uis.add(new WateringControllerUI());    //US306
+        uis.add(new CSVLoaderUI());             // US301
+        uis.add(new IsConnectedUI());           // US302
+        uis.add(new TopNCompaniesUI());         // US303
+        uis.add(new NearestHubToClientsUI());   // US304
+        uis.add(new MinimumDistanceUI());       // US305
+        uis.add(new WateringControllerUI());    // US306
+        uis.add(new ExpBasketListUI());         // US308
+        uis.add(new ExpListNProducersUI());     // US309
         uis.add(new ShortestPathUI());          // US310
         uis.add(new ExpListStatsUi());          // US311
 

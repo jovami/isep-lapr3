@@ -193,4 +193,11 @@ public class HubNetwork extends MapGraph<User, Distance> {
 
         return ok;
     }
+
+    @Override
+    public boolean addVertex(User vert) {
+        boolean flag = super.addVertex(vert);
+        this.addEdge(vert, vert, getZero(vert));
+        return flag;
+    }
 }
