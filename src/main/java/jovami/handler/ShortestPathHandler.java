@@ -47,7 +47,7 @@ public class ShortestPathHandler {
         var components = new LinkedList<Graph<User, Distance>>();
         var hubs = new LinkedList<User>();
         map.forEach((k, v) -> {
-            var subgraph = closure.subNetwork(k, v);
+            var subgraph = closure.subNetwork(k, v).addSelfCycles();
             components.add(subgraph);
             hubs.add(k);
         });
