@@ -69,6 +69,10 @@ public class BundleStore{
         return this.bundles.size();
     }
 
+    public boolean isEmpty() {
+        return this.size() == 0;
+    }
+
     public BundleStore getCopy(){
         return new BundleStore(this.bundles);
     }
