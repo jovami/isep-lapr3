@@ -32,7 +32,6 @@ public class ExpListStatsHandler {
     private final int NUMSTATSPRODUTOR = 5;
     private final int NUMSTATSBUNDLE = 5;
 
-
     public ExpListStatsHandler(){
         app = App.getInstance();
         expStore = app.expListStore();
