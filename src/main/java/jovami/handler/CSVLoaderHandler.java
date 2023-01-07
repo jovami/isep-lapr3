@@ -3,7 +3,7 @@ package jovami.handler;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,14 +59,14 @@ public class CSVLoaderHandler {
     public CSVLoaderHandler() {
         app = App.getInstance();
 
-        parsers = new HashMap<>(1 << 2, 1.0F);
+        this.parsers = new EnumMap<>(CSVHeader.class);
 
-        parsers.put(CSVHeader.USERS, new UserParser());
-        parsers.put(CSVHeader.DISTANCES, new DistanceParser());
+        this.parsers.put(CSVHeader.USERS, new UserParser());
+        this.parsers.put(CSVHeader.DISTANCES, new DistanceParser());
 
         // Special snowflakes
-        parsers.put(CSVHeader.BUNDLES, new BundleParser());
-        parsers.put(CSVHeader.BUNDLES_SMALL, new BundleParser());
+        this.parsers.put(CSVHeader.BUNDLES, new BundleParser());
+        this.parsers.put(CSVHeader.BUNDLES_SMALL, new BundleParser());
     }
 
 
