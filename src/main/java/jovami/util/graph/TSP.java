@@ -70,7 +70,7 @@ public class TSP {
 
         final int len = tour.size();
 
-        // singleton case (should not happen)
+        // Singleton case
         if (len == 1)
             return tour;
 

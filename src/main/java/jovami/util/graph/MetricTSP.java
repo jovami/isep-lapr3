@@ -102,7 +102,8 @@ public class MetricTSP {
          * since our DFS impl returns the list in reverse
          * order of traversal.
          */
-        tour.push(vOrig);
+        if (tour.size() > 1)
+            tour.push(vOrig);
         return tour;
     }
 
