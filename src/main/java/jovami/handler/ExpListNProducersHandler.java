@@ -33,6 +33,7 @@ public class ExpListNProducersHandler {
     private StockStore stockStore;
     private ExpList expList;
     private List<User> producers;
+
     /**
      * Instantiates a new Expedition List for the N closest producers handler.
      */
@@ -92,7 +93,6 @@ public class ExpListNProducersHandler {
                     //TODO MUDAR PRODUCERSTASH PARA AQUILO QUE ELE VAI RETIRAR?
                     order.setQntDelivered(orderedQuantity);
 
-                    flag = true;
                     return;
                 }else if(max.second() < producerStash){
                         max=new Pair<>(producer,producerStash);
@@ -126,7 +126,7 @@ public class ExpListNProducersHandler {
     }
 
     public HashMap<Integer,LinkedList<Bundle>> expListNProducers(int nProducers){
-        expList = new ExpList();
+        ExpList expList = new ExpList();
         bundleStore = expList.getBundleStore();
         stockStore = expList.getStockStore();
 

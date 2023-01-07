@@ -12,7 +12,6 @@ import jovami.util.graph.Graph;
  * MinimumDistanceHandler
  */
 public class MinimumDistanceHandler {
-    private final App app;
     private final HubNetwork hubNetwork;
 
 
@@ -20,7 +19,7 @@ public class MinimumDistanceHandler {
      * Instantiates a new Minimum distance handler.
      */
     public MinimumDistanceHandler() {
-        this.app = App.getInstance();
+        App app = App.getInstance();
         this.hubNetwork = app.hubNetwork();
     }
 

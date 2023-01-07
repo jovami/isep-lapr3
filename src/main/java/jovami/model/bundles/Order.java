@@ -11,10 +11,10 @@ public class Order {
     private User producer;
 
     //Produto pedido
-    private Product product;
+    private final Product product;
 
     //Quantidade pedida
-    private float qntOrder;
+    private final float qntOrder;
 
     //Quantidade fornecida
     private float qntDelivered;

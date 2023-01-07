@@ -2,6 +2,7 @@ package jovami.ui;
 
 import java.io.File;
 import java.util.LinkedHashMap;
+import java.util.Objects;
 
 import jovami.handler.CSVLoaderHandler;
 import jovami.model.csv.CSVHeader;
@@ -38,7 +39,7 @@ public class CSVLoaderUI implements UserStory {
 
     private void loadResources()
     {
-        boolean loadBig = InputReader.readLine("Load 'big' or 'small' files? [default: small]")
+        boolean loadBig = Objects.requireNonNull(InputReader.readLine("Load 'big' or 'small' files? [default: small]"))
                                      .trim()
                                      .toLowerCase()
                                      .matches("^big");

@@ -7,7 +7,7 @@ import jovami.model.bundles.ExpList;
 
 public class ExpListStore {
 
-    public static enum Restriction {
+    public enum Restriction {
         NONE {
             @Override
             public String toString() {

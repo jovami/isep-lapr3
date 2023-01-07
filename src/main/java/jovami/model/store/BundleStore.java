@@ -33,7 +33,7 @@ public class BundleStore{
     }
 
     public void addNewDay(int day) {
-        bundles.put(day, new ArrayList<Bundle>(2 << 4));
+        bundles.put(day, new ArrayList<>(2 << 4));
     }
 
     public boolean addBundle(Bundle newBundle){
