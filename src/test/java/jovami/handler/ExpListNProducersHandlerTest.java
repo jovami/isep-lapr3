@@ -26,6 +26,7 @@ class ExpListNProducersHandlerTest {
     @Test
     void testSelectProducerForOrderSmall() {
         MainTest.readData(false);
+        handler.setProducers();
         new NearestHubToClientsHandler().findNearestHubs();
         int nProd = 2;
 
@@ -34,7 +35,7 @@ class ExpListNProducersHandlerTest {
              * Day 1
              */
             int day = 1;
-            LinkedList<Bundle> expList = handler.expListNProducers(day, nProd).get(day);
+            LinkedList<Bundle> expList = handler.expListNProducers(nProd).get(day);
             var bundlesData = Arrays.asList(
                     new String[]{"P1", "5.0", "P2", "2.0", "P1", "1.0"},
                     new String[]{"P2", "5.5", "P2", "1.5", "P2", "4.0", "P3", "1.0", "P3", "4.0", "P3", "3.0"},
@@ -58,7 +59,7 @@ class ExpListNProducersHandlerTest {
              * Day 2
              */
             int day = 2;
-            LinkedList<Bundle> expList = handler.expListNProducers(day, nProd).get(day);
+            LinkedList<Bundle> expList = handler.expListNProducers(nProd).get(day);
             var bundlesData = Arrays.asList(
                     new String[]{"P1", "3.0", "P1", "6.0", "P2", "2.5", "P1", "4.0", "P2", "9.0", "P1", "3.0", null, "0", null, "0" },
                     new String[]{"P3", "9.0", "P2", "1.0", "P3", "1.5", "P2", "5.0","P2", "4.0", "P3", "5.0", "P3", "7.5", null, "0", "P2", "3"},
@@ -83,7 +84,7 @@ class ExpListNProducersHandlerTest {
              * Day 3
              */
             int day = 3;
-            LinkedList<Bundle> expList = handler.expListNProducers(day, nProd).get(day);
+            LinkedList<Bundle> expList = handler.expListNProducers(nProd).get(day);
             var bundlesData = Arrays.asList(
                     new String[]{"P2", "6.0", "P1", "6.0", "P1", "2.0", "P2", "6.0", "P2", "1.0", "P2", "3.0", "P1", "2.5" },
                     new String[]{"P2", "4.0", "P3", "3.0", "P3", "1.0"},
@@ -107,7 +108,7 @@ class ExpListNProducersHandlerTest {
              * Day 4
              */
             int day = 4;
-            LinkedList<Bundle> expList = handler.expListNProducers(day, nProd).get(day);
+            LinkedList<Bundle> expList = handler.expListNProducers(nProd).get(day);
             var bundlesData = Arrays.asList(
                     new String[]{"P1", "1.5", "P1", "3.5", "P1", "1.0", null, "0",null, "0" },
                     new String[]{null, "0",null, "0",null, "0"},
@@ -131,7 +132,7 @@ class ExpListNProducersHandlerTest {
              * Day 5
              */
             int day = 5;
-            LinkedList<Bundle> expList = handler.expListNProducers(day, nProd).get(day);
+            LinkedList<Bundle> expList = handler.expListNProducers(nProd).get(day);
             var bundlesData = Arrays.asList(
                     new String[]{"P1", "8.0", "P1", "7.0", null, "0", "P1", "1.5", "P1", "6.0","P2", "3.0","P1", "6.5","P2", "3.5" },
                     new String[]{ },
@@ -176,10 +177,11 @@ class ExpListNProducersHandlerTest {
     }
 
     @Test
-    void testFindProducersSmall() {
+    void testSetProducersSmall() {
         MainTest.readData(false);   // read small file
         String[] expected = {"P1", "P2", "P3"};
-        List<User> actual = handler.findProducers();
+        handler.setProducers();
+        List<User> actual = handler.getProducers();
 
         /*
          * Checks producers for small files
@@ -196,10 +198,11 @@ class ExpListNProducersHandlerTest {
     }
 
     @Test
-    void testFindProducersBig() {
+    void testSetProducersBig() {
         MainTest.readData(true);   // read big file
         String[] expected = {"P27", "P12", "P39", "P25", "P45", "P42", "P52", "P15", "P16", "P29"};
-        List<User> actual = handler.findProducers();
+        handler.setProducers();
+        List<User> actual = handler.getProducers();
 
         /*
          * Checks 10 first producers for big files
@@ -213,5 +216,59 @@ class ExpListNProducersHandlerTest {
          */
         int expectedSize = 60;
         assertEquals(actual.size(), expectedSize);
+    }
+
+    @Test
+    void testCheckDayForExp(){
+        MainTest.readData(false);
+        handler.setProducers();
+        new NearestHubToClientsHandler().findNearestHubs();
+        var exp = handler.expListNProducers(2);
+        {   // Test negative and zero values
+            int[] values = {0, -1, -3, -5, -20, -50, -100, -500};
+            int expected = 1;
+            for (int value : values) {
+                assertEquals(expected, handler.checkDayForExp(value, exp));
+            }
+        }
+        {   // Test values which are higher than 5
+            int[] values = {6, 10, 20, 50, 100, 500};
+            int expected = 5;
+            for (int value : values) {
+                assertEquals(expected, handler.checkDayForExp(value, exp));
+            }
+        }
+        {   // Test correct values
+            int[] values = {1, 2, 3, 4, 5};
+            for (int value : values) {
+                assertEquals(value, handler.checkDayForExp(value, exp));
+            }
+        }
+    }
+
+    @Test
+    void testCheckNProducers(){
+        MainTest.readData(false);
+        handler.setProducers();
+        {   // Test negative and zero values
+            int[] values = {0, -1, -3, -5, -20, -50, -100, -500};
+            int expected = 1;
+            for (int value : values) {
+                assertEquals(expected, handler.checkNProducers(value));
+            }
+        }
+        {   // Test values which are higher than 3
+            int[] values = {4, 10, 20, 50, 100, 500};
+            int expected = 3;
+            for (int value : values) {
+                assertEquals(expected, handler.checkNProducers(value));
+            }
+        }
+        {   // Test correct values
+            int[] values = {1, 2, 3};
+            for (int value : values) {
+                assertEquals(value, handler.checkNProducers(value));
+            }
+        }
     }
 }
