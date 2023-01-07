@@ -1,6 +1,5 @@
 package jovami.ui;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -20,14 +19,14 @@ public class ShortestPathUI implements UserStory {
 
     public ShortestPathUI() {
         this.handler = new ShortestPathHandler();
-        this.restrictions = Arrays.asList(Restriction.values());
+        this.restrictions = List.of(Restriction.values());
     }
 
-	@Override
-	public void run() {
-        int day = InputReader.readInteger("Day of the expedition list: ");
-        int rIdx = InputReader.showAndSelectIndex(this.restrictions,
-                                                  "Types of expedition lists:");
+    @Override
+    public void run() {
+        final int day = InputReader.readInteger("Day of the expedition list: ");
+        final int rIdx = InputReader.showAndSelectIndex(this.restrictions,
+                                                        "Types of expedition lists:");
 
         if (!this.handler.setDayRestriction(day, this.restrictions.get(rIdx))) {
             System.err.println("error: no valid export list for that day");
@@ -35,15 +34,15 @@ public class ShortestPathUI implements UserStory {
         }
 
         // TODO: change variable name
-        var stuff = this.handler.shortestRoute();
+        final var stuff = this.handler.shortestRoute();
         printPath(stuff.first(), stuff.second());
         System.out.printf("\nTotal distance: %dm\n\n", stuff.third().getDistance());
 
-        var orders = this.handler.ordersByHub();
+        final var orders = this.handler.ordersByHub();
         printOrders(orders);
-	}
+    }
 
-    private void printPath(List<User> users, List<Distance> dists) {
+    private void printPath(final List<User> users, final List<Distance> dists) {
         final int size = users.size();
 
         System.out.println("Path to take:");
@@ -53,14 +52,16 @@ public class ShortestPathUI implements UserStory {
         }
     }
 
-    private void printOrders(Map<User, List<List<Order>>> map) {
+    private void printOrders(final Map<User, List<List<Order>>> map) {
         System.out.println("Bundles delivered in each hub:");
 
         map.forEach((hub, bundles) -> {
             System.out.printf("Hub %s bundles:\n", hub);
 
-            for (var bundle : bundles)
-                System.out.printf("\t-> %s\n", bundle);
+            for (final var b : bundles) {
+                if (!b.isEmpty())
+                    System.out.printf("\t-> %s\n", b);
+            }
             System.out.println();
         });
     }
