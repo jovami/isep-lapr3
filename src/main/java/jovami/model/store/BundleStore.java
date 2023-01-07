@@ -75,9 +75,13 @@ public class BundleStore{
 
     // TODO: better way of doing this?
     public Map<User,Set<User>> producersPerHub(int day) {
+        return producersPerHub(this.bundles.get(day));
+    }
+
+    public static Map<User, Set<User>> producersPerHub(List<Bundle> bList) {
         Map<User, Set<User>> ret = new HashMap<>();
 
-        for (Bundle b : this.bundles.get(day)) {
+        for (Bundle b : bList) {
             User hub = b.getClient().getNearestHub();
 
             if(ret.get(hub) == null)
