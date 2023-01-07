@@ -27,24 +27,31 @@ public class ExpListNProducersUI implements UserStory {
             System.out.println("Day: " + day + " | " + "Closest " + nProd + " producers to the hubs");
             expList.forEach(a -> {
                 var orders = a.getOrders();
-                if(orders.hasNext())
+                if (orders.hasNext()) {
                     System.out.println("\nBundle for client: " + a.getClient().getUserID()
                             + " | Hub for pickup: " + a.getClient().getNearestHub().getUserID());
-                while(orders.hasNext()){
+                    System.out.printf(" -> Product | Ordered | Delivered | Supplied by\n");
+                }
+                while (orders.hasNext()) {
                     var order = orders.next();
                     if (order.getProducer() == null) {
-                        System.out.println(" -> Product: " + order.getProduct().getName()
-                                + "  | Ordered: " + order.getQuantity()
-                                + " | There were no producers to fulfill this order");
-                    }else {
-                        System.out.println(" -> Product: " + order.getProduct().getName()
-                                + " | Ordered: " + order.getQuantity()
-                                + "  | Delivered: " + order.getQuantityDelivered()
-                                + " | Supplied by: " + order.getProducer().getUserID());
+                        System.out.printf(" -> %-8s|   %-6.1f|    %-6.1f | " +
+                                        "There were no producers to fulfill this order\n",
+                                order.getProduct().getName(),
+                                order.getQuantity(),
+                                order.getQuantityDelivered());
+                    } else {
+
+                        System.out.printf(" -> %-8s|   %-6.1f|    %-6.1f | %s\n",
+                                order.getProduct().getName(),
+                                order.getQuantity(),
+                                order.getQuantityDelivered(),
+                                order.getProducer().getUserID());
                     }
                 }
+
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             System.err.println("Aborting...");
             throw new RuntimeException(e);
         }

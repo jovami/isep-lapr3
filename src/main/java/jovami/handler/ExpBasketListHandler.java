@@ -21,7 +21,6 @@ public class ExpBasketListHandler {
     private BundleStore bundleStore;
     private StockStore stockStore;
     private final ExpListStore expStore;
-    private ExpList expList;
 
 
     public ExpBasketListHandler() {
@@ -70,7 +69,6 @@ public class ExpBasketListHandler {
 
                     //TODO MUDAR PRODUCERSTASH PARA AQUILO QUE ELE VAI RETIRAR?
                     order.setQntDelivered(quantityToRetrieve);
-                    flag = true;
                     return;
                 }else if(max.second() < stockProducer){
                         max=new Pair<>(producer,stockProducer);
@@ -84,11 +82,11 @@ public class ExpBasketListHandler {
         }
 
         if(stockStore.getStock(max.first())==null){
-            System.out.println("");
+            System.out.println();
         }
 
         if(!flag){
-            stockStore.getStock(max.first()).retrieveFromStock( day,product, max.second().floatValue());
+            stockStore.getStock(max.first()).retrieveFromStock( day,product, max.second());
             order.setProducer(max.first());
             order.setQntDelivered(max.second());
         }       
@@ -96,7 +94,7 @@ public class ExpBasketListHandler {
     }
 
     public HashMap<Integer, LinkedList<Bundle>> expBasketsList() {
-        expList = new ExpList();
+        ExpList expList = new ExpList();
         bundleStore = expList.getBundleStore();
         stockStore = expList.getStockStore();
 

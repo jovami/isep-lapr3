@@ -13,13 +13,12 @@ import java.util.Optional;
  * IsConnectedHandler.
  */
 public class IsConnectedHandler {
-    private final App app;
     private final HubNetwork network;
 
     private final boolean connected;
 
     public IsConnectedHandler() {
-        this.app = App.getInstance();
+        App app = App.getInstance();
         this.network = app.hubNetwork();
         this.connected = Algorithms.isConnected(network);   // O(V*E)
     }

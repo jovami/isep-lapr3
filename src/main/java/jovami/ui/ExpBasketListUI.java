@@ -21,18 +21,23 @@ public class ExpBasketListUI implements UserStory {
 
             expList.forEach(a -> {
                 var orders = a.getOrders();
-                if(orders.hasNext())
+                if(orders.hasNext()) {
                     System.out.println("\nBundle for client: " + a.getClient().getUserID()
                             + " | Hub for pickup: " + a.getClient().getNearestHub().getUserID());
+                    System.out.printf(" -> Product | Ordered | Delivered | Supplied by\n");
+                }
                 while(orders.hasNext()){
                     var order = orders.next();
                     if (order.getProducer() == null) {
-                        System.out.printf(" -> Product: %-6s | Delivered: %-4.1f | " +
+
+                        System.out.printf(" -> %-8s|   %-6.1f|    %-6.1f | " +
                                         "There were no producers to fulfill this order\n",
                                 order.getProduct().getName(),
+                                order.getQuantity(),
                                 order.getQuantityDelivered());
                     }else {
-                        System.out.printf(" -> Product: %-6s | Ordered: %-4.1f | Delivered: %-4.1f |  Supplied by: %s\n",
+
+                        System.out.printf(" -> %-8s|   %-6.1f|    %-6.1f | %s\n",
                                 order.getProduct().getName(),
                                 order.getQuantity(),
                                 order.getQuantityDelivered(),

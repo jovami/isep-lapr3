@@ -33,7 +33,7 @@ public class Stock {
         this(originStock.size());
 
         for (Entry<Product,HashMap<Integer,ProductStock>> allStock  : originStock.entrySet()) {
-            this.stock.put(allStock.getKey(),new HashMap<Integer,ProductStock>());
+            this.stock.put(allStock.getKey(), new HashMap<>());
 
             for (Entry<Integer,ProductStock> dayStock : allStock.getValue().entrySet()) {
 

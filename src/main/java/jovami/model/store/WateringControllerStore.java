@@ -40,8 +40,7 @@ public class WateringControllerStore implements Iterable<WateringController> {
      * @return the boolean
      */
     public boolean addController(Collection<LocalTime> times,
-            List<Triplet<String, Integer, WateringFrequency>> plotData)
-    {
+                                 List<Triplet<String, Integer, WateringFrequency>> plotData) {
         var ctrl = new WateringController(plotData.size());
 
         ctrl.addWateringHours(times);
@@ -92,7 +91,7 @@ public class WateringControllerStore implements Iterable<WateringController> {
         var expired = new ArrayList<LocalDate>();
 
         this.store.forEach((k, v) -> {
-            if (v.getValidRange()[1].compareTo(now) >= 0)
+            if (!v.getValidRange()[1].isBefore(now))
                 expired.add(k);
         });
 

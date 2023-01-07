@@ -19,7 +19,6 @@ import java.util.Optional;
  * the resulting bundles or product stock updates to the relevant stores.
  */
 public class BundleParser implements CSVParser {
-    private final App app;
     private final ProductStore productStore;
     private final StockStore stockStore;
     private final BundleStore bundleStore;
@@ -45,7 +44,7 @@ public class BundleParser implements CSVParser {
      * Instantiates a new Bundle parser.
      */
     public BundleParser() {
-        this.app = App.getInstance();
+        App app = App.getInstance();
         this.productStore = app.productStore();
         this.stockStore = app.stockStore();
         this.bundleStore = app.bundleStore();

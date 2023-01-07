@@ -18,7 +18,7 @@ public class Bundle {
     
     // TODO usar um set?(previne pedidos iguais para o mesmo cabaz)
     //Lista de todos os pedidos
-    private ArrayList<Order> orders;
+    private final ArrayList<Order> orders;
     
     //TODO needed?? uma vez que todas as encomendas sao expedidas no mesmo dia, caso estejam ou nao completas
     // para saber se o cabaz foi entregue

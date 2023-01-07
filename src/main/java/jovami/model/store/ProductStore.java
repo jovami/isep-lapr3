@@ -7,14 +7,14 @@ import jovami.model.bundles.Product;
 
 public class ProductStore {
 
-    private HashMap<String,Product> products;
+    private final HashMap<String,Product> products;
 
     public ProductStore() {
         this(2 << 4);
     }
 
     public ProductStore(int initialCapacity) {
-        this.products = new HashMap<String,Product>(initialCapacity);
+        this.products = new HashMap<>(initialCapacity);
     }
 
     public Iterator<Product> getIterator(){

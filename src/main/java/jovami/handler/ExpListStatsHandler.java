@@ -17,8 +17,8 @@ import jovami.model.store.ExpListStore.Restriction;
 
 public class ExpListStatsHandler {
 
-    private App app;
-    private ExpListStore expStore;
+    private final App app;
+    private final ExpListStore expStore;
 
     public ExpListStatsHandler(){
         app = App.getInstance();
@@ -173,8 +173,8 @@ public class ExpListStatsHandler {
                         }
                     }
                 }
-                if(partialFilledBundle == true) partialFullFilled++;
-                if(fullFilledBundle == true) totalFullFilled++;
+                if(partialFilledBundle) partialFullFilled++;
+                if(fullFilledBundle) totalFullFilled++;
             }
         }
 

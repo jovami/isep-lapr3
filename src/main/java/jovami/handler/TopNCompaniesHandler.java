@@ -15,7 +15,6 @@ import jovami.util.Pair;
  */
 public class TopNCompaniesHandler {
 
-    private final App app;
     private final HubNetwork mapGraph;
 
     /**
@@ -27,7 +26,7 @@ public class TopNCompaniesHandler {
      * Instantiates a new Top n companies handler.
      */
     public TopNCompaniesHandler(){
-        app=App.getInstance();
+        App app = App.getInstance();
         mapGraph = app.hubNetwork();
     }
 
