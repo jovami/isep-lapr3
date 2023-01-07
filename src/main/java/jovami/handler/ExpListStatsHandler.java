@@ -45,8 +45,8 @@ public class ExpListStatsHandler {
 
     /*CABAZ
     */
-    public HashMap<Bundle,float[]> getAllbundlesStats (int day,ExpList expList){
-        HashMap<Bundle,float []> res = new LinkedHashMap<>();
+    public LinkedHashMap<Bundle,float[]> getAllbundlesStats (int day,ExpList expList){
+        LinkedHashMap<Bundle,float []> res = new LinkedHashMap<>();
 
         for (Bundle iterBundle : expList.getBundleStore().getBundles(day)) {
             if(res.get(iterBundle)==null)
@@ -102,9 +102,9 @@ public class ExpListStatsHandler {
 
 
     //TODO change arraylist ot linked hashMap
-    public HashMap<User,int[]> getAllClientsStats(int day,ExpList expList){
+    public LinkedHashMap<User,int[]> getAllClientsStats(int day,ExpList expList){
 
-        HashMap<User,int []> res = new LinkedHashMap<>();
+        LinkedHashMap<User,int []> res = new LinkedHashMap<>();
 
         for (Bundle iterBundle : expList.getBundleStore().getBundles(day)) {
             //uma empresa é um cliente, e é também um hub
@@ -154,9 +154,9 @@ public class ExpListStatsHandler {
     /*PRODUTOR
     */
 
-    public HashMap<User,int[]> getAllProducersStats(int day, ExpList expList){
+    public LinkedHashMap<User,int[]> getAllProducersStats(int day, ExpList expList){
 
-        HashMap<User,int []> res = new LinkedHashMap<>();
+        LinkedHashMap<User,int []> res = new LinkedHashMap<>();
 
         for(Pair<User,Stock> producerStock: expList.getStockStore().getStocks()){//n*inside
             if(res.get(producerStock.first())==null){
@@ -267,9 +267,9 @@ public class ExpListStatsHandler {
      * HUB
      */
 
-    public HashMap<User,int[]> getAllHubsStats(int day, ExpList expList){
+    public LinkedHashMap<User,int[]> getAllHubsStats(int day, ExpList expList){
 
-        HashMap<User,int []> res = new LinkedHashMap<>();
+        LinkedHashMap<User,int []> res = new LinkedHashMap<>();
 
         //keep track de clientes e produtores já existentes
         HashMap<User,Pair<HashSet<User>,HashSet<User>>> difClientsProducerPerHub=new LinkedHashMap<>();

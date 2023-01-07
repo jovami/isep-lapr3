@@ -376,4 +376,223 @@ public class DataLoader {
                 new String[]{"P3", "5", "0", "0", "0", "7.5", "0", "0", "0", "4", "6.5", "0", "8.5", "4.5"}
         );
     }
+    
+    public List<List<String[]>> statsClientExpNoRestrict() {
+            return Arrays.asList(
+                            Arrays.asList(
+                                            new String[] { "C1", "1", "0", "3" },
+                                            new String[] { "C2", "0", "1", "2" },
+                                            new String[] { "C3", "0", "1", "2" },
+                                            new String[] { "C4", "0", "0", "0" },
+                                            new String[] { "C5", "0", "0", "0" },
+                                            new String[] { "C6", "0", "1", "2" },
+                                            new String[] { "C7", "0", "0", "0" },
+                                            new String[] { "C8", "0", "1", "2" },
+                                            new String[] { "C9", "0", "1", "2" },
+                                            new String[] { "E1", "0", "0", "0" },
+                                            new String[] { "E2", "0", "1", "3" },
+                                            new String[] { "E3", "0", "1", "1" },
+                                            new String[] { "E4", "0", "0", "0" },
+                                            new String[] { "E5", "0", "1", "2" }),
+                            Arrays.asList(
+                                            new String[] { "C1", "0", "1", "3" },
+                                            new String[] { "C2", "0", "1", "3" },
+                                            new String[] { "C3", "0", "1", "3" },
+                                            new String[] { "C4", "0", "1", "2" },
+                                            new String[] { "C5", "0", "0", "0" },
+                                            new String[] { "C6", "0", "0", "0" },
+                                            new String[] { "C7", "0", "1", "2" },
+                                            new String[] { "C8", "0", "0", "0" },
+                                            new String[] { "C9", "0", "1", "2" },
+                                            new String[] { "E1", "0", "1", "2" },
+                                            new String[] { "E2", "0", "1", "1" },
+                                            new String[] { "E3", "0", "0", "0" },
+                                            new String[] { "E4", "0", "0", "0" },
+                                            new String[] { "E5", "0", "1", "2" }),
+                            Arrays.asList(
+                                            new String[] { "C1", "0", "1", "3" },
+                                            new String[] { "C2", "0", "1", "2" },
+                                            new String[] { "C3", "0", "0", "0" },
+                                            new String[] { "C4", "0", "1", "2" },
+                                            new String[] { "C5", "0", "1", "1" },
+                                            new String[] { "C6", "0", "1", "1" },
+                                            new String[] { "C7", "0", "1", "2" },
+                                            new String[] { "C8", "0", "1", "2" },
+                                            new String[] { "C9", "0", "1", "1" },
+                                            new String[] { "E1", "0", "1", "1" },
+                                            new String[] { "E2", "0", "1", "1" },
+                                            new String[] { "E3", "0", "0", "0" },
+                                            new String[] { "E4", "0", "1", "1" },
+                                            new String[] { "E5", "0", "0", "0" }),
+                            Arrays.asList(
+                                            new String[] { "C1", "0", "1", "1" },
+                                            new String[] { "C2", "0", "1", "1" },
+                                            new String[] { "C3", "0", "1", "1" },
+                                            new String[] { "C4", "0", "0", "0" },
+                                            new String[] { "C5", "0", "0", "0" },
+                                            new String[] { "C6", "0", "1", "1" },
+                                            new String[] { "C7", "0", "0", "0" },
+                                            new String[] { "C8", "0", "0", "0" },
+                                            new String[] { "C9", "0", "0", "0" },
+                                            new String[] { "E1", "0", "1", "1" },
+                                            new String[] { "E2", "0", "1", "1" },
+                                            new String[] { "E3", "0", "0", "0" },
+                                            new String[] { "E4", "0", "0", "0" },
+                                            new String[] { "E5", "0", "0", "0" }),
+                            Arrays.asList(
+                                            new String[] { "C1", "0", "1", "2" },
+                                            new String[] { "C2", "0", "0", "0" },
+                                            new String[] { "C3", "0", "1", "2" },
+                                            new String[] { "C4", "0", "0", "0" },
+                                            new String[] { "C5", "0", "1", "3" },
+                                            new String[] { "C6", "0", "1", "2" },
+                                            new String[] { "C7", "0", "1", "3" },
+                                            new String[] { "C8", "0", "0", "0" },
+                                            new String[] { "C9", "0", "1", "2" },
+                                            new String[] { "E1", "0", "1", "2" },
+                                            new String[] { "E2", "0", "0", "0" },
+                                            new String[] { "E3", "0", "0", "0" },
+                                            new String[] { "E4", "0", "0", "0" },
+                                            new String[] { "E5", "0", "0", "0" }));
+    }
+    
+    public List<List<String[]>> statsProducerExpNoRestrict() {
+            return Arrays.asList(
+                            Arrays.asList(
+                                            new String[] { "P1", "0", "6", "9", "6", "2" },
+                                            new String[] { "P2", "0", "6", "9", "6", "2" },
+                                            new String[] { "P3", "0", "7", "10", "7", "2" }),
+                            Arrays.asList(
+                                            new String[] { "P1", "0", "6", "6", "6", "1" },
+                                            new String[] { "P2", "0", "8", "6", "8", "3" },
+                                            new String[] { "P3", "0", "6", "5", "6", "1" }),
+                            Arrays.asList(
+                                            new String[] { "P1", "0", "5", "6", "5", "2" },
+                                            new String[] { "P2", "0", "6", "8", "6", "0" },
+                                            new String[] { "P3", "0", "6", "7", "6", "1" }),
+                            Arrays.asList(
+                                            new String[] { "P1", "0", "6", "10", "6", "2" },
+                                            new String[] { "P2", "0", "0", "0", "0", "0" },
+                                            new String[] { "P3", "0", "0", "0", "0", "0" }),
+                            Arrays.asList(
+                                            new String[] { "P1", "0", "5", "5", "5", "1" },
+                                            new String[] { "P2", "0", "7", "9", "7", "1" },
+                                            new String[] { "P3", "0", "4", "5", "4", "0" }));
+    }
+
+    public List<List<String[]>> statsHubExpNoRestrict() {
+            return Arrays.asList(
+                            Arrays.asList(
+                                            new String[] { "E4", "4", "3" },
+                                            new String[] { "E1", "5", "3" },
+                                            new String[] { "E5", "3", "3" },
+                                            new String[] { "E2", "1", "3" },
+                                            new String[] { "E3", "1", "1" }),
+                            Arrays.asList(
+                                            new String[] { "E4", "4", "3" },
+                                            new String[] { "E1", "5", "3" },
+                                            new String[] { "E5", "3", "3" },
+                                            new String[] { "E2", "1", "1" },
+                                            new String[] { "E3", "1", "0" }),
+                            Arrays.asList(
+                                            new String[] { "E4", "4", "3" },
+                                            new String[] { "E1", "5", "3" },
+                                            new String[] { "E5", "3", "2" },
+                                            new String[] { "E2", "1", "1" },
+                                            new String[] { "E3", "1", "0" }),
+                            Arrays.asList(
+                                            new String[] { "E4", "4", "1" },
+                                            new String[] { "E1", "5", "1" },
+                                            new String[] { "E5", "3", "1" },
+                                            new String[] { "E2", "1", "1" },
+                                            new String[] { "E3", "1", "0" }),
+                            Arrays.asList(
+                                            new String[] { "E4", "4", "3" },
+                                            new String[] { "E1", "5", "3" },
+                                            new String[] { "E5", "3", "2" },
+                                            new String[] { "E2", "1", "0" },
+                                            new String[] { "E3", "1", "0" }));
+    }
+
+
+    
+    public List<List<String[]>> statsBundleExpNoRestrict() {
+            return Arrays.asList(
+                            Arrays.asList(
+                                            new String[] { "C1", "3.0", "0.0", "0.0", "100.00", "3.00" },
+                                            new String[] { "C2", "5.0", "1.0", "0.0", "83.33", "2.00" },
+                                            new String[] { "C3", "1.0", "3.0", "0.0", "25.00", "2.00" },
+                                            new String[] { "C4", "0.0", "0.0", "0.0", null, "0.00" },
+                                            new String[] { "C5", "0.0", "0.0", "0.0", null, "0.00" },
+                                            new String[] { "C6", "0.0", "3.0", "0.0", "0.00", "2.00" },
+                                            new String[] { "C7", "0.0", "0.0", "0.0", null, "0.00" },
+                                            new String[] { "C8", "1.0", "2.0", "0.0", "33.33", "2.00" },
+                                            new String[] { "C9", "0.0", "2.0", "0.0", "0.00", "2.00" },
+                                            new String[] { "E1", "0.0", "0.0", "0.0", null, "0.00" },
+                                            new String[] { "E2", "2.0", "3.0", "4.0", "22.22", "3.00" },
+                                            new String[] { "E3", "0.0", "1.0", "2.0", "0.00", "1.00" },
+                                            new String[] { "E4", "0.0", "0.0", "5.0", "0.00", "0.00" },
+                                            new String[] { "E5", "1.0", "1.0", "2.0", "25.00", "2.001" }),
+                            Arrays.asList(
+                                            new String[] { "C1", "6.0", "1.0", "1.0", "75.00", "3.00" },
+                                            new String[] { "C2", "3.0", "5.0", "1.0", "33.33", "3.00" },
+                                            new String[] { "C3", "2.0", "2.0", "1.0", "40.00", "3.00" },
+                                            new String[] { "C4", "1.0", "2.0", "1.0", "25.00", "2.00" },
+                                            new String[] { "C5", "0.0", "0.0", "0.0", null, "0.00" },
+                                            new String[] { "C6", "0.0", "0.0", "0.0", null, "0.00" },
+                                            new String[] { "C7", "1.0", "4.0", "4.0", "11.11", "2.00" },
+                                            new String[] { "C8", "0.0", "0.0", "0.0", null, "0.00" },
+                                            new String[] { "C9", "0.0", "3.0", "3.0", "0.00", "2.00" },
+                                            new String[] { "E1", "2.0", "0.0", "3.0", "40.00", "2.00" },
+                                            new String[] { "E2", "0.0", "1.0", "3.0", "0.00", "1.00" },
+                                            new String[] { "E3", "0.0", "0.0", "0.0", null, "0.00" },
+                                            new String[] { "E4", "0.0", "0.0", "0.0", null, "0.00" },
+                                            new String[] { "E5", "1.0", "2.0", "5.0", "12.50", "2.00 " }),
+                            Arrays.asList(
+                                            new String[] { "C1", "1.0", "5.0", "1.0", "14.29", "3.00" },
+                                            new String[] { "C2", "1.0", "2.0", "0.0", "33.33", "2.00" },
+                                            new String[] { "C3", "0.0", "0.0", "0.0", null, "0.00" },
+                                            new String[] { "C4", "4.0", "2.0", "0.0", "66.67", "2.00" },
+                                            new String[] { "C5", "1.0", "2.0", "0.0", "33.33", "1.00" },
+                                            new String[] { "C6", "1.0", "1.0", "2.0", "25.00", "1.00" },
+                                            new String[] { "C7", "1.0", "2.0", "1.0", "25.00", "2.00" },
+                                            new String[] { "C8", "0.0", "3.0", "3.0", "0.00", "2.00" },
+                                            new String[] { "C9", "0.0", "1.0", "2.0", "0.00", "1.00" },
+                                            new String[] { "E1", "0.0", "1.0", "7.0", "0.00", "1.00" },
+                                            new String[] { "E2", "0.0", "1.0", "3.0", "0.00", "1.00" },
+                                            new String[] { "E3", "0.0", "0.0", "0.0", null, "0.00" },
+                                            new String[] { "E4", "0.0", "1.0", "3.0", "0.00", "1.00" },
+                                            new String[] { "E5", "0.0", "0.0", "5.0", "0.00", "0.00" }),
+                            Arrays.asList(
+                                            new String[] { "C1", "0.0", "3.0", "2.0", "0.00", "1.00" },
+                                            new String[] { "C2", "1.0", "1.0", "1.0", "33.33", "1.00" },
+                                            new String[] { "C3", "2.0", "0.0", "2.0", "50.00", "1.00" },
+                                            new String[] { "C4", "0.0", "0.0", "0.0", null, "0.00" },
+                                            new String[] { "C5", "0.0", "0.0", "3.0", "0.00", "0.00" },
+                                            new String[] { "C6", "1.0", "0.0", "3.0", "25.00", "1.00" },
+                                            new String[] { "C7", "0.0", "0.0", "0.0", null, "0.00" },
+                                            new String[] { "C8", "0.0", "0.0", "0.0", null, "0.00" },
+                                            new String[] { "C9", "0.0", "0.0", "0.0", null, "0.00" },
+                                            new String[] { "E1", "1.0", "0.0", "4.0", "20.00", "1.00" },
+                                            new String[] { "E2", "1.0", "1.0", "2.0", "25.00", "1.00" },
+                                            new String[] { "E3", "0.0", "0.0", "4.0", "0.00", "0.00" },
+                                            new String[] { "E4", "0.0", "0.0", "0.0", null, "0.00" },
+                                            new String[] { "E5", "0.0", "0.0", "0.0", null, "0.00" }),
+                            Arrays.asList(
+                                            new String[] { "C1", "7.0", "0.0", "1.0", "87.50", "2.00" },
+                                            new String[] { "C2", "0.0", "0.0", "0.0", null, "0.00" },
+                                            new String[] { "C3", "3.0", "2.0", "0.0", "60.00", "2.00" },
+                                            new String[] { "C4", "0.0", "0.0", "0.0", null, "0.00" },
+                                            new String[] { "C5", "3.0", "4.0", "3.0", "30.00", "3.00" },
+                                            new String[] { "C6", "2.0", "1.0", "1.0", "50.00", "2.00" },
+                                            new String[] { "C7", "0.0", "5.0", "3.0", "0.00", "3.00" },
+                                            new String[] { "C8", "0.0", "0.0", "0.0", null, "0.00" },
+                                            new String[] { "C9", "0.0", "2.0", "2.0", "0.00", "2.00" },
+                                            new String[] { "E1", "0.0", "3.0", "7.0", "0.00", "2.00" },
+                                            new String[] { "E2", "0.0", "0.0", "0.0", null, "0.00" },
+                                            new String[] { "E3", "0.0", "0.0", "5.0", "0.00", "0.00" },
+                                            new String[] { "E4", "0.0", "0.0", "5.0", "0.00", "0.00" },
+                                            new String[] { "E5", "0.0", "0.0", "6.0", "0.00", "0.00" }));
+    }
+
 }
