@@ -30,6 +30,8 @@ public class ShortestPathHandler {
     }
 
     public boolean setDayRestriction(int day, Restriction r) {
+        if (day < 1)
+            return false;
         this.day = day;
 
         var expList = this.app.expListStore().getExpList(r);
@@ -37,10 +39,12 @@ public class ShortestPathHandler {
             return false;
         this.bStore = expList.getBundleStore();
 
-        return this.bStore != null;
+        return this.bStore != null && !this.bStore.isEmpty();
     }
 
     public Triplet<List<User>, List<Distance>, Distance> shortestRoute() {
+        if (this.bStore == null)
+            throw new IllegalStateException();
         var map = this.bStore.producersPerHub(this.day);
 
         var closure = this.app.hubNetwork().transitiveClosure();
