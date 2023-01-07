@@ -40,11 +40,15 @@ public class ExpListStore {
     }
 
 
+    public void addExpList(Restriction r, ExpList expList) {
+        this.listExp.put(r, expList);
+    }
+
     public void addExpListNoRestrict(ExpList expList) {
-        listExp.put(Restriction.NONE, expList);
+        this.addExpList(Restriction.NONE, expList);
     }
 
     public void addExpListProdRestrict(ExpList expList) {
-        listExp.put(Restriction.PRODUCERS, expList);
+        this.addExpList(Restriction.PRODUCERS, expList);
     }
 }
