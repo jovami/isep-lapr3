@@ -3,6 +3,7 @@ package jovami.handler;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import jovami.App;
@@ -21,6 +23,7 @@ import jovami.model.Distance;
 import jovami.model.HubNetwork;
 import jovami.model.User;
 import jovami.model.bundles.Bundle;
+import jovami.model.bundles.ExpList;
 import jovami.model.store.BundleStore;
 import jovami.model.store.ExpListStore.Restriction;
 import jovami.util.Pair;
@@ -33,7 +36,9 @@ public class ShortestPathHandlerTest {
     private App app;
     private HubNetwork network;
     private ShortestPathHandler handler;
+    private final List<Restriction> rests = List.of(Restriction.values());
 
+    @BeforeEach
     void setup() {
         this.setup(false);
     }
@@ -103,13 +108,11 @@ public class ShortestPathHandlerTest {
     @Test
     void testSeveralPermutations() {
         final int maxDays = 5;
-        var restrictions = Restriction.values();
 
-        IntStream.
-            range(1, maxDays+1)
+        IntStream
+            .rangeClosed(1, maxDays)
             .boxed()
-            .flatMap(i -> Arrays.stream(restrictions)
-                                .map(r -> new Pair<>(i, r)))
+            .flatMap(i -> rests.stream().map(r -> new Pair<>(i, r)))
             .forEach(p -> {
                      int day = p.first();
                      Restriction r = p.second();
@@ -176,5 +179,53 @@ public class ShortestPathHandlerTest {
             });
 
         checkNoMissingOrExtra(route, points);
+    }
+
+
+    @Test
+    void testInvalidDay() {
+        int day = 0;
+
+        new ExpBasketListHandler().expBasketsList();
+        // TODO: remove the 0 unused argument
+        new ExpListNProducersHandler().expListNProducers(0, 1);
+
+        rests.forEach(r -> assertFalse(this.handler.setDayRestriction(day, r)));
+
+        // setup(true);
+        // new ExpBasketListHandler().expBasketsList();
+        // TODO: remove the 0 unused argument
+        // new ExpListNProducersHandler().expListNProducers(0, 1);
+
+        // rests.forEach(r -> assertFalse(this.handler.setDayRestriction(day, r)));
+    }
+
+    @Test
+    void testEmptyBundle() {
+        final int maxDays = 5;
+        IntStream
+            .rangeClosed(1, maxDays)
+            .forEach(this::testEmptyBundleDay);
+    }
+
+    private void testEmptyBundleDay(int day) {
+        rests.forEach(r -> {
+            MainTest.resetSingleton();
+            this.handler = new ShortestPathHandler();
+
+            assertFalse(this.handler.setDayRestriction(day, r));
+            assertThrows(IllegalStateException.class, this.handler::shortestRoute);
+
+            App.getInstance().expListStore().addExpList(r, new ExpList());
+
+            assertFalse(this.handler.setDayRestriction(day, r));
+            var data = this.handler.shortestRoute();
+
+            assertTrue(data.first().isEmpty());
+            assertTrue(data.second().isEmpty());
+            assertEquals(data.third(), Distance.zero);
+
+            assertTrue(this.handler.ordersByHub().isEmpty());
+        });
     }
 }
