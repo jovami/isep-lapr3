@@ -63,7 +63,6 @@ public class TSP {
         return result;
     }
 
-    // TODO: rename this method?
     private static <V,E> List<V>
     componentTSP(Graph<V,E> g, V vOrig, Comparator<E> ce, E zero)
     {
@@ -89,7 +88,7 @@ public class TSP {
          * =======
          * In the case where the first edge is the cheapest,
          * vOrig will no longer be the end vertex of our route,
-         * and thus we need to reverse the list .
+         * and thus we need to reverse the list.
          */
         if (res < 0) {
             tour.removeLast();
@@ -108,6 +107,7 @@ public class TSP {
         ensureNonNull(components, starting, ce, zeroSupplier);
 
         final int compSize = components.size();
+        // TODO: remove this check
         if (compSize != starting.size())
             return Collections.emptyList();
 
@@ -129,16 +129,15 @@ public class TSP {
         ensureNonNull(g, zero, sum, route, dists);
         maybeClear(dists);
 
-        E dist = zero;
+        E total = zero;
         final int size = route.size();
         for (int i = 1; i < size; i++) {
-            // We don't need to check if edge exists due to floyd-warshall
-            E weight = g.edge(route.get(i-1), route.get(i))
-                        .getWeight();
+            // NOTE: We don't need to check if edge exists due to floyd-warshall
+            E weight = g.edge(route.get(i-1), route.get(i)).getWeight();
             dists.add(weight);
-            dist = sum.apply(dist, weight);
+            total = sum.apply(total, weight);
         }
 
-        return dist;
+        return total;
     }
 }

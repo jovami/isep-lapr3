@@ -63,7 +63,8 @@ public class HubNetwork extends MapGraph<User, Distance> {
     }
 
     public static Distance getZero(User vert){
-        return new Distance(vert.getLocationID(), vert.getLocationID(), 0);
+        var locID = vert.getLocationID();
+        return new Distance(locID, locID, 0);
     }
 
     /**
@@ -87,7 +88,7 @@ public class HubNetwork extends MapGraph<User, Distance> {
      */
     public boolean addEdges(Collection<Triplet<User, User, Distance>> dists) {
         int oldNum = this.numEdges;
-        dists.forEach(e -> this.addEdge(e.first(), e.second(), e.third()));
+        dists.forEach(t -> this.addEdge(t.first(), t.second(), t.third()));
 
         return oldNum != this.numEdges;
     }
@@ -163,7 +164,6 @@ public class HubNetwork extends MapGraph<User, Distance> {
     // TODO: check if we still need to override this
     @Override
     public Collection<Edge<User, Distance>> outgoingEdges(User vert) {
-
         Collection<Edge<User, Distance>> edges = super.outgoingEdges(vert);
 
         var list = new ArrayList<Edge<User, Distance>>();

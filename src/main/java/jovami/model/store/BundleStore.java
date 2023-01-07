@@ -85,7 +85,6 @@ public class BundleStore{
             var producers = ret.get(hub);
 
             for (Order o : b.getOrdersList()) {
-                // FIXME: producers errados
                 var p = o.getProducer();
                 if (p != null)
                     producers.add(p);
@@ -104,7 +103,6 @@ public class BundleStore{
 
             if(ret.get(hub) == null)
                 ret.put(hub, new LinkedList<>());
-            // FIXME: this might also be wrong
             ret.get(hub).add(b.getOrdersList());
         }
 

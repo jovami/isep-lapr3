@@ -10,7 +10,6 @@ import jovami.model.HubNetwork;
 import jovami.model.User;
 import jovami.model.bundles.Order;
 import jovami.model.store.BundleStore;
-import jovami.model.store.ExpListStore;
 import jovami.model.store.ExpListStore.Restriction;
 import jovami.util.Triplet;
 import jovami.util.graph.Graph;
@@ -25,13 +24,11 @@ public class ShortestPathHandler {
     // TODO: make this not scuffed
     private int day;
     private BundleStore bStore;
-    // private ExpList expList;
 
     public ShortestPathHandler() {
         this.app = App.getInstance();
     }
 
-    // FIXME: finish this
     public boolean setDayRestriction(int day, Restriction r) {
         this.day = day;
 

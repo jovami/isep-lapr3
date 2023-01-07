@@ -77,7 +77,7 @@ public class MetricTSP {
     /**
      * Two's approximation of a TSP over a metric space
      * @param g     the TSP graph
-     * @param vOrig the vertex to start/end ato
+     * @param vOrig the vertex to start/end at
      * @param ce    edge Comparator
      * @param zero  the E class equivalent of the arithmetic zero
      *
