@@ -31,6 +31,8 @@ public class ExpListNProducersHandler {
     private final ExpListStore expStore;
     private BundleStore bundleStore;
     private StockStore stockStore;
+    private ExpList expList;
+    private List<User> producers;
 
     /**
      * Instantiates a new Expedition List for the N closest producers handler.

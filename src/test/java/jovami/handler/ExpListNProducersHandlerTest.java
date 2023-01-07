@@ -1,35 +1,27 @@
 package jovami.handler;
-
 import jovami.App;
 import jovami.MainTest;
 import jovami.model.User;
 import jovami.model.bundles.Bundle;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import java.util.*;
-
 import static org.junit.jupiter.api.Assertions.*;
-
 class ExpListNProducersHandlerTest {
-
     private ExpListNProducersHandler handler;
     private App app;
-
     @BeforeEach
     public void setup() {
         MainTest.resetSingleton();
         this.app = App.getInstance();
         this.handler = new ExpListNProducersHandler();
     }
-
     @Test
     void testSelectProducerForOrderSmall() {
         MainTest.readData(false);
         handler.setProducers();
         new NearestHubToClientsHandler().findNearestHubs();
         int nProd = 2;
-
         {
             /*
              * Day 1
@@ -79,7 +71,6 @@ class ExpListNProducersHandlerTest {
             auxSelectProducerForOrder(bundlesData, expList);
         }
         {
-
             /*
              * Day 3
              */
@@ -152,19 +143,16 @@ class ExpListNProducersHandlerTest {
             auxSelectProducerForOrder(bundlesData, expList);
         }
     }
-
     void auxSelectProducerForOrder(List<String[]> bundlesData, LinkedList<Bundle> expList){
         for (int i = 0; i < expList.size(); i++) {
             Bundle b = expList.get(i);
             String[] expected = bundlesData.get(i);
             var orders = b.getOrders();
             int j = 0;
-
             if (orders.hasNext()){
                 while (orders.hasNext()) {
                     var order = orders.next();
                     User producer = order.getProducer();
-
                     if (producer != null)
                         assertEquals(expected[j], producer.getUserID());
                     assertEquals(Float.valueOf(expected[j+1]), order.getQuantityDelivered());
@@ -175,49 +163,42 @@ class ExpListNProducersHandlerTest {
             }
         }
     }
-
     @Test
     void testSetProducersSmall() {
         MainTest.readData(false);   // read small file
         String[] expected = {"P1", "P2", "P3"};
         handler.setProducers();
         List<User> actual = handler.getProducers();
-
         /*
          * Checks producers for small files
          */
         for (int i = 0; i < expected.length; i++) {
             assertEquals(actual.get(i).getUserID(), expected[i]);
         }
-
         /*
          * Checks number of producers found
          */
         int expectedSize = 3;
         assertEquals(actual.size(), expectedSize);
     }
-
     @Test
     void testSetProducersBig() {
         MainTest.readData(true);   // read big file
         String[] expected = {"P27", "P12", "P39", "P25", "P45", "P42", "P52", "P15", "P16", "P29"};
         handler.setProducers();
         List<User> actual = handler.getProducers();
-
         /*
          * Checks 10 first producers for big files
          */
         for (int i = 0; i < expected.length; i++) {
             assertEquals(actual.get(i).getUserID(), expected[i]);
         }
-
         /*
          * Checks number of producers found
          */
         int expectedSize = 60;
         assertEquals(actual.size(), expectedSize);
     }
-
     @Test
     void testCheckDayForExp(){
         MainTest.readData(false);
@@ -245,7 +226,6 @@ class ExpListNProducersHandlerTest {
             }
         }
     }
-
     @Test
     void testCheckNProducers(){
         MainTest.readData(false);
