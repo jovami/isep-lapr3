@@ -32,6 +32,7 @@ public class ExpListNProducersHandler {
     private BundleStore bundleStore;
     private StockStore stockStore;
     private ExpList expList;
+    private List<User> producers;
     /**
      * Instantiates a new Expedition List for the N closest producers handler.
      */
@@ -53,16 +54,9 @@ public class ExpListNProducersHandler {
         var result = new LinkedList<Bundle>();
         var bundles = bundleStore.getBundles(day);
 
-        //TODO: exception for non valid inputs
-        if(bundles == null){
-            System.out.println();
-            bundles = bundleStore.getBundles(2);
-        }
-        var producers = findProducers();
-
-        for(Bundle bundle : bundles) {       
+        for(Bundle bundle : bundles) {
             var hub = bundle.getClient().getNearestHub();
-            var nearestProdsToHub = getNearestProducersToHub(producers, nProducers, hub);
+            var nearestProdsToHub = getNearestProducersToHub(nProducers, hub);
             computeBundle(day, bundle, nearestProdsToHub);
             
             result.add(bundle);
@@ -112,14 +106,14 @@ public class ExpListNProducersHandler {
         }
 
         if(!flag){
-            stockStore.getStock(max.first()).retrieveFromStock( day,orderedProduct, max.second().floatValue());
+            stockStore.getStock(max.first()).retrieveFromStock( day,orderedProduct, max.second());
             order.setProducer(max.first());
             order.setQntDelivered(max.second());
-        }       
+        }
 
     }
 
-    private List<Distance> getNearestProducersToHub(List<User> producers, int nProducers, User hub) {
+    private List<Distance> getNearestProducersToHub(int nProducers, User hub) {
         PriorityQueue<Distance> distances = new PriorityQueue<>(Distance.cmp);
         producers.forEach(producer ->
                 distances.offer(network.shortestPath(producer, hub, new LinkedList<>())));
@@ -131,13 +125,13 @@ public class ExpListNProducersHandler {
         return nearestProducers;
     }
 
-    public HashMap<Integer,LinkedList<Bundle>> expListNProducers(int day, int nProducers){
+    public HashMap<Integer,LinkedList<Bundle>> expListNProducers(int nProducers){
         expList = new ExpList();
         bundleStore = expList.getBundleStore();
         stockStore = expList.getStockStore();
 
-        int size=bundleStore.size();
-        HashMap<Integer,LinkedList<Bundle>> hash=new HashMap<>(size);
+        int size = bundleStore.size();
+        HashMap<Integer,LinkedList<Bundle>> hash = new HashMap<>(size);
 
         for (int i = 1; i <= size; i++) {
             hash.put(i,expListNProducersDay(i, nProducers));
@@ -147,10 +141,36 @@ public class ExpListNProducersHandler {
         return hash;
     }
 
-    public List<User> findProducers(){
-        return network.vertices().stream()
-                .filter(u -> u.getUserType() == UserType.PRODUCER)
-                .toList();
+    public void setProducers(){
+        this.producers = network.vertices().stream()
+                        .filter(u -> u.getUserType() == UserType.PRODUCER)
+                        .toList();
     }
 
+    public int checkDayForExp(int day, HashMap<Integer,LinkedList<Bundle>> expList) {
+        if (day < 1)
+            return 1;
+
+        if (expList.containsKey(day)) {
+            return day;
+        } else {
+            int lastDay = -1;
+            for (int d : expList.keySet()) {
+                if (d > lastDay) {
+                    lastDay = d;
+                }
+            }
+            return lastDay;
+        }
+    }
+
+    public int checkNProducers(int n){
+        if (n < 1)
+            n = 1;
+        return Math.min(n, producers.size());
+    }
+
+    public List<User> getProducers() {
+        return producers;
+    }
 }
