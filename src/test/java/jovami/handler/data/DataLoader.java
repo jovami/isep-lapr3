@@ -1,289 +1,361 @@
 package jovami.handler.data;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class DataLoader {
-    public List<String[]> addDistances() {
-        return Arrays.asList(
-                new String[]{"CT10", "CT13", "63448"},
-                new String[]{"CT10", "CT6", "67584"},
-                new String[]{"CT10", "CT1", "110848"},
-                new String[]{"CT10", "CT5", "125041"},
-                new String[]{"CT12", "CT3", "50467"},
-                new String[]{"CT12", "CT1", "62877"},
-                new String[]{"CT12", "CT15", "70717"},
-                new String[]{"CT11", "CT5", "62655"},
-                new String[]{"CT11", "CT13", "121584"},
-                new String[]{"CT11", "CT10", "142470"},
-                new String[]{"CT14", "CT13", "89813"},
-                new String[]{"CT14", "CT7", "95957"},
-                new String[]{"CT14", "CT2", "114913"},
-                new String[]{"CT14", "CT8", "207558"},
-                new String[]{"CT13", "CT7", "111686"},
-                new String[]{"CT16", "CT3", "68957"},
-                new String[]{"CT16", "CT17", "79560"},
-                new String[]{"CT16", "CT12", "82996"},
-                new String[]{"CT16", "CT9", "103704"},
-                new String[]{"CT16", "CT4", "110133"},
-                new String[]{"CT15", "CT3", "43598"},
-                new String[]{"CT17", "CT9", "62879"},
-                new String[]{"CT17", "CT1", "69282"},
-                new String[]{"CT17", "CT6", "73828"},
-                new String[]{"CT1", "CT6", "56717"},
-                new String[]{"CT2", "CT7", "65574"},
-                new String[]{"CT2", "CT8", "125105"},
-                new String[]{"CT2", "CT11", "163996"},
-                new String[]{"CT4", "CT3", "157223"},
-                new String[]{"CT4", "CT9", "162527"},
-                new String[]{"CT5", "CT9", "90186"},
-                new String[]{"CT5", "CT6", "100563"},
-                new String[]{"CT5", "CT17", "111134"}
-        );
-    }
-
-    public List<String[]> addUsers() {
-        return Arrays.asList(
-                new String[]{"CT1", "40.6389", "-8.6553", "C1"},
-                new String[]{"CT2", "38.0333", "-7.8833", "C2"},
-                new String[]{"CT3", "41.5333", "-8.4167", "C3"},
-                new String[]{"CT15", "41.7", "-8.8333", "C4"},
-                new String[]{"CT16", "41.3002", "-7.7398", "C5"},
-                new String[]{"CT12", "41.1495", "-8.6108", "C6"},
-                new String[]{"CT7", "38.5667", "-7.9", "C7"},
-                new String[]{"CT8", "37.0161", "-7.935", "C8"},
-                new String[]{"CT13", "39.2369", "-8.685", "C9"},
-                new String[]{"CT14", "38.5243", "-8.8926", "E1"},
-                new String[]{"CT11", "39.3167", "-7.4167", "E2"},
-                new String[]{"CT5", "39.823", "-7.4931", "E3"},
-                new String[]{"CT9", "40.5364", "-7.2683", "E4"},
-                new String[]{"CT4", "41.8", "-6.75", "E5"},
-                new String[]{"CT17", "40.6667", "-7.9167", "P1"},
-                new String[]{"CT6", "40.2111", "-8.4291", "P2"},
-                new String[]{"CT10", "39.7444", "-8.8072", "P3"}
-        );
-    }
-
     public List<List<String[]>> addDeliveredProducerDay1() {
         return Arrays.asList(
                 Arrays.asList(
-                        new String[]{"Prod5", "5,0", "P1"},
-                        new String[]{"Prod6", "2,0", "P2"},
-                        new String[]{"Prod11", "2,5", "P3"}),
-
+                        new String[] { "Prod5", "5.0", "5.0", "P1" },
+                        new String[] { "Prod6", "2.0", "2.0", "P2" },
+                        new String[] { "Prod11","2.5", "2.5", "P3" }),
                 Arrays.asList(
-                        new String[]{"Prod2", "5,5", "P1"},
-                        new String[]{"Prod3", "4,5", "P1"},
-                        new String[]{"Prod5", "4,0", "P2"},
-                        new String[]{"Prod9", "1,0", "P1"},
-                        new String[]{"Prod10", "9,0", "P1"},
-                        new String[]{"Prod11", "10,0", null}),
-
+                        new String[] { "Prod2", "5.5", "5.5", "P1" },
+                        new String[] { "Prod3", "4.5", "4.5", "P1" },
+                        new String[] { "Prod5", "4.0", "4.0", "P2" },
+                        new String[] { "Prod9", "1.0", "1.0", "P1" },
+                        new String[] { "Prod10","9.0", "9.0", "P1" },
+                        new String[] { "Prod11","10.0", "1.0", "P1" }),
                 Arrays.asList(
-                        new String[]{"Prod1", "10,0", null},
-                        new String[]{"Prod5", "9,0", null},
-                        new String[]{"Prod6", "2,5", "P3"},
-                        new String[]{"Prod9", "4,5", null}),
-
+                        new String[] { "Prod1", "10.0", "7.5", "P2" },
+                        new String[] { "Prod5", "9.0", "1.5", "P3" },
+                        new String[] { "Prod6", "2.5", "2.5", "P3" },
+                        new String[] { "Prod9", "4.5", "3.5", "P3" }),
+                List.of(),List.of(),
+                Arrays.asList(
+                        new String[] { "Prod3", "8.5", "4.5", "P1" },
+                        new String[] { "Prod10","9.0", "4.0", "P3" },
+                        new String[] { "Prod11","9.5", "0.5", "P3" }),
                 List.of(),
+                Arrays.asList(
+                        new String[] { "Prod6", "2.5", "2.5", "P3" },
+                        new String[] { "Prod9", "7.5", "2.5", "P1" },
+                        new String[] { "Prod12","6.0", "2.5", "P3" }),
+                Arrays.asList(
+                        new String[] { "Prod1", "7.0", "2.5", "P3" },
+                        new String[] { "Prod9", "3.0", "1.0", "P2" }),
                 List.of(),
-
                 Arrays.asList(
-                        new String[]{"Prod3", "8,5", null},
-                        new String[]{"Prod10", "9,0", null},
-                        new String[]{"Prod11", "9,5", null}),
-
-                List.of(),
-
+                        new String[] { "Prod1", "0.0", null },
+                        new String[] { "Prod2", "6.0", "6.0", "P2" },
+                        new String[] { "Prod3", "9.0", "1.5", "P2" },
+                        new String[] { "Prod5", "6.0", "1.0", "P1" },
+                        new String[] { "Prod6", "8.5", "3.0", "P3" },
+                        new String[] { "Prod7", "7.5", "7.5", "P1" },
+                        new String[] { "Prod9", "0.0", null },
+                        new String[] { "Prod10", "0.0", null },
+                        new String[] { "Prod11", "0.0", null }),
                 Arrays.asList(
-                        new String[]{"Prod6", "2,5", "P3"},
-                        new String[]{"Prod9", "7,5", null},
-                        new String[]{"Prod12", "6,0", null}),
-
+                        new String[] { "Prod6", "10.0", "0.5", "P2" },
+                        new String[] { "Prod9", "0.0", null },
+                        new String[] { "Prod11", "0.0", null }),
                 Arrays.asList(
-                        new String[]{"Prod1", "7,0", "P2"},
-                        new String[]{"Prod9", "3,0", "P3"}),
-
-                List.of(),
-
+                        new String[] { "Prod1", "0.0", null },
+                        new String[] { "Prod3", "0.0", null },
+                        new String[] { "Prod5", "0.0", null },
+                        new String[] { "Prod10", "0.0", null },
+                        new String[] { "Prod11", "0.0", null }),
                 Arrays.asList(
-                        new String[]{"Prod1", "9,0", null},
-                        new String[]{"Prod2", "6,0", "P2"},
-                        new String[]{"Prod3", "9,0", null},
-                        new String[]{"Prod5", "6,0", null},
-                        new String[]{"Prod6", "8,5", null},
-                        new String[]{"Prod7", "7,5", "P1"},
-                        new String[]{"Prod9", "2,5", "P1"},
-                        new String[]{"Prod10", "4,5", null},
-                        new String[]{"Prod11", "3,0", null}),
-
-                Arrays.asList(
-                        new String[]{"Prod6", "10,0", null},
-                        new String[]{"Prod9", "5,0", null},
-                        new String[]{"Prod11", "5,5", null}),
-
-                Arrays.asList(
-                        new String[]{"Prod1", "6,5", null},
-                        new String[]{"Prod3", "6,5", null},
-                        new String[]{"Prod5", "1,0", "P1"},
-                        new String[]{"Prod10", "1,0", "P3"},
-                        new String[]{"Prod11", "5,5", null}),
-
-                Arrays.asList(
-                        new String[]{"Prod2", "1,5", "P1"},
-                        new String[]{"Prod6", "8,0", null},
-                        new String[]{"Prod7", "9,5", null},
-                        new String[]{"Prod11", "6,0", null})
-        );
+                        new String[] { "Prod2", "1.5", "1.5", "P1" },
+                        new String[] { "Prod6", "0.0", null },
+                        new String[] { "Prod7", "9.5", "9.0", "P3" },
+                        new String[] { "Prod11", "0.0", null }));
     }
 
 
     public List<List<String[]>> addDeliveredProducerDay2() {
         return Arrays.asList(
                 Arrays.asList(
-                        new String[]{"Prod1", "4,5", "P3"},
-                        new String[]{"Prod2", "6,0", null},
-                        new String[]{"Prod3", "3,5", "P1"},
-                        new String[]{"Prod5", "4,0", "P1"},
-                        new String[]{"Prod7", "9,0", "P2"},
-                        new String[]{"Prod8", "3,0", "P1"},
-                        new String[]{"Prod10", "5,5", "P3"},
-                        new String[]{"Prod11", "1,5", null}),
+                        new String[]{"Prod1","4.5","4.5","P3"},
+                        new String[]{"Prod2","6.0","2.0","P3"},
+                        new String[]{"Prod3","3.5","3.5","P3"},
+                        new String[]{"Prod5","4.0","4.0","P1"},
+                        new String[]{"Prod7","9.0","9.0","P2"},
+                        new String[]{"Prod8","3.0","3.0","P1"},
+                        new String[]{"Prod10","5.5","5.5","P3"},
+                        new String[]{"Prod11","0.0",null}),
 
                 Arrays.asList(
-                        new String[]{"Prod1", "9,0", null},
-                        new String[]{"Prod2", "7,0", null},
-                        new String[]{"Prod4", "1,5", "P1"},
-                        new String[]{"Prod5", "6,0", null},
-                        new String[]{"Prod7", "5,0", "P3"},
-                        new String[]{"Prod9", "5,0", "P1"},
-                        new String[]{"Prod10", "10,", null},
-                        new String[]{"Prod11", "1,0", "P1"},
-                        new String[]{"Prod12", "3,0", "P2"}),
+                        new String[]{"Prod1","9.0","5.0","P3"},
+                        new String[]{"Prod2","7.0","0.5","P1"},
+                        new String[]{"Prod4","1.5","1.5","P1"},
+                        new String[]{"Prod5","6.0","5.0","P2"},
+                        new String[]{"Prod7","5.0","4.0","P2"},
+                        new String[]{"Prod9","5.0","5.0","P1"},
+                        new String[]{"Prod10","10.0","2.0","P3"},
+                        new String[]{"Prod11","0.0",null},
+                        new String[]{"Prod12","3.0","3.0","P2"}),
+                Arrays.asList(
+                        new String[]{"Prod1","10.0","3.0","P1"},
+                        new String[]{"Prod7","6.0","1.0","P1"},
+                        new String[]{"Prod9","7.5","7.5","P3"},
+                        new String[]{"Prod11","0.0",null},
+                        new String[]{"Prod12","3.5","3.5","P2"}),
 
                 Arrays.asList(
-                        new String[]{"Prod1", "10,", null},
-                        new String[]{"Prod7", "6,0", null},
-                        new String[]{"Prod9", "7,5", "P3"},
-                        new String[]{"Prod11", "2,5", null},
-                        new String[]{"Prod12", "3,5", "P2"}),
+                        new String[]{"Prod5","6.5","0.5","P1"},
+                        new String[]{"Prod9","2.0","2.0","P2"},
+                        new String[]{"Prod11","0.0",null},
+                        new String[]{"Prod12","3.0","2.5","P1"}),
+
+                List.of(),List.of(),
 
                 Arrays.asList(
-                        new String[]{"Prod5", "6,5", null},
-                        new String[]{"Prod9", "2,0", "P2"},
-                        new String[]{"Prod11", "3,5", null},
-                        new String[]{"Prod12", "3,0", null}),
-
-                List.of(),
-                List.of(),
-
-                Arrays.asList(
-                        new String[]{"Prod1", "6,0", "P3"},
-                        new String[]{"Prod3", "8,0", null},
-                        new String[]{"Prod6", "7,0", "P2"},
-                        new String[]{"Prod7", "3,5", "P2"},
-                        new String[]{"Prod8", "7,0", null},
-                        new String[]{"Prod9", "1,5", "P2"},
-                        new String[]{"Prod10", "2,5", "P3"},
-                        new String[]{"Prod11", "3,5", null},
-                        new String[]{"Prod12", "4,5", null}),
+                        new String[]{"Prod1","0.0",null},
+                        new String[]{"Prod3","8.0","2.5","P2"},
+                        new String[]{"Prod6","7.0","7.0","P2"},
+                        new String[]{"Prod7","0.0",null},
+                        new String[]{"Prod8","7.0","6.0","P3"},
+                        new String[]{"Prod9","1.5","1.0","P2"},
+                        new String[]{"Prod10","0.0",null},
+                        new String[]{"Prod11","0.0",null},
+                        new String[]{"Prod12","4.5","2.0","P2"}),
 
                 List.of(),
 
                 Arrays.asList(
-                        new String[]{"Prod1", "10,", null},
-                        new String[]{"Prod3", "6,5", null},
-                        new String[]{"Prod6", "10,", null},
-                        new String[]{"Prod9", "9,5", null},
-                        new String[]{"Prod10", "3,5", null},
-                        new String[]{"Prod11", "4,5", null}),
+                        new String[]{"Prod1","0.0",null},
+                        new String[]{"Prod3","6.5","1.0","P3"},
+                        new String[]{"Prod6","10.0","4.0","P1"},
+                        new String[]{"Prod9","9.5","1.0","P3"},
+                        new String[]{"Prod10","0.0",null},
+                        new String[]{"Prod11","0.0",null}),
 
                 Arrays.asList(
-                        new String[]{"Prod4", "4,5", "P2"},
-                        new String[]{"Prod8", "3,0", "P1"},
-                        new String[]{"Prod10", "9,5", null},
-                        new String[]{"Prod11", "2,5", null},
-                        new String[]{"Prod12", "3,0", null}),
+                        new String[]{"Prod4","4.5","4.5","P2"},
+                        new String[]{"Prod8","3.0","3.0","P1"},
+                        new String[]{"Prod10","0.0",null},
+                        new String[]{"Prod11","0.0",null},
+                        new String[]{"Prod12","0.0",null}),
+                Arrays.asList(
+                        new String[]{"Prod5","0.0",null},
+                        new String[]{"Prod6","2.0","0.5","P2"},
+                        new String[]{"Prod11","0.0",null},
+                        new String[]{"Prod12","0.0",null}),
+
+                List.of(),List.of(),
 
                 Arrays.asList(
-                        new String[]{"Prod5", "9,5", null},
-                        new String[]{"Prod6", "2,0", "P1"},
-                        new String[]{"Prod11", "9,0", null},
-                        new String[]{"Prod12", "9,0", null}),
-
-                List.of(),
-                List.of(),
-
-                Arrays.asList(
-                        new String[]{"Prod1", "8,5", null},
-                        new String[]{"Prod2", "5,0", null},
-                        new String[]{"Prod4", "3,5", "P3"},
-                        new String[]{"Prod6", "5,0", null},
-                        new String[]{"Prod7", "1,0", "P1"},
-                        new String[]{"Prod8", "9,5", null},
-                        new String[]{"Prod11", "1,5", null},
-                        new String[]{"Prod12", "2,5", "P1"})
+                        new String[]{"Prod1","0.0",null},
+                        new String[]{"Prod2","5.0","0.5","P2"},
+                        new String[]{"Prod4","3.5","3.5","P3"},
+                        new String[]{"Prod6","0.0",null},
+                        new String[]{"Prod7","0.0",null},
+                        new String[]{"Prod8","9.5","3.5","P2"},
+                        new String[]{"Prod11","0.0",null},
+                        new String[]{"Prod12","0.0",null})
         );
+    }
+
+    public List<List<String[]>> addDeliveredProducerDay3() {
+        return Arrays.asList(
+                Arrays.asList(
+                        new String[] { "Prod1", "8.0", "7.5", "P3" },
+                        new String[] { "Prod3", "9.5", "6.0", "P1" },
+                        new String[] { "Prod4", "2.0", "2.0", "P2" },
+                        new String[] { "Prod7", "9.5", "6.0", "P2" },
+                        new String[] { "Prod9", "0.0", null },
+                        new String[] { "Prod10", "9.5", "3.0", "P2" },
+                        new String[] { "Prod12", "6.0", "2.5", "P1" }),
+                Arrays.asList(
+                        new String[] { "Prod5", "5.0", "4.0", "P2" },
+                        new String[] { "Prod7", "3.0", "3.0", "P3" },
+                        new String[] { "Prod10", "8.0", "1.0", "P3" }),
+                List.of(),
+                Arrays.asList(
+                        new String[] { "Prod2", "10.0", "1.5", "P1" },
+                        new String[] { "Prod4", "8.0", "8.0", "P3" },
+                        new String[] { "Prod5", "5.0", "2.5", "P3" },
+                        new String[] { "Prod6", "2.5", "2.5", "P1" },
+                        new String[] { "Prod8", "4.0", "4.0", "P1" },
+                        new String[] { "Prod11", "5.5", "5.5", "P3" }),
+                Arrays.asList(
+                        new String[] { "Prod1", "8.0", "6.0", "P2" },
+                        new String[] { "Prod3", "4.5", "4.5", "P2" },
+                        new String[] { "Prod11", "5.5", "1.5", "P2" }),
+                Arrays.asList(
+                        new String[] { "Prod1", "0.0", null },
+                        new String[] { "Prod3", "8.5", "1.5", "P2" },
+                        new String[] { "Prod8", "4.5", "4.5", "P2" },
+                        new String[] { "Prod10", "0.0", null }),
+                Arrays.asList(
+                        new String[] { "Prod4", "5.5", "2.0", "P2" },
+                        new String[] { "Prod7", "3.5", "2.0", "P3" },
+                        new String[] { "Prod8", "3.0", "3.0", "P2" },
+                        new String[] { "Prod12", "0.0", null }),
+                Arrays.asList(
+                        new String[] { "Prod1", "0.0", null },
+                        new String[] { "Prod4", "8.5", "1.5", "P3" },
+                        new String[] { "Prod6", "8.5", "7.0", "P3" },
+                        new String[] { "Prod8", "10.0", "1.0", "P2" },
+                        new String[] { "Prod9", "0.0", null },
+                        new String[] { "Prod12", "0.0", null }),
+                Arrays.asList(
+                        new String[] { "Prod4", "7.5", "0.5", "P1" },
+                        new String[] { "Prod5", "0.0", null },
+                        new String[] { "Prod8", "0.0", null }),
+                Arrays.asList(
+                        new String[] { "Prod2", "0.0", null },
+                        new String[] { "Prod3", "0.0", null },
+                        new String[] { "Prod4", "0.0", null },
+                        new String[] { "Prod6", "9.5", "2.0", "P1" },
+                        new String[] { "Prod8", "0.0", null },
+                        new String[] { "Prod9", "0.0", null },
+                        new String[] { "Prod10", "0.0", null },
+                        new String[] { "Prod12", "0.0", null }),
+                Arrays.asList(
+                        new String[] { "Prod1", "0.0", null },
+                        new String[] { "Prod9", "0.0", null },
+                        new String[] { "Prod11", "5.5", "0.5", "P3" },
+                        new String[] { "Prod12", "0.0", null }),
+                List.of(),
+                Arrays.asList(
+                        new String[] { "Prod2", "0.0", null },
+                        new String[] { "Prod6", "0.0", null },
+                        new String[] { "Prod7", "6.5", "1.0", "P1" },
+                        new String[] { "Prod8", "0.0", null }),
+                Arrays.asList(
+                        new String[] { "Prod1", "0.0", null },
+                        new String[] { "Prod4", "0.0", null },
+                        new String[] { "Prod5", "0.0", null },
+                        new String[] { "Prod11", "0.0", null },
+                        new String[] { "Prod12", "0.0", null }));
     }
 
     public List<List<String[]>> addDeliveredProducerDay4() {
         return Arrays.asList(
                 Arrays.asList(
-                        new String[]{"Prod2", "4,5", null},
-                        new String[]{"Prod5", "9,0", null},
-                        new String[]{"Prod6", "9,5", null},
-                        new String[]{"Prod11", "5,5", null},
-                        new String[]{"Prod12", "9,0", null}),
-
+                        new String[] { "Prod2", "4.5", "1.5", "P1" },
+                        new String[] { "Prod5", "9.0", "3.5", "P1" },
+                        new String[] { "Prod6", "9.5", "1.0", "P1" },
+                        new String[] { "Prod11", "0.0", null },
+                        new String[] { "Prod12", "0.0", null }),
                 Arrays.asList(
-                        new String[]{"Prod1", "2,5", "P1"},
-                        new String[]{"Prod3", "9,0", "P1"},
-                        new String[]{"Prod5", "9,0", null}),
-
+                        new String[] { "Prod1", "2.5", "2.5", "P1" },
+                        new String[] { "Prod3", "9.0", "8.0", "P1" },
+                        new String[] { "Prod5", "0.0", null }),
                 Arrays.asList(
-                        new String[]{"Prod1", "1,0", "P1"},
-                        new String[]{"Prod5", "2,5", "P1"},
-                        new String[]{"Prod6", "7,5", null},
-                        new String[]{"Prod10", "4,0", "P1"}),
-
+                        new String[] { "Prod1", "1.0", "1.0", "P1" },
+                        new String[] { "Prod5", "0.0", null },
+                        new String[] { "Prod6", "0.0", null },
+                        new String[] { "Prod10", "4.0", "4.0", "P1" }),
                 List.of(),
+                Arrays.asList(
+                        new String[] { "Prod5", "0.0", null },
+                        new String[] { "Prod6", "0.0", null },
+                        new String[] { "Prod12", "0.0", null }),
 
                 Arrays.asList(
-                        new String[]{"Prod5", "2,0", "P2"},
-                        new String[]{"Prod6", "1,0", "P1"},
-                        new String[]{"Prod12", "4,5", null}),
-
+                        new String[] { "Prod3", "0.0", null },
+                        new String[] { "Prod4", "8.0", "8.0", "P1" },
+                        new String[] { "Prod10", "0.0", null },
+                        new String[] { "Prod11", "0.0", null }),
+                List.of(),List.of(),List.of(),
                 Arrays.asList(
-                        new String[]{"Prod3", "7,5", null},
-                        new String[]{"Prod4", "8,0", "P1"},
-                        new String[]{"Prod10", "5,0", null},
-                        new String[]{"Prod11", "7,5", null}),
+                        new String[] { "Prod4", "0.0", null },
+                        new String[] { "Prod5", "0.0", null },
+                        new String[] { "Prod6", "0.0", null },
+                        new String[] { "Prod7", "7.0", "7.0", "P1" },
+                        new String[] { "Prod10", "0.0", null }),
+                Arrays.asList(
+                        new String[] { "Prod3", "0.0", null },
+                        new String[] { "Prod7", "3.5", "1.5", "P1" },
+                        new String[] { "Prod9", "6.0", "6.0", "P1" },
+                        new String[] { "Prod11", "0.0", null }),
+                Arrays.asList(
+                        new String[] { "Prod3", "0.0", null },
+                        new String[] { "Prod4", "0.0", null },
+                        new String[] { "Prod10", "0.0", null },
+                        new String[] { "Prod12", "0.0", null }),
+                List.of(),List.of()
 
+        );
+    }
+
+    public List<List<String[]>> addDeliveredProducerDay5() {
+        return Arrays.asList(
+                Arrays.asList(
+                        new String[] { "Prod1", "8.0", "8.0", "P1" },
+                        new String[] { "Prod2", "7.0", "7.0", "P1" },
+                        new String[] { "Prod3", "0.0", null },
+                        new String[] { "Prod7", "1.5", "1.5", "P2" },
+                        new String[] { "Prod8", "6.0", "6.0", "P1" },
+                        new String[] { "Prod10", "3.0", "3.0", "P2" },
+                        new String[] { "Prod11", "6.5", "6.5", "P1" },
+                        new String[] { "Prod12", "3.5", "3.5", "P2" }),
                 List.of(),
-                List.of(),
-                List.of(),
-
                 Arrays.asList(
-                        new String[]{"Prod4", "6,5", null},
-                        new String[]{"Prod5", "7,5", null},
-                        new String[]{"Prod6", "7,0", null},
-                        new String[]{"Prod7", "7,0", "P1"},
-                        new String[]{"Prod10", "5,5", null}),
-
-                Arrays.asList(
-                        new String[]{"Prod3", "7,5", null},
-                        new String[]{"Prod7", "3,5", null},
-                        new String[]{"Prod9", "6,0", "P1"},
-                        new String[]{"Prod11", "3,5", null}),
-
-                Arrays.asList(
-                        new String[]{"Prod3", "9,5", null},
-                        new String[]{"Prod4", "10,0", null},
-                        new String[]{"Prod10", "8,0", null},
-                        new String[]{"Prod12", "3,0", null}),
-
+                        new String[] { "Prod2", "5.0", "5.0", "P2" },
+                        new String[] { "Prod6", "5.0", "5.0", "P1" },
+                        new String[] { "Prod7", "4.5", "1.5", "P2" },
+                        new String[] { "Prod10", "5.0", "4.0", "P2" },
+                        new String[] { "Prod11", "2.5", "2.5", "P1" }),
                 List.of(),
-                List.of()
+                Arrays.asList(
+                        new String[] { "Prod1", "6.5", "2.0", "P2" },
+                        new String[] { "Prod2", "5.0", "1.0", "P1" },
+                        new String[] { "Prod3", "0.0", null },
+                        new String[] { "Prod4", "6.0", "6.0", "P3" },
+                        new String[] { "Prod6", "6.5", "2.0", "P1" },
+                        new String[] { "Prod7", "0.0", null },
+                        new String[] { "Prod8", "7.0", "7.0", "P1" },
+                        new String[] { "Prod9", "7.5", "6.5", "P3" },
+                        new String[] { "Prod10", "0.0", null },
+                        new String[] { "Prod12", "2.5", "2.5", "P2" }),
+                Arrays.asList(
+                        new String[] { "Prod5", "1.0", "1.0", "P2" },
+                        new String[] { "Prod7", "0.0", null },
+                        new String[] { "Prod8", "6.0", "4.0", "P3" },
+                        new String[] { "Prod11", "2.0", "2.0", "P2" }),
+                Arrays.asList(
+                        new String[] { "Prod1", "7.0", "0.5", "P1" },
+                        new String[] { "Prod5", "0.0", null },
+                        new String[] { "Prod6", "0.0", null },
+                        new String[] { "Prod8", "7.5", "1.5", "P2" },
+                        new String[] { "Prod9", "10.0", "5.0", "P2" },
+                        new String[] { "Prod10", "0.0", null },
+                        new String[] { "Prod11", "9.0", "8.5", "P3" },
+                        new String[] { "Prod12", "5.0", "4.5", "P3" }),
+                List.of(),
+                Arrays.asList(
+                        new String[] { "Prod1", "0.0", null },
+                        new String[] { "Prod2", "6.5", "0.5", "P2" },
+                        new String[] { "Prod4", "3.0", "1.5", "P3" },
+                        new String[] { "Prod6", "0.0", null }),
+                Arrays.asList(
+                        new String[] { "Prod2", "0.0", null },
+                        new String[] { "Prod3", "0.0", null },
+                        new String[] { "Prod4", "7.5", "1.0", "P1" },
+                        new String[] { "Prod5", "0.0", null },
+                        new String[] { "Prod6", "0.0", null },
+                        new String[] { "Prod8", "0.0", null },
+                        new String[] { "Prod9", "0.0", null },
+                        new String[] { "Prod10", "0.0", null },
+                        new String[] { "Prod11", "4.0", "2.0", "P2" },
+                        new String[] { "Prod12", "9.5", "4.0", "P2" }),
+                List.of(),
+                Arrays.asList(
+                        new String[] { "Prod3", "0.0", null },
+                        new String[] { "Prod4", "0.0", null },
+                        new String[] { "Prod6", "0.0", null },
+                        new String[] { "Prod7", "0.0", null },
+                        new String[] { "Prod9", "0.0", null }),
+                Arrays.asList(
+                        new String[] { "Prod4", "0.0", null },
+                        new String[] { "Prod5", "0.0", null },
+                        new String[] { "Prod6", "0.0", null },
+                        new String[] { "Prod9", "0.0", null },
+                        new String[] { "Prod10", "0.0", null }),
+                Arrays.asList(
+                        new String[] { "Prod1", "0.0", null },
+                        new String[] { "Prod7", "0.0", null },
+                        new String[] { "Prod8", "0.0", null },
+                        new String[] { "Prod9", "0.0", null },
+                        new String[] { "Prod10", "0.0", null },
+                        new String[] { "Prod12", "0.0", null })
+
         );
     }
 
