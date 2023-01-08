@@ -16,7 +16,7 @@ static const float resize_f = 1.5f;
 static int
 extend(sensor_vec *v)
 {
-    size_t new_sz = v->max_len*resize_f;
+    size_t new_sz = v->max_len*resize_f + 0.5f;
     Sensor *new_data = reallocarray(v->data, new_sz, sizeof(Sensor));
 
     if (!new_data)
