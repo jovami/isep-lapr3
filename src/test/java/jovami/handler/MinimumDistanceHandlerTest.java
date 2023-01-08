@@ -18,9 +18,9 @@ import jovami.util.graph.Graph;
 public class MinimumDistanceHandlerTest {
 
     MinimumDistanceHandler minimumDistanceHandler;
-    List<String[]> userList = addUsers();
-    List<String[]> distanceList = addDistances();
-    List<Integer> weight = Arrays.asList(56717, 62877, 69282, 65574, 125105, 43598, 50467, 68957, 43598, 68957, 110133, 50467, 62877, 65574, 95957, 125105, 63448, 89813, 89813, 95957, 62655, 62655, 90186, 62879, 90186, 110133, 62879, 69282, 56717, 67584, 63448, 67584);
+    final List<String[]> userList = addUsers();
+    final List<String[]> distanceList = addDistances();
+    final List<Integer> weight = Arrays.asList(56717, 62877, 69282, 65574, 125105, 43598, 50467, 68957, 43598, 68957, 110133, 50467, 62877, 65574, 95957, 125105, 63448, 89813, 89813, 95957, 62655, 62655, 90186, 62879, 90186, 110133, 62879, 69282, 56717, 67584, 63448, 67584);
 
     @BeforeEach
     public void setup(){

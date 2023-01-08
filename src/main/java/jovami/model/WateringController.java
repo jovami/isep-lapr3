@@ -1,5 +1,6 @@
 package jovami.model;
 
+import java.time.Clock;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -9,6 +10,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.SortedSet;
@@ -119,7 +121,7 @@ public class WateringController {
     private Optional<LocalTime> previousWateringHour(LocalTime time) {
         try {
             return Optional.of(this.wateringHours.headSet(time).last());
-        } catch (NullPointerException e) {
+        } catch (NullPointerException | NoSuchElementException e) {
             return Optional.empty();
         }
     }
@@ -129,8 +131,8 @@ public class WateringController {
      *
      * @return the list
      */
-    public List<Pair<String, Long>> currentlyWatering() {
-        LocalDateTime now = LocalDateTime.now();
+    public List<Pair<String, Long>> currentlyWatering(Clock clk) {
+        LocalDateTime now = LocalDateTime.now(clk);
         int dayOfMonth = now.getDayOfMonth();
         LocalTime nowTime = now.toLocalTime();
 
@@ -141,12 +143,9 @@ public class WateringController {
         var opt = previousWateringHour(nowTime);
         if (opt.isEmpty())
             return Collections.emptyList();
-
         LocalTime previous = opt.get();
 
         var plots = new LinkedList<Pair<String, Long>>();
-
-        // TODO: check if this is really the better way of iterating
         var keys = this.plotData.keySet();
         for (var key : keys) {
             var pair = this.plotData.get(key);

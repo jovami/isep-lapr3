@@ -133,5 +133,96 @@ class WateringControllerStore{
 }
 WateringControllerStore -> WateringController
 
+class BundleStore{
+     - bundles: HashMap<Integer,ArrayList<Bundle>>
+     + boolean addBundle(Bundel newBundle)
+     + ArrayList<Bundle> getBundles(int day)
+     + HashMap<Integer,ArrayList<Bundle>> getBundles()
+     + BundleStore getCopy()
+}
+
+BundleStore -> Bundle
+
+class Bundle{
+    - day: int
+    - client: User
+    - orders: ArrayList<Order>
+    - state: DeliverieState
+    + DeliverieState getState()
+    + boolean addNewOrder(Product product, float quantity)
+}
+
+Bundle --> User
+Bundle --> Order
+Bundle --> DeliverieState
+
+class Order{
+    - producer: User
+    - product: Product
+    - qntOrder: float 
+    - qntDelivered: float
+    - state: DeliverieState
+    + float getQuantityDelivered
+}
+
+enum DeliverieState{
+    TOTALLY_STATISFIED
+    PARTIALY_STATISFIED
+    NOT_SATISFIED
+}
+
+
+class ProductStore{
+    - products: HashMap<String,Product>
+    + Product getProduct(String productName)
+}
+ProductStore -> Product
+
+class Product{
+    - name: string 
+}
+
+
+class StockStore{
+    - stocks: ArrayList<Pair<User,Stock>>
+    + boolean addProducer(User producer)
+    + boolean existUser(User producer)
+    + Stock getStock
+}
+
+class Stock{
+    - stock: HashMap<Product,HashMap<Integer,ProductStock>>
+    + float getStashAvailable(Product product, int day)
+    + void addProductStock(Product product, float provided, int day)
+}
+
+class ProductStock{
+    - day: int
+    - product: Product
+    - provided: float
+    - stash: float
+    + boolean retrieveStock(float retrieve)
+}
+
+StockStore -> Stock
+Stock --> ProductStock
+ProductStock --> Product
+
+class ExpListStore{
+    - listExp: HashMap<Integer, ExpList>
+    + addExpListNotRestrict(ExpList expList)
+    + addExpListProdRestrict(ExpList expList)
+}
+
+class ExpList{
+    - stockCopy: StockStore
+    - bundleCopy: BundleStore
+}
+
+ExpListStore -> ExpList
+ExpList --> StockStore
+ExpList --> BundleStore
+
+
 
 @enduml

@@ -15,19 +15,18 @@ import jovami.util.Pair;
  */
 public class TopNCompaniesHandler {
 
-    private final App app;
     private final HubNetwork mapGraph;
 
     /**
      * The Companies by order.
      */
-    ArrayList<Pair<User,Double>> companiesByOrder = new ArrayList<>();
+    final ArrayList<Pair<User,Double>> companiesByOrder = new ArrayList<>();
 
     /**
      * Instantiates a new Top n companies handler.
      */
     public TopNCompaniesHandler(){
-        app=App.getInstance();
+        App app = App.getInstance();
         mapGraph = app.hubNetwork();
     }
 
@@ -123,26 +122,22 @@ public class TopNCompaniesHandler {
      * Print top n companies boolean.
      *
      * @param n the n
-     * @return the boolean
      */
-    public boolean printTopNCompanies(int n){
+    public void printTopNCompanies(int n){
         ArrayList<Pair<User,Double>> topN = getTopNCompanies(n);
 
         System.out.printf("Top %d companies\n", n);
         if(topN==null){
             System.out.println("There are no companies for the specified parameters");
-            return false;
+            return;
         }
         int place=1;
 
-        System.out.println();
-        System.out.println("||  Top  || Company || Average weight");
+        System.out.println("\n||  Top  || Company || Average weight");
         for (Pair<User,Double> pair : topN) {
             System.out.printf("||  %3d  ||   %3s   ||  %.2f\n",place,pair.first().getUserID(),pair.second());
             place++;
         }
-
-        return true;
 
     }
 }

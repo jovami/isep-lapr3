@@ -17,14 +17,13 @@ import jovami.util.Triplet;
 
 class NearestHubToClientsHandlerTest {
     private NearestHubToClientsHandler handler;
-    private App app;
     private UserStore userStore;
 
     @BeforeEach
     void setUp() {
         MainTest.resetSingleton();
 
-        this.app = App.getInstance();
+        App app = App.getInstance();
         NearestHubToClientsData.loadData();
         new CSVLoaderHandler().populateNetwork();
 

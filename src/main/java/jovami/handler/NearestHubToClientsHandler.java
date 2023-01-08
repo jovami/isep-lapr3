@@ -17,7 +17,6 @@ import jovami.util.Triplet;
  */
 public class NearestHubToClientsHandler {
 
-    private final App app;
     private final HubNetwork network;
     private final UserStore userStore;
 
@@ -25,7 +24,7 @@ public class NearestHubToClientsHandler {
      * Instantiates a new Nearest hub to clients handler.
      */
     public NearestHubToClientsHandler() {
-        this.app = App.getInstance();
+        App app = App.getInstance();
         this.network = app.hubNetwork();
         this.userStore = app.userStore();
     }
@@ -58,7 +57,9 @@ public class NearestHubToClientsHandler {
 
             if (companyDist.isPresent()) {
                 Distance d = companyDist.get();
-                list.add(new Triplet<>(client, userStore.getUser(d.getLocID2()).get(), d));
+                var nearestHub = userStore.getUser(d.getLocID2()).get();
+                list.add(new Triplet<>(client, nearestHub, d));
+                client.setNearestHub(nearestHub);
             }
         }
 
