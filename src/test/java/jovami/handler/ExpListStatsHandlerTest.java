@@ -23,15 +23,14 @@ import jovami.model.store.ExpListStore.Restriction;
 
 public class ExpListStatsHandlerTest {
 
-    private App app;
     private ExpListStatsHandler handler;
     private ExpListStore store;
-    DataLoader data = new DataLoader();
+    final DataLoader data = new DataLoader();
 
     @BeforeEach
     public void setup() {
         MainTest.resetSingleton();
-        this.app = App.getInstance();
+        App app = App.getInstance();
         this.store = app.expListStore();
         handler = new ExpListStatsHandler();
 

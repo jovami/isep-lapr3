@@ -21,7 +21,7 @@ import jovami.model.bundles.Order;
 public class ExpBasketListHandlerTest extends ExpBasketListHandler {
 
     private ExpBasketListHandler handler;
-    DataLoader dataLoader = new DataLoader();
+    final DataLoader dataLoader = new DataLoader();
     List<List<String[]>> listResultDay1;
     List<List<String[]>> listResultDay2;
     List<List<String[]>> listResultDay3;

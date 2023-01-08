@@ -17,7 +17,6 @@ public enum BundleIndex {
     
     FULLY_DELIVERED(0),
 
-    //TODO: partial will be used?
     PARTIALY_DELIVERED(1),
     
     NOT_DELIVERED(2),

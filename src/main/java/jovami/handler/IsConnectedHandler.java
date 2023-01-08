@@ -5,6 +5,7 @@ import jovami.model.Distance;
 import jovami.model.HubNetwork;
 import jovami.model.User;
 import jovami.util.graph.Algorithms;
+import jovami.util.graph.BetterAlgorithms;
 
 import java.util.LinkedList;
 import java.util.Optional;
@@ -20,7 +21,7 @@ public class IsConnectedHandler {
     public IsConnectedHandler() {
         App app = App.getInstance();
         this.network = app.hubNetwork();
-        this.connected = Algorithms.isConnected(network);   // O(V*E)
+        this.connected = BetterAlgorithms.isConnected(network);   // O(V*E)
     }
 
     /**

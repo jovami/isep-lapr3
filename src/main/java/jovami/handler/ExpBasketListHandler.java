@@ -67,7 +67,6 @@ public class ExpBasketListHandler {
                     producerStock.retrieveFromStock(day, product, quantityToRetrieve);
                     order.setProducer(producer);
 
-                    //TODO MUDAR PRODUCERSTASH PARA AQUILO QUE ELE VAI RETIRAR?
                     order.setQntDelivered(quantityToRetrieve);
                     return;
                 }else if(max.second() < stockProducer){

@@ -33,7 +33,7 @@ public class ShortestPathUI implements UserStory {
             return;
         }
 
-        // TODO: change variable name
+
         final var stuff = this.handler.shortestRoute();
         printPath(stuff.first(), stuff.second());
         System.out.printf("\nTotal distance: %dm\n\n", stuff.third().getDistance());

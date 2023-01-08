@@ -16,19 +16,19 @@ import java.util.function.Function;
  */
 public class TSP {
 
-    // TODO: move this to a separate place
+
     private static void ensureNonNull(Object... objs) {
         for (var obj : objs)
             Objects.requireNonNull(obj);
     }
 
-    // TODO: move this to a separate place
+
     private static <E> void maybeClear(Collection<E> col) {
         if (!col.isEmpty())
             col.clear();
     }
 
-    // TODO: move this to a separate place
+
     public static <V,E> Graph<V,E>
     getCompleteGraph(Graph<V,E> g, Comparator<E> ce, BinaryOperator<E> sum)
     {
@@ -110,7 +110,7 @@ public class TSP {
         ensureNonNull(components, starting, ce, zeroSupplier);
 
         final int compSize = components.size();
-        // TODO: remove this check
+
         if (compSize != starting.size())
             return Collections.emptyList();
 

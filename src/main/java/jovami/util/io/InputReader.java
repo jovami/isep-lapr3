@@ -93,9 +93,9 @@ public class InputReader {
     public static File getFile(String prompt) {
         String path = InputReader.readLine(prompt);
 
-        File f = new File(path);
-        if (f == null || !f.isFile() || !f.canRead())
-            throw new RuntimeException("File does not exist!! " + (f != null ? f.getPath() : ""));
+        File f = new File(Objects.requireNonNull(path));
+        if (!f.isFile() || !f.canRead())
+            throw new RuntimeException("File does not exist!! " + f.getPath());
 
         return f;
     }

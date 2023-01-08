@@ -8,7 +8,7 @@ public class ExpListPrint {
         if(orders.hasNext()) {
             System.out.println("\nBundle for client: " + a.getClient().getUserID()
                     + " | Hub for pickup: " + a.getClient().getNearestHub().getUserID());
-            System.out.printf(" -> Product | Ordered | Delivered | Supplied by\n");
+            System.out.println(" -> Product | Ordered | Delivered | Supplied by");
         }
         while(orders.hasNext()){
             var order = orders.next();

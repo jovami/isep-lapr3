@@ -1,12 +1,10 @@
 package jovami.model.store;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
 import jovami.model.User;
 import jovami.model.bundles.Stock;
-import jovami.util.Pair;
 
 public class StockStore {
 
@@ -63,7 +61,7 @@ public class StockStore {
     }
 
     public User getUser(Stock stockToFind) {
-        //todo clean
+
         for (Entry<User, Stock> keys : stocks.entrySet()) {
             if (keys.getValue().equals(stockToFind))
                 return keys.getKey();

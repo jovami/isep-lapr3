@@ -21,7 +21,7 @@ import jovami.util.graph.TSP;
 public class ShortestPathHandler {
     private final App app;
 
-    // TODO: make this not scuffed
+
     private int day;
     private BundleStore bStore;
 
@@ -45,7 +45,7 @@ public class ShortestPathHandler {
     public Triplet<List<User>, List<Distance>, Distance> shortestRoute() {
         if (this.bStore == null)
             throw new IllegalStateException();
-        var map = this.bStore.producersPerHub(this.day);                // O(n*m)
+        var map = this.bStore.producersPerHub(this.day);                // O(h*V)
 
         var closure = this.app.hubNetwork().transitiveClosure();        // O(V^3)
         var components = new LinkedList<Graph<User, Distance>>();

@@ -6,14 +6,14 @@ import jovami.util.io.InputReader;
 
 
 public class ExpListNProducersUI implements UserStory {
-    private final ExpListNProducersHandler handler;
+
 
     public ExpListNProducersUI() {
-        this.handler = new ExpListNProducersHandler();
     }
 
     @Override
     public void run() {
+        ExpListNProducersHandler handler = new ExpListNProducersHandler();
         int nProd = InputReader.readInteger("Closest N producers to hub:");
 
         try {

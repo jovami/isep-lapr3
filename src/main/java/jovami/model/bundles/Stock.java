@@ -39,11 +39,6 @@ public class Stock {
                 this.stock.get(allStock.getKey()).put(dayStock.getKey(),dayStock.getValue().getCopy());
             }
         }
-        // //TODO: optimize using streams??
-        // this.stock = stock.entrySet().stream().collect(Collectors.toMap(
-        //     e -> e.getKey(), e -> this.stock.get(e.getKey()).entrySet().stream().collect(
-        //         Collectors.toMap(j -> j.getKey(), j-> j.getValue()))));
-
     }
 
     //Interpretação
@@ -64,7 +59,7 @@ public class Stock {
         return array;
     }
 
-    //TODO how to handle product(string??)
+
     public void addProductStock(Product product, float provided, int day) {
         stock.putIfAbsent(product, new HashMap<>(2 << 4));
         ProductStock ps = new ProductStock(product, provided, day);

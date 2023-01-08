@@ -4,11 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.function.BinaryOperator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -33,8 +29,8 @@ public class MetricTSPTest {
 
     @SuppressWarnings("unused")
     private <V> void checkContentEquals(List<V> l1, List<V> l2, Comparator<? super V> cmp) {
-        var ll1 = List.copyOf(l1);
-        var ll2 = List.copyOf(l2);
+        var ll1 = new ArrayList<>(l1);
+        var ll2 = new ArrayList<>(l2);
 
         ll1.sort(cmp);
         ll2.sort(cmp);
@@ -109,7 +105,7 @@ public class MetricTSPTest {
         assertEquals(vOrig, route.getLast());
 
         var rt = new HashSet<>(route);
-        rt.removeAll(map.vertices());
+        map.vertices().forEach(rt::remove);
 
         assertEquals(Collections.emptySet(), rt);
 

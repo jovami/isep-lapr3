@@ -9,6 +9,7 @@ import java.util.function.BinaryOperator;
 
 import jovami.util.Triplet;
 import jovami.util.graph.Algorithms;
+import jovami.util.graph.BetterAlgorithms;
 import jovami.util.graph.Edge;
 import jovami.util.graph.Graph;
 import jovami.util.graph.map.MapGraph;
@@ -102,8 +103,8 @@ public class HubNetwork extends MapGraph<User, Distance> {
 
         for (int i = 0; i < size; i++) {                    // O(V*inside)
             User u1 = verts.get(i);                         // O(1)
-            for (int j = 0; j < size; j++) {                // O(V*inside)
-                User u2 = verts.get(j);                     // O(1)
+                                                            // O(1)
+            for (User u2 : verts) {                         // O(V*inside)
                 var edge = this.edge(u1, u2);               // O(1)
                 if (edge != null)                           // O(1)
                     sub.addEdge(u1, u2, edge.getWeight());  // O(1)
@@ -162,13 +163,12 @@ public class HubNetwork extends MapGraph<User, Distance> {
      * @return the linked list
      */
     public LinkedList<Distance> shortestPathsForPool(User origin, List<User> pool) {
-        return Algorithms.shortestPathsForPool(this, origin, pool,
+        return BetterAlgorithms.shortestPathsForPool(this, origin, pool,
                                                distCmp, distSum, getZero(origin));
     }
 
     //==================== Overrides ====================//
 
-    // TODO: check if we still need to override this
     @Override
     public Collection<Edge<User, Distance>> outgoingEdges(User vert) {
         Collection<Edge<User, Distance>> edges = super.outgoingEdges(vert);

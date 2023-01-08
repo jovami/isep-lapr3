@@ -13,12 +13,11 @@ import jovami.MainTest;
 class IsConnectedHandlerTest {
 
     IsConnectedHandler handler;
-    private App app;
 
     @BeforeEach
     void setUp() {
         MainTest.resetSingleton();
-        this.app = App.getInstance();
+        App app = App.getInstance();
         handler = new IsConnectedHandler();
     }
 

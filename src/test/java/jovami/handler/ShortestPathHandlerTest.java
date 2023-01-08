@@ -90,7 +90,7 @@ public class ShortestPathHandlerTest {
         assertTrue(excess.isEmpty(), "Route had extra vertices!!");
 
         var missing = new HashSet<>(expectedUsers);
-        missing.removeAll(route);
+        route.forEach(missing::remove);
         assertTrue(missing.isEmpty(), "Route had missing vertices!!");
     }
 
@@ -134,13 +134,12 @@ public class ShortestPathHandlerTest {
         final int maxTop = 10;
 
         switch (r) {
-            case NONE:
+            case NONE -> {
                 var bundles = new ExpBasketListHandler().expBasketsList().get(day);
                 this.handler.setDayRestriction(day, r);
-				routeTest(bundles);
-                break;
-            case PRODUCERS:
-                IntStream
+                routeTest(bundles);
+            }
+            case PRODUCERS -> IntStream
                     .range(minTop, maxTop)
                     .forEach(top -> {
                         System.out.printf("\t-> Testing top %d producers\n", top);
@@ -148,7 +147,6 @@ public class ShortestPathHandlerTest {
                         this.handler.setDayRestriction(day, r);
                         routeTest(bs);
                     });
-                break;
         }
         System.out.println("Success!!");
     }
@@ -161,7 +159,7 @@ public class ShortestPathHandlerTest {
         var total = data.third();
 
         assertFalse(route.isEmpty());
-        assertFalse(route.isEmpty());
+        assertFalse(dists.isEmpty());
         assertNotEquals(0, total.getDistance(), "Distance was zero!!");
 
         checkNoDupes(route);

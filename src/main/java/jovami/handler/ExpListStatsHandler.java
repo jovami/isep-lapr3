@@ -24,7 +24,6 @@ import jovami.util.Pair;
 
 public class ExpListStatsHandler {
 
-    private final App app;
     private final ExpListStore expStore;
 
     private final int NUMSTATSHUB = 2;
@@ -33,7 +32,7 @@ public class ExpListStatsHandler {
     private final int NUMSTATSBUNDLE = 5;
 
     public ExpListStatsHandler(){
-        app = App.getInstance();
+        App app = App.getInstance();
         expStore = app.expListStore();
     }
 
@@ -48,8 +47,7 @@ public class ExpListStatsHandler {
         LinkedHashMap<Bundle,float []> res = new LinkedHashMap<>();
 
         for (Bundle iterBundle : expList.getBundleStore().getBundles(day)) {
-            if(res.get(iterBundle)==null)
-                res.put(iterBundle, new float[NUMSTATSBUNDLE]);
+            res.computeIfAbsent(iterBundle, k -> new float[NUMSTATSBUNDLE]);
 
             statsEachBundle(iterBundle, res.get(iterBundle));
         }
@@ -61,7 +59,6 @@ public class ExpListStatsHandler {
 
         float numFullyDelivered = 0;
 
-        //TODO
         //nº de produtos parcialmente satisfeitos,
         float numPartialyDelivered = 0;
 
@@ -100,16 +97,14 @@ public class ExpListStatsHandler {
     */
 
 
-    //TODO change arraylist ot linked hashMap
+
     public LinkedHashMap<User,int[]> getAllClientsStats(int day,ExpList expList){
 
         LinkedHashMap<User,int []> res = new LinkedHashMap<>();
 
         for (Bundle iterBundle : expList.getBundleStore().getBundles(day)) {
             //uma empresa é um cliente, e é também um hub
-            if(res.get(iterBundle.getClient())==null){
-                res.put(iterBundle.getClient(), new int[NUMSTATSCLIENT]);
-            }
+            res.computeIfAbsent(iterBundle.getClient(), k -> new int[NUMSTATSCLIENT]);
             clientStats(iterBundle.getClient(), iterBundle,res.get(iterBundle.getClient()));
         }
 
@@ -247,9 +242,9 @@ public class ExpListStatsHandler {
                     }
                 }
 
-                if (doesFullfil == true)
+                if (doesFullfil)
                     totalFullFilled++;
-                else if (doesPartialFill == true)
+                else if (doesPartialFill)
                     partialFilled++;
             }
         }

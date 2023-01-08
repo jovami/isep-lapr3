@@ -78,7 +78,7 @@ public class BundleStore{
         return new BundleStore(this.bundles);
     }
 
-    // TODO: better way of doing this?
+
     public Map<User,Set<User>> producersPerHub(int day) {
         return producersPerHub(this.bundles.get(day));
     }
@@ -92,8 +92,8 @@ public class BundleStore{
         for (Bundle b : bList) {                        // O(n*inside); n => num of bundles
             User hub = b.getClient().getNearestHub();   // O(1)
 
-            if(ret.get(hub) == null)                    // O(1)
-                ret.put(hub, new HashSet<>());          // O(1)
+            // O(1)
+            ret.computeIfAbsent(hub, k -> new HashSet<>());          // O(1)
             var producers = ret.get(hub);
 
             for (Order o : b.getOrdersList()) {         // O(m*inside); m => num of orders
@@ -117,8 +117,8 @@ public class BundleStore{
         for (Bundle b : bList) {                        // O(n*inside); n => num of bundles
             User hub = b.getClient().getNearestHub();   // O(1)
 
-            if(ret.get(hub) == null)                    // O(1)
-                ret.put(hub, new LinkedList<>());       // O(1)
+            // O(1)
+            ret.computeIfAbsent(hub, k -> new LinkedList<>());       // O(1)
             ret.get(hub).add(b.getOrdersList());        // O(1) for get(), add() and getOrdersList()
         }
 

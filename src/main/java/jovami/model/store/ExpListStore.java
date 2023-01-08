@@ -11,7 +11,7 @@ public class ExpListStore {
         NONE {
             @Override
             public String toString() {
-                return "None";
+                return "No Restrictions";
             }
         },
         PRODUCERS {

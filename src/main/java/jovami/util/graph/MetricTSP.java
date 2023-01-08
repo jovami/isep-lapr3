@@ -89,7 +89,7 @@ public class MetricTSP {
      *
      * @return the resulting TSP tour
      *
-     * @see https://ocw.mit.edu/courses/6-046j-design-and-analysis-of-algorithms-spring-2015/
+     * @see <a href="https://ocw.mit.edu/courses/6-046j-design-and-analysis-of-algorithms-spring-2015/">...</a>
      * @apiNote g must be a complete graph
      */
     public static <V,E> LinkedList<V>
@@ -114,7 +114,7 @@ public class MetricTSP {
         return tour;
     }
 
-    // TODO: delete this since we're not using Christofides' algorithm
+
     // private static <V,E> Graph<V,E> oddDegreeSubgraph(Graph<V,E> g) {
     //     var list = new ArrayList<V>(g.numVertices());
 
@@ -136,7 +136,7 @@ public class MetricTSP {
     //         }
     //     }
 
-    //     // TODO: check if this is needed
+    //
     //     // if (odg.numVertices() != size)
     //     //     list.forEach(odg::addVertex);
 

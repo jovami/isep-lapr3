@@ -54,7 +54,7 @@ public final class App {
         return this.expStore;
     }
     
-    //TODO: verificar que a store foi inicializada
+
     public BundleStore deepCopyBundleStore() {
         return this.bundleStore.getCopy();        
     }

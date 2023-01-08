@@ -1,6 +1,7 @@
 package jovami.util.graph.matrix;
 
 import jovami.util.graph.Algorithms;
+import jovami.util.graph.BetterAlgorithms;
 import jovami.util.graph.Graph;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -232,8 +233,8 @@ class MatrixAlgorithmsTest {
         disconnected.addEdge("Porto", "Braga", 1);
         disconnected.addEdge("Vila Real", "Aveiro", 1);
 
-        assertTrue(Algorithms.isConnected(completeMap));
-        assertFalse(Algorithms.isConnected(disconnected));
+        assertTrue(BetterAlgorithms.isConnected(completeMap));
+        assertFalse(BetterAlgorithms.isConnected(disconnected));
     }
     
     

@@ -30,7 +30,7 @@ class BundleParserTest {
     void parseNothing() {
         final int size = 0;
 
-        this.parser.parse(new LinkedList<String[]>());
+        this.parser.parse(new LinkedList<>());
 
         assertEquals(size, this.app.bundleStore().size());
     }

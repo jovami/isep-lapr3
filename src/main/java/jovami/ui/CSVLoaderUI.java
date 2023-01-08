@@ -54,23 +54,6 @@ public class CSVLoaderUI implements UserStory {
         files.put(CSVHeader.USERS,      InputReader.getFile("Insert the path to the Clients/Producers file:"));
         files.put(CSVHeader.DISTANCES,  InputReader.getFile("Insert the path to the Distances file:"));
 
-        /* NOTE: bundles are disabled because they're not yet needed */
-        // {
-        //     path = InputReader.readLine("Insert the path to the Bundles file:");
-        //     File f = new File(path);
-        //     if (!f.isFile() || !f.canRead())
-        //         throw new RuntimeException();
-
-        //     // FIXME: Make this not stupid
-        //     boolean big = InputReader.confirm("Is this file similar to the 'big' file?");
-
-        //     var data = CSVReader.readCSV(f, !big ? CSVHeader.BUNDLES_SMALL : CSVFiles.BUNDLES.header);
-
-        //     if (!big)
-        //         ;// FIXME: parse differently
-        //     else
-        //         parsers.get(CSVFiles.BUNDLES).parse(data);
-        // }
 
         this.handler.loadInteractive(files);
     }
