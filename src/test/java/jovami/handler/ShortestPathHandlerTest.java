@@ -187,16 +187,19 @@ public class ShortestPathHandlerTest {
         int day = 0;
 
         new ExpBasketListHandler().expBasketsList();
-        new ExpListNProducersHandler().expListNProducers(1);
+        var expHander = new ExpListNProducersHandler();
+        expHander.setProducers();
+        expHander.expListNProducers(1);
 
         rests.forEach(r -> assertFalse(this.handler.setDayRestriction(day, r)));
 
-        // setup(true);
-        // new ExpBasketListHandler().expBasketsList();
-        // TODO: remove the 0 unused argument
-        // new ExpListNProducersHandler().expListNProducers(1);
+        setup(true);
+        new ExpBasketListHandler().expBasketsList();
+        expHander = new ExpListNProducersHandler();
+        expHander.setProducers();
+        expHander.expListNProducers(1);
 
-        // rests.forEach(r -> assertFalse(this.handler.setDayRestriction(day, r)));
+        rests.forEach(r -> assertFalse(this.handler.setDayRestriction(day, r)));
     }
 
     @Test
