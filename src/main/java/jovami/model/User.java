@@ -98,6 +98,30 @@ public class User {
     }
 
     public User getNearestHub() {
-        return nearestHub;
+        return this.nearestHub;
+    }
+    //==================== Overrides ====================//
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.userID, this.coords, this.userType, this.locationID);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof User u))
+            return false;
+
+        return this.userID.equals(u.userID)
+            && this.coords.equals(u.coords)
+            && this.userType == u.userType
+            && this.locationID.equals(u.locationID);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s", this.userID);
     }
 }

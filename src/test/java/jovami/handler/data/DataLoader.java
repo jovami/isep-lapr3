@@ -1,6 +1,5 @@
 package jovami.handler.data;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -448,7 +447,7 @@ public class DataLoader {
                 new String[]{"P3", "5", "0", "0", "0", "7.5", "0", "0", "0", "4", "6.5", "0", "8.5", "4.5"}
         );
     }
-    
+
     public List<List<String[]>> statsClientExpNoRestrict() {
             return Arrays.asList(
                             Arrays.asList(
@@ -527,7 +526,7 @@ public class DataLoader {
                                             new String[] { "E4", "0", "0", "0" },
                                             new String[] { "E5", "0", "0", "0" }));
     }
-    
+
     public List<List<String[]>> statsProducerExpNoRestrict() {
             return Arrays.asList(
                             Arrays.asList(
@@ -587,7 +586,7 @@ public class DataLoader {
     }
 
 
-    
+
     public List<List<String[]>> statsBundleExpNoRestrict() {
             return Arrays.asList(
                             Arrays.asList(

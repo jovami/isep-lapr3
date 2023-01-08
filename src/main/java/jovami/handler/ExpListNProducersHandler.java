@@ -1,5 +1,11 @@
 package jovami.handler;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.PriorityQueue;
+
 import jovami.App;
 import jovami.model.Distance;
 import jovami.model.HubNetwork;
@@ -15,8 +21,6 @@ import jovami.model.store.ExpListStore;
 import jovami.model.store.StockStore;
 import jovami.model.store.UserStore;
 import jovami.util.Pair;
-
-import java.util.*;
 
 /**
  * The ExpListNProducersHandler class is responsible for handling requests to
@@ -56,7 +60,7 @@ public class ExpListNProducersHandler {
             var hub = bundle.getClient().getNearestHub();
             var nearestProdsToHub = getNearestProducersToHub(nProducers, hub);
             computeBundle(day, bundle, nearestProdsToHub);
-            
+
             result.add(bundle);
         }
         return result;

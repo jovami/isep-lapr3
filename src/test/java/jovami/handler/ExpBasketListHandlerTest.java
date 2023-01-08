@@ -1,19 +1,24 @@
 package jovami.handler;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
 import jovami.MainTest;
 import jovami.handler.data.DataLoader;
 import jovami.model.User;
 import jovami.model.bundles.Bundle;
 import jovami.model.bundles.Order;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
 
-import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-class ExpBasketListHandlerTest extends ExpBasketListHandler {
+public class ExpBasketListHandlerTest extends ExpBasketListHandler {
 
     private ExpBasketListHandler handler;
     DataLoader dataLoader = new DataLoader();
