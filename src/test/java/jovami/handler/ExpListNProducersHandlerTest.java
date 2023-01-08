@@ -1,15 +1,20 @@
 package jovami.handler;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import jovami.App;
 import jovami.MainTest;
 import jovami.model.User;
 import jovami.model.bundles.Bundle;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
-import java.util.*;
-import static org.junit.jupiter.api.Assertions.*;
-class ExpListNProducersHandlerTest {
+
+public class ExpListNProducersHandlerTest {
     private ExpListNProducersHandler handler;
 
     @BeforeEach
