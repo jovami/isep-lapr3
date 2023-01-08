@@ -21,12 +21,11 @@ public class ExpListNProducersHandlerTest {
     public void setup() {
         MainTest.resetSingleton();
         App.getInstance();
-        this.handler = new ExpListNProducersHandler();
     }
     @Test
     void testSelectProducerForOrderSmall() {
         MainTest.readData(false);
-        handler.setProducers();
+        this.handler = new ExpListNProducersHandler();
         new NearestHubToClientsHandler().findNearestHubs();
         int nProd = 2;
         {
@@ -173,8 +172,8 @@ public class ExpListNProducersHandlerTest {
     @Test
     void testSetProducersSmall() {
         MainTest.readData(false);   // read small file
+        this.handler = new ExpListNProducersHandler();
         String[] expected = {"P1", "P2", "P3"};
-        handler.setProducers();
         List<User> actual = handler.getProducers();
         /*
          * Checks producers for small files
@@ -191,8 +190,8 @@ public class ExpListNProducersHandlerTest {
     @Test
     void testSetProducersBig() {
         MainTest.readData(true);   // read big file
+        this.handler = new ExpListNProducersHandler();
         String[] expected = {"P27", "P12", "P39", "P25", "P45", "P42", "P52", "P15", "P16", "P29"};
-        handler.setProducers();
         List<User> actual = handler.getProducers();
         /*
          * Checks 10 first producers for big files
@@ -210,7 +209,7 @@ public class ExpListNProducersHandlerTest {
     @Test
     void testCheckHigherDaySmall(){
         MainTest.readData(false);
-        handler.setProducers();
+        this.handler = new ExpListNProducersHandler();
         new NearestHubToClientsHandler().findNearestHubs();
         var exp = handler.expListNProducers(2);
         assertEquals(5, handler.checkHigherDay(exp));
@@ -219,7 +218,7 @@ public class ExpListNProducersHandlerTest {
     @Disabled
     void testCheckHigherDayBig(){
         MainTest.readData(true);
-        handler.setProducers();
+        this.handler = new ExpListNProducersHandler();
         new NearestHubToClientsHandler().findNearestHubs();
         var exp = handler.expListNProducers(2);
         assertEquals(5, handler.checkHigherDay(exp));
@@ -228,7 +227,7 @@ public class ExpListNProducersHandlerTest {
     @Test
     void testCheckNProducers(){
         MainTest.readData(false);
-        handler.setProducers();
+        this.handler = new ExpListNProducersHandler();
         {   // Test negative and zero values
             int[] values = {0, -1, -3, -5, -20, -50, -100, -500};
             int expected = 0;

@@ -17,7 +17,6 @@ public class ExpListNProducersUI implements UserStory {
         int nProd = InputReader.readInteger("Closest N producers to hub:");
 
         try {
-            handler.setProducers();
             var exp = handler.expListNProducers(nProd);
             int maxDay = handler.checkHigherDay(exp);
 

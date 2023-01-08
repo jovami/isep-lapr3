@@ -43,6 +43,8 @@ public class ExpListNProducersHandler {
         this.network = app.hubNetwork();
         this.userStore = app.userStore();
         this.expStore= app.expListStore();
+
+        this.setProducers();
     }
     /**
      * Computes the expedition list for the N closest producers for the given day.
@@ -152,7 +154,7 @@ public class ExpListNProducersHandler {
         return hash;
     }
 
-    public void setProducers(){
+    private void setProducers() {
         // O(V)
         this.producers = network.vertices()
                                 .stream()
