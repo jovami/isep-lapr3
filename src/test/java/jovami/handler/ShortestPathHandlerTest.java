@@ -144,7 +144,9 @@ public class ShortestPathHandlerTest {
                     .range(minTop, maxTop)
                     .forEach(top -> {
                         System.out.printf("\t-> Testing top %d producers\n", top);
-                        var bs = new ExpListNProducersHandler().expListNProducers(top).get(day);
+                        var expHander = new ExpListNProducersHandler();
+                        expHander.setProducers();
+                        var bs = expHander.expListNProducers(top).get(day);
                         this.handler.setDayRestriction(day, r);
                         routeTest(bs);
                     });
