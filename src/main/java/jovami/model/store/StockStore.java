@@ -1,6 +1,8 @@
 package jovami.model.store;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map.Entry;
 
 import jovami.model.User;
 import jovami.model.bundles.Stock;
@@ -9,53 +11,48 @@ import jovami.util.Pair;
 public class StockStore {
 
 
-    private final ArrayList<Pair<User, Stock>> stocks;
+    private final LinkedHashMap<User, Stock> stocks;
 
     public StockStore() {
         this(2 << 4);
     }
 
 
-    public StockStore(ArrayList<Pair<User, Stock>> originStocks) {
+    public StockStore(LinkedHashMap<User, Stock> originStocks) {
         this(originStocks.size());
         //DEEP copy
-        for (Pair<User, Stock> iterator : originStocks) {
-            this.stocks.add(new Pair<>(iterator.first(), iterator.second().getCopy()));
+        for (Entry<User, Stock> iterator : originStocks.entrySet()) {
+            this.stocks.put(iterator.getKey(), iterator.getValue().getCopy());
         }
     }
 
 
     public StockStore(int initialCapacity) {
-        this.stocks = new ArrayList<>(initialCapacity);
+        this.stocks = new LinkedHashMap<>(initialCapacity);
     }
 
     public boolean addProducer(User producer) {
         if (existUser(producer))
             return false;
         else {
-            stocks.add(new Pair<>(producer, new Stock()));
+            stocks.put(producer, new Stock());
             return true;
         }
     }
 
     public boolean existUser(User producer) {
-        for (Pair<User, Stock> pair : this.stocks) {
-            if (pair.first().equals(producer)) {
-                return true;
-            }
-        }
-        return false;
+        return stocks.get(producer)!=null;
 
     }
 
-    public ArrayList<Pair<User,Stock>> getStocks(){
+    public LinkedHashMap<User,Stock> getStocks(){
         return this.stocks;
     }
 
     public Stock getStock(User producer){
-        for (Pair<User,Stock> pair : stocks) {
-            if (pair.first().equals(producer)){
-                return pair.second();
+        for (Entry<User,Stock> pair : stocks.entrySet()) {
+            if (pair.getKey().equals(producer)){
+                return pair.getValue();
             }
         }
         return null;
@@ -67,9 +64,9 @@ public class StockStore {
 
     public User getUser(Stock stockToFind) {
         //todo clean
-        for (Pair<User, Stock> keys : stocks) {
-            if (keys.second().equals(stockToFind))
-                return keys.first();
+        for (Entry<User, Stock> keys : stocks.entrySet()) {
+            if (keys.getValue().equals(stockToFind))
+                return keys.getKey();
         }
         return null;
     }

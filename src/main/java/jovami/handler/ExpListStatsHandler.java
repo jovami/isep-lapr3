@@ -157,12 +157,10 @@ public class ExpListStatsHandler {
 
         LinkedHashMap<User,int []> res = new LinkedHashMap<>();
 
-        for(Pair<User,Stock> producerStock: expList.getStockStore().getStocks()){//n*inside
-            if(res.get(producerStock.first())==null){
-                res.put(producerStock.first(), new int[NUMSTATSPRODUTOR]);
-            }
-            producerStockStats(day, res.get(producerStock.first()), producerStock.second());//n
-            producerBundleStats(producerStock.first(),day, expList,res.get(producerStock.first()));//n2
+        for(Entry<User,Stock> producerStock: expList.getStockStore().getStocks().entrySet()){//ninside
+            res.computeIfAbsent(producerStock.getKey(), k -> new int[NUMSTATSPRODUTOR]);
+            producerStockStats(day, res.get(producerStock.getKey()), producerStock.getValue());//n
+            producerBundleStats(producerStock.getKey(),day, expList,res.get(producerStock.getKey()));//n2
         }
 
         //O(n3)
