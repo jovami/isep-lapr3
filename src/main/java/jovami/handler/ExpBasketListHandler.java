@@ -114,5 +114,14 @@ public class ExpBasketListHandler {
                 .toList();
     }
 
+    public int checkHigherDay(HashMap<Integer,LinkedList<Bundle>> expList) {
+        int lastDay = -1;
+        for (int d : expList.keySet()) {
+            if (d > lastDay) {
+                lastDay = d;
+            }
+        }
+        return lastDay;
+    }
 
 }

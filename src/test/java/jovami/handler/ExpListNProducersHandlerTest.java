@@ -1,19 +1,21 @@
 package jovami.handler;
+
 import jovami.App;
 import jovami.MainTest;
 import jovami.model.User;
 import jovami.model.bundles.Bundle;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 class ExpListNProducersHandlerTest {
     private ExpListNProducersHandler handler;
-    private App app;
+
     @BeforeEach
     public void setup() {
         MainTest.resetSingleton();
-        this.app = App.getInstance();
+        App.getInstance();
         this.handler = new ExpListNProducersHandler();
     }
     @Test
@@ -199,40 +201,32 @@ class ExpListNProducersHandlerTest {
         int expectedSize = 60;
         assertEquals(actual.size(), expectedSize);
     }
+
     @Test
-    void testCheckDayForExp(){
+    void testCheckHigherDaySmall(){
         MainTest.readData(false);
         handler.setProducers();
         new NearestHubToClientsHandler().findNearestHubs();
         var exp = handler.expListNProducers(2);
-        {   // Test negative and zero values
-            int[] values = {0, -1, -3, -5, -20, -50, -100, -500};
-            int expected = 1;
-            for (int value : values) {
-                assertEquals(expected, handler.checkDayForExp(value, exp));
-            }
-        }
-        {   // Test values which are higher than 5
-            int[] values = {6, 10, 20, 50, 100, 500};
-            int expected = 5;
-            for (int value : values) {
-                assertEquals(expected, handler.checkDayForExp(value, exp));
-            }
-        }
-        {   // Test correct values
-            int[] values = {1, 2, 3, 4, 5};
-            for (int value : values) {
-                assertEquals(value, handler.checkDayForExp(value, exp));
-            }
-        }
+        assertEquals(5, handler.checkHigherDay(exp));
     }
+    @Test
+    @Disabled
+    void testCheckHigherDayBig(){
+        MainTest.readData(true);
+        handler.setProducers();
+        new NearestHubToClientsHandler().findNearestHubs();
+        var exp = handler.expListNProducers(2);
+        assertEquals(5, handler.checkHigherDay(exp));
+    }
+
     @Test
     void testCheckNProducers(){
         MainTest.readData(false);
         handler.setProducers();
         {   // Test negative and zero values
             int[] values = {0, -1, -3, -5, -20, -50, -100, -500};
-            int expected = 1;
+            int expected = 0;
             for (int value : values) {
                 assertEquals(expected, handler.checkNProducers(value));
             }

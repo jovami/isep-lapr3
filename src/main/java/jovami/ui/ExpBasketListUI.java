@@ -15,9 +15,18 @@ public class ExpBasketListUI implements UserStory {
 
     @Override
     public void run() {
-        int day = InputReader.readInteger("Day for expedition list:");
 
         try{
+            var exp = handler.expBasketsList();
+            int maxDay = handler.checkHigherDay(exp);
+
+            int day;
+            day = InputReader.readInteger("Day for expedition list:");
+            while (day < 1 || day > maxDay){
+                System.out.println("The day should be higher than 1 and less than " + (maxDay + 1));
+                day = InputReader.readInteger("Day for expedition list:");
+            }
+
             var expList = handler.expBasketsList().get(day);
 
             expList.forEach(ExpListPrint::bundlePrint);

@@ -14,14 +14,21 @@ public class ExpListNProducersUI implements UserStory {
 
     @Override
     public void run() {
-        int initDay = InputReader.readInteger("Day for expedition list:");
-        int initN = InputReader.readInteger("Closest N producers to hub:");
+        int nProd = InputReader.readInteger("Closest N producers to hub:");
+
         try {
             handler.setProducers();
-            int nProd = handler.checkNProducers(initN);
             var exp = handler.expListNProducers(nProd);
-            int day = handler.checkDayForExp(initDay, exp);
-            var expList = handler.expListNProducers(nProd).get(day);
+            int maxDay = handler.checkHigherDay(exp);
+
+            int day;
+            day = InputReader.readInteger("Day for expedition list:");
+            while (day < 1 || day > maxDay){
+                System.out.println("The day should be higher than 1 and less than " + (maxDay + 1));
+                day = InputReader.readInteger("Day for expedition list:");
+            }
+
+            var expList = exp.get(day);
             System.out.println("Day: " + day + " | " + "Closest " + nProd + " producers to the hubs");
             expList.forEach(ExpListPrint::bundlePrint);
 

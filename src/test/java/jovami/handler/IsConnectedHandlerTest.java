@@ -2,7 +2,6 @@ package jovami.handler;
 
 import jovami.App;
 import jovami.MainTest;
-import jovami.handler.data.NearestHubToClientsData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

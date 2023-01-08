@@ -26,12 +26,9 @@ public class ExpListNProducersHandler {
 
     private final HubNetwork network;
     private final UserStore userStore;
-
-    //should this always be final?
     private final ExpListStore expStore;
     private BundleStore bundleStore;
     private StockStore stockStore;
-    private ExpList expList;
     private List<User> producers;
 
     /**
@@ -129,6 +126,7 @@ public class ExpListNProducersHandler {
         ExpList expList = new ExpList();
         bundleStore = expList.getBundleStore();
         stockStore = expList.getStockStore();
+        nProducers = checkNProducers(nProducers);
 
         int size = bundleStore.size();
         HashMap<Integer,LinkedList<Bundle>> hash = new HashMap<>(size);
@@ -147,26 +145,19 @@ public class ExpListNProducersHandler {
                         .toList();
     }
 
-    public int checkDayForExp(int day, HashMap<Integer,LinkedList<Bundle>> expList) {
-        if (day < 1)
-            return 1;
-
-        if (expList.containsKey(day)) {
-            return day;
-        } else {
-            int lastDay = -1;
-            for (int d : expList.keySet()) {
-                if (d > lastDay) {
-                    lastDay = d;
-                }
+    public int checkHigherDay(HashMap<Integer,LinkedList<Bundle>> expList) {
+        int lastDay = -1;
+        for (int d : expList.keySet()) {
+            if (d > lastDay) {
+                lastDay = d;
             }
-            return lastDay;
         }
+        return lastDay;
     }
 
     public int checkNProducers(int n){
         if (n < 1)
-            n = 1;
+            n = 0;
         return Math.min(n, producers.size());
     }
 

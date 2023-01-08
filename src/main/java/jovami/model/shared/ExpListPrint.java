@@ -15,7 +15,7 @@ public class ExpListPrint {
             if (order.getProducer() == null) {
 
                 System.out.printf(" -> %-8s|   %-6.1f|    %-6.1f | " +
-                                "There were no producers to fulfill this order\n",
+                                "Unsupplied\n",
                         order.getProduct().getName(),
                         order.getQuantity(),
                         order.getQuantityDelivered());

@@ -1,14 +1,12 @@
 package jovami.handler;
 
-import jovami.App;
 import jovami.MainTest;
 import jovami.handler.data.DataLoader;
 import jovami.model.User;
 import jovami.model.bundles.Bundle;
 import jovami.model.bundles.Order;
-import jovami.model.csv.BundleParser;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
@@ -121,6 +119,20 @@ class ExpBasketListHandlerTest extends ExpBasketListHandler {
          */
         int expectedSize = 60;
         assertEquals(actual.size(), expectedSize);
+    }
+
+    @Test
+    void testCheckHigherDaySmall(){
+        MainTest.readData(false);
+        var exp = handler.expBasketsList();
+        assertEquals(5, handler.checkHigherDay(exp));
+    }
+    @Test
+    @Disabled
+    void testCheckHigherDayBig(){
+        MainTest.readData(true);
+        var exp = handler.expBasketsList();
+        assertEquals(5, handler.checkHigherDay(exp));
     }
 }
 
