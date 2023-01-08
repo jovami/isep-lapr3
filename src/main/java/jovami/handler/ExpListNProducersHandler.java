@@ -87,7 +87,6 @@ public class ExpListNProducersHandler {
                 if (producerStash>=orderedQuantity) {
                     producerStock.retrieveFromStock(day, orderedProduct, orderedQuantity);
                     order.setProducer(producer);
-                    //TODO MUDAR PRODUCERSTASH PARA AQUILO QUE ELE VAI RETIRAR?
                     order.setQntDelivered(orderedQuantity);
 
                     return;

@@ -63,7 +63,6 @@ public class BundleStore{
     }
     
     public BundleStore getCopy(){
-        //TODO OPTIMIZE
         return new BundleStore(this.bundles);
     }
 }
