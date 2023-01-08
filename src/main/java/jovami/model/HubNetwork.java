@@ -100,20 +100,22 @@ public class HubNetwork extends MapGraph<User, Distance> {
         var verts = sub.vertices();
         final int size = verts.size();
 
-        for (int i = 0; i < size; i++) {
-            User u1 = verts.get(i);
-            for (int j = 0; j < size; j++) {
-                User u2 = verts.get(j);
-                var edge = this.edge(u1, u2);
-                if (edge != null)
-                    sub.addEdge(u1, u2, edge.getWeight());
+        for (int i = 0; i < size; i++) {                    // O(V*inside)
+            User u1 = verts.get(i);                         // O(1)
+            for (int j = 0; j < size; j++) {                // O(V*inside)
+                User u2 = verts.get(j);                     // O(1)
+                var edge = this.edge(u1, u2);               // O(1)
+                if (edge != null)                           // O(1)
+                    sub.addEdge(u1, u2, edge.getWeight());  // O(1)
             }
         }
 
+        // Net complexity: O(V^2)
         return sub;
     }
 
     public HubNetwork addSelfCycles() {
+        // O(V)
         this.vertices().forEach(v -> this.addEdge(v, v, getZero(v)));
         return this;
     }

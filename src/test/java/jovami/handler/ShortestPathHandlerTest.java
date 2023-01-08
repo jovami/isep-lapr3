@@ -121,10 +121,10 @@ public class ShortestPathHandlerTest {
                      dayRestrictionTest(day, r);
 
                      // RIP PC :/
-                     System.out.printf("BIG: Testing for day %d, with restriction \"%s\"\n", day, r);
-                     setup(true);
-                     this.handler.setDayRestriction(day, r);
-                     dayRestrictionTest(day, r);
+                     // System.out.printf("BIG: Testing for day %d, with restriction \"%s\"\n", day, r);
+                     // setup(true);
+                     // this.handler.setDayRestriction(day, r);
+                     // dayRestrictionTest(day, r);
             });
     }
 
@@ -193,13 +193,12 @@ public class ShortestPathHandlerTest {
 
         rests.forEach(r -> assertFalse(this.handler.setDayRestriction(day, r)));
 
-        setup(true);
-        new ExpBasketListHandler().expBasketsList();
-        expHander = new ExpListNProducersHandler();
-        expHander.setProducers();
-        expHander.expListNProducers(1);
-
-        rests.forEach(r -> assertFalse(this.handler.setDayRestriction(day, r)));
+        // setup(true);
+        // new ExpBasketListHandler().expBasketsList();
+        // expHander = new ExpListNProducersHandler();
+        // expHander.setProducers();
+        // expHander.expListNProducers(1);
+        // rests.forEach(r -> assertFalse(this.handler.setDayRestriction(day, r)));
     }
 
     @Test

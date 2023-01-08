@@ -198,13 +198,14 @@ public class Algorithms {
         E min = null;
 
         int i;
-        for (i = 0; i < dist.length; i++) {
-            if (!visited[i] && ce.compare(min, dist[i]) > 0) {
-                min = dist[i];
-                result = g.vertex(i);
+        for (i = 0; i < dist.length; i++) {                     // O(V*inside)
+            if (!visited[i] && ce.compare(min, dist[i]) > 0) {  // O(1)
+                min = dist[i];                                  // O(1)
+                result = g.vertex(i);                           // O(1)
             }
         }
 
+        // Net complexity: O(V)
         return result;
     }
 

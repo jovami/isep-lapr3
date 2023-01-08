@@ -28,7 +28,7 @@ public class MetricTSP {
 
         var visited = new boolean[g.numVertices()];
 
-        for (V vert : g.vertices()) {
+        for (V vert : g.vertices()) {                       // O(V)
             int k = g.key(vert);
             dist[k] = null;
             pathKeys[k] = null;
@@ -36,7 +36,10 @@ public class MetricTSP {
         }
         dist[g.key(vOrig)] = zero;
 
+        // O(V*E)
         mstPrimImpl(g, Comparator.nullsLast(ce), vOrig, visited, pathKeys, dist);
+        // O(V) mstBuild()
+        // Net complexity: O(V*E)
         return mstBuild(g, pathKeys, dist);
     }
 
@@ -44,33 +47,36 @@ public class MetricTSP {
                                           V vOrig, boolean[] visited,
                                           V[] pathKeys, E[] dist)
     {
-        while (vOrig != null) {
-            int origKey = g.key(vOrig);
-            visited[origKey] = true;
-            for (var edge : g.outgoingEdges(vOrig)) {
-                int vAdj = g.key(edge.getVDest());
-                E weight = edge.getWeight();
-                if (!visited[vAdj] && ce.compare(dist[vAdj], weight) > 0) {
-                    dist[vAdj] = weight;
+        while (vOrig != null) {                                             // O(V*inside)
+            int origKey = g.key(vOrig);                                     // O(1)
+            visited[origKey] = true;                                        // O(1)
+            for (var edge : g.outgoingEdges(vOrig)) {                       // O(E*inside)
+                int vAdj = g.key(edge.getVDest());                          // O(1)
+                E weight = edge.getWeight();                                // O(1)
+                if (!visited[vAdj] && ce.compare(dist[vAdj], weight) > 0) { // O(1)
+                    dist[vAdj] = weight;                                    // O(1)
                     pathKeys[vAdj] = vOrig;
                 }
             }
-            vOrig = Algorithms.getVertMinDist(g, visited, dist, ce);
+            vOrig = Algorithms.getVertMinDist(g, visited, dist, ce);        // O(V)
         }
+
+        // Net complexity: O(V*E)
     }
 
     private static <V,E> Graph<V,E> mstBuild(Graph<V,E> g, V[] pathKeys, E[] dist) {
         Graph<V,E> mst = new MapGraph<>(g.isDirected());
 
-        for (int i = 0; i < pathKeys.length; i++) {
-            V dest = g.vertex(i);
+        for (int i = 0; i < pathKeys.length; i++) {         // O(V*inside)
+            V dest = g.vertex(i);                           // O(1)
 
-            if (pathKeys[i] == null)
-                mst.addVertex(dest);
+            if (pathKeys[i] == null)                        // O(1)
+                mst.addVertex(dest);                        // O(1)
             else
-                mst.addEdge(pathKeys[i], dest, dist[i]);
+                mst.addEdge(pathKeys[i], dest, dist[i]);    // O(1)
         }
 
+        // Net complexity: O(V)
         return mst;
     }
 
@@ -91,9 +97,9 @@ public class MetricTSP {
     {
         ensureNonNull(g, vOrig, ce, zero);
 
-        var mst = mstPrim(g, vOrig, ce, zero);
+        var mst = mstPrim(g, vOrig, ce, zero);              // O(V*E)
 
-        var tour = Algorithms.DepthFirstSearch(mst, vOrig);
+        var tour = Algorithms.DepthFirstSearch(mst, vOrig); // O(V*E)
 
         /* NOTE:
          * We don't need to shortcut over any vertices
@@ -102,8 +108,9 @@ public class MetricTSP {
          * since our DFS impl returns the list in reverse
          * order of traversal.
          */
-        if (tour.size() > 1)
-            tour.push(vOrig);
+        if (tour.size() > 1)                                // O(1)
+            tour.push(vOrig);                               // O(1)
+        // Net complexity: O(V*E)
         return tour;
     }
 

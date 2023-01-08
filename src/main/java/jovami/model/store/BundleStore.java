@@ -87,41 +87,42 @@ public class BundleStore{
         Map<User, Set<User>> ret = new HashMap<>();
 
         if (bList == null)
-            return Collections.emptyMap();
+            return Collections.emptyMap();              // O(1)
 
-        for (Bundle b : bList) {
-            User hub = b.getClient().getNearestHub();
+        for (Bundle b : bList) {                        // O(n*inside); n => num of bundles
+            User hub = b.getClient().getNearestHub();   // O(1)
 
-            if(ret.get(hub) == null)
-                ret.put(hub, new HashSet<>());
+            if(ret.get(hub) == null)                    // O(1)
+                ret.put(hub, new HashSet<>());          // O(1)
             var producers = ret.get(hub);
 
-            for (Order o : b.getOrdersList()) {
-                var p = o.getProducer();
-                if (p != null)
-                    producers.add(p);
+            for (Order o : b.getOrdersList()) {         // O(m*inside); m => num of orders
+                var p = o.getProducer();                // O(1)
+                if (p != null)                          // O(1)
+                    producers.add(p);                   // O(1)
             }
         }
 
+        // Net complexity: O(n*m)
         return ret;
     }
 
-    // TODO: better way of doing this?
     public Map<User, List<List<Order>>> ordersByHub(int day) {
         Map<User, List<List<Order>>> ret = new HashMap<>();
 
-        var bList = this.bundles.get(day);
+        var bList = this.bundles.get(day);              // O(1)
         if (bList == null)
-            return Collections.emptyMap();
+            return Collections.emptyMap();              // O(1)
 
-        for (Bundle b : bList) {
-            User hub = b.getClient().getNearestHub();
+        for (Bundle b : bList) {                        // O(n*inside); n => num of bundles
+            User hub = b.getClient().getNearestHub();   // O(1)
 
-            if(ret.get(hub) == null)
-                ret.put(hub, new LinkedList<>());
-            ret.get(hub).add(b.getOrdersList());
+            if(ret.get(hub) == null)                    // O(1)
+                ret.put(hub, new LinkedList<>());       // O(1)
+            ret.get(hub).add(b.getOrdersList());        // O(1) for get(), add() and getOrdersList()
         }
 
+        // Net complexity: O(n)
         return ret;
     }
 }

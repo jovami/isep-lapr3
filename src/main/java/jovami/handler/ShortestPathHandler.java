@@ -45,25 +45,25 @@ public class ShortestPathHandler {
     public Triplet<List<User>, List<Distance>, Distance> shortestRoute() {
         if (this.bStore == null)
             throw new IllegalStateException();
-        var map = this.bStore.producersPerHub(this.day);
+        var map = this.bStore.producersPerHub(this.day);                // O(n*m)
 
-        var closure = this.app.hubNetwork().transitiveClosure();
+        var closure = this.app.hubNetwork().transitiveClosure();        // O(V^3)
         var components = new LinkedList<Graph<User, Distance>>();
         var hubs = new LinkedList<User>();
-        map.forEach((k, v) -> {
-            var subgraph = closure.subNetwork(k, v).addSelfCycles();
-            components.add(subgraph);
-            hubs.add(k);
+        map.forEach((k, v) -> {                                         // O(h*inside); h => num of hubs
+            var subgraph = closure.subNetwork(k, v).addSelfCycles();    // O(V^2) sub(); O(V) add()
+            components.add(subgraph);                                   // O(1)
+            hubs.add(k);                                                // O(1)
         });
 
-        var route = TSP.fromComponents(components, hubs,
-                                       HubNetwork.distCmp, HubNetwork::getZero);
-
+        // O(h*V*E) ~ O(h*V^3) > O(h*V^2)
+        var route = TSP.fromComponents(components, hubs, HubNetwork.distCmp, HubNetwork::getZero);
         var dists = new LinkedList<Distance>();
-        // TODO: check if Distance.zero is correct here
-        var dist = TSP.getDists(closure, Distance.zero, HubNetwork.distSum,
-                                route, dists);
 
+        // O(V)
+        var dist = TSP.getDists(closure, Distance.zero, HubNetwork.distSum, route, dists);
+
+        // Net complexity: O(h*V*E) ~ O(V^4)
         return new Triplet<>(route, dists, dist);
     }
 
