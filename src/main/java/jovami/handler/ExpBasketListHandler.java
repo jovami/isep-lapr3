@@ -29,7 +29,7 @@ public class ExpBasketListHandler {
         this.expStore= app.expListStore();
     }
 
-    public LinkedList<Bundle> expBasketsListDay(int day) {
+    public LinkedList<Bundle> expBasketsListDay(int day) { // O(n^3)
         var result = new LinkedList<Bundle>();
         var bundles = bundleStore.getBundles(day);
         var producers = findProducers();
@@ -42,7 +42,7 @@ public class ExpBasketListHandler {
         return result;
     }
 
-    private void computeBundle(int day, Bundle bundle, List<User> producers) {
+    private void computeBundle(int day, Bundle bundle, List<User> producers) { // 0(n^2)
         var orders = bundle.getOrders();
         while (orders.hasNext()) {
             var order = orders.next();
@@ -50,7 +50,7 @@ public class ExpBasketListHandler {
         }
     }
 
-    private void selectProducer(int day, Order order, List<User> producers) {
+    private void selectProducer(int day, Order order, List<User> producers) { // O(n)
         Product product = order.getProduct();
         boolean flag=false;
         float quantityToRetrieve = order.getQuantity();
@@ -93,7 +93,7 @@ public class ExpBasketListHandler {
 
     }
 
-    public HashMap<Integer, LinkedList<Bundle>> expBasketsList() {
+    public HashMap<Integer, LinkedList<Bundle>> expBasketsList() { // 0(n^4)
         ExpList expList = new ExpList();
         bundleStore = expList.getBundleStore();
         stockStore = expList.getStockStore();
