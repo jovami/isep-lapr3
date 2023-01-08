@@ -3,6 +3,7 @@ package jovami.handler;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.Clock;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,12 +39,12 @@ public class WateringControllerHandler {
      *
      * @return the list
      */
-    public List<Pair<String, Long>> currentlyWatering() {
+    public List<Pair<String, Long>> currentlyWatering(Clock clk) {
         var opt = this.app.wateringControllerStore().getActiveController();
 
         if (opt.isPresent()) {
             WateringController ctrl = opt.get();
-            return ctrl.currentlyWatering();
+            return ctrl.currentlyWatering(clk);
         }
 
         return Collections.emptyList();

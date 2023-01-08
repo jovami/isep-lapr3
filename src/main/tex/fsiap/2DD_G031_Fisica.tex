@@ -1186,7 +1186,7 @@ Tendo em conta os materiais apresentados na secção e, o croqui da estrutura, \
 	\caption{Composição da zona E}\label{tab:zona_e}
 \end{table}
 
-Com base na tabela \ref*{tab:zona_e}, o cálculo das resistências para esta secção sucede-se da seguinte forma:
+Com base na tabela~\ref*{tab:zona_e}, o cálculo das resistências para esta secção sucede-se da seguinte forma:
 
 \paragraph{Parede exterior:}\label{par:zona_e_ext}Camadas associadas em série:
 
@@ -1244,7 +1244,7 @@ Com base na tabela \ref*{tab:zona_e}, o cálculo das resistências para esta sec
 
 \paragraph{Total:}\label{par:zona_e_total:} Tendo em conta que os componentes est\~ao
 associados em série e considerando os resultados das
-equa\c{c}\~oes~\ref{eq:zona_e_ext_2} e ~\ref{eq:zona_e_int_n_est_3}
+equa\c{c}\~oes~\ref{eq:zona_e_ext_2} e~\ref{eq:zona_e_int_n_est_3}
 
 \begin{equation}
 	R_{total} =
@@ -1307,6 +1307,1148 @@ Com base na tabela~\ref*{tab:telhado}, o cálculo das resistência para o telhad
 
 
 % section Estrutura (end)
+
+\section{Sprint2}\label{Sprint2}
+\subsection{US406}
+
+Para calcular a energia necessária para manter as secções às temperaturas solicitadas, devemos calcular o R total da secção e com isso calcular a energia.
+
+\begin{equation}
+	R_{total} (K/W)=
+		\dfrac{1}{
+		\dfrac{1}{R_{secc\tilde{a}o}} +
+		\dfrac{1}{R_{total}}
+		}
+	\label{eq:total}
+\end{equation}
+
+\begin{equation}
+	Energia (J)=
+	\dfrac{1}{R_{total}} *
+	\Delta T *
+	\Delta t
+	\label{eq:energia}
+\end{equation}
+
+
+\subsubsection{Secção C}\label{seccaoC}
+\paragraph{Temperatura Interior = -10ºC}
+
+\begin{equation}
+	\dfrac{1}{R_{total}} =
+	\dfrac{1}{0.0280} +
+	\dfrac{1}{0.0790}
+	\label{eq:totalC1}
+\end{equation}
+
+\begin{equation}
+	\Leftrightarrow R_{total} =
+	{0.0207}
+	\label{eq:totalC2}
+\end{equation}
+
+\begin{equation}
+	Energia =
+	\dfrac{1}{0.0207} *
+	\left( {15+10} \right) *
+	3600
+	\label{eq:energiaC}
+\end{equation}
+
+\begin{equation}
+	\Leftrightarrow Energia\_C =
+	4348574
+	\label{eq:energiaC1}
+\end{equation}
+
+\subsubsection{Secção D}\label{seccaoD}
+\paragraph{Temperatura Interior = 0ºC}
+
+\begin{equation}
+	\dfrac{1}{R_{total}} =
+	\dfrac{1}{0.0140} +
+	\dfrac{1}{0.0790}
+	\label{eq:totalD1}
+\end{equation}
+
+\begin{equation}
+	\Leftrightarrow R_{total} =
+	{0.0119}
+	\label{eq:totalD2}
+\end{equation}
+
+\begin{equation}
+	Energia =
+	\dfrac{1}{0.0119} *
+	\left( {15-0} \right) *
+	3600
+	\label{eq:energiaD}
+\end{equation}
+
+\begin{equation}
+	\Leftrightarrow Energia\_D =
+	4539094
+	\label{eq:energiaD1}
+\end{equation}
+
+\subsubsection{Secção E}\label{seccaoE}
+\paragraph{Temperatura Interior = 10ºC}
+
+\begin{equation}
+	\dfrac{1}{R_{total}} =
+	\dfrac{1}{0.0156} +
+	\dfrac{1}{0.0790}
+	\label{eq:totalE1}
+\end{equation}
+
+\begin{equation}
+	\Leftrightarrow R_{total} =
+	{0.0130}
+	\label{eq:totalE2}
+\end{equation}
+
+\begin{equation}
+	Energia =
+	\dfrac{1}{0.0130} *
+	\left( {15-10} \right) *
+	3600
+	\label{eq:energiaE}
+\end{equation}
+
+\begin{equation}
+	\Leftrightarrow Energia\_E =
+	11382313
+	\label{eq:energiaE1}
+\end{equation}
+
+\pagebreak
+\subsection{US407}\label{sec:US407}
+Com as resistências previamente calculadas, vamos calcular o total para cada face que se oponha a uma superfície com diferente temperatura. Após isso com a diferença de temperatura entre cada uma das secções calculamos a potência. A soma das potências de cada secção dá-nos uma potência total, e através dela multiplicando com o período de tempo em estudo, é possível calcular a energia a fornecer para aquela secção. Através disso a soma de todas as energias entregam a energia total a fornecer há estrutura.
+\vspace{10mm}
+\subsubsection{Formulas Utilizadas}
+
+\begin{equation}
+	\dfrac{1}{R_{TotalExterior}(K/W)} =
+	\dfrac{1}{R1} +
+	\dfrac{1}{R2} +
+    \cdots
+	\label{eq:US407formula10}
+\end{equation}
+
+\subparagraph{Exemplo para o Calculo da Resistência da Secção A}
+Formulas 62, 63, 64
+
+\begin{equation}
+	\dfrac{1}{R_{TotalExterior}} =
+	\dfrac{1}{R_{Parede Exterior}} +
+	\dfrac{1}{R_{Janela}} +
+	\dfrac{1}{R_{Porta de Subir}} +
+	\dfrac{1}{R_{Telhado}}
+	\label{eq:US407formula1}
+\end{equation}
+
+\begin{equation}
+	R_{TotalInteriorEstrutural} =
+	R_{Parede Interior Estrutural}
+	\label{eq:US407formula2}
+\end{equation}
+
+\begin{equation}
+	\dfrac{1}{R_{TotalInteriorNaoEstrutural}} =
+	\dfrac{1}{R_{Parede Interior Nao Estrutural}} +
+	\dfrac{1}{R_{Porta Simples}}
+	\label{eq:US407formula3}
+\end{equation}
+
+
+
+\begin{equation}
+	Potencia(W) =
+	\dfrac{{\Delta} T}{R_{Total}}
+	\label{eq:US407formula4}
+\end{equation}
+
+\begin{equation}
+	PotenciaTotal(W) =
+	Potencia1 +
+	Potencia2 + \cdots +
+	PotenciaN
+	\label{eq:US407formula5}
+\end{equation}
+
+\begin{equation}
+	Energia(J) = PotenciaN * {\Delta}t
+	\label{eq:US407formula7}
+\end{equation}
+
+\begin{equation}
+	{\Delta}t(s) = 3600
+	\label{eq:US407formula6}
+\end{equation}
+
+\vspace{13mm}
+Estas formulas com as necessárias adaptações são utilizadas para todos os cálculos das~\ref{sec:US407} e~\ref{sec:US408}.
+
+
+\pagebreak
+\subsubsection{Temperatura Exterior de $20\celsius$}
+\paragraph{Secção}
+\textbf{A}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Secção A   													 & 	R (K/W) \\
+			\midrule
+			Parede Exterior			               				     & $0.0399$		 \\
+			Janela                  										 & $0.0880$		 \\
+			Porta de Subir              	  							 & $0.1667$		 \\
+			\cline{1-1}
+			Parede Interior Estrutural             	   		 & $0.0374$		 \\
+			\cline{1-1}
+			Parede Interior n\~ao Estrutural          		 & $0.0834$		 \\
+			Porta Simples                 							 & $0.2778$		 \\
+			\cline{1-1}
+			Telhado                   									 & $0.0790$		 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Composição da zona A}\label{tab:seccaoA}
+\end{table}
+
+\vspace{15mm}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			R Total por Estrutura									 & 	R (K/W)  \\
+			\midrule
+			 Exterior			               				     & $0.0182$		 \\
+			 Interior Estrutural             	   			 & $0.0374$		 \\
+			 Interior n\~ao Estrutural          		 & $0.0642$		 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{R Total da zona A}\label{tab:seccaoAtotal}
+\end{table}
+
+\vspace{15mm}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Temperatura    										 & 	$\Delta T (\celsius)$   \\
+			\midrule
+			 Exterior	com Zona A		               	     & $25$	 \\
+			 Zona B com Zona A             	   			 & $0$		 \\
+			 Zona D com Zona A          					 & $5$		 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Temperatura da zona A}\label{tab:seccaoAtemp}
+\end{table}
+
+\pagebreak
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Potência   										 & 	I (W) \\
+			\midrule
+			 Exterior	com Zona A		               	     & $1376.49$	 \\
+			 Zona B com Zona A             	   			 & $0.00$		 \\
+			 Zona D com Zona A          					 & $77.92$		 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Potência da zona A}\label{tab:seccaoApot}
+\end{table}
+
+\vspace{35mm}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Potência  Total 										 & 	I (W) \\
+			\midrule
+			 Potência A		               	     & $1454$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Potência Total da zona A}\label{tab:seccaoApotT}
+\end{table}
+
+\vspace{35mm}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Energia por Hora 								 & 	(I * $\Delta$t) (J) \\
+			\midrule
+			Energia A 						               	     & $5235891$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Energia da zona A}\label{tab:seccaoAenergia}
+\end{table}
+
+\pagebreak
+\paragraph{Secção}
+\textbf{B}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Secção B  													 & 	R (K/W) \\
+			\midrule
+			Parede Exterior			              				     & $0.0337$		 \\
+			Janela                  										 & $0.0880$		 \\
+			Porta de Dupla             	  							 & $0.1389$		 \\
+			\cline{1-1}
+			Parede Interior Estrutural             	   		 & $0.0346$		 \\
+			\cline{1-1}
+			Parede Interior n\~ao Estrutural          		 & $0.1335$		 \\
+			\cline{1-1}
+			Telhado                   									 & $0.0790$		 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Composição da zona B}\label{tab:seccaoB}
+\end{table}
+
+\vspace{15mm}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			R Total por Estrutura									 & 	R (K/W)  \\
+			\midrule
+			 Exterior			               				     & $0.0164$		 \\
+			 Interior Estrutural             	   			 & $0.0346$		 \\
+			 Interior n\~ao Estrutural          		 & $0.1335$		 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{R Total da zona B}\label{tab:seccaoBtotal}
+\end{table}
+
+\vspace{15mm}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Temperatura    										 & 	$\Delta T(\celsius)$    \\
+			\midrule
+			 Exterior	com Zona B		               	     & $25$	 \\
+			 Zona A com Zona B            	   				 & $0$		 \\
+			 Zona C com Zona B          					 & $5$		 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Temperatura da zona B}\label{tab:seccaoBtemp}
+\end{table}
+
+\pagebreak
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Potência   										 & 	I (W) \\
+			\midrule
+			 Exterior	com Zona B		               	     & $1522.63$	 \\
+			 Zona A com Zona B             	   			 & $0.00$		 \\
+			 Zona C com Zona B         					 & $37.45$		 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Potência da zona B}\label{tab:seccaoBpot}
+\end{table}
+
+\vspace{35mm}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Potência  Total 										 & 	I (W) \\
+			\midrule
+			 Potência B		               	     & $1560$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Potência Total da zona B}\label{tab:seccaoBpotT}
+\end{table}
+
+\vspace{35mm}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Energia por Hora 								 & 	(I * $\Delta$t) (J) \\
+			\midrule
+			Energia B 						               	     & $5616308$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Energia da zona B}\label{tab:seccaoBenergia}
+\end{table}
+
+\pagebreak
+\paragraph{Secção}
+\textbf{C}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Secção C   													 & 	R (K/W) \\
+			\midrule
+			Parede Exterior  		               				     & $0.0484$		 \\
+			\cline{1-1}
+			\multirow{1}{*}{2x  }
+			Parede Interior n\~ao Estrutural          		 & $0.1335$		 \\
+			\cline{1-1}
+			Parede Interior Estrutural             	   		 & $0.0374$		 \\
+			Porta Simples                 							 & $0.2778$		 \\
+			\cline{1-1}
+			Telhado                   									 & $0.0790$		 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Composição da zona C}\label{tab:seccaoC}
+\end{table}
+
+\vspace{15mm}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			R Total por Estrutura									 & 	R (K/W)  \\
+			\midrule
+			 Exterior			               				     & $0.0300$		 \\
+			 Interior Estrutural             	   			 & $0.0329$		 \\
+			 Interior n\~ao Estrutural          		 & $0.1335$		 \\
+			 Interior n\~ao Estrutural          		 & $0.1335$		 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{R Total da zona C}\label{tab:seccaoCtotal}
+\end{table}
+
+\vspace{15mm}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Temperatura    										 & 	$\Delta T(\celsius)$    \\
+			\midrule
+			 Exterior	com Zona C		               	     & $30$	 \\
+			 Zona B com Zona C             	   			 & $5$		 \\
+			 Zona D com Zona C          					 & $10$		 \\
+			 Zona E com Zona C          					 & $20$		 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Temperatura da zona C}\label{tab:seccaoCtemp}
+\end{table}
+
+\pagebreak
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Potência   										 & 	I (W) \\
+			\midrule
+			 Exterior	com Zona C		               	     & $999.11$	 \\
+			 Zona B com Zona C             	   			 & $37.45$		 \\
+			 Zona D com Zona C          					 & $303.70$		 \\
+			 Zona E com Zona C          					 & $149.81$		 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Potência da zona C}\label{tab:1seccaoCpot}
+\end{table}
+
+\vspace{35mm}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Potência  Total 										 & 	I (W) \\
+			\midrule
+			 Potência C		               	     & $1490$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Potência Total da zona C}\label{tab:8seccaoCpotT}
+\end{table}
+
+\vspace{35mm}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Energia por Hora 								 & 	(I * $\Delta$t) (J) \\
+			\midrule
+			Energia C 						               	     & $5364270$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Energia da zona C}\label{tab:7seccaoCpotT}
+\end{table}
+
+\pagebreak
+\paragraph{Secção}
+\textbf{D}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Secção D  													 & 	R (K/W) \\
+			\midrule
+			Parede Exterior              		        		     & $0.0484$		 \\
+			\cline{1-1}
+			\multirow{2}{*}{2x  }
+			Parede Interior n\~ao Estrutural               & $0.1517$		 \\
+			Porta Simples                 						     & $0.2778$		 \\
+			\cline{1-1}
+			Parede Interior Estrutural             	   		 & $0.0374$		 \\
+			Porta Simples                 							 & $0.2778$		 \\
+			\cline{1-1}
+			Telhado                   									 & $0.0790$		 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Composição da zona D}\label{tab:seccaoD}
+\end{table}
+
+\vspace{15mm}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			R Total por Estrutura									 & 	R (K/W)  \\
+			\midrule
+			 Exterior			               				     & $0.0300$		 \\
+			 Interior Estrutural             	   			 & $0.0329$		 \\
+			 \multirow{1}{*}{2x  }
+			 Interior n\~ao Estrutural          		 & $0.0981$		 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{R Total da zona D}\label{tab:seccaoDtotal}
+\end{table}
+
+\vspace{15mm}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Temperatura    										 & 	$\Delta T(\celsius)$   \\
+			\midrule
+			 Exterior	com Zona D		               	     & $20$	 \\
+			 Zona A com Zona D             	   			 & $5$		 \\
+			 Zona C com Zona D          					 & $10$		 \\
+			 Zona E com Zona D          					 & $10$		 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Temperatura da zona D}\label{tab:seccaoDtemp}
+\end{table}
+
+\pagebreak
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Potência   										 & 	I (W) \\
+			\midrule
+			 Exterior	com Zona D		               	     & $666.07$	 \\
+			 Zona A com Zona D             	   			 & $50.96$		 \\
+			 Zona C com Zona D          					 & $303.70$		 \\
+			 Zona E com Zona D          					 & $101.92$		 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Potência da zona D}\label{tab:1seccaoDpot}
+\end{table}
+
+\vspace{30mm}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Potência  Total 										 & 	I (W) \\
+			\midrule
+			 Potência D		               	     & $1123$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Potência Total da zona D}\label{tab:2seccaoDpotT}
+\end{table}
+
+\vspace{30mm}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Energia por Hora 								 & 	(I * $\Delta$t) (J) \\
+			\midrule
+			Energia D 						               	     & $4041544$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Energia da zona D}\label{tab:3seccaoDpotT}
+\end{table}
+
+\pagebreak
+\paragraph{Secção}
+\textbf{E}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Secção E  													 & 	R (K/W) \\
+			\midrule
+			Parede Exterior                  				         & $0.0215$		 \\
+			\cline{1-1}
+			Parede Interior n\~ao Estrutural               & $0.1517$		 \\
+			Porta Simples                 							 & $0.2778$		 \\
+			\cline{1-1}
+			Parede Interior n\~ao Estrutural               & $0.1335$		 \\
+			\cline{1-1}
+			Telhado                   									 & $0.0790$		 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Composição da zona E}\label{tab:seccaoE}
+\end{table}
+
+\vspace{10mm}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			R Total por Estrutura									 & 	R (K/W)  \\
+			\midrule
+			 Exterior			               				         & $0.0169$		 \\
+			 Interior n\~ao Estrutural (1)            	 & $0.0981$		 \\
+			 Interior n\~ao Estrutural (2)         		 & $0.1335$		 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\begin{center}
+		(1) com Porta
+		(2) sem Porta
+	\end{center}
+	\caption{R Total da zona E}\label{tab:seccaoEtotal}
+\end{table}
+
+\vspace{10mm}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Temperatura    										 & 	$\Delta T(\celsius)$   \\
+			\midrule
+			 Exterior	com Zona E		               	     & $10$	 \\
+			 Zona D com Zona E             	   			 & $10$		 \\
+			 Zona C com Zona E          					 & $20$		 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Temperatura da zona E}\label{tab:seccaoEtemp}
+\end{table}
+
+\pagebreak
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Potência   										 & 	I (W) \\
+			\midrule
+			 Exterior	com Zona E		               	     & $591.13$	     \\
+			 Zona D com Zona E             	   			 & $101.92$		 \\
+			 Zona C com Zona E          					 & $149.81$		 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Potência da zona E}\label{tab:1seccaoEpot}
+\end{table}
+
+\vspace{30mm}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Potência  Total 										 & 	I (W) \\
+			\midrule
+			 Potência E		               	     & $843$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Potência Total da zona E}\label{tab:2seccaoEpotT}
+\end{table}
+
+\vspace{30mm}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Energia por Hora 								 & 	(I * $\Delta$t) (J) \\
+			\midrule
+			Energia E 						               	     & $3034283$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Energia da zona E}\label{tab:3seccaoEpotT}
+\end{table}
+
+
+\pagebreak
+\paragraph{Energia Total da Estrutura}
+
+\begin{equation}
+	Energia Total(J) = Energia A + Energia B + Energia C + Energia D + Energia E
+	\label{eq:1totalEnergia}
+\end{equation}
+
+\begin{equation}
+	\Leftrightarrow Energia Total = 	23292296 J
+	\label{eq:2totalEnergiaR}
+\end{equation}
+
+\subsubsection{Temperatura Exterior de 28ºC}
+\paragraph{Para este exemplo iremos proceder com a mesma sequência de cálculos, mas agora considerando uma temperatura exterior de 28ºC. Desta forma iremos apresentar apenas os resultados para tornas uma mais simples leitura}
+
+\paragraph{Secção}
+\textbf{A}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Energia por Hora 								 & 	(I * $\Delta$t) (J)  \\
+			\midrule
+			Energia A 						               	     & $6821609$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Energia da zona A}\label{tab:1seccaoApotT28}
+\end{table}
+
+\paragraph{Secção}
+\textbf{B}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Energia por Hora 								 & 	(I * $\Delta$t) (J)  \\
+			\midrule
+			Energia B						               	     & $7370381$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Energia da zona B}\label{tab:1seccaoBpotT28}
+\end{table}
+
+\paragraph{Secção}
+\textbf{C}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Energia por Hora 								 & 	(I * $\Delta$t) (J)  \\
+			\midrule
+			Energia C 						               	     & $6323414$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Energia da zona C}\label{tab:3seccaoCpotT28}
+\end{table}
+
+\pagebreak
+\paragraph{Secção}
+\textbf{D}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Energia por Hora 								 & 	(I * $\Delta$t) (J)t \\
+			\midrule
+			Energia D 						               	     & $5000689$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Energia da zona D}\label{tab:4seccaoDpotT28}
+\end{table}
+
+
+\paragraph{Secção}
+\textbf{E}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Energia por Hora 								 & 	(I * $\Delta$t) (J) \\
+			\midrule
+			Energia E 						               	     & $4736740$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Energia da zona E}\label{tab:4seccaoEpotT28}
+\end{table}
+
+
+\paragraph{Energia Total da Estrutura}
+
+\begin{equation}
+	Energia Total = Energia A + Energia B + Energia C + Energia D + Energia E
+	\label{eq:3totalEnergia}
+\end{equation}
+
+\begin{equation}
+	\Leftrightarrow Energia Total = 	30252833 J
+	\label{eq:4totalEnergiaR}
+\end{equation}
+
+\subsection{US408}\label{sec:US408}
+
+Como só foi alterado a estrutura das paredes interiores serão apresentadas as mudanças das resistências das paredes em questão. Existem nos quatro cenários possíveis, Paredes Estruturais e não Estruturais com Portas ou não e os cálculos serão os mesmos que no~\ref{sec:US407}.
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Paredes Interiores  													 & 	R (K/W) \\
+			\midrule
+			Estrutural  com Porta 									&	$0.0696$		 \\
+			Estrutural  sem Porta									&	$0.0644$		 \\
+			n\~ao Estrutural com Porta							& $0.1357$		 \\
+			n\~ao Estrutural sem Porta							& $0.2171$		 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Resistências após Melhorias}\label{tab:melhoriasR}
+\end{table}
+
+\pagebreak
+\subsubsection{Temperatura de 20ºC}
+
+\paragraph{Secção}
+\textbf{A}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Energia por Hora 								 & 	(I * $\Delta$t) (J) \\
+			\midrule
+			Energia A 						               	     & $5142852$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Energia da zona A}\label{tab:2seccaoApotT28}
+\end{table}
+
+\vspace{30mm}
+
+\paragraph{Secção}
+\textbf{B}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Energia por Hora 								 & 	(I * $\Delta$t) (J) \\
+			\midrule
+			Energia B						               	     & $5564375$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Energia da zona B}\label{tab:2seccaoBpotT28}
+\end{table}
+
+\vspace{30mm}
+
+\paragraph{Secção}
+\textbf{C}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Energia por Hora 								 & 	(I * $\Delta$t) (J)  \\
+			\midrule
+			Energia C 						               	     & $4658306$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Energia da zona C}\label{tab:4seccaoCpotT28}
+\end{table}
+
+\pagebreak
+\paragraph{Secção}
+\textbf{D}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Energia por Hora 								 & 	(I * $\Delta$t) (J)  \\
+			\midrule
+			Energia D 						               	     & $3458141$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Energia da zona D}\label{tab:5seccaoDpotT28}
+\end{table}
+
+\paragraph{Secção}
+\textbf{E}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Energia por Hora 								 & 	(I * $\Delta$t) (J) \\
+			\midrule
+			Energia E 						               	     & $2735153$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Energia da zona E}\label{tab:5seccaoEpotT28}
+\end{table}
+
+\vspace{11mm}
+\paragraph{Energia Total da Estrutura}
+
+\begin{equation}
+	Energia Total(J) = Energia A + Energia B + Energia C + Energia D + Energia E
+	\label{eq:5totalEnergia}
+\end{equation}
+
+\begin{equation}
+	\Leftrightarrow Energia Total = 	21558827 J
+	\label{eq:6totalEnergiaR}
+\end{equation}
+
+\vspace{15mm}
+
+\subsection{Diferença de Energias Após Melhorias}
+\begin{equation}
+    Diferenca De Energia 20{\celsius} = EnergiaAntesDaMelhoria - EnergiaAposMelhoria
+	\label{eq:diffEnergia}
+\end{equation}
+
+\begin{equation}
+	\Leftrightarrow DiferencaDeEnergia20C  = 	1717290 J
+	\label{eq:diffEnergiaT}
+\end{equation}
+
+\pagebreak
+\subsection{US409}
+\paragraph{Formulas Utilizadas}
+
+\begin{equation}
+	Potencia(W) =
+	\dfrac{{\Delta} T}{R_{Total}}
+\end{equation}
+
+\begin{equation}
+	PotenciaTotal(W) =
+	Potencia1 +
+	Potencia2 + \cdots +
+	PotenciaN
+\end{equation}
+
+\begin{equation}
+	1BTU/h = 3412.142KW/h
+\end{equation}
+
+\begin{equation}
+	Arrefecimento Necessario = \dfrac{3412.142}{1000} \times Potencia
+\end{equation}
+
+
+Estas formulas com as necessárias adaptações são utilizadas para todos os cálculos da US409.
+
+\subsubsection{Ponto 7}
+
+\paragraph{Temperatura =}
+\textbf{20ºC}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Potência 								 & 	I (W) \\
+			\midrule
+			Secção A 						               	     & $1450$	 \\
+			Secção B						               	     & $1560$	 \\
+			Secção C						               	     & $1490$	 \\
+			Secção D 						               	     & $1123$	 \\
+			Secção E						               	  	 & $843$	 \\
+			\hline
+			Total						             & $6466$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Potência para o Arrefecimento}\label{tab:arrefecimento20P7}
+\end{table}
+
+\paragraph{Temperatura =}
+\textbf{28ºC}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Potência 								 & 	I (W) \\
+			\midrule
+			Secção A 						               	     & $1890$	 \\
+			Secção B						               	     & $2047$	 \\
+			Secção C						               	     & $1757$	 \\
+			Secção D 						               	 & $1389$	 \\
+			Secção E						               	  	 & $1316$	 \\
+			\hline
+			Total						             & $8399$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Potência para o Arrefecimento}\label{tab:arrefecimento28P7}
+\end{table}
+
+\pagebreak
+\subsubsection{Ponto8}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Potência 								 & 	I (W) \\
+			\midrule
+			Secção A 						               	     & $1429$	 \\
+			Secção B						               	     & $1546$	 \\
+			Secção C						               	     & $1294$	 \\
+			Secção D 						               	 & $961$	 \\
+			Secção E						               	  	 & $760$	 \\
+			\hline
+			Total						             & $5989$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Potência para o Arrefecimento}\label{tab:arrefecimentoP8}
+\end{table}
+
+\subsubsection{Otimizar Sistemas de Arrefecimento}
+
+\vspace{10mm}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Potência (BTU/h)							 & 	Potência (KW/h)  \\
+			\midrule
+			1 						               	     & $3412.142$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Conversão pata BTU/h}\label{tab:conversaoBTU}
+\end{table}
+
+\vspace{10mm}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c}
+			\toprule
+			Arrefecimento 								 & 	Potência (BTU/h) \\
+			\midrule
+			Secção A 						               	     & $4874$	 \\
+			Secção B						               	     & $5274$	 \\
+			Secção C						               	     & $4415$	 \\
+			Secção D 						               	 	 & $3278$	 \\
+			Secção E						               	  	 & $2592$	 \\
+			\hline
+			Total						             & $20434$	 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{BTU's Necessários para Manter Temperatura}\label{tab:BTUmanter}
+\end{table}
+
+\pagebreak
+
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c c c}
+			\toprule
+			Potência (BTU/h) 								 & 	Consumo (KW/h) & Tarifa (€)   & Custo por Hora de Funcionamento (€) \\
+			\midrule
+			6000 						         &    $1.46$      	     	  & $0.24$		   & $0.35$					 \\
+			12000 						     &    $2.10$      	     	  & $0.24$		   & $0.50$					 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Ar Condicionados}\label{tab:arcondicionado}
+\end{table}
+
+\vspace{25mm}
+
+Para otimizar o numero de sistemas de arrefecimento optamos pelo Ar Condicionado encontrado com menor produção de BTU/h suficiente para satisfazer as condições pretendidas. Para as secções C, D e E não foi possível outras formas de otimizar estes sistemas de arrefecimentos pelas diferentes temperaturas presentes em cada uma. Contudo a mesma coisa não se aplica nas secções A e B por ambas estarem a $-5{\celsius}$. Com a criação de uma porta com a mesma estrutura das outras ``Portas Simples'', entre as duas secções e deixar esta porta aberta apenas enquanto as portas para a o exterior estiverem fechadas, é possível colocar apenas um ar condicionado de 12 mil BTU/h. Desta forma, como um Ar Condicionado de 12 mil BTU's, não tem consumos diretamente proporcionais com o aumento de BTU/h seria economicamente mais apetecível abdicar de colocar dois Ar Condicionados de metade de produção de BTU's e optar por um mais potente pela vantagem económica como demonstra a seguinte tabela.
+
+
+\vspace{25mm}
+
+\begin{table}[htpb]
+	\begin{center}
+		\begin{tabular}{c c c}
+			\toprule
+			Nº Ar Condicionados 								 & 	Potência (BTU/h) 	 & 		Custo por Hora de Funcionamento (€)		 \\
+			\midrule
+			2				               	   								 & 6000 		 & 			0.70	    \\
+			1					              							 	 & 12000 	 &				0.50		\\
+			\bottomrule
+		\end{tabular}
+	\end{center}
+	\caption{Numero de Ar Condicionados com Custo}\label{tab:compensa}
+\end{table}
+
 
 \pagebreak
 \printbibliography{}

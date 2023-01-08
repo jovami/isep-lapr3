@@ -23,7 +23,7 @@ public enum WateringFrequency {
         lookup = Collections.unmodifiableMap(lookup);
     }
 
-    /* TODO: change name */
+
     public final int i;
     private final char abbrev;
 

@@ -1,9 +1,4 @@
-#  Template maven-build
-
-#  This template allows you to test and build your Java project with Maven.
-#  The workflow allows running tests, code checkstyle and security scans on the default branch.
-
-# Prerequisites: pom.xml and appropriate project structure should exist in the repository.
+# Copyright (c) 2022 jovami. All Rights Reserved.
 
 image: maven:3.8.6-eclipse-temurin-19-alpine
 
@@ -16,3 +11,14 @@ pipelines:
             - maven
           script:
             - mvn -B verify --file pom.xml
+# image: scottieg40/linux:buildEnv
+
+# pipelines:
+#   default:
+#       - step:
+#           name: build main
+#           script:
+#               - apt-get update && apt-get install -y git
+#               - git submodule update --recursive --init
+#               - make cclean c
+#               - make cclean ctest

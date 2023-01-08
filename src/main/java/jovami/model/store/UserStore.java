@@ -53,8 +53,7 @@ public class UserStore implements Iterable<User> {
      * @return the boolean
      */
     public boolean addUser(String userID, String locationID,
-                           double latitude, double longitude)
-    {
+                           double latitude, double longitude) {
         var user = new User(userID, locationID, latitude, longitude);
         return this.addUser(user);
     }
@@ -67,6 +66,14 @@ public class UserStore implements Iterable<User> {
      */
     public Optional<User> getUser(String key) {
         return Optional.ofNullable(this.users.get(key));
+    }
+
+    public Optional<User> getUserByID(String id) {
+        for (User user : users.values()) {
+            if (user.getUserID().equals(id))
+                return Optional.of(user);
+        }
+        return Optional.empty();
     }
 
     @Override

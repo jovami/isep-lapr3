@@ -1,0 +1,14 @@
+# Copyright (c) 2022 jovami. All Rights Reserved.
+
+image: scottieg40/linux:buildEnv
+
+pipelines:
+  default:
+      - step:
+          name: build main
+          script:
+              - make cclean c
+      - step:
+          name: test main
+          script:
+              - make cclean ctest
