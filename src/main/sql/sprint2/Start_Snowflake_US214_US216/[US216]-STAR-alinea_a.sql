@@ -3,48 +3,44 @@
 ---------------------------
 
 -----------------------------------------------------------------------------------------------------------------
-------------------------------------CRITERIO DE ACEITACAO 6------------------------------------------------------
+------------------------------------CRITERIO DE ACEITACAO 4------------------------------------------------------
 -----------------------------------------ALINEA a----------------------------------------------------------------
 ----------------Analisar a evolução das vendas mensais por tipo de cultura e hub?--------------------------------
 
 SET SERVEROUTPUT ON;
 
 
-create or replace PROCEDURE p_analisar_vendas_mensais_por_tipo_cultura_e_hub(v_designacao_tc  tipo_cultura.designacao%TYPE, v_designacao_th tipo_hub.designacao%TYPE) 
+create or replace PROCEDURE p_analisar_vendas_mensais_por_tipo_cultura_e_hub(v_designacao_tc  produto.designacao_tc%TYPE, v_designacao_th hub.designacao_th%TYPE) 
 IS
     
-    l_ano                              ano.ano%TYPE;
-    l_mes_nome                         mes.nome%TYPE; 
+    l_ano                              tempo.ano%TYPE;
+    l_mes_nome                         tempo.mes_nome%TYPE; 
     l_sum_venda_milhares_euros         producao_venda.venda_milhares_euros%TYPE;
     
-    temp_v_designacao_tc               tipo_cultura.designacao%TYPE;
-    temp_v_designacao_th               tipo_hub.designacao%TYPE;
+    temp_v_designacao_tc               produto.designacao_tc%TYPE;
+    temp_v_designacao_th               hub.designacao_th%TYPE;
     
    CURSOR c_analisar_vendas_mensais_por_tipo_cultura_e_hub IS
-        SELECT a.ano, m.nome, SUM(pv.venda_milhares_euros)
+        SELECT t.ano, t.mes_nome, SUM(pv.venda_milhares_euros)
         FROM producao_venda pv
             INNER JOIN tempo t ON pv.tempo_id = t.tempo_id
-            INNER JOIN ano a ON t.ano = a.ano
-            INNER JOIN mes m ON t.mes = m.mes
             INNER JOIN produto p ON pv.produto_id = p.produto_id
-            INNER JOIN tipo_cultura tc ON p.tipo_cultura_id = tc.tipo_cultura_id
             INNER JOIN hub h ON pv.hub_id = h.hub_id
-            INNER JOIN tipo_hub th ON h.tipo_hub_id = th.tipo_hub_id
             WHERE pv.designacao_p_ou_v = 'venda'
-                AND tc.designacao = v_designacao_tc
-                AND th.designacao = v_designacao_th
-            GROUP BY a.ano, m.mes, m.nome
-            ORDER BY a.ano, m.mes;
+                AND p.designacao_tc = v_designacao_tc
+                AND h.designacao_th = v_designacao_th
+            GROUP BY t.ano, t.mes, t.mes_nome
+            ORDER BY t.ano, t.mes;
     
 BEGIN
 
-    SELECT tc.designacao INTO temp_v_designacao_tc
-    FROM tipo_cultura tc
-        WHERE tc.designacao = v_designacao_tc;
+    SELECT p.designacao_tc INTO temp_v_designacao_tc
+    FROM produto p
+        WHERE p.designacao_tc = v_designacao_tc AND ROWNUM <=1;
         
-    SELECT th.designacao INTO temp_v_designacao_th
-    FROM tipo_hub th
-        WHERE th.designacao = v_designacao_th;
+    SELECT h.designacao_th INTO temp_v_designacao_th
+    FROM hub h
+        WHERE h.designacao_th = v_designacao_th AND ROWNUM <=1 ;
                 
     OPEN c_analisar_vendas_mensais_por_tipo_cultura_e_hub;
         dbms_output.put_line('TIPO DE CULTURA= ' || v_designacao_tc);
@@ -77,7 +73,7 @@ END p_analisar_vendas_mensais_por_tipo_cultura_e_hub;
 ---------OUTPUT OBTIDO E DE ACORDO AO ESPERADO--------------
 /*
 TIPO DE CULTURA= temporaria
-TIPO DE HUB= C
+TIPO DE HUB= P
 ano= 2018 mes_nome= janeiro   sum_venda_milhares_euros= 20
 ano= 2018 mes_nome= fevereiro   sum_venda_milhares_euros= 20
 ano= 2018 mes_nome= marco   sum_venda_milhares_euros= 20
@@ -108,7 +104,7 @@ ano= 2022 mes_nome= abril   sum_venda_milhares_euros= 150
 ano= 2022 mes_nome= maio   sum_venda_milhares_euros= 140
 ano= 2022 mes_nome= junho   sum_venda_milhares_euros= 170
 */
-CALL  p_analisar_vendas_mensais_por_tipo_cultura_e_hub('temporaria','C');
+CALL  p_analisar_vendas_mensais_por_tipo_cultura_e_hub('temporaria','P');
 
 
 ---------OUTPUT OBTIDO E DE ACORDO AO ESPERADO--------------
@@ -116,7 +112,7 @@ CALL  p_analisar_vendas_mensais_por_tipo_cultura_e_hub('temporaria','C');
 Error report -
 ORA-20011: Nao existe o tipo cultura especificado
 */
-CALL  p_analisar_vendas_mensais_por_tipo_cultura_e_hub('semestral','C');
+CALL  p_analisar_vendas_mensais_por_tipo_cultura_e_hub('semestral','P');
  
 
 ---------OUTPUT OBTIDO E DE ACORDO AO ESPERADO--------------

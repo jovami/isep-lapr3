@@ -93,8 +93,8 @@ CREATE TABLE tipo_hub (
 CREATE TABLE localizacao (
     
     localizacao_id     INTEGER GENERATED AS IDENTITY CONSTRAINT pk_localizacao_id                 PRIMARY KEY,
-    latitude           NUMBER(15,9) CONSTRAINT ck_localizacao_latitude  	CHECK( (latitude >= -90 and latitude <= 90) OR latitude = 91 ),
-    longitude          NUMBER(15,9) CONSTRAINT ck_localizacao_longitude 	CHECK( (longitude >= -180 and longitude <= 180) OR longitude = 181 )
+    latitude           NUMBER(15,9) CONSTRAINT ck_localizacao_latitude  	CHECK( latitude >= -90 and latitude <= 90 ),
+    longitude          NUMBER(15,9) CONSTRAINT ck_localizacao_longitude 	CHECK( longitude >= -180 and longitude <= 180 )
 );
     
 
@@ -220,8 +220,8 @@ INSERT INTO cliente(codigo_interno,nome,email,numero_fiscal,plafond,numero_incid
 INSERT INTO parcela_agricola(designacao,area_ha) VALUES ('Balmada', 100);
 INSERT INTO parcela_agricola(designacao,area_ha) VALUES ('Japa', 200);
 
-INSERT INTO tipo_hub(designacao) VALUES ('C');
 INSERT INTO tipo_hub(designacao) VALUES ('P');
+INSERT INTO tipo_hub(designacao) VALUES ('E');
 
 INSERT INTO localizacao(latitude,longitude)  VALUES (38.5243,-8.8926);
 INSERT INTO localizacao(latitude,longitude)  VALUES (39.3167,-7.4167);

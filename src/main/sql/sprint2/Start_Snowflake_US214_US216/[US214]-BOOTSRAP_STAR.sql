@@ -59,8 +59,8 @@ CREATE TABLE hub (
     tipo_hub_id        INTEGER CONSTRAINT nn_tipo_hub_id                    NOT NULL,
     designacao_th      VARCHAR(40) CONSTRAINT nn_tipo_hub_designacao_th     NOT NULL,
     localizacao_id     INTEGER CONSTRAINT nn_localizacao_id                 NOT NULL,
-    latitude           NUMBER(15,9) CONSTRAINT ck_localizacao_latitude  	CHECK( (latitude >= -90 and latitude <= 90) OR latitude = 91 ),
-    longitude          NUMBER(15,9) CONSTRAINT ck_localizacao_longitude 	CHECK( (longitude >= -180 and longitude <= 180) OR longitude = 181 )
+    latitude           NUMBER(15,9) CONSTRAINT ck_localizacao_latitude  	CHECK( latitude >= -90 and latitude <= 90 ),
+    longitude          NUMBER(15,9) CONSTRAINT ck_localizacao_longitude 	CHECK( longitude >= -180 and longitude <= 180 )
 );  
 
 
@@ -158,10 +158,10 @@ INSERT INTO parcela_agricola(designacao,area_ha) VALUES ('Balmada', 100);
 INSERT INTO parcela_agricola(designacao,area_ha) VALUES ('Japa', 200);
 
 INSERT INTO hub(hub_id,tipo_hub_id,designacao_th,localizacao_id,latitude,longitude)
-            VALUES ('CT14',1,'C',1,38.5243,-8.8926);
+            VALUES ('CT14',1,'P',1,38.5243,-8.8926);
 
 INSERT INTO hub(hub_id,tipo_hub_id,designacao_th,localizacao_id,latitude,longitude)
-            VALUES ('CT11',2,'P',2,39.3167,-7.4167);
+            VALUES ('CT11',2,'E',2,39.3167,-7.4167);
 
 
 --PRODUTO ROSAS
@@ -770,5 +770,4 @@ SELECT count(*) AS "linhas/tuplos na tabela hub" FROM hub;
 
 SELECT * FROM producao_venda ;
 SELECT count(*) AS "linhas/tuplos na tabela producao_venda" FROM producao_venda;
-
 
