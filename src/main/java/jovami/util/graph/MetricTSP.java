@@ -36,7 +36,7 @@ public class MetricTSP {
         }
         dist[g.key(vOrig)] = zero;
 
-        mstPrimImpl(g, ce, vOrig, visited, pathKeys, dist);
+        mstPrimImpl(g, Comparator.nullsLast(ce), vOrig, visited, pathKeys, dist);
         return mstBuild(g, pathKeys, dist);
     }
 
