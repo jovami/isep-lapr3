@@ -29,9 +29,7 @@ public class ExpListStatsUI implements UserStory {
 
     @Override
     public void run() {
-        //showing statistics to the 4 types
-
-        //for which type expedition list
+        //Net complexity: O(n^3) -> computing producers stats
 
 
         ExpList expList;
@@ -51,11 +49,11 @@ public class ExpListStatsUI implements UserStory {
         //client
         System.out.println("\tCalculating stats related to clients:\n");
 
-        HashMap<User, int[]> clientStats = handler.getAllClientsStats(day, expList);
+        HashMap<User, int[]> clientStats = handler.getAllClientsStats(day, expList);    //O(n^2)
 
         System.out.println("\tBundle represented as 'B'");
         System.out.println("Client | B.Full | B.Partial | Producers");
-        for (Entry<User, int[]> iterClient : clientStats.entrySet()) {
+        for (Entry<User, int[]> iterClient : clientStats.entrySet()) {                  //O(n)
             System.out.printf("-> %-4s|   %-5d|     %-6d|     %d\n", iterClient.getKey().getUserID()
                     , iterClient.getValue()[ClientIndex.TOTALLY_SATISTFIED.getPrefix()]
                     , iterClient.getValue()[ClientIndex.PARTIALLY_SATISFIED.getPrefix()]
@@ -76,10 +74,10 @@ public class ExpListStatsUI implements UserStory {
         //printing stats
 
 
-        HashMap<User, int[]> producerStats = handler.getAllProducersStats(day, expList);
+        HashMap<User, int[]> producerStats = handler.getAllProducersStats(day, expList);       //O(n^3)
 
         System.out.println("Producer | B.full | B.Partial | Out Of Stock | Clients | Hubs");
-        for (Entry<User, int[]> iterProducer : producerStats.entrySet()) {
+        for (Entry<User, int[]> iterProducer : producerStats.entrySet()) {//O(n)
             System.out.printf("-> %-6s|   %-5d|     %-6d|      %-8d|    %-5d|  %d\n", iterProducer.getKey().getUserID()
                     , iterProducer.getValue()[ProducerIndex.BUNDLES_TOTALLY_PROVIDED.getPrefix()]
                     , iterProducer.getValue()[ProducerIndex.BUNDLES_PARTIALLY_PROVIDED.getPrefix()]
@@ -99,11 +97,11 @@ public class ExpListStatsUI implements UserStory {
 
 
         //hub
-        HashMap<User, int[]> hubStats = handler.getAllHubsStats(day, expList);
+        HashMap<User, int[]> hubStats = handler.getAllHubsStats(day, expList);                                       //O(n^2)
 
 
         System.out.println("  Hub | Clients | Producers");
-        for (Entry<User, int[]> iterHub : hubStats.entrySet()) {
+        for (Entry<User, int[]> iterHub : hubStats.entrySet()) {                                                      //O(n)
             System.out.printf("-> %s |    %-5d|     %d\n", iterHub.getKey().getUserID()
                     , iterHub.getValue()[HubIndex.DIF_CLIENTS.getPrefix()]
                     , iterHub.getValue()[HubIndex.DIF_PRODUCERS.getPrefix()]
@@ -114,13 +112,13 @@ public class ExpListStatsUI implements UserStory {
         //bundle
         System.out.println("\n\tCalculating stats related to bundle\n");
 
-        HashMap<Bundle, float[]> bundleStats = handler.getAllbundlesStats(day, expList);
+        HashMap<Bundle, float[]> bundleStats = handler.getAllbundlesStats(day, expList);                               //O(n^2)
 
 
         System.out.println("\nSupplied represented as 'S'");
         System.out.println("Clients With Non Integer Values Did Not Ordered Anything for That Day\n");
         System.out.println("Bundle | Fully S | Partially S | Not S | Fully S % | Producers");
-        for (Entry<Bundle, float[]> iterBundle : bundleStats.entrySet()) {
+        for (Entry<Bundle, float[]> iterBundle : bundleStats.entrySet()) {                                             //O(n)                
 
             if (Float.isNaN(iterBundle.getValue()[BundleIndex.PERC_TOTAL_SATISFIED.getPrefix()])) {
                 System.out.printf("-> %-4s| ------- | ----------- | ----- | --------- | --------\n",

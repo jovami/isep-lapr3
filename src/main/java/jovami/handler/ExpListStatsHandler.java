@@ -43,19 +43,19 @@ public class ExpListStatsHandler {
 
     /*CABAZ
     */
-    public LinkedHashMap<Bundle,float[]> getAllbundlesStats (int day,ExpList expList){
+    public LinkedHashMap<Bundle,float[]> getAllbundlesStats (int day,ExpList expList){          //Net complexity: O(n^2)
         LinkedHashMap<Bundle,float []> res = new LinkedHashMap<>();
 
-        for (Bundle iterBundle : expList.getBundleStore().getBundles(day)) {
-            res.computeIfAbsent(iterBundle, k -> new float[NUMSTATSBUNDLE]);
+        for (Bundle iterBundle : expList.getBundleStore().getBundles(day)) {    	            //O(n*inside)
+            res.computeIfAbsent(iterBundle, k -> new float[NUMSTATSBUNDLE]);                    //O(1)
 
-            statsEachBundle(iterBundle, res.get(iterBundle));
+            statsEachBundle(iterBundle, res.get(iterBundle));                                   //O(n)
         }
         return res;
     }
 
 
-    protected void statsEachBundle(Bundle bundle, float[] res){
+    protected void statsEachBundle(Bundle bundle, float[] res){                                 //Net complexity: O(n)
 
         float numFullyDelivered = 0;
 
@@ -68,20 +68,20 @@ public class ExpListStatsHandler {
 
         HashSet<User> producers = new HashSet<>();
 
-        for (Order order : bundle.getOrdersList()) {
-            if(order.getState()==DeliveryState.TOTALLY_SATISTFIED){
-                numFullyDelivered++;
-                producers.add(order.getProducer());
+        for (Order order : bundle.getOrdersList()) {                                            //O(n*inside)
+            if(order.getState()==DeliveryState.TOTALLY_SATISTFIED){                             //O(1)
+                numFullyDelivered++;                                                            //O(1)
+                producers.add(order.getProducer());                                             //O(1)
 
-            }else if(order.getState() == DeliveryState.PARTIALLY_SATISFIED){
-                    numPartialyDelivered++;
-                    producers.add(order.getProducer());
+            }else if(order.getState() == DeliveryState.PARTIALLY_SATISFIED){                    //O(1)
+                    numPartialyDelivered++;                                                     //O(1)
+                    producers.add(order.getProducer());                                         //O(1)
 
             }else{
-                numNotDelivered++;
+                numNotDelivered++;                                                              //O(1)
             }
         }
-        //nº de produtores que forneceram o cabaz.
+        //nº de produtores que forneceram o cabaz.  
         float numProducers = producers.size();
 
         //percentagem total do cabaz satisfeito
@@ -98,40 +98,40 @@ public class ExpListStatsHandler {
 
 
 
-    public LinkedHashMap<User,int[]> getAllClientsStats(int day,ExpList expList){
+    public LinkedHashMap<User,int[]> getAllClientsStats(int day,ExpList expList){              //Net complexity O(n^2)
 
         LinkedHashMap<User,int []> res = new LinkedHashMap<>();
 
-        for (Bundle iterBundle : expList.getBundleStore().getBundles(day)) {
-            //uma empresa é um cliente, e é também um hub
-            res.computeIfAbsent(iterBundle.getClient(), k -> new int[NUMSTATSCLIENT]);
-            clientStats(iterBundle.getClient(), iterBundle,res.get(iterBundle.getClient()));
+        for (Bundle iterBundle : expList.getBundleStore().getBundles(day)) {                    //O(n*inside)
+            //uma empresa é um cliente, e é também um hub   
+            res.computeIfAbsent(iterBundle.getClient(), k -> new int[NUMSTATSCLIENT]);          //O(1)
+            clientStats(iterBundle.getClient(), iterBundle,res.get(iterBundle.getClient()));    //O(n)
         }
 
         return res;
 
     }
 
-    protected void clientStats (User client,Bundle bundle, int[] arr){
+    protected void clientStats (User client,Bundle bundle, int[] arr){              //O(n)
         //nº de cabazes totalmente satisfeitos
-        int totalSatisfied=arr[ClientIndex.TOTALLY_SATISTFIED.getPrefix()];
+        int totalSatisfied=arr[ClientIndex.TOTALLY_SATISTFIED.getPrefix()];         //O(1)
 
         //nº de cabazes parcialmente satisfeitos
-        int partialyStatisfied=arr[ClientIndex.PARTIALLY_SATISFIED.getPrefix()];
+        int partialyStatisfied=arr[ClientIndex.PARTIALLY_SATISFIED.getPrefix()];    //O(1)
 
-        HashSet<User> deliv=new HashSet<>();
+        HashSet<User> deliv=new HashSet<>();                                        //O(1)
 
-        if(bundle.getClient()==client){
-            switch (bundle.getState()) {
-                case TOTALLY_SATISTFIED -> totalSatisfied++;
-                case PARTIALLY_SATISFIED -> partialyStatisfied++;
+        if(bundle.getClient()==client){                                             //O(1)
+            switch (bundle.getState()) {                                            //O(1)
+                case TOTALLY_SATISTFIED -> totalSatisfied++;                        //O(1)
+                case PARTIALLY_SATISFIED -> partialyStatisfied++;                   //O(1)
                 default -> {}
             }
 
             if(bundle.getOrdersList().size()!=0) {
-                for (Order order : bundle.getOrdersList()) {
-                    if(order.getProducer()!=null)
-                        deliv.add(order.getProducer());
+                for (Order order : bundle.getOrdersList()) {//o(n*inside)
+                    if(order.getProducer()!=null)                                   //O(1)
+                        deliv.add(order.getProducer());                             //O(1)
                 }
             }
         }
@@ -148,39 +148,38 @@ public class ExpListStatsHandler {
     /*PRODUTOR
     */
 
-    public LinkedHashMap<User,int[]> getAllProducersStats(int day, ExpList expList){
+    public LinkedHashMap<User,int[]> getAllProducersStats(int day, ExpList expList){                    //Net complexity: O(n^3)
 
         LinkedHashMap<User,int []> res = new LinkedHashMap<>();
 
-        for(Entry<User,Stock> producerStock: expList.getStockStore().getStocks().entrySet()){//ninside
-            res.computeIfAbsent(producerStock.getKey(), k -> new int[NUMSTATSPRODUTOR]);
-            producerStockStats(day, res.get(producerStock.getKey()), producerStock.getValue());//n
-            producerBundleStats(producerStock.getKey(),day, expList,res.get(producerStock.getKey()));//n2
+        for(Entry<User,Stock> producerStock: expList.getStockStore().getStocks().entrySet()){           //O(n*inside)
+            res.computeIfAbsent(producerStock.getKey(), k -> new int[NUMSTATSPRODUTOR]);                //O(1)
+            producerStockStats(day, res.get(producerStock.getKey()), producerStock.getValue());         //O(n)
+            producerBundleStats(producerStock.getKey(),day, expList,res.get(producerStock.getKey()));   //O(n^2)
         }
 
-        //O(n3)
         return res;
 
     }
 
 
-    protected void producerStockStats(int day, int[] res, Stock producerStock) {
+    protected void producerStockStats(int day, int[] res, Stock producerStock) {                        //Net complexity: O(n)
 
-        int outOfStock=res[ProducerIndex.PROD_OUT_OF_STOCK.getPrefix()];
+        int outOfStock=res[ProducerIndex.PROD_OUT_OF_STOCK.getPrefix()];                                //O(1)
 
-        for(ProductStock product : producerStock.getStocks(day)){
-            if(product!=null){
-                if(producerStock.getStashAvailable(product.getProduct(), day)==0){
-                    outOfStock++;
+        for(ProductStock product : producerStock.getStocks(day)){                                       //O(n*inside)
+            if(product!=null){                                                                          //O(1)
+                if(producerStock.getStashAvailable(product.getProduct(), day)==0){                      //O(1)
+                    outOfStock++;                                                                       //O(1)
                 }
             }
         }
 
-        res[ProducerIndex.PROD_OUT_OF_STOCK.getPrefix()]=outOfStock;
+        res[ProducerIndex.PROD_OUT_OF_STOCK.getPrefix()]=outOfStock;                                    //O(1)
     }
 
 
-    protected void producerBundleStats (User producer,int day,ExpList expList,int[] res){
+    protected void producerBundleStats (User producer,int day,ExpList expList,int[] res){           //O(n^2)
         BundleStore bundles = expList.getBundleStore();
 
         // nº de cabazes fornecidos totalmente
@@ -200,13 +199,13 @@ public class ExpListStatsHandler {
         // estrutura auxiliar para controlar clientes repetidos
         HashSet<User> difClients = new HashSet<>();
 
-        for (Bundle bundle : bundles.getBundles(day)) {
+        for (Bundle bundle : bundles.getBundles(day)) {                                         //O(n*inside)
             // assumindo que cada bundle e sempre fullfilled por um
             doesFullfil = true;
             doesPartialFill = false;
 
             if(!bundle.getOrdersList().isEmpty()){
-                for (Order order : bundle.getOrdersList()){
+                for (Order order : bundle.getOrdersList()){                                     //O(n*inside)
 
                     // nao entregue
                     if (order.getProducer() != null) {
@@ -259,36 +258,36 @@ public class ExpListStatsHandler {
      * HUB
      */
 
-    public LinkedHashMap<User,int[]> getAllHubsStats(int day, ExpList expList){
+    public LinkedHashMap<User,int[]> getAllHubsStats(int day, ExpList expList){                         //Net complexity: O(n^2)
 
         LinkedHashMap<User,int []> res = new LinkedHashMap<>();
 
         //keep track de clientes e produtores já existentes
         HashMap<User,Pair<HashSet<User>,HashSet<User>>> difClientsProducerPerHub=new LinkedHashMap<>();
 
-        for (Bundle iterBundle : expList.getBundleStore().getBundles(day)) {
+        for (Bundle iterBundle : expList.getBundleStore().getBundles(day)) {                            //O(n*inside)
 
-            User hub=iterBundle.getClient().getNearestHub();
+            User hub=iterBundle.getClient().getNearestHub();                                            //O(1)
 
-            Pair<HashSet<User>,HashSet<User>>pair=difClientsProducerPerHub.get(hub);
+            Pair<HashSet<User>,HashSet<User>>pair=difClientsProducerPerHub.get(hub);                    //O(1)
 
             if(pair==null){
-                difClientsProducerPerHub.put(hub,new Pair<>(new HashSet<>(), new HashSet<>()));
+                difClientsProducerPerHub.put(hub,new Pair<>(new HashSet<>(), new HashSet<>()));         //O(1)
                 pair=difClientsProducerPerHub.get(hub);
             }
 
             //adicionar o cliente
-            pair.first().add(iterBundle.getClient());
+            pair.first().add(iterBundle.getClient());                                                   //O(1)
 
-            for (Order iterOrder : iterBundle.getOrdersList()) {
+            for (Order iterOrder : iterBundle.getOrdersList()) {                                        //O(n*inside)
                 //adicionar o produtor
-                if(iterOrder.getProducer()!=null)
-                    pair.second().add(iterOrder.getProducer());
+                if(iterOrder.getProducer()!=null)                                                       //O(1)
+                    pair.second().add(iterOrder.getProducer());                                         //O(1)
             }
         }
 
 
-        for (Entry<User,Pair<HashSet<User>,HashSet<User>>> iterPair : difClientsProducerPerHub.entrySet()) {
+        for (Entry<User,Pair<HashSet<User>,HashSet<User>>> iterPair : difClientsProducerPerHub.entrySet()) {   //O(n)
             int[] arr = new int[NUMSTATSHUB];
             arr[HubIndex.DIF_CLIENTS.getPrefix()]=iterPair.getValue().first().size();
             arr[HubIndex.DIF_PRODUCERS.getPrefix()]=iterPair.getValue().second().size();
