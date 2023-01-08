@@ -1,11 +1,14 @@
 package jovami.handler;
 
-import jovami.MainTest;
-import jovami.handler.data.NearestHubToClientsData;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import jovami.App;
+import jovami.MainTest;
 
 class IsConnectedHandlerTest {
 
@@ -14,17 +17,27 @@ class IsConnectedHandlerTest {
     @BeforeEach
     void setUp() {
         MainTest.resetSingleton();
-        NearestHubToClientsData.loadData();
-        new CSVLoaderHandler().populateNetwork();
+        App app = App.getInstance();
         handler = new IsConnectedHandler();
     }
 
     @Test
-    void minReachability() {
+    void minReachabilitySmall() {
+        MainTest.readData(false);
         var min = handler.minReachability();
         assertTrue(min.isPresent());
         assertNotNull(min.get());
 
-        assertEquals(272, min.get());
+        assertEquals(1, min.get());
+    }
+
+    @Test
+    void minReachabilityBig() {
+        MainTest.readData(true);
+        var min = handler.minReachability();
+        assertTrue(min.isPresent());
+        assertNotNull(min.get());
+
+        assertEquals(14, min.get());
     }
 }

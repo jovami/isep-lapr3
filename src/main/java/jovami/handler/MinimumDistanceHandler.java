@@ -4,7 +4,7 @@ import jovami.App;
 import jovami.model.Distance;
 import jovami.model.HubNetwork;
 import jovami.model.User;
-import jovami.util.graph.Algorithms;
+import jovami.util.graph.BetterAlgorithms;
 import jovami.util.graph.Edge;
 import jovami.util.graph.Graph;
 
@@ -12,7 +12,6 @@ import jovami.util.graph.Graph;
  * MinimumDistanceHandler
  */
 public class MinimumDistanceHandler {
-    private final App app;
     private final HubNetwork hubNetwork;
 
 
@@ -20,7 +19,7 @@ public class MinimumDistanceHandler {
      * Instantiates a new Minimum distance handler.
      */
     public MinimumDistanceHandler() {
-        this.app = App.getInstance();
+        App app = App.getInstance();
         this.hubNetwork = app.hubNetwork();
     }
 
@@ -30,7 +29,7 @@ public class MinimumDistanceHandler {
      * @return the graph
      */
     public Graph<User, Distance> getMinimalUserNetwork(){
-        return Algorithms.kruskalMST(hubNetwork, HubNetwork.distCmp);   //O(E*log E)
+        return BetterAlgorithms.kruskalMST(hubNetwork, HubNetwork.distCmp);   //O(E*log E)
     }
 
     /**

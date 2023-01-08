@@ -1,0 +1,127 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Hub{
+- type
+id
+}
+class Order{
+- status
+paymentDeadline
+estimatedDeliveryDate
+shipmentAddress
+value
+registerDate
+estimatedDeliveryDate
+paymentDate
+}
+class Location{
+latitude
+longitude
+}
+class Client{
+- type
+name
+email
+taxNumber
+lastYearOrdersValue
+lastYearOrdersQuantity
+ceiling
+lastIncidentDate
+numberOfIncidents
+}
+class AgriculturalManager{
+- startOfContract
+- endOfContract
+name
+email
+taxNumber
+}
+class Incident{
+value
+date
+dateSettled
+}
+class AgriculturalInstallation{
+name
+}
+class Product{
+quantity
+designation
+marketValue
+}
+class Building{
+- type
+area
+designation
+}
+class Sector{
+area
+designation
+}
+class HarvestRecord{
+- cultureType
+plantingDate
+harvestDate
+harvestQuantity
+area
+}
+class WateringRegister{
+- wateringType
+- systemType
+date
+quantity
+duration
+}
+class WateringPlan{
+frequency
+duration
+}
+class Sensor{
+-readingInstant
+-readValue
+-sensorType
+id
+}
+class ProductionFactor{
+-type
+-fertilizationType
+-stockYear
+-stockQuantity
+provider
+pricePerKilo
+commercialName
+}
+class Formula{
+-type
+}
+class Compound{
+-type
+-quantity
+-unitOfMeasure
+designation
+}
+
+"Hub" "*" -r- "*" "Order": receives >
+"Location" "1" -u-- "*" "Hub": contains >
+"Location" "1" -r- "*" "Client": contains >
+"Client" "1" -u-- "*" "Order": registers >
+"Order" "1" -r-- "*" "Incident": has >
+"AgriculturalManager" "1" -u--- "*" "Order": manages >
+"AgriculturalManager" "*" -d-- "*" "AgriculturalInstallation": manages >
+"Location" "1" -d-- "*" "AgriculturalInstallation": contains >
+"Order" "*" --- "*" "Product": has >
+"AgriculturalInstallation" "*" -u-- "*" "Product": has >
+"AgriculturalInstallation" "1" -l-- "*" "Building": contains >
+"AgriculturalInstallation" "1" -r-- "*" "Sector": contains >
+"Sector" "1" -r-- "*" "HarvestRecord": contains >
+"HarvestRecord" "1" -l-- "*" "Product": contains >
+"HarvestRecord" "*" -u-- "*" "WateringRegister": contains >
+"HarvestRecord" "1" -d-- "*" "WateringPlan": contains >
+"Sector" "*" -d-- "*" "Sensor": contains >
+"Sector" "*" -d---- "*" "ProductionFactor": may restrict >
+"Sector" "*" -d---- "*" "ProductionFactor": uses >
+"AgriculturalInstallation" "*" -d- "*" "ProductionFactor": has >
+"ProductionFactor" "*" -l- "1" "Formula": contains >
+"ProductionFactor" "*" -d-- "*" "Compound": contains >
+@enduml
