@@ -1,21 +1,21 @@
+/* Copyright (c) 2023 Jovami. All Rights Reserved. */
+
 #pragma once
 
-//external
-#include <unistd.h>
+/* external */
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
-//menu related
+#include <sensor_vec.h>
+#include <sensor_impl.h>
+#include <util.h>
+
 #include "bootstrap.h"
+#include "dailymatrix/dailymatrix.h"
 #include "menu.h"
 #include "menu_aux.h"
-#include "dailymatrix/dailymatrix.h"
-#include "util.h"
-
-//sensors
 #include "sensors/gen_sens_values.h"
-#include "sensor_vec.h"
-#include "sensor_impl.h"
 
 
 void print_success_msg();
@@ -46,7 +46,7 @@ enum {
     "0) Quit\n" \
 
 
-#define MENU_FST    ADD_SENS    
+#define MENU_FST    ADD_SENS
 #define QUIT        (MENU_FST-1)
 #define MATCH(X)    ((X) >= MENU_FST && (X) < MENU_LST)
 

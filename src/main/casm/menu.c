@@ -61,6 +61,4 @@ menu(sensor_vec *pack)
     } while (running);
 }
 
-
-
 /* EOF */

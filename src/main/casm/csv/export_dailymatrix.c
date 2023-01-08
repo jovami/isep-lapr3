@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "export_csv.h"
-#include "util.h"
+#include <export_csv.h>
+#include <util.h>
 
 enum {
     TEMP_ROW,
@@ -24,7 +24,7 @@ enum {
 #define NUM_ROWS    6
 #define NUM_COLS    3
 
-void    
+void
 export_dailymatrix(unsigned short matrix[NUM_ROWS][NUM_COLS])
 {
     const unsigned short *p = &matrix[0][0];
@@ -48,7 +48,7 @@ export_dailymatrix(unsigned short matrix[NUM_ROWS][NUM_COLS])
     }
     fprintf(fp, "Sensor Type;Average;Maximum;Minimum\n");
 
-    for (int i = 0; i < NUM_ROWS * NUM_COLS; i++) { 
+    for (int i = 0; i < NUM_ROWS * NUM_COLS; i++) {
         if (!(i % NUM_COLS)){
             if(i)
                 fprintf(fp, "\n");
@@ -81,5 +81,7 @@ export_dailymatrix(unsigned short matrix[NUM_ROWS][NUM_COLS])
             fprintf(fp, ";%hu", *(p+i));
     }
     fclose(fp);
+
+    puts("Daily matrix exported with success!\n");
 }
 

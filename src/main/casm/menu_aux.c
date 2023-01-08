@@ -1,7 +1,7 @@
 /* Copyright (c) 2022 Jovami. All Rights Reserved. */
 
-#include "menu_aux.h"
 #include <stdint.h>
+#include "menu_aux.h"
 
 static const unsigned short sensor_names[SENS_LAST] = {
     [SENS_TEMP] = 10,
@@ -13,7 +13,8 @@ static const unsigned short sensor_names[SENS_LAST] = {
 };
 
 
-void sens_freqs(sensor_vec *pack)
+void
+sens_freqs(sensor_vec *pack)
 {
     puts("Altering sensors frequencies");
     short offset_type = choose_type_sens();
@@ -39,10 +40,10 @@ void sens_freqs(sensor_vec *pack)
     //realloc reading
     sens->readings_size = sz;
     sens->readings = arqcp_realloc(sens->readings,sz, sizeof(*sens->readings));
-
 }
 
-short choose_type_sens()
+short
+choose_type_sens(void)
 {
     int opt;
     do
@@ -52,16 +53,17 @@ short choose_type_sens()
             fprintf(stdout,"%ld) %s\n",i+1,strsens(i));
         }
         fputs("\nChoose one: ", stdout);
-        opt = read_int_wrapper() - 1;   
+        opt = read_int_wrapper() - 1;
 
     } while (opt>=SENS_LAST || opt<0);
 
-    return opt; 
+    return opt;
 }
 
 
 //returns -1 if there are no sensors related to the sens_type specified
-short choose_sens(sensor_vec *type_pack)
+short
+choose_sens(sensor_vec *type_pack)
 {
 
     int opt;
@@ -79,10 +81,10 @@ short choose_sens(sensor_vec *type_pack)
     } while (opt > (type_pack->len) || opt<0);
 
     return opt;
-    
 }
 
-void print_vec(sensor_vec *type_pack)
+void
+print_vec(sensor_vec *type_pack)
 {
     Sensor *sens = type_pack->data;
     for (size_t i = 0; i < type_pack->len; i++)
@@ -91,7 +93,8 @@ void print_vec(sensor_vec *type_pack)
     }
 }
 
-void sensor_init(Sensor *sens_add, short n_sens_type)
+void
+sensor_init(Sensor *sens_add, short n_sens_type)
 {
     char *c=NULL;
     size_t t=0;
@@ -125,7 +128,7 @@ void sensor_init(Sensor *sens_add, short n_sens_type)
     sens_init(
         sens_add,
         n_sens_type,
-        sensor_names[n_sens_type], 
+        sensor_names[n_sens_type],
         limit_max,
         limit_min,
         frequency,
@@ -133,7 +136,8 @@ void sensor_init(Sensor *sens_add, short n_sens_type)
     );
 }
 
-void list_sensors(sensor_vec *pack){
+void
+list_sensors(sensor_vec *pack){
     size_t count=1;
 
     for (size_t j = 0; j < SENS_LAST; j++)
@@ -148,14 +152,16 @@ void list_sensors(sensor_vec *pack){
 }
 
 
-void add_remove_sensors(sensor_vec *pack)
+void
+add_remove_sensors(sensor_vec *pack)
 {
     puts("Types of Sensors: ");
     short n_sens_type = choose_type_sens();
     choose_add_remove_opt(pack,n_sens_type);
 }
 
-void choose_add_remove_opt(sensor_vec *pack, short n_sens_type)
+void
+choose_add_remove_opt(sensor_vec *pack, short n_sens_type)
 {
     int opt;
 
@@ -173,7 +179,8 @@ void choose_add_remove_opt(sensor_vec *pack, short n_sens_type)
 }
 
 
-void add_remove(sensor_vec *pack, int opt, short n_sens_type)  
+void
+add_remove(sensor_vec *pack, int opt, short n_sens_type)
 {
     sensor_vec *type_pack = pack+n_sens_type;
     if (opt == 0)
@@ -194,7 +201,7 @@ void add_remove(sensor_vec *pack, int opt, short n_sens_type)
     }
     else{
         print_vec(type_pack);
-        choose_add_remove_opt(pack, n_sens_type);  
+        choose_add_remove_opt(pack, n_sens_type);
     }
 }
 

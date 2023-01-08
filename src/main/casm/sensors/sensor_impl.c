@@ -1,3 +1,5 @@
+/* Copyright (c) 2023 Jovami. All Rights Reserved. */
+
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>

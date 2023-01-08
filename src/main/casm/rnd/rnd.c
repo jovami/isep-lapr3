@@ -1,3 +1,5 @@
+/* Copyright (c) 2023 Jovami. All Rights Reserved. */
+
 #include <stdio.h>
 
 #include <rnd.h>

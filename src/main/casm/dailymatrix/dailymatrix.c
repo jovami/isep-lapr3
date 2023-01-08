@@ -1,10 +1,12 @@
+/* Copyright (c) 2023 Jovami. All Rights Reserved. */
+
 #include <stdio.h>
 
+#include <export_csv.h>
 #include <sensor_impl.h>
 #include <sensor_vec.h>
 
 #include "dailymatrix.h"
-#include "export_csv.h"
 
 #define MAX(X, Y)   ((X) > (Y) ? (X) : (Y))
 #define MIN(X, Y)   ((X) < (Y) ? (X) : (Y))
@@ -79,6 +81,8 @@ daily_matrix(sensor_vec *pack)
     fill_matrix(matrix, pack);
     print_matrix(matrix);
 
+    putchar('\n');
+
     export_dailymatrix(matrix);
     export_sensor_data(pack);
 
@@ -148,4 +152,5 @@ print_matrix(unsigned short matrix[NUM_ROWS][NUM_COLS])
         else
             printf("%9hu", *(p+i));
     }
+    putchar('\n');
 }

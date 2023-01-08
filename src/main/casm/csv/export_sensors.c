@@ -1,16 +1,16 @@
+/* Copyright (c) 2023 Jovami. All Rights Reserved. */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
-#include "sensor_vec.h"
-#include "util.h"
-#include "export_csv.h"
-#include "sensor_impl.h"
-#include "sensor_impl.h"
+#include <export_csv.h>
+#include <sensor_impl.h>
+#include <sensor_vec.h>
+#include <util.h>
 
-
-void 
+void
 export_sensor_data(const sensor_vec *sensors) {
     FILE *fp;
 
@@ -20,16 +20,8 @@ export_sensor_data(const sensor_vec *sensors) {
     snprintf(filename, sizeof(filename), "sensors_data_%s.csv", date);
     free(date);
 
-    fp = fopen(filename, "w"); // Creates an empty file for writing
-
-    /**
-    * This if statement is not necessary, but it is a good practice to check
-    */
-    if (fp == NULL)
-    {
-        printf("Can't open file %s!", filename);
-        exit(1);
-    }
+    if (!(fp = fopen(filename, "w")))
+        die("export_sensor_data: can't open file: ");
 
     /* Write sensor readings */
     for (enum SensorType i = 0; i < SENS_LAST; i++) {
@@ -49,4 +41,6 @@ export_sensor_data(const sensor_vec *sensors) {
         }
     }
     fclose(fp);
+
+    puts("Sensor values exported with success!\n");
 }

@@ -1,3 +1,5 @@
+/* Copyright (c) 2023 Jovami. All Rights Reserved. */
+
 #include <signal.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -97,7 +99,6 @@ gen_sens_values(sensor_vec *pack)
 
     if (sigaction(SIGINT, &stop_action, NULL) == -1)
         die("gen_sens_values: could not install signal: ");
-
     putchar('\n');
 }
 

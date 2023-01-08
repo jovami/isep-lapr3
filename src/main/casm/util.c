@@ -1,3 +1,5 @@
+/* Copyright (c) 2023 Jovami. All Rights Reserved. */
+
 #include <errno.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -101,7 +103,7 @@ read_int(char **bufp, size_t *n)
     return d;
 }
 
-char 
+char
 *get_date(void) {
     // Get the current time
     time_t t = time(NULL);

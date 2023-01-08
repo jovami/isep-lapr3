@@ -3,8 +3,6 @@
 void
 bootstrap(sensor_vec pack[SENS_LAST], unsigned long freqs[SENS_LAST])
 {
-    /* TODO: use frequencies from the freqs array */
-
     Sensor t1,t2, p1, dv1, vv1, ha1, hs1;
     sens_init(&t1,
               SENS_TEMP,
@@ -13,6 +11,7 @@ bootstrap(sensor_vec pack[SENS_LAST], unsigned long freqs[SENS_LAST])
               TEMP_LIM_MIN,
               freqs[SENS_TEMP],
               MAX_BAD_VALUES);
+
     sens_init(&t2,
               SENS_TEMP,
               30,
@@ -29,7 +28,6 @@ bootstrap(sensor_vec pack[SENS_LAST], unsigned long freqs[SENS_LAST])
               freqs[SENS_PLUV],
               MAX_BAD_VALUES);
 
-
     sens_init(&dv1,
               SENS_DIR_VNT,
               70,
@@ -37,7 +35,6 @@ bootstrap(sensor_vec pack[SENS_LAST], unsigned long freqs[SENS_LAST])
               DIR_VENTO_LIM_MIN,
               freqs[SENS_DIR_VNT],
               MAX_BAD_VALUES);
-
 
     sens_init(&vv1,
               SENS_VEL_VNT,
@@ -55,7 +52,6 @@ bootstrap(sensor_vec pack[SENS_LAST], unsigned long freqs[SENS_LAST])
               freqs[SENS_HUM_ATM],
               MAX_BAD_VALUES);
 
-
     sens_init(&hs1,
               SENS_HUM_SOL,
               40,
@@ -63,7 +59,6 @@ bootstrap(sensor_vec pack[SENS_LAST], unsigned long freqs[SENS_LAST])
               HUMD_SOLO_LIM_MIN,
               freqs[SENS_HUM_SOL],
               MAX_BAD_VALUES);
-
 
     /********************************/
 

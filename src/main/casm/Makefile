@@ -1,3 +1,5 @@
+# Copyright (c) 2023 Jovami. All Rights Reserved.
+
 PROGNAME = main
 
 CXXFLAGS = -Iinclude -D_POSIX_C_SOURCE=200809L -D_DEFAULT_SOURCE -D_GNU_SOURCE -DPROGNAME=\"${PROGNAME}\"

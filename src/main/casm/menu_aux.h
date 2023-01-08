@@ -13,9 +13,6 @@
 #include "unistd.h"
 
 
-//menu 
-void choose_add_remove_opt(sensor_vec *pack, short n_sens_type);
-
 enum {
     ADD_SENSOR,
     REMOVE_SENSOR,
@@ -34,23 +31,25 @@ enum {
 #define MENU_FIRST  ADD_SENSOR
 #define MATCH_ADD_REMOVE(X)  ((X)>=MENU_FIRST && (X)<MENU_LAST)
 
+
+/* menu  */
+void choose_add_remove_opt(sensor_vec *pack, short n_sens_type);
+
 void add_remove(sensor_vec *pack, int opt, short n_sens_type);
 void list_sensors(sensor_vec *pack);
 void sens_freqs(sensor_vec *pack);
 
-
-//escolher os sensores
+/* escolher os sensores */
 short choose_sens(sensor_vec *type_pack);
 short choose_type_sens();
 
-//prints
+/* prints */
 void print_vec(sensor_vec *type_pack);
 
-//aux functions
+/* aux functions */
 void add_remove_sensors(sensor_vec *pack);
 void sensor_init(Sensor *sens_add, short n_sens_type);
 void choose_add_remove_opt(sensor_vec *pack, short n_sens_type);
 void add_remove(sensor_vec *pack, int opt, short n_sens_type);
-
 
 /* EOF */
