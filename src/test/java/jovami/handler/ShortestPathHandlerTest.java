@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -122,18 +121,17 @@ public class ShortestPathHandlerTest {
                      dayRestrictionTest(day, r);
 
                      // RIP PC :/
-                     // System.out.printf("BIG: Testing for day %d, with restriction \"%s\"\n", day, r);
-                     // setup(true);
-                     // this.handler.setDayRestriction(day, r);
-                     // dayRestrictionTest(day, r);
+                     System.out.printf("BIG: Testing for day %d, with restriction \"%s\"\n", day, r);
+                     setup(true);
+                     this.handler.setDayRestriction(day, r);
+                     dayRestrictionTest(day, r);
             });
     }
 
 
     private void dayRestrictionTest(int day, Restriction r) {
         final int minTop = 1;
-        // FIXME: update this to 10 or something once ExpBasketListHandler gets fixed
-        final int maxTop = 4;
+        final int maxTop = 10;
 
         switch (r) {
             case NONE:
@@ -146,7 +144,7 @@ public class ShortestPathHandlerTest {
                     .range(minTop, maxTop)
                     .forEach(top -> {
                         System.out.printf("\t-> Testing top %d producers\n", top);
-                        var bs = new ExpListNProducersHandler().expListNProducers(day, top).get(day);
+                        var bs = new ExpListNProducersHandler().expListNProducers(top).get(day);
                         this.handler.setDayRestriction(day, r);
                         routeTest(bs);
                     });
@@ -187,15 +185,14 @@ public class ShortestPathHandlerTest {
         int day = 0;
 
         new ExpBasketListHandler().expBasketsList();
-        // TODO: remove the 0 unused argument
-        new ExpListNProducersHandler().expListNProducers(0, 1);
+        new ExpListNProducersHandler().expListNProducers(1);
 
         rests.forEach(r -> assertFalse(this.handler.setDayRestriction(day, r)));
 
         // setup(true);
         // new ExpBasketListHandler().expBasketsList();
         // TODO: remove the 0 unused argument
-        // new ExpListNProducersHandler().expListNProducers(0, 1);
+        // new ExpListNProducersHandler().expListNProducers(1);
 
         // rests.forEach(r -> assertFalse(this.handler.setDayRestriction(day, r)));
     }
